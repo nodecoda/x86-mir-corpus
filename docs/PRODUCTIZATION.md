@@ -26,6 +26,13 @@
 - `.gitignore`：补 `.pytest_cache/`、`.ruff_cache/`、`.mypy_cache/`。
 - CI：新增 `lint`（ruff check）与 `package`（构建 wheel + 安装 + CLI 冒烟）。
 
+### P0 LLVM 修订锁定
+- 新增 `assets/llvm-pin.json`：记录快照来源 commit（`fed20e0e6832`）、快照
+  sha256、冻结参考修订；`SOURCE-COMMIT` 的 `default-source-revision` 与之同步。
+- 新增 `pin show/verify/update`：`verify --repo` 从 checkout 重新 `git show`
+  该 commit 的 `X86LegalizerInfo.cpp` 并比对 sha256，防止快照与声明漂移。
+- 默认 `--source-rev` 从 `upstream/main` 改为 pinned commit：工具不再随分支漂移。
+
 ### P0 静态检查
 - ruff `select = [E4,E7,E9,F,I,B,UP,SIM,RUF]`，`ignore = [E501]`。
 - 自动修复 import 排序、冗余 open 模式、未使用 import；手工修 `raise ... from`、
@@ -60,3 +67,4 @@
 | 打包元数据 | 完成 | PEP 639：`License-Expression` + `License-File`，wheel 0.2.0 构建通过 |
 | 文档 | 完成 | CHANGELOG / CONTRIBUTING / docs/README / README 质量门禁与目录 |
 | Makefile | 完成 | `make lint/test/parity/build` |
+| LLVM 修订锁定 | 完成 | `pin show/verify/update`；`pin verify --repo` 9/9 ok；wheel 内含 `assets/llvm-pin.json` 与快照 |

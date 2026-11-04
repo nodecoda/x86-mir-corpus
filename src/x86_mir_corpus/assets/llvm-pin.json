@@ -1,0 +1,10 @@
+{
+  "recorded": "2026-11-04",
+  "reference_revision": "ebac17721d12",
+  "revision": "fed20e0e68323be32cb0fe8af679b8cb34e72112",
+  "schema": "x86-mir-corpus-llvm-pin",
+  "snapshot": "assets/source-snapshots/fed20e0e-X86LegalizerInfo.cpp",
+  "snapshot_sha256": "79f2376096c3271910840a42c6270932011078df9fff343bfd96c226523336cd",
+  "source_path": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+  "version": 1
+}

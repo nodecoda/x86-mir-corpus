@@ -8,6 +8,7 @@ import subprocess
 import sys
 
 from . import (
+    __version__,
     baseline,
     corpusdiff,
     domain,
@@ -16,6 +17,7 @@ from . import (
     mirrun,
     oracle,
     parse,
+    pin,
     schemas,
     target,
     tracediff,
@@ -520,6 +522,43 @@ def cmd_triage_verify(args):
         raise SystemExit(1)
 
 
+def cmd_pin_show(args):
+    doc = pin.load()
+    if doc is None:
+        print("pin: missing or unreadable", file=sys.stderr)
+        raise SystemExit(1)
+    if args.json:
+        print(json.dumps(doc, sort_keys=True))
+        return
+    print(f"revision:  {doc.get('revision')}")
+    print(f"snapshot:  {doc.get('snapshot')}")
+    print(f"sha256:    {doc.get('snapshot_sha256')}")
+    print(f"reference: {doc.get('reference_revision')}")
+    print(f"recorded:  {doc.get('recorded')}")
+
+
+def cmd_pin_verify(args):
+    report = pin.verify(repo=args.repo)
+    if args.json:
+        print(json.dumps(report, sort_keys=True))
+    else:
+        for entry in report["checks"]:
+            status = "ok" if entry["ok"] else "FAIL"
+            print(f"{status:4s}  {entry['check']}")
+        print(f"pin: {'ok' if report['ok'] else 'not ok'}")
+    if not report["ok"]:
+        raise SystemExit(1)
+
+
+def cmd_pin_update(args):
+    try:
+        changes = pin.update(args.repo, args.revision, dry_run=args.dry_run)
+    except RuntimeError as err:
+        print(f"pin update failed: {err}", file=sys.stderr)
+        raise SystemExit(2) from None
+    print(json.dumps(changes, sort_keys=True))
+
+
 def cmd_llvm_build(args):
     binaries = llvm.build_sidecar(
         args.llvm_build, args.out, llvm_src=args.llvm_src,
@@ -534,12 +573,15 @@ def build_parser():
     p = argparse.ArgumentParser(
         prog="x86-mir-corpus",
         description="X86 legalizer corpus reader and MIR legalization corpus supervisor")
+    p.add_argument("--version", action="version",
+                   version=f"%(prog)s {__version__}")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     def common(sp):
         sp.add_argument("--input", help="read this C++ file instead of a revision")
         sp.add_argument("--source-rev", default=target.DEFAULT_SOURCE_REV,
-                        help="git revision to read (default: upstream/main)")
+                        help="git revision to read (default: the pinned commit; "
+                             "see `pin show`)")
         sp.add_argument("--source-path", default=target.DEFAULT_SOURCE_PATH)
         sp.add_argument("--repo",
                         default=os.environ.get("X86_MIR_LLVM_SRC", "."))
@@ -592,6 +634,28 @@ def build_parser():
     sp.add_argument("--json", action="store_true")
     sp.add_argument("--allow-unpinned", action="store_true")
     sp.set_defaults(func=cmd_doctor)
+
+    sp = sub.add_parser("pin",
+                        help="inspect or move the pinned LLVM revision")
+    pin_sub = sp.add_subparsers(dest="pin_cmd", required=True)
+
+    pp = pin_sub.add_parser("show", help="print the pinned revision")
+    pp.add_argument("--json", action="store_true")
+    pp.set_defaults(func=cmd_pin_show)
+
+    pp = pin_sub.add_parser("verify",
+                            help="check the pin against snapshots and a checkout")
+    pp.add_argument("--repo", default=os.environ.get("X86_MIR_LLVM_SRC"))
+    pp.add_argument("--json", action="store_true")
+    pp.set_defaults(func=cmd_pin_verify)
+
+    pp = pin_sub.add_parser("update", help="re-pin from an LLVM checkout")
+    pp.add_argument("--repo", default=os.environ.get("X86_MIR_LLVM_SRC"))
+    pp.add_argument("--revision", default="upstream/main",
+                    help="commit-ish to pin (default: upstream/main)")
+    pp.add_argument("--dry-run", action="store_true",
+                    help="print the planned changes without writing")
+    pp.set_defaults(func=cmd_pin_update)
 
     sp = sub.add_parser("llvm")
     llvm_sub = sp.add_subparsers(dest="llvm_cmd", required=True)

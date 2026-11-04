@@ -14,6 +14,12 @@ All notable changes to this project are documented here.  The format follows
   test matrix.
 - `CONTRIBUTING.md`, `docs/README.md`, and `docs/PRODUCTIZATION.md`.
 - `X86_MIR_PARITY=1` opt-in gate for the pinned-baseline parity test.
+- `pin show` / `pin verify` / `pin update`: the bundled
+  `X86LegalizerInfo.cpp` snapshot is pinned to LLVM commit
+  `fed20e0e6832` in `assets/llvm-pin.json` (revision, sha256, frozen
+  reference), and `pin verify --repo` re-extracts the blob from a checkout
+  to prove the snapshot still matches.
+- `x86-mir-corpus --version`.
 
 ### Changed
 

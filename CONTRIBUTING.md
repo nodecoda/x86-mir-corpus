@@ -49,6 +49,26 @@ If upstream behaviour legitimately moved, refresh the witness in the same
 change and explain the delta in the commit message.  Do not make the test
 unconditionally green by editing the expectations.
 
+## Updating the LLVM pin
+
+The bundled snapshot is pinned to one commit (`assets/llvm-pin.json`), not to a
+branch.  To move it:
+
+```bash
+x86-mir-corpus pin update --repo /path/to/llvm-project \
+  --revision <commit> --dry-run     # review the planned change
+x86-mir-corpus pin update --repo /path/to/llvm-project --revision <commit>
+x86-mir-corpus pin verify --repo /path/to/llvm-project
+python -m unittest discover -s tests -q
+```
+
+Commit the new snapshot, `assets/llvm-pin.json`, and `SOURCE-COMMIT` together,
+and explain in the commit message what changed in the legalizer.  Regenerating
+corpora is a separate change: the pin only fixes which source the tool reads by
+default.  A pin move does not add the revision to
+`sidecar/supported-revisions.json`; do that only after building and running the
+sidecar at that revision.
+
 ## Test layout
 
 - `tests/test_*.py` — unit and integration tests (`unittest` style).

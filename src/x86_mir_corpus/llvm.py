@@ -16,7 +16,7 @@ import shutil
 import subprocess
 import sys
 
-from . import __version__, schemas
+from . import __version__, pin, schemas
 
 DOCTOR_SCHEMA = "x86-mir-corpus-doctor"
 DOCTOR_VERSION = 1
@@ -265,6 +265,12 @@ def doctor(llvm_src=None, llvm_build=None, sidecar_build=None,
                 f"unpinned LLVM revision {revision[:12]}; supported: "
                 + ", ".join(item[:12] for item in supported)
                 + " (pass --allow-unpinned for an experimental build)")
+
+    pin_report = pin.verify(repo=src)
+    report["pin"] = pin_report
+    if not pin_report["ok"]:
+        reasons.append("pinned source snapshot is inconsistent: "
+                       + ", ".join(pin_report["reasons"]))
 
     info = llvm_build_info(build) if build else None
     report["llvm_build"] = {"path": build, "ok": False}

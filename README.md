@@ -33,6 +33,7 @@ python3 -m venv .venv
 . .venv/bin/activate
 pip install -e .
 x86-mir-corpus --help
+x86-mir-corpus pin show        # which LLVM commit the snapshot is pinned to
 ```
 
 Bundled witness corpora and reports live in `corpora/` (see
@@ -76,8 +77,12 @@ x86-mir-corpus mir-run --corpus /tmp/up-C2.json \
 
 ## Provenance
 
-- Source snapshot: llvm-project `8bc4cd96f4bb` (`SOURCE-COMMIT`).
-- Default C++ input: `fed20e0e-X86LegalizerInfo.cpp`.
+- Pinned source snapshot: llvm-project `fed20e0e6832`, sha256 `79f23760...`
+  (`src/x86_mir_corpus/assets/llvm-pin.json`; check with
+  `x86-mir-corpus pin verify`).  The pin is a fixed commit, not a branch.
+- Extract commit for the upstream corpus utilities: `8bc4cd96f4bb`
+  (`SOURCE-COMMIT`).
+- Default C++ input: `fed20e0e-X86LegalizerInfo.cpp` (bundled with the wheel).
 - Frozen reference: `ebac17721d12`, checked by `doctor` against the LLVM
   checkout and recorded in `sidecar/reference/`.
 - License: Apache-2.0 WITH LLVM-exception (`LICENSE`, `NOTICE`).

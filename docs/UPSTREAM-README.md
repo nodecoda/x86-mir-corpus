@@ -1,8 +1,13 @@
 # x86-legalizer-corpus
 
 Build legalizer query corpora from the **hand-written** X86 legalizer C++
-(`llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp`), at any git revision
-(default `upstream/main`), then let an oracle fill in the expected answers.
+(`llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp`), at any git revision,
+then let an oracle fill in the expected answers.
+
+> This document describes the upstream-facing prototype, where the default
+> revision was `upstream/main`.  The standalone tool now pins one LLVM commit
+> (`assets/llvm-pin.json`, `x86-mir-corpus pin show`) and uses it as the
+> default; pass `--source-rev upstream/main` to follow the branch.
 
 This tool is deliberately not a TableGen reader.  It parses the source file
 that a human wrote, so the corpus describes the chain semantics that the

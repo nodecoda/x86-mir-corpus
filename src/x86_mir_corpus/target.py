@@ -4,6 +4,8 @@ Only this module knows that the input is X86: the feature environment,
 the LLT spellings used by the source, and the reviewed boundary panels.
 """
 
+from .pin import default_source_rev as _default_source_rev
+
 # The Subtarget predicates the X86 legalizer constructor reads.  A new one in
 # the C++ source is a hard error until it is added here (see parse.py).
 FEATURE_KEYS = (
@@ -95,8 +97,11 @@ SKIP_WITNESS_SLOT1_AS = {
 }
 
 DEFAULT_CONFIG = "C2"
-DEFAULT_SOURCE_REV = "upstream/main"
 DEFAULT_SOURCE_PATH = "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp"
+# Pinned LLVM commit behind the bundled snapshot.  ``pin show`` prints it and
+# ``pin update`` moves it; the fallback only applies to an installed package
+# that lost its assets.
+DEFAULT_SOURCE_REV = _default_source_rev()
 
 # The C++ constructor spells the Subtarget predicates with local aliases.  A
 # lambda body is scanned as tokens, so it needs the same aliases the parser's

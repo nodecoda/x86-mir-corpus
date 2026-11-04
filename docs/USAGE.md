@@ -27,6 +27,35 @@ Checks: Python >= 3.10, LLVM revision pin, assertions enabled, X86 target,
 sidecar binaries and build info, frozen reference provenance, schema versions.
 Exit 0 when `ok: true`, exit 1 otherwise with actionable `reasons[]`.
 
+## Pin
+
+The bundled source snapshot is pinned to one LLVM commit; it does not follow
+`upstream/main`.
+
+```bash
+x86-mir-corpus pin show                                 # revision, snapshot, sha256
+x86-mir-corpus pin show --json
+x86-mir-corpus pin verify                               # bundled artifacts only
+x86-mir-corpus pin verify --repo "$X86_MIR_LLVM_SRC"    # also re-extract the blob
+x86-mir-corpus pin update --repo "$X86_MIR_LLVM_SRC" \
+  --revision <commit> [--dry-run]
+```
+
+`pin verify` checks that the revision and snapshot exist, the snapshot sha256,
+the snapshot file-name prefix, the `default-source-revision:` line in
+`SOURCE-COMMIT`, and the frozen reference revision.  With `--repo` it also
+confirms the commit exists and that
+`git show <commit>:llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp` hashes to the
+recorded sha256.  Any failed check exits 1.
+
+`pin update` writes
+`src/x86_mir_corpus/assets/source-snapshots/<sha8>-X86LegalizerInfo.cpp`,
+`assets/llvm-pin.json`, and the two `default-source-*` lines in `SOURCE-COMMIT`.
+`--dry-run` prints the planned change and touches no files.  Moving the pin does
+**not** extend the sidecar's `supported-revisions.json`: the MIR driver may
+still reject a snapshot from an unsupported revision, which is a separate
+deliberate gate.
+
 ## Sidecar build
 
 ```bash
@@ -53,12 +82,17 @@ x86-mir-corpus points \
   --config C2 --tier witness --out /tmp/points.json
 ```
 
-Read a revision from an LLVM checkout (default `--source-rev upstream/main`):
+Read a revision from an LLVM checkout (default `--source-rev` is the pinned commit; see `pin show`):
 
 ```bash
 x86-mir-corpus corpus --repo "$X86_MIR_LLVM_SRC" \
-  --source-rev upstream/main --config C2 --oracle=none \
+  --source-rev <commit from `pin show`> --config C2 --oracle=none \
   --tier witness --out /tmp/shapes.json
+
+# or follow a moving branch explicitly
+x86-mir-corpus corpus --repo "$X86_MIR_LLVM_SRC" \
+  --source-rev upstream/main --config C2 --oracle=none \
+  --tier witness --out /tmp/shapes-main.json
 ```
 
 Fill expected actions with the frozen reference:

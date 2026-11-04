@@ -39,6 +39,15 @@ def run_cli(*args):
     return testlib.run_cli(*args)
 
 
+class VersionFlagTest(unittest.TestCase):
+    def test_version_flag_prints_the_package_version(self):
+        from x86_mir_corpus import __version__
+
+        proc = run_cli("--version")
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertIn(__version__, proc.stdout)
+
+
 class CliTest(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
