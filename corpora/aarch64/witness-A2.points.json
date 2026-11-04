@@ -91,120 +91,64 @@
  "coverage": {
   "construction": {
    "detail_codes": {
-    "shape_arity": 16
+    "shape_arity_unreachable": 7
    },
    "issues": [
     {
-     "detail": "opcodes need 2 type index(es); rules describe 1",
-     "detail_code": "shape_arity",
+     "detail": "subvector index immediate has no reviewed value; the rule cannot be constructed from MIR",
+     "detail_code": "shape_arity_unreachable",
      "method": null,
-     "rule_index": null,
-     "rule_set": "AArch64_SMULO"
-    },
-    {
-     "detail": "opcodes need 2 type index(es); rules describe 1",
-     "detail_code": "shape_arity",
-     "method": null,
-     "rule_index": null,
-     "rule_set": "AArch64_ROTL"
-    },
-    {
-     "detail": "opcodes need 2 type index(es); rules describe 1",
-     "detail_code": "shape_arity",
-     "method": null,
+     "opcode": "G_INSERT_SUBVECTOR",
      "rule_index": null,
      "rule_set": "AArch64_INSERT_SUBVECTOR"
     },
     {
-     "detail": "opcodes need 2 type index(es); rules describe 1",
-     "detail_code": "shape_arity",
+     "detail": "indexed addressing AM immediate has no reviewed value; the rule cannot be constructed from MIR",
+     "detail_code": "shape_arity_unreachable",
      "method": null,
-     "rule_index": null,
-     "rule_set": "AArch64_CTLZ_ZERO_POISON"
-    },
-    {
-     "detail": "opcodes need 2 type index(es); rules describe 1",
-     "detail_code": "shape_arity",
-     "method": null,
-     "rule_index": null,
-     "rule_set": "AArch64_CTTZ_ZERO_POISON"
-    },
-    {
-     "detail": "opcodes need 2 type index(es); rules describe 1",
-     "detail_code": "shape_arity",
-     "method": null,
-     "rule_index": null,
-     "rule_set": "AArch64_FCOPYSIGN"
-    },
-    {
-     "detail": "opcodes need 3 type index(es); rules describe 2",
-     "detail_code": "shape_arity",
-     "method": null,
+     "opcode": "G_INDEXED_STORE",
      "rule_index": null,
      "rule_set": "AArch64_INDEXED_STORE"
     },
     {
-     "detail": "opcodes need 3 type index(es); rules describe 2",
-     "detail_code": "shape_arity",
+     "detail": "indexed addressing AM immediate has no reviewed value; the rule cannot be constructed from MIR",
+     "detail_code": "shape_arity_unreachable",
      "method": null,
+     "opcode": "G_INDEXED_LOAD",
      "rule_index": null,
      "rule_set": "AArch64_INDEXED_LOAD"
     },
     {
-     "detail": "opcodes need 3 type index(es); rules describe 2",
-     "detail_code": "shape_arity",
+     "detail": "indexed addressing AM immediate has no reviewed value; the rule cannot be constructed from MIR",
+     "detail_code": "shape_arity_unreachable",
      "method": null,
+     "opcode": "G_INDEXED_SEXTLOAD",
      "rule_index": null,
      "rule_set": "AArch64_INDEXED_SEXTLOAD"
     },
     {
-     "detail": "opcodes need 2 type index(es); rules describe 1",
-     "detail_code": "shape_arity",
+     "detail": "indexed addressing AM immediate has no reviewed value; the rule cannot be constructed from MIR",
+     "detail_code": "shape_arity_unreachable",
      "method": null,
+     "opcode": "G_INDEXED_ZEXTLOAD",
      "rule_index": null,
-     "rule_set": "AArch64_BUILD_VECTOR_TRUNC"
+     "rule_set": "AArch64_INDEXED_SEXTLOAD"
     },
     {
-     "detail": "opcodes need 2 type index(es); rules describe 1",
-     "detail_code": "shape_arity",
+     "detail": "dynamic stack allocation is unbuildable by the reviewed policy",
+     "detail_code": "shape_arity_unreachable",
      "method": null,
+     "opcode": "G_DYN_STACKALLOC",
      "rule_index": null,
      "rule_set": "AArch64_DYN_STACKALLOC"
     },
     {
-     "detail": "opcodes need 2 type index(es); rules describe 1",
-     "detail_code": "shape_arity",
+     "detail": "libcall lowering is disabled and the tailcall immediate has no reviewed value",
+     "detail_code": "shape_arity_unreachable",
      "method": null,
+     "opcode": "G_BZERO",
      "rule_index": null,
      "rule_set": "AArch64_BZERO"
-    },
-    {
-     "detail": "opcodes need 3 type index(es); rules describe 2",
-     "detail_code": "shape_arity",
-     "method": null,
-     "rule_index": null,
-     "rule_set": "AArch64_VECREDUCE_FADD"
-    },
-    {
-     "detail": "opcodes need 2 type index(es); rules describe 1",
-     "detail_code": "shape_arity",
-     "method": null,
-     "rule_index": null,
-     "rule_set": "AArch64_VECTOR_COMPRESS"
-    },
-    {
-     "detail": "opcodes need 2 type index(es); rules describe 1",
-     "detail_code": "shape_arity",
-     "method": null,
-     "rule_index": null,
-     "rule_set": "AArch64_IS_FPCLASS"
-    },
-    {
-     "detail": "opcodes need 2 type index(es); rules describe 1",
-     "detail_code": "shape_arity",
-     "method": null,
-     "rule_index": null,
-     "rule_set": "AArch64_SCMP"
     }
    ]
   },
@@ -2438,6 +2382,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "p1",
     "p1"
    ]
   },
@@ -2450,6 +2395,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "p2",
     "p2"
    ]
   },
@@ -2690,6 +2636,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "p1",
     "p1"
    ]
   },
@@ -2702,6 +2649,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "p2",
     "p2"
    ]
   },
@@ -2818,6 +2766,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "p1",
     "p1"
    ]
   },
@@ -2830,6 +2779,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "p2",
     "p2"
    ]
   },
@@ -3530,6 +3480,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "p1",
     "p1"
    ]
   },
@@ -3542,6 +3493,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "p2",
     "p2"
    ]
   },
@@ -5456,7 +5408,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "p1"
+    "p1",
+    "f32"
    ]
   },
   {
@@ -5468,7 +5421,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "p2"
+    "p2",
+    "f32"
    ]
   },
   {
@@ -6314,6 +6268,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "p1",
     "p1"
    ]
   },
@@ -6326,6 +6281,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "p2",
     "p2"
    ]
   },
@@ -6910,7 +6866,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "p1"
+    "p1",
+    "v4s32"
    ]
   },
   {
@@ -6922,7 +6879,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "p2"
+    "p2",
+    "v4s32"
    ]
   },
   {
@@ -6934,7 +6892,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "p1"
+    "p1",
+    "v4s32"
    ]
   },
   {
@@ -6946,7 +6905,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "p2"
+    "p2",
+    "v4s32"
    ]
   },
   {
@@ -7764,7 +7724,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "p1"
+    "p1",
+    "s1"
    ]
   },
   {
@@ -7776,7 +7737,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "p2"
+    "p2",
+    "s1"
    ]
   },
   {
@@ -7788,7 +7750,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "p1"
+    "p1",
+    "s1"
    ]
   },
   {
@@ -7800,7 +7763,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "p2"
+    "p2",
+    "s1"
    ]
   },
   {
@@ -8747,7 +8711,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "p0",
-    "p1"
+    "p1",
+    "p0"
    ]
   },
   {
@@ -8760,7 +8725,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "p0",
-    "p2"
+    "p2",
+    "p0"
    ]
   },
   {
@@ -8773,7 +8739,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "p1",
-    "p0"
+    "p0",
+    "p1"
    ]
   },
   {
@@ -8786,7 +8753,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "p2",
-    "p0"
+    "p0",
+    "p2"
    ]
   },
   {
@@ -9530,7 +9498,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "p1"
+    "p1",
+    "s1"
    ]
   },
   {
@@ -9542,7 +9511,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "p2"
+    "p2",
+    "s1"
    ]
   },
   {
@@ -31264,6 +31234,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "bf16",
     "bf16"
    ]
   },
@@ -31276,6 +31247,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "f128",
     "f128"
    ]
   },
@@ -31288,6 +31260,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "f16",
     "f16"
    ]
   },
@@ -31300,6 +31273,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "f32",
     "f32"
    ]
   },
@@ -31312,6 +31286,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "f64",
     "f64"
    ]
   },
@@ -31324,6 +31299,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "i128",
     "i128"
    ]
   },
@@ -31336,6 +31312,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "i16",
     "i16"
    ]
   },
@@ -31348,6 +31325,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "i32",
     "i32"
    ]
   },
@@ -31360,6 +31338,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "i64",
     "i64"
    ]
   },
@@ -31372,6 +31351,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "i8",
     "i8"
    ]
   },
@@ -31384,7 +31364,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "nxv16i8"
+    "nxv16i8",
+    "i8"
    ]
   },
   {
@@ -31396,7 +31377,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "nxv16s8"
+    "nxv16s8",
+    "s8"
    ]
   },
   {
@@ -31408,7 +31390,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "nxv2i64"
+    "nxv2i64",
+    "i64"
    ]
   },
   {
@@ -31420,7 +31403,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "nxv2s64"
+    "nxv2s64",
+    "s64"
    ]
   },
   {
@@ -31432,7 +31416,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "nxv4i32"
+    "nxv4i32",
+    "i32"
    ]
   },
   {
@@ -31444,7 +31429,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "nxv4s32"
+    "nxv4s32",
+    "s32"
    ]
   },
   {
@@ -31456,7 +31442,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "nxv8i16"
+    "nxv8i16",
+    "i16"
    ]
   },
   {
@@ -31468,7 +31455,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "nxv8s16"
+    "nxv8s16",
+    "s16"
    ]
   },
   {
@@ -31480,6 +31468,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "p0",
     "p0"
    ]
   },
@@ -31492,6 +31481,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "s128",
     "s128"
    ]
   },
@@ -31504,6 +31494,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "s16",
     "s16"
    ]
   },
@@ -31516,6 +31507,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "s32",
     "s32"
    ]
   },
@@ -31528,6 +31520,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "s64",
     "s64"
    ]
   },
@@ -31540,6 +31533,7 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
+    "s8",
     "s8"
    ]
   },
@@ -31552,7 +31546,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v16i8"
+    "v16i8",
+    "i8"
    ]
   },
   {
@@ -31564,7 +31559,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v16s8"
+    "v16s8",
+    "s8"
    ]
   },
   {
@@ -31576,7 +31572,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v2f32"
+    "v2f32",
+    "f32"
    ]
   },
   {
@@ -31588,7 +31585,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v2f64"
+    "v2f64",
+    "f64"
    ]
   },
   {
@@ -31600,7 +31598,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v2i16"
+    "v2i16",
+    "i16"
    ]
   },
   {
@@ -31612,7 +31611,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v2i32"
+    "v2i32",
+    "i32"
    ]
   },
   {
@@ -31624,7 +31624,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v2i64"
+    "v2i64",
+    "i64"
    ]
   },
   {
@@ -31636,7 +31637,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v2i8"
+    "v2i8",
+    "i8"
    ]
   },
   {
@@ -31648,7 +31650,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v2p0"
+    "v2p0",
+    "p0"
    ]
   },
   {
@@ -31660,7 +31663,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v2s16"
+    "v2s16",
+    "s16"
    ]
   },
   {
@@ -31672,7 +31676,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v2s32"
+    "v2s32",
+    "s32"
    ]
   },
   {
@@ -31684,7 +31689,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v2s64"
+    "v2s64",
+    "s64"
    ]
   },
   {
@@ -31696,7 +31702,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v2s8"
+    "v2s8",
+    "s8"
    ]
   },
   {
@@ -31708,7 +31715,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v4bf16"
+    "v4bf16",
+    "bf16"
    ]
   },
   {
@@ -31720,7 +31728,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v4f16"
+    "v4f16",
+    "f16"
    ]
   },
   {
@@ -31732,7 +31741,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v4f32"
+    "v4f32",
+    "f32"
    ]
   },
   {
@@ -31744,7 +31754,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v4i16"
+    "v4i16",
+    "i16"
    ]
   },
   {
@@ -31756,7 +31767,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v4i32"
+    "v4i32",
+    "i32"
    ]
   },
   {
@@ -31768,7 +31780,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v4i8"
+    "v4i8",
+    "i8"
    ]
   },
   {
@@ -31780,7 +31793,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v4s16"
+    "v4s16",
+    "s16"
    ]
   },
   {
@@ -31792,7 +31806,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v4s32"
+    "v4s32",
+    "s32"
    ]
   },
   {
@@ -31804,7 +31819,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v4s8"
+    "v4s8",
+    "s8"
    ]
   },
   {
@@ -31816,7 +31832,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v8bf16"
+    "v8bf16",
+    "bf16"
    ]
   },
   {
@@ -31828,7 +31845,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v8f16"
+    "v8f16",
+    "f16"
    ]
   },
   {
@@ -31840,7 +31858,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v8i16"
+    "v8i16",
+    "i16"
    ]
   },
   {
@@ -31852,7 +31871,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v8i8"
+    "v8i8",
+    "i8"
    ]
   },
   {
@@ -31864,7 +31884,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v8s16"
+    "v8s16",
+    "s16"
    ]
   },
   {
@@ -31876,7 +31897,8 @@
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR_TRUNC",
    "types": [
-    "v8s8"
+    "v8s8",
+    "s8"
    ]
   },
   {
@@ -35788,6 +35810,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "bf16",
     "bf16"
    ]
   },
@@ -35800,6 +35823,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "f128",
     "f128"
    ]
   },
@@ -35812,6 +35836,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "f16",
     "f16"
    ]
   },
@@ -35824,6 +35849,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "f32",
     "f32"
    ]
   },
@@ -35836,6 +35862,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "f64",
     "f64"
    ]
   },
@@ -35848,6 +35875,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "i128",
     "i128"
    ]
   },
@@ -35860,6 +35888,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "i16",
     "i16"
    ]
   },
@@ -35872,6 +35901,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "i32",
     "i32"
    ]
   },
@@ -35884,6 +35914,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "i64",
     "i64"
    ]
   },
@@ -35896,6 +35927,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "i8",
     "i8"
    ]
   },
@@ -35908,6 +35940,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "nxv16i8",
     "nxv16i8"
    ]
   },
@@ -35920,6 +35953,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "nxv16s8",
     "nxv16s8"
    ]
   },
@@ -35932,6 +35966,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "nxv2i64",
     "nxv2i64"
    ]
   },
@@ -35944,6 +35979,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "nxv2s64",
     "nxv2s64"
    ]
   },
@@ -35956,6 +35992,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "nxv4i32",
     "nxv4i32"
    ]
   },
@@ -35968,6 +36005,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "nxv4s32",
     "nxv4s32"
    ]
   },
@@ -35980,6 +36018,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "nxv8i16",
     "nxv8i16"
    ]
   },
@@ -35992,6 +36031,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "nxv8s16",
     "nxv8s16"
    ]
   },
@@ -36004,6 +36044,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "p0",
     "p0"
    ]
   },
@@ -36016,6 +36057,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "s128",
     "s128"
    ]
   },
@@ -36028,6 +36070,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "s16",
     "s16"
    ]
   },
@@ -36040,6 +36083,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "s32",
     "s32"
    ]
   },
@@ -36052,6 +36096,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "s64",
     "s64"
    ]
   },
@@ -36064,6 +36109,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "s8",
     "s8"
    ]
   },
@@ -36076,6 +36122,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v16i8",
     "v16i8"
    ]
   },
@@ -36088,6 +36135,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v16s8",
     "v16s8"
    ]
   },
@@ -36100,6 +36148,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v2f32",
     "v2f32"
    ]
   },
@@ -36112,6 +36161,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v2f64",
     "v2f64"
    ]
   },
@@ -36124,6 +36174,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v2i16",
     "v2i16"
    ]
   },
@@ -36136,6 +36187,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v2i32",
     "v2i32"
    ]
   },
@@ -36148,6 +36200,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v2i64",
     "v2i64"
    ]
   },
@@ -36160,6 +36213,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v2i8",
     "v2i8"
    ]
   },
@@ -36172,6 +36226,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v2p0",
     "v2p0"
    ]
   },
@@ -36184,6 +36239,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v2s16",
     "v2s16"
    ]
   },
@@ -36196,6 +36252,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v2s32",
     "v2s32"
    ]
   },
@@ -36208,6 +36265,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v2s64",
     "v2s64"
    ]
   },
@@ -36220,6 +36278,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v2s8",
     "v2s8"
    ]
   },
@@ -36232,6 +36291,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v4bf16",
     "v4bf16"
    ]
   },
@@ -36244,6 +36304,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v4f16",
     "v4f16"
    ]
   },
@@ -36256,6 +36317,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v4f32",
     "v4f32"
    ]
   },
@@ -36268,6 +36330,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v4i16",
     "v4i16"
    ]
   },
@@ -36280,6 +36343,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v4i32",
     "v4i32"
    ]
   },
@@ -36292,6 +36356,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v4i8",
     "v4i8"
    ]
   },
@@ -36304,6 +36369,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v4s16",
     "v4s16"
    ]
   },
@@ -36316,6 +36382,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v4s32",
     "v4s32"
    ]
   },
@@ -36328,6 +36395,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v4s8",
     "v4s8"
    ]
   },
@@ -36340,6 +36408,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v8bf16",
     "v8bf16"
    ]
   },
@@ -36352,6 +36421,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v8f16",
     "v8f16"
    ]
   },
@@ -36364,6 +36434,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v8i16",
     "v8i16"
    ]
   },
@@ -36376,6 +36447,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v8i8",
     "v8i8"
    ]
   },
@@ -36388,6 +36460,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v8s16",
     "v8s16"
    ]
   },
@@ -36400,6 +36473,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTLZ_ZERO_POISON",
    "types": [
+    "v8s8",
     "v8s8"
    ]
   },
@@ -37764,6 +37838,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "bf16",
     "bf16"
    ]
   },
@@ -37776,6 +37851,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "f128",
     "f128"
    ]
   },
@@ -37788,6 +37864,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "f16",
     "f16"
    ]
   },
@@ -37800,6 +37877,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "f32",
     "f32"
    ]
   },
@@ -37812,6 +37890,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "f64",
     "f64"
    ]
   },
@@ -37824,6 +37903,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "i128",
     "i128"
    ]
   },
@@ -37836,6 +37916,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "i16",
     "i16"
    ]
   },
@@ -37848,6 +37929,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "i32",
     "i32"
    ]
   },
@@ -37860,6 +37942,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "i64",
     "i64"
    ]
   },
@@ -37872,6 +37955,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "i8",
     "i8"
    ]
   },
@@ -37884,6 +37968,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "nxv16i8",
     "nxv16i8"
    ]
   },
@@ -37896,6 +37981,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "nxv16s8",
     "nxv16s8"
    ]
   },
@@ -37908,6 +37994,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "nxv2i64",
     "nxv2i64"
    ]
   },
@@ -37920,6 +38007,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "nxv2s64",
     "nxv2s64"
    ]
   },
@@ -37932,6 +38020,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "nxv4i32",
     "nxv4i32"
    ]
   },
@@ -37944,6 +38033,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "nxv4s32",
     "nxv4s32"
    ]
   },
@@ -37956,6 +38046,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "nxv8i16",
     "nxv8i16"
    ]
   },
@@ -37968,6 +38059,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "nxv8s16",
     "nxv8s16"
    ]
   },
@@ -37980,6 +38072,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "p0",
     "p0"
    ]
   },
@@ -37992,6 +38085,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "s128",
     "s128"
    ]
   },
@@ -38004,6 +38098,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "s16",
     "s16"
    ]
   },
@@ -38016,6 +38111,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "s32",
     "s32"
    ]
   },
@@ -38028,6 +38124,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "s64",
     "s64"
    ]
   },
@@ -38040,6 +38137,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "s8",
     "s8"
    ]
   },
@@ -38052,6 +38150,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v16i8",
     "v16i8"
    ]
   },
@@ -38064,6 +38163,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v16s8",
     "v16s8"
    ]
   },
@@ -38076,6 +38176,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v2f32",
     "v2f32"
    ]
   },
@@ -38088,6 +38189,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v2f64",
     "v2f64"
    ]
   },
@@ -38100,6 +38202,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v2i16",
     "v2i16"
    ]
   },
@@ -38112,6 +38215,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v2i32",
     "v2i32"
    ]
   },
@@ -38124,6 +38228,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v2i64",
     "v2i64"
    ]
   },
@@ -38136,6 +38241,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v2i8",
     "v2i8"
    ]
   },
@@ -38148,6 +38254,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v2p0",
     "v2p0"
    ]
   },
@@ -38160,6 +38267,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v2s16",
     "v2s16"
    ]
   },
@@ -38172,6 +38280,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v2s32",
     "v2s32"
    ]
   },
@@ -38184,6 +38293,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v2s64",
     "v2s64"
    ]
   },
@@ -38196,6 +38306,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v2s8",
     "v2s8"
    ]
   },
@@ -38208,6 +38319,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v4bf16",
     "v4bf16"
    ]
   },
@@ -38220,6 +38332,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v4f16",
     "v4f16"
    ]
   },
@@ -38232,6 +38345,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v4f32",
     "v4f32"
    ]
   },
@@ -38244,6 +38358,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v4i16",
     "v4i16"
    ]
   },
@@ -38256,6 +38371,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v4i32",
     "v4i32"
    ]
   },
@@ -38268,6 +38384,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v4i8",
     "v4i8"
    ]
   },
@@ -38280,6 +38397,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v4s16",
     "v4s16"
    ]
   },
@@ -38292,6 +38410,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v4s32",
     "v4s32"
    ]
   },
@@ -38304,6 +38423,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v4s8",
     "v4s8"
    ]
   },
@@ -38316,6 +38436,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v8bf16",
     "v8bf16"
    ]
   },
@@ -38328,6 +38449,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v8f16",
     "v8f16"
    ]
   },
@@ -38340,6 +38462,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v8i16",
     "v8i16"
    ]
   },
@@ -38352,6 +38475,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v8i8",
     "v8i8"
    ]
   },
@@ -38364,6 +38488,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v8s16",
     "v8s16"
    ]
   },
@@ -38376,6 +38501,7 @@
    "rule_index": null,
    "rule_set": "AArch64_CTTZ_ZERO_POISON",
    "types": [
+    "v8s8",
     "v8s8"
    ]
   },
@@ -54248,6 +54374,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "bf16",
     "bf16"
    ]
   },
@@ -54260,6 +54387,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "f128",
     "f128"
    ]
   },
@@ -54272,6 +54400,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "f16",
     "f16"
    ]
   },
@@ -54284,6 +54413,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "f32",
     "f32"
    ]
   },
@@ -54296,6 +54426,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "f64",
     "f64"
    ]
   },
@@ -54308,6 +54439,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "i128",
     "i128"
    ]
   },
@@ -54320,6 +54452,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "i16",
     "i16"
    ]
   },
@@ -54332,6 +54465,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "i32",
     "i32"
    ]
   },
@@ -54344,6 +54478,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "i64",
     "i64"
    ]
   },
@@ -54356,6 +54491,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "i8",
     "i8"
    ]
   },
@@ -54368,6 +54504,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "nxv16i8",
     "nxv16i8"
    ]
   },
@@ -54380,6 +54517,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "nxv16s8",
     "nxv16s8"
    ]
   },
@@ -54392,6 +54530,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "nxv2i64",
     "nxv2i64"
    ]
   },
@@ -54404,6 +54543,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "nxv2s64",
     "nxv2s64"
    ]
   },
@@ -54416,6 +54556,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "nxv4i32",
     "nxv4i32"
    ]
   },
@@ -54428,6 +54569,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "nxv4s32",
     "nxv4s32"
    ]
   },
@@ -54440,6 +54582,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "nxv8i16",
     "nxv8i16"
    ]
   },
@@ -54452,6 +54595,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "nxv8s16",
     "nxv8s16"
    ]
   },
@@ -54464,6 +54608,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "p0",
     "p0"
    ]
   },
@@ -54476,6 +54621,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "s128",
     "s128"
    ]
   },
@@ -54488,6 +54634,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "s16",
     "s16"
    ]
   },
@@ -54500,6 +54647,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "s32",
     "s32"
    ]
   },
@@ -54512,6 +54660,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "s64",
     "s64"
    ]
   },
@@ -54524,6 +54673,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "s8",
     "s8"
    ]
   },
@@ -54536,6 +54686,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v16i8",
     "v16i8"
    ]
   },
@@ -54548,6 +54699,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v16s8",
     "v16s8"
    ]
   },
@@ -54560,6 +54712,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v2f32",
     "v2f32"
    ]
   },
@@ -54572,6 +54725,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v2f64",
     "v2f64"
    ]
   },
@@ -54584,6 +54738,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v2i16",
     "v2i16"
    ]
   },
@@ -54596,6 +54751,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v2i32",
     "v2i32"
    ]
   },
@@ -54608,6 +54764,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v2i64",
     "v2i64"
    ]
   },
@@ -54620,6 +54777,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v2i8",
     "v2i8"
    ]
   },
@@ -54632,6 +54790,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v2p0",
     "v2p0"
    ]
   },
@@ -54644,6 +54803,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v2s16",
     "v2s16"
    ]
   },
@@ -54656,6 +54816,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v2s32",
     "v2s32"
    ]
   },
@@ -54668,6 +54829,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v2s64",
     "v2s64"
    ]
   },
@@ -54680,6 +54842,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v2s8",
     "v2s8"
    ]
   },
@@ -54692,6 +54855,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v4bf16",
     "v4bf16"
    ]
   },
@@ -54704,6 +54868,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v4f16",
     "v4f16"
    ]
   },
@@ -54716,6 +54881,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v4f32",
     "v4f32"
    ]
   },
@@ -54728,6 +54894,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v4i16",
     "v4i16"
    ]
   },
@@ -54740,6 +54907,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v4i32",
     "v4i32"
    ]
   },
@@ -54752,6 +54920,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v4i8",
     "v4i8"
    ]
   },
@@ -54764,6 +54933,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v4s16",
     "v4s16"
    ]
   },
@@ -54776,6 +54946,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v4s32",
     "v4s32"
    ]
   },
@@ -54788,6 +54959,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v4s8",
     "v4s8"
    ]
   },
@@ -54800,6 +54972,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v8bf16",
     "v8bf16"
    ]
   },
@@ -54812,6 +54985,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v8f16",
     "v8f16"
    ]
   },
@@ -54824,6 +54998,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v8i16",
     "v8i16"
    ]
   },
@@ -54836,6 +55011,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v8i8",
     "v8i8"
    ]
   },
@@ -54848,6 +55024,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v8s16",
     "v8s16"
    ]
   },
@@ -54860,6 +55037,7 @@
    "rule_index": null,
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
+    "v8s8",
     "v8s8"
    ]
   },
@@ -90804,7 +90982,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "bf16"
+    "bf16",
+    "f32"
    ]
   },
   {
@@ -90816,7 +90995,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "f128"
+    "f128",
+    "f32"
    ]
   },
   {
@@ -90828,7 +91008,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "f16"
+    "f16",
+    "f32"
    ]
   },
   {
@@ -90840,6 +91021,7 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
+    "f32",
     "f32"
    ]
   },
@@ -90852,7 +91034,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "f64"
+    "f64",
+    "f32"
    ]
   },
   {
@@ -90864,7 +91047,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "i128"
+    "i128",
+    "f32"
    ]
   },
   {
@@ -90876,7 +91060,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "i16"
+    "i16",
+    "f32"
    ]
   },
   {
@@ -90888,7 +91073,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "i32"
+    "i32",
+    "f32"
    ]
   },
   {
@@ -90900,7 +91086,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "i64"
+    "i64",
+    "f32"
    ]
   },
   {
@@ -90912,7 +91099,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "i8"
+    "i8",
+    "f32"
    ]
   },
   {
@@ -90924,7 +91112,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "nxv16i8"
+    "nxv16i8",
+    "nxv16f32"
    ]
   },
   {
@@ -90936,7 +91125,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "nxv16s8"
+    "nxv16s8",
+    "nxv16f32"
    ]
   },
   {
@@ -90948,7 +91138,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "nxv2i64"
+    "nxv2i64",
+    "nxv2f32"
    ]
   },
   {
@@ -90960,7 +91151,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "nxv2s64"
+    "nxv2s64",
+    "nxv2f32"
    ]
   },
   {
@@ -90972,7 +91164,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "nxv4i32"
+    "nxv4i32",
+    "nxv4f32"
    ]
   },
   {
@@ -90984,7 +91177,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "nxv4s32"
+    "nxv4s32",
+    "nxv4f32"
    ]
   },
   {
@@ -90996,7 +91190,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "nxv8i16"
+    "nxv8i16",
+    "nxv8f32"
    ]
   },
   {
@@ -91008,7 +91203,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "nxv8s16"
+    "nxv8s16",
+    "nxv8f32"
    ]
   },
   {
@@ -91020,7 +91216,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "p0"
+    "p0",
+    "f32"
    ]
   },
   {
@@ -91032,7 +91229,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "s128"
+    "s128",
+    "f32"
    ]
   },
   {
@@ -91044,7 +91242,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "s16"
+    "s16",
+    "f32"
    ]
   },
   {
@@ -91056,7 +91255,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "s32"
+    "s32",
+    "f32"
    ]
   },
   {
@@ -91068,7 +91268,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "s64"
+    "s64",
+    "f32"
    ]
   },
   {
@@ -91080,7 +91281,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "s8"
+    "s8",
+    "f32"
    ]
   },
   {
@@ -91092,7 +91294,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v16i8"
+    "v16i8",
+    "v16f32"
    ]
   },
   {
@@ -91104,7 +91307,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v16s8"
+    "v16s8",
+    "v16f32"
    ]
   },
   {
@@ -91116,6 +91320,7 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
+    "v2f32",
     "v2f32"
    ]
   },
@@ -91128,7 +91333,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v2f64"
+    "v2f64",
+    "v2f32"
    ]
   },
   {
@@ -91140,7 +91346,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v2i16"
+    "v2i16",
+    "v2f32"
    ]
   },
   {
@@ -91152,7 +91359,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v2i32"
+    "v2i32",
+    "v2f32"
    ]
   },
   {
@@ -91164,7 +91372,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v2i64"
+    "v2i64",
+    "v2f32"
    ]
   },
   {
@@ -91176,7 +91385,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v2i8"
+    "v2i8",
+    "v2f32"
    ]
   },
   {
@@ -91188,7 +91398,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v2p0"
+    "v2p0",
+    "v2f32"
    ]
   },
   {
@@ -91200,7 +91411,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v2s16"
+    "v2s16",
+    "v2f32"
    ]
   },
   {
@@ -91212,7 +91424,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v2s32"
+    "v2s32",
+    "v2f32"
    ]
   },
   {
@@ -91224,7 +91437,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v2s64"
+    "v2s64",
+    "v2f32"
    ]
   },
   {
@@ -91236,7 +91450,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v2s8"
+    "v2s8",
+    "v2f32"
    ]
   },
   {
@@ -91248,7 +91463,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v4bf16"
+    "v4bf16",
+    "v4f32"
    ]
   },
   {
@@ -91260,7 +91476,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v4f16"
+    "v4f16",
+    "v4f32"
    ]
   },
   {
@@ -91272,6 +91489,7 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
+    "v4f32",
     "v4f32"
    ]
   },
@@ -91284,7 +91502,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v4i16"
+    "v4i16",
+    "v4f32"
    ]
   },
   {
@@ -91296,7 +91515,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v4i32"
+    "v4i32",
+    "v4f32"
    ]
   },
   {
@@ -91308,7 +91528,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v4i8"
+    "v4i8",
+    "v4f32"
    ]
   },
   {
@@ -91320,7 +91541,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v4s16"
+    "v4s16",
+    "v4f32"
    ]
   },
   {
@@ -91332,7 +91554,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v4s32"
+    "v4s32",
+    "v4f32"
    ]
   },
   {
@@ -91344,7 +91567,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v4s8"
+    "v4s8",
+    "v4f32"
    ]
   },
   {
@@ -91356,7 +91580,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v8bf16"
+    "v8bf16",
+    "v8f32"
    ]
   },
   {
@@ -91368,7 +91593,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v8f16"
+    "v8f16",
+    "v8f32"
    ]
   },
   {
@@ -91380,7 +91606,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v8i16"
+    "v8i16",
+    "v8f32"
    ]
   },
   {
@@ -91392,7 +91619,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v8i8"
+    "v8i8",
+    "v8f32"
    ]
   },
   {
@@ -91404,7 +91632,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v8s16"
+    "v8s16",
+    "v8f32"
    ]
   },
   {
@@ -91416,7 +91645,8 @@
    "rule_index": null,
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
-    "v8s8"
+    "v8s8",
+    "v8f32"
    ]
   },
   {
@@ -104324,6 +104554,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "bf16",
     "bf16"
    ]
   },
@@ -104336,6 +104567,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "f128",
     "f128"
    ]
   },
@@ -104348,6 +104580,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "f16",
     "f16"
    ]
   },
@@ -104360,6 +104593,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "f32",
     "f32"
    ]
   },
@@ -104372,6 +104606,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "f64",
     "f64"
    ]
   },
@@ -104384,6 +104619,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "i128",
     "i128"
    ]
   },
@@ -104396,6 +104632,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "i16",
     "i16"
    ]
   },
@@ -104408,6 +104645,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "i32",
     "i32"
    ]
   },
@@ -104420,6 +104658,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "i64",
     "i64"
    ]
   },
@@ -104432,6 +104671,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "i8",
     "i8"
    ]
   },
@@ -104444,6 +104684,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "nxv16i8",
     "nxv16i8"
    ]
   },
@@ -104456,6 +104697,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "nxv16s8",
     "nxv16s8"
    ]
   },
@@ -104468,6 +104710,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "nxv2i64",
     "nxv2i64"
    ]
   },
@@ -104480,6 +104723,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "nxv2s64",
     "nxv2s64"
    ]
   },
@@ -104492,6 +104736,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "nxv4i32",
     "nxv4i32"
    ]
   },
@@ -104504,6 +104749,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "nxv4s32",
     "nxv4s32"
    ]
   },
@@ -104516,6 +104762,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "nxv8i16",
     "nxv8i16"
    ]
   },
@@ -104528,6 +104775,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "nxv8s16",
     "nxv8s16"
    ]
   },
@@ -104540,6 +104788,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "p0",
     "p0"
    ]
   },
@@ -104552,6 +104801,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "s128",
     "s128"
    ]
   },
@@ -104564,6 +104814,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "s16",
     "s16"
    ]
   },
@@ -104576,6 +104827,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "s32",
     "s32"
    ]
   },
@@ -104588,6 +104840,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "s64",
     "s64"
    ]
   },
@@ -104600,6 +104853,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "s8",
     "s8"
    ]
   },
@@ -104612,6 +104866,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v16i8",
     "v16i8"
    ]
   },
@@ -104624,6 +104879,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v16s8",
     "v16s8"
    ]
   },
@@ -104636,6 +104892,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v2f32",
     "v2f32"
    ]
   },
@@ -104648,6 +104905,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v2f64",
     "v2f64"
    ]
   },
@@ -104660,6 +104918,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v2i16",
     "v2i16"
    ]
   },
@@ -104672,6 +104931,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v2i32",
     "v2i32"
    ]
   },
@@ -104684,6 +104944,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v2i64",
     "v2i64"
    ]
   },
@@ -104696,6 +104957,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v2i8",
     "v2i8"
    ]
   },
@@ -104708,6 +104970,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v2p0",
     "v2p0"
    ]
   },
@@ -104720,6 +104983,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v2s16",
     "v2s16"
    ]
   },
@@ -104732,6 +104996,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v2s32",
     "v2s32"
    ]
   },
@@ -104744,6 +105009,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v2s64",
     "v2s64"
    ]
   },
@@ -104756,6 +105022,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v2s8",
     "v2s8"
    ]
   },
@@ -104768,6 +105035,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v4bf16",
     "v4bf16"
    ]
   },
@@ -104780,6 +105048,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v4f16",
     "v4f16"
    ]
   },
@@ -104792,6 +105061,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v4f32",
     "v4f32"
    ]
   },
@@ -104804,6 +105074,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v4i16",
     "v4i16"
    ]
   },
@@ -104816,6 +105087,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v4i32",
     "v4i32"
    ]
   },
@@ -104828,6 +105100,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v4i8",
     "v4i8"
    ]
   },
@@ -104840,6 +105113,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v4s16",
     "v4s16"
    ]
   },
@@ -104852,6 +105126,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v4s32",
     "v4s32"
    ]
   },
@@ -104864,6 +105139,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v4s8",
     "v4s8"
    ]
   },
@@ -104876,6 +105152,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v8bf16",
     "v8bf16"
    ]
   },
@@ -104888,6 +105165,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v8f16",
     "v8f16"
    ]
   },
@@ -104900,6 +105178,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v8i16",
     "v8i16"
    ]
   },
@@ -104912,6 +105191,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v8i8",
     "v8i8"
    ]
   },
@@ -104924,6 +105204,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v8s16",
     "v8s16"
    ]
   },
@@ -104936,6 +105217,7 @@
    "rule_index": null,
    "rule_set": "AArch64_ROTL",
    "types": [
+    "v8s8",
     "v8s8"
    ]
   },
@@ -112384,7 +112666,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "bf16"
+    "bf16",
+    "v4s32"
    ]
   },
   {
@@ -112396,7 +112679,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "f128"
+    "f128",
+    "v4s32"
    ]
   },
   {
@@ -112408,7 +112692,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "f16"
+    "f16",
+    "v4s32"
    ]
   },
   {
@@ -112420,7 +112705,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "f32"
+    "f32",
+    "v4s32"
    ]
   },
   {
@@ -112432,7 +112718,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "f64"
+    "f64",
+    "v4s32"
    ]
   },
   {
@@ -112444,7 +112731,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "i128"
+    "i128",
+    "v4s32"
    ]
   },
   {
@@ -112456,7 +112744,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "i16"
+    "i16",
+    "v4s32"
    ]
   },
   {
@@ -112468,7 +112757,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "i32"
+    "i32",
+    "v4s32"
    ]
   },
   {
@@ -112480,7 +112770,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "i64"
+    "i64",
+    "v4s32"
    ]
   },
   {
@@ -112492,7 +112783,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "i8"
+    "i8",
+    "v4s32"
    ]
   },
   {
@@ -112504,6 +112796,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv16i8",
     "nxv16i8"
    ]
   },
@@ -112516,6 +112809,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv16s8",
     "nxv16s8"
    ]
   },
@@ -112528,6 +112822,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv2i64",
     "nxv2i64"
    ]
   },
@@ -112540,6 +112835,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv2s64",
     "nxv2s64"
    ]
   },
@@ -112552,6 +112848,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv4i32",
     "nxv4i32"
    ]
   },
@@ -112564,6 +112861,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv4s32",
     "nxv4s32"
    ]
   },
@@ -112576,6 +112874,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv8i16",
     "nxv8i16"
    ]
   },
@@ -112588,6 +112887,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv8s16",
     "nxv8s16"
    ]
   },
@@ -112600,7 +112900,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "p0"
+    "p0",
+    "v4s32"
    ]
   },
   {
@@ -112612,7 +112913,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "s128"
+    "s128",
+    "v4s32"
    ]
   },
   {
@@ -112624,7 +112926,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "s16"
+    "s16",
+    "v4s32"
    ]
   },
   {
@@ -112636,7 +112939,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "s32"
+    "s32",
+    "v4s32"
    ]
   },
   {
@@ -112648,7 +112952,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "s64"
+    "s64",
+    "v4s32"
    ]
   },
   {
@@ -112660,7 +112965,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "s8"
+    "s8",
+    "v4s32"
    ]
   },
   {
@@ -112672,6 +112978,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v16i8",
     "v16i8"
    ]
   },
@@ -112684,6 +112991,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v16s8",
     "v16s8"
    ]
   },
@@ -112696,6 +113004,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2f32",
     "v2f32"
    ]
   },
@@ -112708,6 +113017,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2f64",
     "v2f64"
    ]
   },
@@ -112720,6 +113030,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2i16",
     "v2i16"
    ]
   },
@@ -112732,6 +113043,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2i32",
     "v2i32"
    ]
   },
@@ -112744,6 +113056,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2i64",
     "v2i64"
    ]
   },
@@ -112756,6 +113069,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2i8",
     "v2i8"
    ]
   },
@@ -112768,6 +113082,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2p0",
     "v2p0"
    ]
   },
@@ -112780,6 +113095,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2s16",
     "v2s16"
    ]
   },
@@ -112792,6 +113108,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2s32",
     "v2s32"
    ]
   },
@@ -112804,6 +113121,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2s64",
     "v2s64"
    ]
   },
@@ -112816,6 +113134,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2s8",
     "v2s8"
    ]
   },
@@ -112828,6 +113147,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4bf16",
     "v4bf16"
    ]
   },
@@ -112840,6 +113160,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4f16",
     "v4f16"
    ]
   },
@@ -112852,6 +113173,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4f32",
     "v4f32"
    ]
   },
@@ -112864,6 +113186,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4i16",
     "v4i16"
    ]
   },
@@ -112876,6 +113199,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4i32",
     "v4i32"
    ]
   },
@@ -112888,6 +113212,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4i8",
     "v4i8"
    ]
   },
@@ -112900,6 +113225,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4s16",
     "v4s16"
    ]
   },
@@ -112912,6 +113238,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4s32",
     "v4s32"
    ]
   },
@@ -112924,6 +113251,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4s8",
     "v4s8"
    ]
   },
@@ -112936,6 +113264,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v8bf16",
     "v8bf16"
    ]
   },
@@ -112948,6 +113277,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v8f16",
     "v8f16"
    ]
   },
@@ -112960,6 +113290,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v8i16",
     "v8i16"
    ]
   },
@@ -112972,6 +113303,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v8i8",
     "v8i8"
    ]
   },
@@ -112984,6 +113316,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v8s16",
     "v8s16"
    ]
   },
@@ -112996,6 +113329,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v8s8",
     "v8s8"
    ]
   },
@@ -113008,7 +113342,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "bf16"
+    "bf16",
+    "v4s32"
    ]
   },
   {
@@ -113020,7 +113355,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "f128"
+    "f128",
+    "v4s32"
    ]
   },
   {
@@ -113032,7 +113368,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "f16"
+    "f16",
+    "v4s32"
    ]
   },
   {
@@ -113044,7 +113381,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "f32"
+    "f32",
+    "v4s32"
    ]
   },
   {
@@ -113056,7 +113394,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "f64"
+    "f64",
+    "v4s32"
    ]
   },
   {
@@ -113068,7 +113407,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "i128"
+    "i128",
+    "v4s32"
    ]
   },
   {
@@ -113080,7 +113420,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "i16"
+    "i16",
+    "v4s32"
    ]
   },
   {
@@ -113092,7 +113433,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "i32"
+    "i32",
+    "v4s32"
    ]
   },
   {
@@ -113104,7 +113446,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "i64"
+    "i64",
+    "v4s32"
    ]
   },
   {
@@ -113116,7 +113459,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "i8"
+    "i8",
+    "v4s32"
    ]
   },
   {
@@ -113128,6 +113472,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv16i8",
     "nxv16i8"
    ]
   },
@@ -113140,6 +113485,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv16s8",
     "nxv16s8"
    ]
   },
@@ -113152,6 +113498,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv2i64",
     "nxv2i64"
    ]
   },
@@ -113164,6 +113511,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv2s64",
     "nxv2s64"
    ]
   },
@@ -113176,6 +113524,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv4i32",
     "nxv4i32"
    ]
   },
@@ -113188,6 +113537,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv4s32",
     "nxv4s32"
    ]
   },
@@ -113200,6 +113550,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv8i16",
     "nxv8i16"
    ]
   },
@@ -113212,6 +113563,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "nxv8s16",
     "nxv8s16"
    ]
   },
@@ -113224,7 +113576,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "p0"
+    "p0",
+    "v4s32"
    ]
   },
   {
@@ -113236,7 +113589,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "s128"
+    "s128",
+    "v4s32"
    ]
   },
   {
@@ -113248,7 +113602,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "s16"
+    "s16",
+    "v4s32"
    ]
   },
   {
@@ -113260,7 +113615,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "s32"
+    "s32",
+    "v4s32"
    ]
   },
   {
@@ -113272,7 +113628,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "s64"
+    "s64",
+    "v4s32"
    ]
   },
   {
@@ -113284,7 +113641,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "s8"
+    "s8",
+    "v4s32"
    ]
   },
   {
@@ -113296,6 +113654,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v16i8",
     "v16i8"
    ]
   },
@@ -113308,6 +113667,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v16s8",
     "v16s8"
    ]
   },
@@ -113320,6 +113680,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2f32",
     "v2f32"
    ]
   },
@@ -113332,6 +113693,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2f64",
     "v2f64"
    ]
   },
@@ -113344,6 +113706,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2i16",
     "v2i16"
    ]
   },
@@ -113356,6 +113719,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2i32",
     "v2i32"
    ]
   },
@@ -113368,6 +113732,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2i64",
     "v2i64"
    ]
   },
@@ -113380,6 +113745,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2i8",
     "v2i8"
    ]
   },
@@ -113392,6 +113758,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2p0",
     "v2p0"
    ]
   },
@@ -113404,6 +113771,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2s16",
     "v2s16"
    ]
   },
@@ -113416,6 +113784,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2s32",
     "v2s32"
    ]
   },
@@ -113428,6 +113797,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2s64",
     "v2s64"
    ]
   },
@@ -113440,6 +113810,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v2s8",
     "v2s8"
    ]
   },
@@ -113452,6 +113823,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4bf16",
     "v4bf16"
    ]
   },
@@ -113464,6 +113836,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4f16",
     "v4f16"
    ]
   },
@@ -113476,6 +113849,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4f32",
     "v4f32"
    ]
   },
@@ -113488,6 +113862,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4i16",
     "v4i16"
    ]
   },
@@ -113500,6 +113875,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4i32",
     "v4i32"
    ]
   },
@@ -113512,6 +113888,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4i8",
     "v4i8"
    ]
   },
@@ -113524,6 +113901,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4s16",
     "v4s16"
    ]
   },
@@ -113536,6 +113914,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4s32",
     "v4s32"
    ]
   },
@@ -113548,6 +113927,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v4s8",
     "v4s8"
    ]
   },
@@ -113560,6 +113940,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v8bf16",
     "v8bf16"
    ]
   },
@@ -113572,6 +113953,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v8f16",
     "v8f16"
    ]
   },
@@ -113584,6 +113966,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v8i16",
     "v8i16"
    ]
   },
@@ -113596,6 +113979,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v8i8",
     "v8i8"
    ]
   },
@@ -113608,6 +113992,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v8s16",
     "v8s16"
    ]
   },
@@ -113620,6 +114005,7 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
+    "v8s8",
     "v8s8"
    ]
   },
@@ -127152,7 +127538,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "bf16"
+    "bf16",
+    "s1"
    ]
   },
   {
@@ -127164,7 +127551,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "f128"
+    "f128",
+    "s1"
    ]
   },
   {
@@ -127176,7 +127564,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "f16"
+    "f16",
+    "s1"
    ]
   },
   {
@@ -127188,7 +127577,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "f32"
+    "f32",
+    "s1"
    ]
   },
   {
@@ -127200,7 +127590,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "f64"
+    "f64",
+    "s1"
    ]
   },
   {
@@ -127212,7 +127603,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "i128"
+    "i128",
+    "s1"
    ]
   },
   {
@@ -127224,7 +127616,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "i16"
+    "i16",
+    "s1"
    ]
   },
   {
@@ -127236,7 +127629,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "i32"
+    "i32",
+    "s1"
    ]
   },
   {
@@ -127248,7 +127642,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "i64"
+    "i64",
+    "s1"
    ]
   },
   {
@@ -127260,7 +127655,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "i8"
+    "i8",
+    "s1"
    ]
   },
   {
@@ -127272,7 +127668,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv16i8"
+    "nxv16i8",
+    "nxv16s1"
    ]
   },
   {
@@ -127284,7 +127681,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv16s8"
+    "nxv16s8",
+    "nxv16s1"
    ]
   },
   {
@@ -127296,7 +127694,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv2i64"
+    "nxv2i64",
+    "nxv2s1"
    ]
   },
   {
@@ -127308,7 +127707,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv2s64"
+    "nxv2s64",
+    "nxv2s1"
    ]
   },
   {
@@ -127320,7 +127720,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv4i32"
+    "nxv4i32",
+    "nxv4s1"
    ]
   },
   {
@@ -127332,7 +127733,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv4s32"
+    "nxv4s32",
+    "nxv4s1"
    ]
   },
   {
@@ -127344,7 +127746,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv8i16"
+    "nxv8i16",
+    "nxv8s1"
    ]
   },
   {
@@ -127356,7 +127759,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv8s16"
+    "nxv8s16",
+    "nxv8s1"
    ]
   },
   {
@@ -127368,7 +127772,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "p0"
+    "p0",
+    "s1"
    ]
   },
   {
@@ -127380,7 +127785,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "s128"
+    "s128",
+    "s1"
    ]
   },
   {
@@ -127392,7 +127798,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "s16"
+    "s16",
+    "s1"
    ]
   },
   {
@@ -127404,7 +127811,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "s32"
+    "s32",
+    "s1"
    ]
   },
   {
@@ -127416,7 +127824,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "s64"
+    "s64",
+    "s1"
    ]
   },
   {
@@ -127428,7 +127837,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "s8"
+    "s8",
+    "s1"
    ]
   },
   {
@@ -127440,7 +127850,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v16i8"
+    "v16i8",
+    "v16s1"
    ]
   },
   {
@@ -127452,7 +127863,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v16s8"
+    "v16s8",
+    "v16s1"
    ]
   },
   {
@@ -127464,7 +127876,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2f32"
+    "v2f32",
+    "v2s1"
    ]
   },
   {
@@ -127476,7 +127889,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2f64"
+    "v2f64",
+    "v2s1"
    ]
   },
   {
@@ -127488,7 +127902,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2i16"
+    "v2i16",
+    "v2s1"
    ]
   },
   {
@@ -127500,7 +127915,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2i32"
+    "v2i32",
+    "v2s1"
    ]
   },
   {
@@ -127512,7 +127928,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2i64"
+    "v2i64",
+    "v2s1"
    ]
   },
   {
@@ -127524,7 +127941,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2i8"
+    "v2i8",
+    "v2s1"
    ]
   },
   {
@@ -127536,7 +127954,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2p0"
+    "v2p0",
+    "v2s1"
    ]
   },
   {
@@ -127548,7 +127967,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2s16"
+    "v2s16",
+    "v2s1"
    ]
   },
   {
@@ -127560,7 +127980,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2s32"
+    "v2s32",
+    "v2s1"
    ]
   },
   {
@@ -127572,7 +127993,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2s64"
+    "v2s64",
+    "v2s1"
    ]
   },
   {
@@ -127584,7 +128006,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2s8"
+    "v2s8",
+    "v2s1"
    ]
   },
   {
@@ -127596,7 +128019,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4bf16"
+    "v4bf16",
+    "v4s1"
    ]
   },
   {
@@ -127608,7 +128032,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4f16"
+    "v4f16",
+    "v4s1"
    ]
   },
   {
@@ -127620,7 +128045,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4f32"
+    "v4f32",
+    "v4s1"
    ]
   },
   {
@@ -127632,7 +128058,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4i16"
+    "v4i16",
+    "v4s1"
    ]
   },
   {
@@ -127644,7 +128071,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4i32"
+    "v4i32",
+    "v4s1"
    ]
   },
   {
@@ -127656,7 +128084,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4i8"
+    "v4i8",
+    "v4s1"
    ]
   },
   {
@@ -127668,7 +128097,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4s16"
+    "v4s16",
+    "v4s1"
    ]
   },
   {
@@ -127680,7 +128110,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4s32"
+    "v4s32",
+    "v4s1"
    ]
   },
   {
@@ -127692,7 +128123,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4s8"
+    "v4s8",
+    "v4s1"
    ]
   },
   {
@@ -127704,7 +128136,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v8bf16"
+    "v8bf16",
+    "v8s1"
    ]
   },
   {
@@ -127716,7 +128149,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v8f16"
+    "v8f16",
+    "v8s1"
    ]
   },
   {
@@ -127728,7 +128162,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v8i16"
+    "v8i16",
+    "v8s1"
    ]
   },
   {
@@ -127740,7 +128175,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v8i8"
+    "v8i8",
+    "v8s1"
    ]
   },
   {
@@ -127752,7 +128188,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v8s16"
+    "v8s16",
+    "v8s1"
    ]
   },
   {
@@ -127764,7 +128201,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v8s8"
+    "v8s8",
+    "v8s1"
    ]
   },
   {
@@ -127776,7 +128214,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "bf16"
+    "bf16",
+    "s1"
    ]
   },
   {
@@ -127788,7 +128227,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "f128"
+    "f128",
+    "s1"
    ]
   },
   {
@@ -127800,7 +128240,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "f16"
+    "f16",
+    "s1"
    ]
   },
   {
@@ -127812,7 +128253,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "f32"
+    "f32",
+    "s1"
    ]
   },
   {
@@ -127824,7 +128266,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "f64"
+    "f64",
+    "s1"
    ]
   },
   {
@@ -127836,7 +128279,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "i128"
+    "i128",
+    "s1"
    ]
   },
   {
@@ -127848,7 +128292,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "i16"
+    "i16",
+    "s1"
    ]
   },
   {
@@ -127860,7 +128305,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "i32"
+    "i32",
+    "s1"
    ]
   },
   {
@@ -127872,7 +128318,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "i64"
+    "i64",
+    "s1"
    ]
   },
   {
@@ -127884,7 +128331,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "i8"
+    "i8",
+    "s1"
    ]
   },
   {
@@ -127896,7 +128344,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv16i8"
+    "nxv16i8",
+    "nxv16s1"
    ]
   },
   {
@@ -127908,7 +128357,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv16s8"
+    "nxv16s8",
+    "nxv16s1"
    ]
   },
   {
@@ -127920,7 +128370,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv2i64"
+    "nxv2i64",
+    "nxv2s1"
    ]
   },
   {
@@ -127932,7 +128383,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv2s64"
+    "nxv2s64",
+    "nxv2s1"
    ]
   },
   {
@@ -127944,7 +128396,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv4i32"
+    "nxv4i32",
+    "nxv4s1"
    ]
   },
   {
@@ -127956,7 +128409,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv4s32"
+    "nxv4s32",
+    "nxv4s1"
    ]
   },
   {
@@ -127968,7 +128422,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv8i16"
+    "nxv8i16",
+    "nxv8s1"
    ]
   },
   {
@@ -127980,7 +128435,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "nxv8s16"
+    "nxv8s16",
+    "nxv8s1"
    ]
   },
   {
@@ -127992,7 +128448,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "p0"
+    "p0",
+    "s1"
    ]
   },
   {
@@ -128004,7 +128461,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "s128"
+    "s128",
+    "s1"
    ]
   },
   {
@@ -128016,7 +128474,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "s16"
+    "s16",
+    "s1"
    ]
   },
   {
@@ -128028,7 +128487,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "s32"
+    "s32",
+    "s1"
    ]
   },
   {
@@ -128040,7 +128500,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "s64"
+    "s64",
+    "s1"
    ]
   },
   {
@@ -128052,7 +128513,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "s8"
+    "s8",
+    "s1"
    ]
   },
   {
@@ -128064,7 +128526,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v16i8"
+    "v16i8",
+    "v16s1"
    ]
   },
   {
@@ -128076,7 +128539,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v16s8"
+    "v16s8",
+    "v16s1"
    ]
   },
   {
@@ -128088,7 +128552,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2f32"
+    "v2f32",
+    "v2s1"
    ]
   },
   {
@@ -128100,7 +128565,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2f64"
+    "v2f64",
+    "v2s1"
    ]
   },
   {
@@ -128112,7 +128578,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2i16"
+    "v2i16",
+    "v2s1"
    ]
   },
   {
@@ -128124,7 +128591,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2i32"
+    "v2i32",
+    "v2s1"
    ]
   },
   {
@@ -128136,7 +128604,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2i64"
+    "v2i64",
+    "v2s1"
    ]
   },
   {
@@ -128148,7 +128617,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2i8"
+    "v2i8",
+    "v2s1"
    ]
   },
   {
@@ -128160,7 +128630,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2p0"
+    "v2p0",
+    "v2s1"
    ]
   },
   {
@@ -128172,7 +128643,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2s16"
+    "v2s16",
+    "v2s1"
    ]
   },
   {
@@ -128184,7 +128656,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2s32"
+    "v2s32",
+    "v2s1"
    ]
   },
   {
@@ -128196,7 +128669,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2s64"
+    "v2s64",
+    "v2s1"
    ]
   },
   {
@@ -128208,7 +128682,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v2s8"
+    "v2s8",
+    "v2s1"
    ]
   },
   {
@@ -128220,7 +128695,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4bf16"
+    "v4bf16",
+    "v4s1"
    ]
   },
   {
@@ -128232,7 +128708,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4f16"
+    "v4f16",
+    "v4s1"
    ]
   },
   {
@@ -128244,7 +128721,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4f32"
+    "v4f32",
+    "v4s1"
    ]
   },
   {
@@ -128256,7 +128734,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4i16"
+    "v4i16",
+    "v4s1"
    ]
   },
   {
@@ -128268,7 +128747,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4i32"
+    "v4i32",
+    "v4s1"
    ]
   },
   {
@@ -128280,7 +128760,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4i8"
+    "v4i8",
+    "v4s1"
    ]
   },
   {
@@ -128292,7 +128773,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4s16"
+    "v4s16",
+    "v4s1"
    ]
   },
   {
@@ -128304,7 +128786,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4s32"
+    "v4s32",
+    "v4s1"
    ]
   },
   {
@@ -128316,7 +128799,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v4s8"
+    "v4s8",
+    "v4s1"
    ]
   },
   {
@@ -128328,7 +128812,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v8bf16"
+    "v8bf16",
+    "v8s1"
    ]
   },
   {
@@ -128340,7 +128825,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v8f16"
+    "v8f16",
+    "v8s1"
    ]
   },
   {
@@ -128352,7 +128838,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v8i16"
+    "v8i16",
+    "v8s1"
    ]
   },
   {
@@ -128364,7 +128851,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v8i8"
+    "v8i8",
+    "v8s1"
    ]
   },
   {
@@ -128376,7 +128864,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v8s16"
+    "v8s16",
+    "v8s1"
    ]
   },
   {
@@ -128388,7 +128877,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "v8s8"
+    "v8s8",
+    "v8s1"
    ]
   },
   {
@@ -143897,7 +144387,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "f128",
-    "s32"
+    "s32",
+    "f128"
    ]
   },
   {
@@ -143910,7 +144401,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "f32",
-    "s32"
+    "s32",
+    "f32"
    ]
   },
   {
@@ -143923,7 +144415,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "i16",
-    "s32"
+    "s32",
+    "i16"
    ]
   },
   {
@@ -143936,7 +144429,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "i64",
-    "s32"
+    "s32",
+    "i64"
    ]
   },
   {
@@ -143949,7 +144443,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "nxv16s8",
-    "s32"
+    "s32",
+    "nxv16s8"
    ]
   },
   {
@@ -143962,7 +144457,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "nxv2s64",
-    "s32"
+    "s32",
+    "nxv2s64"
    ]
   },
   {
@@ -143975,7 +144471,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "nxv4s32",
-    "s32"
+    "s32",
+    "nxv4s32"
    ]
   },
   {
@@ -143988,7 +144485,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "nxv8s16",
-    "s32"
+    "s32",
+    "nxv8s16"
    ]
   },
   {
@@ -144001,7 +144499,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "p0",
-    "s32"
+    "s32",
+    "p0"
    ]
   },
   {
@@ -144014,7 +144513,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s128",
-    "s32"
+    "s32",
+    "s128"
    ]
   },
   {
@@ -144027,7 +144527,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "bf16"
+    "bf16",
+    "s32"
    ]
   },
   {
@@ -144040,7 +144541,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "f16"
+    "f16",
+    "s32"
    ]
   },
   {
@@ -144053,7 +144555,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "f64"
+    "f64",
+    "s32"
    ]
   },
   {
@@ -144066,7 +144569,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "i128"
+    "i128",
+    "s32"
    ]
   },
   {
@@ -144079,7 +144583,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "i32"
+    "i32",
+    "s32"
    ]
   },
   {
@@ -144092,7 +144597,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "i8"
+    "i8",
+    "s32"
    ]
   },
   {
@@ -144105,7 +144611,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "nxv16i8"
+    "nxv16i8",
+    "s32"
    ]
   },
   {
@@ -144118,7 +144625,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "nxv2i64"
+    "nxv2i64",
+    "s32"
    ]
   },
   {
@@ -144131,7 +144639,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "nxv4i32"
+    "nxv4i32",
+    "s32"
    ]
   },
   {
@@ -144144,7 +144653,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "nxv8i16"
+    "nxv8i16",
+    "s32"
    ]
   },
   {
@@ -144157,7 +144667,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "s16"
+    "s16",
+    "s32"
    ]
   },
   {
@@ -144169,6 +144680,7 @@
    "rule_index": null,
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
+    "s32",
     "s32",
     "s32"
    ]
@@ -144183,7 +144695,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "s64"
+    "s64",
+    "s32"
    ]
   },
   {
@@ -144196,7 +144709,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "v16i8"
+    "v16i8",
+    "s32"
    ]
   },
   {
@@ -144209,7 +144723,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "v2f32"
+    "v2f32",
+    "s32"
    ]
   },
   {
@@ -144222,7 +144737,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "v2f64"
+    "v2f64",
+    "s32"
    ]
   },
   {
@@ -144235,7 +144751,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "v2i16"
+    "v2i16",
+    "s32"
    ]
   },
   {
@@ -144248,7 +144765,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "v2i32"
+    "v2i32",
+    "s32"
    ]
   },
   {
@@ -144261,7 +144779,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "v2i64"
+    "v2i64",
+    "s32"
    ]
   },
   {
@@ -144274,7 +144793,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "v2i8"
+    "v2i8",
+    "s32"
    ]
   },
   {
@@ -144287,7 +144807,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "v4bf16"
+    "v4bf16",
+    "s32"
    ]
   },
   {
@@ -144300,7 +144821,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "v4f16"
+    "v4f16",
+    "s32"
    ]
   },
   {
@@ -144313,7 +144835,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "v4i16"
+    "v4i16",
+    "s32"
    ]
   },
   {
@@ -144326,7 +144849,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "v4i32"
+    "v4i32",
+    "s32"
    ]
   },
   {
@@ -144339,7 +144863,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "v4i8"
+    "v4i8",
+    "s32"
    ]
   },
   {
@@ -144352,7 +144877,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "v8i16"
+    "v8i16",
+    "s32"
    ]
   },
   {
@@ -144365,7 +144891,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s32",
-    "v8i8"
+    "v8i8",
+    "s32"
    ]
   },
   {
@@ -144378,7 +144905,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "s8",
-    "s32"
+    "s32",
+    "s8"
    ]
   },
   {
@@ -144391,7 +144919,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "v16s8",
-    "s32"
+    "s32",
+    "v16s8"
    ]
   },
   {
@@ -144404,7 +144933,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "v2p0",
-    "s32"
+    "s32",
+    "v2p0"
    ]
   },
   {
@@ -144417,7 +144947,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "v2s16",
-    "s32"
+    "s32",
+    "v2s16"
    ]
   },
   {
@@ -144430,7 +144961,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "v2s32",
-    "s32"
+    "s32",
+    "v2s32"
    ]
   },
   {
@@ -144443,7 +144975,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "v2s64",
-    "s32"
+    "s32",
+    "v2s64"
    ]
   },
   {
@@ -144456,7 +144989,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "v2s8",
-    "s32"
+    "s32",
+    "v2s8"
    ]
   },
   {
@@ -144469,7 +145003,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "v4f32",
-    "s32"
+    "s32",
+    "v4f32"
    ]
   },
   {
@@ -144482,7 +145017,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "v4s16",
-    "s32"
+    "s32",
+    "v4s16"
    ]
   },
   {
@@ -144495,7 +145031,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "v4s32",
-    "s32"
+    "s32",
+    "v4s32"
    ]
   },
   {
@@ -144508,7 +145045,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "v4s8",
-    "s32"
+    "s32",
+    "v4s8"
    ]
   },
   {
@@ -144521,7 +145059,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "v8bf16",
-    "s32"
+    "s32",
+    "v8bf16"
    ]
   },
   {
@@ -144534,7 +145073,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "v8f16",
-    "s32"
+    "s32",
+    "v8f16"
    ]
   },
   {
@@ -144547,7 +145087,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "v8s16",
-    "s32"
+    "s32",
+    "v8s16"
    ]
   },
   {
@@ -144560,7 +145101,8 @@
    "rule_set": "AArch64_VECREDUCE_FADD",
    "types": [
     "v8s8",
-    "s32"
+    "s32",
+    "v8s8"
    ]
   },
   {
@@ -154816,7 +155358,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "bf16"
+    "bf16",
+    "s1"
    ]
   },
   {
@@ -154828,7 +155371,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "f128"
+    "f128",
+    "s1"
    ]
   },
   {
@@ -154840,7 +155384,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "f16"
+    "f16",
+    "s1"
    ]
   },
   {
@@ -154852,7 +155397,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "f32"
+    "f32",
+    "s1"
    ]
   },
   {
@@ -154864,7 +155410,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "f64"
+    "f64",
+    "s1"
    ]
   },
   {
@@ -154876,7 +155423,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "i128"
+    "i128",
+    "s1"
    ]
   },
   {
@@ -154888,7 +155436,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "i16"
+    "i16",
+    "s1"
    ]
   },
   {
@@ -154900,7 +155449,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "i32"
+    "i32",
+    "s1"
    ]
   },
   {
@@ -154912,7 +155462,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "i64"
+    "i64",
+    "s1"
    ]
   },
   {
@@ -154924,7 +155475,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "i8"
+    "i8",
+    "s1"
    ]
   },
   {
@@ -154936,7 +155488,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "nxv16i8"
+    "nxv16i8",
+    "nxv16s1"
    ]
   },
   {
@@ -154948,7 +155501,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "nxv16s8"
+    "nxv16s8",
+    "nxv16s1"
    ]
   },
   {
@@ -154960,7 +155514,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "nxv2i64"
+    "nxv2i64",
+    "nxv2s1"
    ]
   },
   {
@@ -154972,7 +155527,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "nxv2s64"
+    "nxv2s64",
+    "nxv2s1"
    ]
   },
   {
@@ -154984,7 +155540,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "nxv4i32"
+    "nxv4i32",
+    "nxv4s1"
    ]
   },
   {
@@ -154996,7 +155553,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "nxv4s32"
+    "nxv4s32",
+    "nxv4s1"
    ]
   },
   {
@@ -155008,7 +155566,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "nxv8i16"
+    "nxv8i16",
+    "nxv8s1"
    ]
   },
   {
@@ -155020,7 +155579,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "nxv8s16"
+    "nxv8s16",
+    "nxv8s1"
    ]
   },
   {
@@ -155032,7 +155592,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "p0"
+    "p0",
+    "s1"
    ]
   },
   {
@@ -155044,7 +155605,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "s128"
+    "s128",
+    "s1"
    ]
   },
   {
@@ -155056,7 +155618,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "s16"
+    "s16",
+    "s1"
    ]
   },
   {
@@ -155068,7 +155631,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "s32"
+    "s32",
+    "s1"
    ]
   },
   {
@@ -155080,7 +155644,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "s64"
+    "s64",
+    "s1"
    ]
   },
   {
@@ -155092,7 +155657,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "s8"
+    "s8",
+    "s1"
    ]
   },
   {
@@ -155104,7 +155670,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v16i8"
+    "v16i8",
+    "v16s1"
    ]
   },
   {
@@ -155116,7 +155683,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v16s8"
+    "v16s8",
+    "v16s1"
    ]
   },
   {
@@ -155128,7 +155696,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v2f32"
+    "v2f32",
+    "v2s1"
    ]
   },
   {
@@ -155140,7 +155709,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v2f64"
+    "v2f64",
+    "v2s1"
    ]
   },
   {
@@ -155152,7 +155722,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v2i16"
+    "v2i16",
+    "v2s1"
    ]
   },
   {
@@ -155164,7 +155735,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v2i32"
+    "v2i32",
+    "v2s1"
    ]
   },
   {
@@ -155176,7 +155748,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v2i64"
+    "v2i64",
+    "v2s1"
    ]
   },
   {
@@ -155188,7 +155761,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v2i8"
+    "v2i8",
+    "v2s1"
    ]
   },
   {
@@ -155200,7 +155774,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v2p0"
+    "v2p0",
+    "v2s1"
    ]
   },
   {
@@ -155212,7 +155787,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v2s16"
+    "v2s16",
+    "v2s1"
    ]
   },
   {
@@ -155224,7 +155800,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v2s32"
+    "v2s32",
+    "v2s1"
    ]
   },
   {
@@ -155236,7 +155813,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v2s64"
+    "v2s64",
+    "v2s1"
    ]
   },
   {
@@ -155248,7 +155826,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v2s8"
+    "v2s8",
+    "v2s1"
    ]
   },
   {
@@ -155260,7 +155839,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v4bf16"
+    "v4bf16",
+    "v4s1"
    ]
   },
   {
@@ -155272,7 +155852,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v4f16"
+    "v4f16",
+    "v4s1"
    ]
   },
   {
@@ -155284,7 +155865,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v4f32"
+    "v4f32",
+    "v4s1"
    ]
   },
   {
@@ -155296,7 +155878,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v4i16"
+    "v4i16",
+    "v4s1"
    ]
   },
   {
@@ -155308,7 +155891,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v4i32"
+    "v4i32",
+    "v4s1"
    ]
   },
   {
@@ -155320,7 +155904,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v4i8"
+    "v4i8",
+    "v4s1"
    ]
   },
   {
@@ -155332,7 +155917,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v4s16"
+    "v4s16",
+    "v4s1"
    ]
   },
   {
@@ -155344,7 +155930,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v4s32"
+    "v4s32",
+    "v4s1"
    ]
   },
   {
@@ -155356,7 +155943,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v4s8"
+    "v4s8",
+    "v4s1"
    ]
   },
   {
@@ -155368,7 +155956,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v8bf16"
+    "v8bf16",
+    "v8s1"
    ]
   },
   {
@@ -155380,7 +155969,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v8f16"
+    "v8f16",
+    "v8s1"
    ]
   },
   {
@@ -155392,7 +155982,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v8i16"
+    "v8i16",
+    "v8s1"
    ]
   },
   {
@@ -155404,7 +155995,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v8i8"
+    "v8i8",
+    "v8s1"
    ]
   },
   {
@@ -155416,7 +156008,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v8s16"
+    "v8s16",
+    "v8s1"
    ]
   },
   {
@@ -155428,7 +156021,8 @@
    "rule_index": null,
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
-    "v8s8"
+    "v8s8",
+    "v8s1"
    ]
   },
   {
@@ -159106,7 +159700,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SCMP",
    "types": [
-    "s32"
+    "s32",
+    "v4s32"
    ]
   },
   {
@@ -159253,7 +159848,8 @@
    "rule_index": null,
    "rule_set": "AArch64_SMULO",
    "types": [
-    "s32"
+    "s32",
+    "s1"
    ]
   },
   {
@@ -164546,7 +165142,7 @@
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
     "s1",
-    "s32"
+    "s1"
    ]
   },
   {
@@ -164559,7 +165155,7 @@
    "rule_set": "AArch64_FCOPYSIGN",
    "types": [
     "p0",
-    "s32"
+    "p0"
    ]
   },
   {
@@ -167518,7 +168114,7 @@
    "rule_set": "AArch64_IS_FPCLASS",
    "types": [
     "s32",
-    "s32"
+    "f32"
    ]
   },
   {
@@ -169191,7 +169787,7 @@
    "rule_set": "AArch64_SCMP",
    "types": [
     "s32",
-    "s32"
+    "v4s32"
    ]
   },
   {
@@ -169204,7 +169800,7 @@
    "rule_set": "AArch64_SCMP",
    "types": [
     "s32",
-    "s32"
+    "v4s32"
    ]
   },
   {
@@ -171251,7 +171847,7 @@
    "rule_set": "AArch64_SMULO",
    "types": [
     "s3",
-    "s32"
+    "s1"
    ]
   },
   {
@@ -171264,7 +171860,7 @@
    "rule_set": "AArch64_SMULO",
    "types": [
     "s1",
-    "s32"
+    "s1"
    ]
   },
   {
@@ -171277,7 +171873,7 @@
    "rule_set": "AArch64_SMULO",
    "types": [
     "s32",
-    "s32"
+    "s1"
    ]
   },
   {
@@ -171290,7 +171886,7 @@
    "rule_set": "AArch64_SMULO",
    "types": [
     "s3",
-    "s32"
+    "s1"
    ]
   },
   {
@@ -171303,7 +171899,7 @@
    "rule_set": "AArch64_SMULO",
    "types": [
     "s1",
-    "s32"
+    "s1"
    ]
   },
   {
@@ -171316,7 +171912,7 @@
    "rule_set": "AArch64_SMULO",
    "types": [
     "s32",
-    "s32"
+    "s1"
    ]
   },
   {
@@ -172937,7 +173533,7 @@
    "types": [
     "f32",
     "v2f32",
-    "s32"
+    "f32"
    ]
   },
   {
@@ -172951,7 +173547,7 @@
    "types": [
     "f16",
     "v4f16",
-    "s32"
+    "f16"
    ]
   },
   {
@@ -172965,7 +173561,7 @@
    "types": [
     "bf16",
     "s32",
-    "s32"
+    "bf16"
    ]
   },
   {
@@ -174236,7 +174832,7 @@
    "rule_set": "AArch64_VECTOR_COMPRESS",
    "types": [
     "s32",
-    "s32"
+    "s1"
    ]
   },
   {

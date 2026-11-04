@@ -131,3 +131,67 @@ Corpus: 13,854 atoms. `legalized 1,986`, `failed 2,982`,
 `construction_mismatch 5,649`, `unbuildable 3,237`,
 `crash/budget/hang/not_run 0`; A3 `met`. Coverage: 582/611 active rules
 verified, 37 exception rows (29 distinct rules), 0 unprobed.
+
+## Round 3: shape-arity closure (P4, 2026-11-05)
+
+AArch64 opcode descriptors declare more generic type indices than the source
+rules constrain: carry-out flags (`G_SMULO`/`G_UMULO`), shift counts
+(`G_ROTL`, `G_CTLZ_ZERO_POISON`, `G_CTTZ_ZERO_POISON`), lane masks
+(`G_VECTOR_COMPRESS`), reduction accumulators (`G_VECREDUCE_FADD`), build-vector
+elements (`G_BUILD_VECTOR_TRUNC`), three-way comparison operands
+(`G_SCMP`/`G_UCMP`), and the classified value (`G_IS_FPCLASS`). Rule probes only
+carried the slots a predicate referenced, so 16 builders still reported
+`shape_arity`: their opcode arity exceeded the rule's slot count and every point
+was unbuildable.
+
+### Reviewed fills
+
+`TargetProfile.type_fills` maps `opcode -> {type index: fill kind}`. Each fill
+is derived from the descriptor's TableGen type layout on the pinned revision and
+is applied to indices the rule does not constrain; constrained slots keep the
+probe value.
+
+| Opcode | Index | Fill |
+|---|---|---|
+| `G_SMULO`, `G_UMULO` | 1 | `i1of0` — carry-out with the result's shape |
+| `G_ROTL`, `G_CTLZ_ZERO_POISON`, `G_CTTZ_ZERO_POISON`, `G_FCOPYSIGN` | 1 | `same0` — same type as slot 0 |
+| `G_BUILD_VECTOR_TRUNC` | 1 | `elem0` — vector element type |
+| `G_VECREDUCE_FADD` | 2 | `same0` — accumulator of the result type |
+| `G_VECTOR_COMPRESS` | 1 | `i1vec0` — `<N x i1>` lane mask |
+| `G_IS_FPCLASS` | 1 | `f32shape0` — float with the result's shape |
+| `G_SCMP`, `G_UCMP` | 1 | `operand1` — integer operand vector |
+
+Fills preserve scalable element counts (`nxv16i8 -> nxv16s1`), so the boundary
+panel keeps its scalable rows instead of collapsing them to fixed vectors.
+
+### Declared-but-unreachable rules
+
+Seven rules declare a type index the corpus cannot construct: `G_INSERT_SUBVECTOR`
+(subvector index), the four `G_INDEXED_*` memory ops (indexed-addressing AM
+immediate), `G_DYN_STACKALLOC` (unbuildable policy), and `G_BZERO` (libcall
+lowering disabled + tailcall immediate). They keep their reviewed reason in
+`TargetProfile.shape_arity_unreachable` and are reported as
+`shape_arity_unreachable`, never as open construction gaps.
+
+Result: AArch64 `shape_arity 16 -> 0`; 7 `shape_arity_unreachable`.
+
+### Driver gaps the fills exposed
+
+All are construction contracts; none is a legalizer decision.
+
+- `G_ROTL` had no funnel-shift contract (only `G_ROTR`/`G_FSHL`/`G_FSHR` did).
+  Float shapes reached `AArch64LegalizerInfo.cpp:192` and asserted in
+  `getNumElements()`. `G_ROTL` now shares `FunnelShiftRules`.
+- Scalable construction rejects `G_CTLZ_ZERO_POISON`, `G_CTTZ_ZERO_POISON`,
+  `G_ROTL`, `G_SCMP`, `G_UCMP`, `G_SMULO`, `G_UMULO`, and `G_IS_FPCLASS`.
+  `G_IS_FPCLASS` asserted in `MachineIRBuilder::buildConstant` ("unexpected
+  scalable vector"); the rest hit scalable `getNumElements()`/size paths.
+- `fixedBits` and the contract pre-pass now guard `TypeSize` with
+  `isVector() && isScalable()` before `getFixedValue()`.
+
+### Final A2 witness
+
+13,854 atoms. `legalized 2,250` (up from 1,986: carry/mask shapes now
+construct), `failed 2,986`, `construction_mismatch 5,977`,
+`unbuildable 2,641`; `crash/budget/hang/not_run 0`; A3 `met`. Coverage is
+unchanged at 582/611 active rules verified, 37 exception rows, 0 unprobed.

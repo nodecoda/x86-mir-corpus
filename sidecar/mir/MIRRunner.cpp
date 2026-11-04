@@ -330,7 +330,7 @@ bool sameType(const LLT &A, const LLT &B) {
 
 /// getSizeInBits().getFixedValue(), guarded for scalable TypeSize.
 std::optional<uint64_t> fixedBits(const LLT &Ty) {
-  if (Ty.isScalableVector())
+  if (Ty.isVector() && Ty.isScalable())
     return std::nullopt;
   return Ty.getSizeInBits().getFixedValue();
 }
@@ -401,10 +401,13 @@ const OpcodeContract Contracts[] = {
     {"G_SADDSAT", IntegerOnlyRules}, {"G_UADDSAT", IntegerOnlyRules},
     {"G_SSUBSAT", IntegerOnlyRules}, {"G_USUBSAT", IntegerOnlyRules},
     {"G_SSHLSAT", IntegerOnlyRules}, {"G_USHLSAT", IntegerOnlyRules},
+    {"G_SMULO", CarryRules},       {"G_UMULO", CarryRules},
+    {"G_SCMP", IntegerOnlyRules},  {"G_UCMP", IntegerOnlyRules},
     {"G_ABDS", AbdsRules},         {"G_ABDU", AbdsRules},
     {"G_BITREVERSE", UnaryIntRules}, {"G_UMULH", UnaryIntRules},
     {"G_SMULH", UnaryIntRules},    {"G_CTLS", UnaryIntRules},
-    {"G_ROTR", FunnelShiftRules},  {"G_FSHL", FunnelShiftRules},
+    {"G_ROTL", FunnelShiftRules},  {"G_ROTR", FunnelShiftRules},
+    {"G_FSHL", FunnelShiftRules},
     {"G_FSHR", FunnelShiftRules},  {"G_FLDEXP", FloatExponentRules},
     {"G_FPTOSI", IntResultFloatRules},
     {"G_FPTOUI", IntResultFloatRules},
@@ -441,16 +444,19 @@ const OpcodeContract Contracts[] = {
 bool scalableConstructible(StringRef Opcode) {
   static const StringLiteral Unsupported[] = {
       "G_ABDS", "G_ABDU", "G_ABS", "G_BITREVERSE", "G_BUILD_VECTOR",
-      "G_CTLS", "G_EXTRACT", "G_FACOS", "G_FASIN", "G_FATAN",
+      "G_CTLS", "G_CTLZ_ZERO_POISON", "G_CTTZ_ZERO_POISON", "G_EXTRACT",
+      "G_FACOS", "G_FASIN", "G_FATAN",
       "G_FATAN2", "G_FCOS", "G_FCOSH", "G_FEXP", "G_FEXP10",
       "G_FEXP2", "G_FLDEXP", "G_FLOG", "G_FLOG10", "G_FLOG2",
       "G_FMODF", "G_FPOW", "G_FPTOSI_SAT", "G_FPTOUI_SAT", "G_FREM",
       "G_FSHL", "G_FSHR", "G_FSIN", "G_FSINH", "G_FTAN",
-      "G_FTANH", "G_GET_FPENV", "G_GET_FPMODE", "G_INSERT", "G_MUL",
-      "G_SDIV", "G_SDIVREM", "G_SET_FPENV", "G_SET_FPMODE",
-      "G_SEXT_INREG", "G_SMAX", "G_SMIN", "G_SMULH", "G_SREM",
-      "G_UDIV", "G_UDIVREM", "G_UMAX", "G_UMIN", "G_UMULH",
-      "G_UREM", "G_VECREDUCE_ADD", "G_VECREDUCE_AND",
+      "G_FTANH", "G_GET_FPENV", "G_GET_FPMODE", "G_INSERT", "G_IS_FPCLASS",
+      "G_MUL",
+      "G_ROTL", "G_SCMP", "G_SDIV", "G_SDIVREM", "G_SET_FPENV",
+      "G_SET_FPMODE", "G_SEXT_INREG", "G_SMAX", "G_SMIN", "G_SMULH",
+      "G_SMULO", "G_SREM", "G_UCMP", "G_UDIV", "G_UDIVREM", "G_UMAX",
+      "G_UMIN", "G_UMULH", "G_UMULO", "G_UREM", "G_VECTOR_COMPRESS",
+      "G_VECREDUCE_ADD", "G_VECREDUCE_AND",
       "G_VECREDUCE_FADD", "G_VECREDUCE_FMAX", "G_VECREDUCE_FMAXIMUM",
       "G_VECREDUCE_FMIN", "G_VECREDUCE_FMINIMUM", "G_VECREDUCE_FMUL",
       "G_VECREDUCE_MUL", "G_VECREDUCE_OR", "G_VECREDUCE_SMAX",
@@ -483,7 +489,7 @@ std::optional<std::string> checkTypeContract(
     const std::optional<LLT> &MemType = std::nullopt) {
   if (!scalableConstructible(Opcode)) {
     for (unsigned I = 0; I != Types.size(); ++I)
-      if (Types[I].isScalableVector())
+      if (Types[I].isVector() && Types[I].isScalable())
         return contractFailure(I, "operand",
                                "a fixed-width vector for this opcode "
                                "(scalable construction is not supported yet)",

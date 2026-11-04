@@ -63,7 +63,7 @@ surface changes require `--update-manifest`, so the diff is reviewed.
 |---|---|---|
 | `LegalizerInfo.cpp:116` `mutationIsSane` | mutation slot/type validity | `domain.construction_issues` (`mutation_type_idx`, `mutation_source_slot`) |
 | `LegalizerInfo.cpp:191` `LegalizeRuleSet::apply` | first matching rule wins, null mutation is skipped | `domain.first_match`, `parse.extract_mutation` (`kind: none`) |
-| `LegalizerInfo.cpp:211` `verifyTypeIdxsCoverage` | dense type indices covered | `shape_arity` (opcode arity vs rule shape) |
+| `LegalizerInfo.cpp:211` `verifyTypeIdxsCoverage` | dense type indices covered | `shape_arity` (opcode arity vs rule shape), `shape_arity_unreachable` (reviewed no-construction reason) |
 | `LegalizerInfo.cpp:242` `verifyImmIdxsCoverage` | dense immediate indices covered | `imm_idx`, `imm_coverage` |
 | `LegalizerInfo.cpp:308` `getActionDefinitionsBuilder` | builder boundaries | `audit` constructor region |
 
@@ -71,7 +71,11 @@ surface changes require `--update-manifest`, so the diff is reviewed.
 list and per-code counts. These issues do not drop points; they make shape gaps
 explicit. A `shape_arity` issue means the rule set constrains fewer type
 indices than the opcode declares, so the generated corpus for that builder does
-not vary the missing slots.
+not vary the missing slots. Targets with reviewed `type_fills` extend every
+point to the opcode's declared arity (carry flags, masks, reduction
+accumulators) and report nothing. A `shape_arity_unreachable` issue means the
+missing slots cannot be constructed at all (no reviewed immediate, or an
+unbuildable policy); it carries the reviewed reason instead of an open gap.
 
 ## Pin bump flow
 

@@ -5,6 +5,7 @@ import unittest
 
 import testlib
 from x86_mir_corpus import domain, dsl, parse, targets
+from x86_mir_corpus import expr as E
 
 OUT_OF_RANGE = """\
 AArch64LegalizerInfo::AArch64LegalizerInfo(const AArch64Subtarget &ST) {
@@ -74,7 +75,9 @@ class ConstructionIssueTest(unittest.TestCase):
         self.assertNotIn("imm_coverage", codes)
 
     def test_real_sources_only_report_shape_gaps(self):
-        for target, expected in (("x86", 4), ("aarch64", 16)):
+        for target, expected, code in (("x86", 4, "shape_arity"),
+                                       ("aarch64", 7,
+                                        "shape_arity_unreachable")):
             profile = targets.get(target)
             path = os.path.join(
                 testlib.SRC_DIR, "x86_mir_corpus", "assets",
@@ -87,10 +90,41 @@ class ConstructionIssueTest(unittest.TestCase):
                 text, source(text), profile.default_config,
                 profile.configs[profile.default_config],
                 profile.rule_set_prefix, profile.llt_extended)
-            issues = domain.construction_issues(result)
+            issues = domain.construction_issues(result, profile=profile)
             self.assertEqual(len(issues), expected, target)
             self.assertEqual({issue["detail_code"] for issue in issues},
-                             {"shape_arity"}, target)
+                             {code}, target)
+
+    def test_aarch64_type_fills_cover_declared_arity(self):
+        profile = targets.get("aarch64")
+        cases = {
+            "G_SMULO": ([E.scalar(32)], [E.scalar(32), E.scalar(1)]),
+            "G_ROTL": ([E.vec(4, E.scalar(32))],
+                       [E.vec(4, E.scalar(32)), E.vec(4, E.scalar(32))]),
+            "G_BUILD_VECTOR_TRUNC": ([E.vec(4, E.scalar(16))],
+                                     [E.vec(4, E.scalar(16)),
+                                      E.scalar(16)]),
+            "G_VECTOR_COMPRESS": ([E.vec(4, E.scalar(32))],
+                                  [E.vec(4, E.scalar(32)),
+                                   E.vec(4, E.scalar(1))]),
+            "G_VECREDUCE_FADD": ([E.float_(32, "ieee"), E.vec(2, E.float_(
+                32, "ieee"))],
+                [E.float_(32, "ieee"), E.vec(2, E.float_(32, "ieee")),
+                 E.float_(32, "ieee")]),
+        }
+        for opcode, (given, expected) in cases.items():
+            self.assertEqual(
+                domain.apply_type_fills(opcode, given, profile), expected,
+                opcode)
+
+    def test_aarch64_fills_do_not_override_rule_slots(self):
+        profile = targets.get("aarch64")
+        # Slot 1 is the rule's own predicate slot here; the fill must not
+        # replace it even though G_SMULO normally fills slot 1 with i1.
+        types = [E.scalar(32), E.scalar(32)]
+        self.assertEqual(
+            domain.apply_type_fills("G_SMULO", types, profile,
+                                    used_slots={0, 1}), types)
 
 
 if __name__ == "__main__":

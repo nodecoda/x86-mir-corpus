@@ -4,17 +4,17 @@
   "config": "A2",
   "counts": {
    "budget": 0,
-   "construction_mismatch": 5649,
+   "construction_mismatch": 5977,
    "crash": 0,
-   "failed": 2982,
+   "failed": 2986,
    "hang": 0,
-   "legalized": 1986,
+   "legalized": 2250,
    "not_run": 0,
-   "unbuildable": 3237
+   "unbuildable": 2641
   },
-  "note": "13,854 atoms; crash/hang/budget/not_run all zero. 582/611 active rules verified, 37 pipeline_unreachable coverage rows excepted, 0 unprobed. Points file is committed; the report is reproducible with mir-run.",
+  "note": "13,854 atoms; crash/hang/budget/not_run all zero. 582/611 active rules verified, 37 pipeline_unreachable coverage rows excepted, 0 unprobed. Opcode type-arity fills close shape_arity (16 -> 0); the 7 remaining declared-but-unreachable rules are reported as shape_arity_unreachable. Points file is committed; the report is reproducible with mir-run.",
   "points_path": "corpora/aarch64/witness-A2.points.json",
-  "points_sha256": "c6f53f56a201adc4871f4b48a014f709de85b35735bd504768954b648cd34a59",
+  "points_sha256": "cdc84aa47e7b53e2997230947fbe24f2bf333c58c9f27d3d3eef05afc44e6bfa",
   "report_path": "corpora/aarch64/witness-A2.report.json",
   "target": "aarch64",
   "tier": "witness"

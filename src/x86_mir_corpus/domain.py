@@ -67,6 +67,65 @@ def opcode_type_slots(opcode):
     return entry[0] if entry else 0
 
 
+def fill_type(kind, types):
+    """One reviewed opcode fill, derived from the current type vector."""
+    base = types[0]
+    lanes = base[1] if E.is_vec(base) else None
+    if kind == "same0":
+        return base
+    if kind == "i1of0":
+        if not lanes:
+            return E.scalar(1)
+        return (E.scalable_vec(lanes, E.scalar(1)) if E.is_scalable(base)
+                else E.vec(lanes, E.scalar(1)))
+    if kind == "elem0":
+        return base[2] if E.is_vec(base) else base
+    if kind == "i1vec0":
+        if not lanes:
+            return E.scalar(1)
+        return (E.scalable_vec(lanes, E.scalar(1)) if E.is_scalable(base)
+                else E.vec(lanes, E.scalar(1)))
+    if kind == "f32shape0":
+        if not lanes:
+            return E.float_(32, "ieee")
+        elem = E.float_(32, "ieee")
+        return (E.scalable_vec(lanes, elem) if E.is_scalable(base)
+                else E.vec(lanes, elem))
+    if kind == "operand1":
+        return base if E.is_vec(base) else E.vec(4, E.scalar(32))
+    if kind == "vec4s32":
+        return E.vec(4, E.scalar(32))
+    if kind == "s64":
+        return E.scalar(64)
+    raise ValueError(f"unknown type fill {kind!r}")
+
+
+def apply_type_fills(opcode, types, profile=None, used_slots=None):
+    """Extend *types* to the opcode's declared arity with reviewed fills.
+
+    ``used_slots`` marks slots the rule actually constrains.  A slot outside it
+    was only a search placeholder (the probe pads with s32) and is replaced by
+    the opcode's fill, not preserved.  Without ``used_slots`` only missing
+    trailing slots are appended.
+    """
+    fills = getattr(profile, "type_fills", None) or {}
+    spec = fills.get(opcode)
+    if not spec or not types:
+        return list(types)
+    arity = opcode_type_slots(opcode)
+    out = list(types)
+    for idx in range(len(out), arity):
+        kind = spec.get(idx)
+        if kind is None:
+            return list(types)
+        out.append(fill_type(kind, out))
+    if used_slots is not None:
+        for idx, kind in spec.items():
+            if idx < len(out) and idx not in used_slots:
+                out[idx] = fill_type(kind, out)
+    return out
+
+
 def probe_slot_count(builder, opcode, profile=None):
     """Type slots a probe should carry for *opcode*.
 
@@ -2373,6 +2432,11 @@ def rule_probes(builder, classes, mem_classes, env, profile=None):
                         "query is not IR-reachable",
                         None, "pipeline_unreachable"))
                     continue
+                used = {0}
+                for node in rule.args:
+                    used |= predicate_slots(node, env)
+                types = apply_type_fills(opcode, list(types), profile,
+                                         used_slots=used)
                 out.append(point(builder.name, opcode, "rule", types,
                                  probe_mem, probe_align, rule.index))
             continue
@@ -2420,7 +2484,7 @@ COVER_ALL_METHODS = {
 }
 
 
-def construction_issues(result, table=None):
+def construction_issues(result, table=None, profile=None):
     """Static checks mirrored from LegalizerInfo.cpp's verifier.
 
     These do not change point generation; they make shape gaps and invalid
@@ -2429,6 +2493,8 @@ def construction_issues(result, table=None):
     """
     table = table or _dsl.load()
     arity = _dsl.opcode_arity(table)
+    fills = getattr(profile, "type_fills", None) or {}
+    unreachable = getattr(profile, "shape_arity_unreachable", None) or {}
     issues = []
     for builder in result.builders:
         known = [arity[op] for op in builder.opcodes if op in arity]
@@ -2440,15 +2506,47 @@ def construction_issues(result, table=None):
         # must not widen the shape it is checked against.
         shape = expected_types if expected_types is not None \
             else builder.num_slots
-        if expected_types and expected_types != builder.num_slots:
-            issues.append({
-                "rule_set": builder.name,
-                "rule_index": None,
-                "method": None,
-                "detail_code": "shape_arity",
-                "detail": (f"opcodes need {expected_types} type index(es); "
-                           f"rules describe {builder.num_slots}"),
-            })
+        if not fills:
+            if expected_types and expected_types != builder.num_slots:
+                issues.append({
+                    "rule_set": builder.name,
+                    "rule_index": None,
+                    "method": None,
+                    "detail_code": "shape_arity",
+                    "detail": (f"opcodes need {expected_types} type "
+                               f"index(es); rules describe "
+                               f"{builder.num_slots}"),
+                })
+        else:
+            for opcode in builder.opcodes:
+                entry = arity.get(opcode)
+                if entry is None or entry[0] <= builder.num_slots:
+                    continue
+                spec = fills.get(opcode) or {}
+                if all(idx in spec
+                       for idx in range(builder.num_slots, entry[0])):
+                    continue
+                reason = unreachable.get(opcode)
+                if reason:
+                    issues.append({
+                        "rule_set": builder.name,
+                        "rule_index": None,
+                        "method": None,
+                        "opcode": opcode,
+                        "detail_code": "shape_arity_unreachable",
+                        "detail": reason,
+                    })
+                    continue
+                issues.append({
+                    "rule_set": builder.name,
+                    "rule_index": None,
+                    "method": None,
+                    "opcode": opcode,
+                    "detail_code": "shape_arity",
+                    "detail": (f"{opcode} needs {entry[0]} type index(es); "
+                               f"rules describe {builder.num_slots} and no "
+                               "reviewed fill covers the rest"),
+                })
         for rule in builder.rules:
             mutation = rule.mutation
             if mutation:
@@ -2639,7 +2737,15 @@ def build_points(result, tier, exceptions=None, profile=None):
         points.extend(built)
         issues.extend(rule_issues)
 
-    construction = construction_issues(result)
+    if getattr(profile, "type_fills", None):
+        # Profile-gated so targets without reviewed fills keep byte-identical
+        # points (the X86 full-C2 SHA is a frozen gate).
+        for p in points:
+            filled = apply_type_fills(
+                p["opcode"], [E.parse_llt_name(name) for name in p["types"]],
+                profile)
+            p["types"] = [E.llt_name(t) for t in filled]
+    construction = construction_issues(result, profile=profile)
     points.sort(key=point_sort_key)
     counters = {}
     for p in points:

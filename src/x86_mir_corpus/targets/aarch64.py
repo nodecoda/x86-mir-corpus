@@ -159,6 +159,61 @@ RULE_PROBE_EXCLUSIONS = frozenset(
     (opcode, (types,)) for opcode, types in _UNREACHABLE_PROBE_TYPES)
 
 
+# Reviewed fills for type indices the source rules do not constrain.  Every
+# fill is derived from the descriptor's TableGen type layout (fed20e0e).
+TYPE_FILLS = {
+    # type1 is the carry-out: i1 with the result's shape.
+    "G_SMULO": {1: "i1of0"},
+    "G_UMULO": {1: "i1of0"},
+    # type1 is the shift amount; the funnel-shift contract requires it to
+    # match slot 0.
+    "G_ROTL": {1: "same0"},
+    "G_CTLZ_ZERO_POISON": {1: "same0"},
+    "G_CTTZ_ZERO_POISON": {1: "same0"},
+    # type1 is the sign source; same float type as the result.
+    "G_FCOPYSIGN": {1: "same0"},
+    # type1 is the scalar element the vector is built from.
+    "G_BUILD_VECTOR_TRUNC": {1: "elem0"},
+    # type2 is the accumulator; same scalar type as the reduction result.
+    "G_VECREDUCE_FADD": {2: "same0"},
+    # type1 is the lane mask: <N x i1> with the data vector's lanes.
+    "G_VECTOR_COMPRESS": {1: "i1vec0"},
+    # type1 is the classified value: a float with the result's shape.
+    "G_IS_FPCLASS": {1: "f32shape0"},
+    # type1 is the compared values; a representative integer vector when the
+    # three-way result is scalar.
+    "G_SCMP": {1: "operand1"},
+    "G_UCMP": {1: "operand1"},
+}
+
+# Rules whose opcodes declare type indices the corpus cannot fill: they have a
+# non-generic operand with no reviewed immediate (indexed addressing AM,
+# insert-subvector index) or are unbuildable by policy (dynamic stack alloc,
+# libcall-only bzero).  The rule stays visible with this reviewed reason.
+SHAPE_ARITY_UNREACHABLE = {
+    "G_INSERT_SUBVECTOR":
+        "subvector index immediate has no reviewed value; the rule cannot be "
+        "constructed from MIR",
+    "G_INDEXED_LOAD":
+        "indexed addressing AM immediate has no reviewed value; the rule "
+        "cannot be constructed from MIR",
+    "G_INDEXED_SEXTLOAD":
+        "indexed addressing AM immediate has no reviewed value; the rule "
+        "cannot be constructed from MIR",
+    "G_INDEXED_ZEXTLOAD":
+        "indexed addressing AM immediate has no reviewed value; the rule "
+        "cannot be constructed from MIR",
+    "G_INDEXED_STORE":
+        "indexed addressing AM immediate has no reviewed value; the rule "
+        "cannot be constructed from MIR",
+    "G_DYN_STACKALLOC":
+        "dynamic stack allocation is unbuildable by the reviewed policy",
+    "G_BZERO":
+        "libcall lowering is disabled and the tailcall immediate has no "
+        "reviewed value",
+}
+
+
 PROFILE = TargetProfile(
     name="aarch64",
     source_path="llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
@@ -173,5 +228,7 @@ PROFILE = TargetProfile(
     llt_extended=True,
     probe_opcode_arity=True,
     rule_probe_exclusions=RULE_PROBE_EXCLUSIONS,
+    type_fills=TYPE_FILLS,
+    shape_arity_unreachable=SHAPE_ARITY_UNREACHABLE,
     feature_aliases=_aliases,
 )

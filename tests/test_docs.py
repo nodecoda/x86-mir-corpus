@@ -32,7 +32,7 @@ class SurfaceDocTest(unittest.TestCase):
 
     def test_every_construction_detail_code_is_documented(self):
         for code in ("mutation_type_idx", "mutation_source_slot", "shape_arity",
-                     "imm_idx", "imm_coverage"):
+                     "shape_arity_unreachable", "imm_idx", "imm_coverage"):
             self.assertIn(f"`{code}`", self.surface, code)
 
     def test_triage_covers_every_legalize_action(self):

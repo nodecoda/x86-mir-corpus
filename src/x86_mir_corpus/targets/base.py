@@ -34,6 +34,16 @@ class TargetProfile:
     # rule is reported as a pipeline_unreachable coverage issue, never silently
     # counted as verified.
     rule_probe_exclusions: frozenset = frozenset()
+    # Opcode -> {missing type index: fill kind}.  The opcode descriptor
+    # declares more generic type indices than the rules constrain (carry flags,
+    # masks, reduction accumulators); without a reviewed fill every point for
+    # that opcode is unbuildable.
+    type_fills: Mapping[str, Mapping[int, str]] = field(default_factory=dict)
+    # Opcode -> reviewed reason it cannot be filled: the rule is reachable in
+    # the source but no corpus construction can reach it (unbuildable policy or
+    # an immediate with no reviewed value).  Reported as
+    # ``shape_arity_unreachable`` instead of an open construction gap.
+    shape_arity_unreachable: Mapping[str, str] = field(default_factory=dict)
     feature_aliases: Callable[[dict], dict] | None = field(default=None)
 
     def features(self, config):
