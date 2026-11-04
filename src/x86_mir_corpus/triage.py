@@ -154,9 +154,9 @@ def cluster_report(report, corpus, corpus_path, driver=None, build=None):
 
 def cluster(report_path, corpus_path, out_path, driver=None, build=None,
             markdown=None):
-    with open(report_path, "r", encoding="utf-8") as handle:
+    with open(report_path, encoding="utf-8") as handle:
         report = json.load(handle)
-    with open(corpus_path, "r", encoding="utf-8") as handle:
+    with open(corpus_path, encoding="utf-8") as handle:
         corpus = json.load(handle)
     payload = cluster_report(report, corpus, corpus_path, driver=driver,
                              build=build)
@@ -219,20 +219,20 @@ def _run_atom(corpus_path, atom_id, driver=None, build=None):
             command += ["--driver", driver]
         elif build:
             command += ["--build", build]
-        proc = subprocess.run(command, stdout=subprocess.PIPE,
-                              stderr=subprocess.PIPE, text=True)
+        proc = subprocess.run(command, capture_output=True,
+                              text=True)
         if not os.path.exists(out):
             raise SystemExit(
                 f"triage verify: no report for {atom_id}: "
                 f"{proc.stderr.strip() or f'exit {proc.returncode}'}")
-        with open(out, "r", encoding="utf-8") as handle:
+        with open(out, encoding="utf-8") as handle:
             report = json.load(handle)
     atom = next(a for a in report["atoms"] if a["id"] == atom_id)
     return proc.returncode, atom
 
 
 def verify(clusters_path, corpus_path, out_path, driver=None, build=None):
-    with open(clusters_path, "r", encoding="utf-8") as handle:
+    with open(clusters_path, encoding="utf-8") as handle:
         clusters = json.load(handle)
     checks = []
     for kind, key in (("crash", "crash_clusters"),

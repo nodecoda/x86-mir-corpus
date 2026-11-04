@@ -7,3 +7,7 @@ dist/
 .build/
 .omx/
 corpora/full/*.json
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.log

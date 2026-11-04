@@ -10,9 +10,8 @@ import os
 
 from . import expr as E
 from .lexer import matching
-from .parse import eval_int, eval_list, parse_args
-from .target import (BOUNDARY_PANEL, DEEP_PANEL, SKIP_WITNESS_SLOT1_AS,
-                    feature_env)
+from .parse import eval_int, parse_args
+from .target import BOUNDARY_PANEL, DEEP_PANEL, SKIP_WITNESS_SLOT1_AS, feature_env
 
 
 def sorted_llts(values):
@@ -43,7 +42,7 @@ def point(rule_set, opcode, origin, types, mem=None, align=0, rule_index=None):
 def align_classes(aligns):
     # class 0 is "below every threshold"; class N is threshold N-1.
     thresholds = sorted(int(a) for a in aligns)
-    return [0] + thresholds
+    return [0, *thresholds]
 
 
 def rep_class(classes):
@@ -190,10 +189,10 @@ def address_space(builder, classes):
 
     def emit(opcode, types, mem=None, al=0):
         name = builder.name
-        if name in SKIP_WITNESS_SLOT1_AS:
-            if len(types) == 2 and types[0] == p0 and types[1] in (p1, p2) \
-                    and (mem is None or mem == p0):
-                return
+        if (name in SKIP_WITNESS_SLOT1_AS and len(types) == 2
+                and types[0] == p0 and types[1] in (p1, p2)
+                and (mem is None or mem == p0)):
+            return
         out.append(point(name, opcode, "as", types, mem, al))
 
     for opcode in builder.opcodes:
@@ -549,7 +548,8 @@ def list_matches(entries, types, mem, align):
                 return True
             continue
         llts = [x for x in item if E.is_llt(x)]
-        if len(llts) == len(types) and all(a == b for a, b in zip(llts, types)):
+        if len(llts) == len(types) and all(
+                a == b for a, b in zip(llts, types, strict=True)):
             return True
     return False
 
@@ -833,7 +833,7 @@ def probe_candidates(builder, rule, classes, rep, mem, opcode=None):
         for item in entries or []:
             got = item_to_probe(item)
             if got is not None:
-                out.append(got + ("decided",))
+                out.append((*got, "decided"))
         return out
 
     if method in ("legalForCartesianProduct", "customForCartesianProduct",
@@ -937,15 +937,15 @@ def probe_candidates(builder, rule, classes, rep, mem, opcode=None):
             return []
         got = pred_witness(rule.args[0], classes)
         if got is not None:
-            return [got + ("decided",)]
+            return [(*got, "decided")]
         lam = next((x for x in rule.args if isinstance(x, E.Lambda)), None)
         got = probe_from_lambda(lam, classes, rep, mem, opcode)
-        return [got + ("opaque",)] if got is not None else []
+        return [(*got, "opaque")] if got is not None else []
 
     if method in ("customIf", "legalIf", "lowerIf"):
         lam = next((x for x in rule.args if isinstance(x, E.Lambda)), None)
         got = probe_from_lambda(lam, classes, rep, mem, opcode)
-        return [got + ("opaque",)] if got is not None else []
+        return [(*got, "opaque")] if got is not None else []
 
     return []
 
@@ -1013,7 +1013,7 @@ def _search_rule_shape(builder, rule, classes, mem_classes, rep, mem, env,
         mem_variants = [probe_mem]
         if builder.has_mem and memdesc is None:
             mem_variants = sorted_llts(set(
-                [probe_mem] + list(mem_classes) + [base[0]]))
+                [probe_mem, *list(mem_classes), base[0]]))
         for candidate_mem in mem_variants:
             for types in types_variants(base, set(slots), builder, classes):
                 own = rule_matches(rule, types, candidate_mem,
@@ -1087,9 +1087,8 @@ def exception_matches(entry, issue):
         return False
     if "arg" in entry and entry["arg"] != issue["arg"]:
         return False
-    if "arg_contains" in entry and entry["arg_contains"] not in issue["arg"]:
-        return False
-    return True
+    return not ("arg_contains" in entry
+                and entry["arg_contains"] not in issue["arg"])
 
 
 def load_coverage_exceptions(path=None):
@@ -1100,14 +1099,13 @@ def load_coverage_exceptions(path=None):
             path = os.path.join(package, "coverage_exceptions.json")
     if not os.path.exists(path):
         return []
-    with open(path, "r", encoding="utf-8") as handle:
+    with open(path, encoding="utf-8") as handle:
         data = json.load(handle)
     return data.get("exceptions", [])
 
 
 def coverage_report(result, points, issues, inactive, exceptions):
     active_keys = set()
-    builders = {b.name: b for b in result.builders}
     for builder in result.builders:
         for rule in builder.rules:
             if rule.active is not False:

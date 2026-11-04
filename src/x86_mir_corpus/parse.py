@@ -2,9 +2,8 @@
 
 from dataclasses import dataclass, field
 
-from .lexer import lex, matching
 from . import expr as E
-
+from .lexer import lex, matching
 
 # Methods that read a type slot as their first argument.
 SLOT0_METHODS = {
@@ -272,12 +271,15 @@ class BodyParser:
         value = eval_safe_tokens(self.toks[cond_open + 1:cond_close], env)
         # A definite condition is pruned: this is how the LOAD/STORE else branch
         # and the config-specific legalFor lists stay out of the wrong builder.
-        then_guards = guards + [(cond_text, value)]
+        then_guards = [*guards, (cond_text, value)]
         k = cond_close + 1
         k = self.parse_branch(k, end, env, then_guards, take=value is not False)
         if k < end and self.toks[k].text == "else":
             k += 1
-            other_guards = guards + [("!(" + cond_text + ")", None if value is None else not value)]
+            other_guards = [
+                *guards,
+                ("!(" + cond_text + ")", None if value is None else not value),
+            ]
             k = self.parse_branch(k, end, env, other_guards, take=value is not True)
         return k
 
@@ -367,7 +369,8 @@ class BodyParser:
             node = E.Parser(self.toks, open_i + 1, close).parse_expr()
             value = E.eval_expr(node, env)
         except E.ExprError as err:
-            raise E.ExprError(f"bad opcode argument at line {self.toks[i].line}: {err}")
+            raise E.ExprError(
+                f"bad opcode argument at line {self.toks[i].line}: {err}") from err
         opcodes = opcode_list(value)
         if not opcodes:
             raise E.ExprError(f"empty opcode set at line {self.toks[i].line}")

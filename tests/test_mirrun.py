@@ -8,15 +8,12 @@ import hashlib
 import json
 import os
 import signal
-import subprocess
-import sys
 import tempfile
 import time
 import unittest
 
 import testlib
 from x86_mir_corpus import mirrun
-
 
 FAKE_DRIVER = r'''#!/usr/bin/env python3
 import json
@@ -240,13 +237,13 @@ class MirRunTest(unittest.TestCase):
                                 env=env or self.environ())
 
     def read_json(self, name):
-        with open(self.path(name), "r", encoding="utf-8") as handle:
+        with open(self.path(name), encoding="utf-8") as handle:
             return json.load(handle)
 
     def read_trace(self):
         if not os.path.exists(self.trace_path):
             return []
-        with open(self.trace_path, "r", encoding="utf-8") as handle:
+        with open(self.trace_path, encoding="utf-8") as handle:
             return [json.loads(line) for line in handle if line.strip()]
 
     def report_atom(self, report, atom_id):

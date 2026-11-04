@@ -1,11 +1,9 @@
 import os
 import unittest
 
-import testlib  # noqa: F401  (sets sys.path)
-from x86_mir_corpus import parse
-from x86_mir_corpus import verify
+import testlib
+from x86_mir_corpus import parse, verify
 from x86_mir_corpus.target import CONFIGS
-
 
 MINI = """\
 X86LegalizerInfo::X86LegalizerInfo(const X86Subtarget &STI) : Subtarget(STI) {
@@ -76,7 +74,7 @@ class VerifyTest(unittest.TestCase):
         result = parse.parse_source(text, info, "C2", CONFIGS["C2"])
         from x86_mir_corpus import emit
         ast = emit.ast_document(result, info)
-        with open(inc, "r", encoding="utf-8") as handle:
+        with open(inc, encoding="utf-8") as handle:
             td = verify.parse_td_inc(handle.read())
         report = verify.build_report(ast, td)
         classes = {x["rule_set"]: x["class"] for x in report["rule_ledger"]}

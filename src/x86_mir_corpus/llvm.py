@@ -16,8 +16,7 @@ import shutil
 import subprocess
 import sys
 
-from . import __version__
-from . import schemas
+from . import __version__, schemas
 
 DOCTOR_SCHEMA = "x86-mir-corpus-doctor"
 DOCTOR_VERSION = 1
@@ -60,7 +59,7 @@ def load_config(path=None):
         if not candidate:
             continue
         try:
-            with open(candidate, "r", encoding="utf-8") as handle:
+            with open(candidate, encoding="utf-8") as handle:
                 data = json.load(handle)
         except (OSError, ValueError):
             continue
@@ -82,8 +81,7 @@ def find_paths(llvm_src=None, llvm_build=None, sidecar_build=None):
 
 def _git(root, *args):
     proc = subprocess.run(["git", "-C", root, *args],
-                          stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                          text=True)
+                          capture_output=True, text=True)
     if proc.returncode != 0:
         return None
     return proc.stdout
@@ -102,7 +100,7 @@ def _cmake_var(text, name):
 def llvm_build_info(build):
     config = os.path.join(build, "lib", "cmake", "llvm", "LLVMConfig.cmake")
     try:
-        with open(config, "r", encoding="utf-8") as handle:
+        with open(config, encoding="utf-8") as handle:
             text = handle.read()
     except OSError:
         return None
@@ -130,7 +128,7 @@ def sidecar_binaries(build):
 def sidecar_build_info(build):
     path = os.path.join(build, "sidecar-build-info.json")
     try:
-        with open(path, "r", encoding="utf-8") as handle:
+        with open(path, encoding="utf-8") as handle:
             return json.load(handle)
     except (OSError, ValueError):
         return None
@@ -150,7 +148,7 @@ def _sidecar_source_dir():
 def supported_revisions():
     path = os.path.join(PACKAGE_DIR, "assets", "supported-revisions.json")
     try:
-        with open(path, "r", encoding="utf-8") as handle:
+        with open(path, encoding="utf-8") as handle:
             return json.load(handle).get("revisions", [])
     except (OSError, ValueError):
         return []
@@ -158,7 +156,7 @@ def supported_revisions():
 
 def read_provenance(path=PROVENANCE_PATH):
     try:
-        with open(path, "r", encoding="utf-8") as handle:
+        with open(path, encoding="utf-8") as handle:
             return json.load(handle)
     except (OSError, ValueError):
         return None
@@ -194,7 +192,7 @@ def check_provenance(llvm_src, provenance=None):
                               "X86LegalizerInfoReference.cpp") \
             if sidecar else frozen
     try:
-        with open(frozen, "r", encoding="utf-8") as handle:
+        with open(frozen, encoding="utf-8") as handle:
             result["frozen_builders"] = handle.read().count(
                 "getActionDefinitionsBuilder")
     except OSError:
@@ -305,9 +303,9 @@ def doctor(llvm_src=None, llvm_build=None, sidecar_build=None,
             reasons.append("sidecar build info has an unexpected schema")
         if info is not None and build_info.get("llvm_version") != info["version"]:
             reasons.append("sidecar and LLVM build versions differ")
-        if build_info.get("llvm_source_dir") and src:
-            if _real(build_info["llvm_source_dir"]) != llvm_source_dir(src):
-                reasons.append("sidecar was built from a different LLVM source")
+        if (build_info.get("llvm_source_dir") and src
+                and _real(build_info["llvm_source_dir"]) != llvm_source_dir(src)):
+            reasons.append("sidecar was built from a different LLVM source")
 
     report["provenance"] = check_provenance(src)
     if not report["provenance"]["ok"]:

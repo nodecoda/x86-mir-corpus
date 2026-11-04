@@ -6,6 +6,16 @@ on:
   workflow_dispatch:
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: ruff check src tests
+
   python:
     runs-on: ubuntu-latest
     strategy:
@@ -16,8 +26,24 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
-      - run: pip install -e .
+      - run: pip install -e ".[dev]"
       - run: python -m unittest discover -s tests -q
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install build
+      - run: python -m build --wheel
+      - run: |
+          python -m venv smoke
+          . smoke/bin/activate
+          pip install dist/*.whl
+          x86-mir-corpus --help
+          x86-mir-corpus parse --help >/dev/null
 
   sidecar:
     # Self-hosted runner with a pinned LLVM build and cached corpora.
@@ -34,3 +60,4 @@ jobs:
       - run: python -m unittest discover -s tests -p 'test_sidecar_parity.py' -v
         env:
           X86_MIR_SIDECAR_BUILD: ${{ github.workspace }}/.build
+          X86_MIR_PARITY: "1"

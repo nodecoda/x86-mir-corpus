@@ -1,14 +1,15 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "x86-mir-corpus"
-version = "0.1.0"
+version = "0.2.0"
 description = "X86 legalizer corpus reader and MIR legalization corpus supervisor"
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "Apache-2.0 WITH LLVM-exception" }
+license = "Apache-2.0 WITH LLVM-exception"
+license-files = ["LICENSE", "NOTICE"]
 authors = [{ name = "x86-mir-corpus contributors" }]
 keywords = ["llvm", "x86", "globalisel", "legalizer", "mir"]
 classifiers = [
@@ -24,7 +25,11 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
-dev = []
+dev = [
+  "build>=1.2",
+  "pytest>=8",
+  "ruff>=0.5",
+]
 
 [project.scripts]
 x86-mir-corpus = "x86_mir_corpus.cli:main"
@@ -40,3 +45,22 @@ x86_mir_corpus = [
   "assets/*.json",
   "assets/source-snapshots/*.cpp",
 ]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+extend-exclude = ["build", "*.egg-info", "corpora"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B", "UP", "SIM", "RUF"]
+# E501: formatting is handled separately; the codebase predates ruff.
+# RUF059: tests unpack tuples for readability and intentionally ignore fields.
+ignore = ["E501", "RUF059"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["x86_mir_corpus", "testlib"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"

@@ -3,7 +3,6 @@ import unittest
 import testlib
 from x86_mir_corpus import expr as E
 
-
 MINI = """\
 X86LegalizerInfo::X86LegalizerInfo(const X86Subtarget &STI) : Subtarget(STI) {
   const LLT s8 = LLT::scalar(8);
@@ -67,7 +66,7 @@ class ParseTest(unittest.TestCase):
         c3 = builder(testlib.parse_text(MINI, "C3"), "X86_LOAD")
         self.assertEqual(len(c3.rules), 1)
         # C3 has no AVX2, so the else branch is the active one.
-        self.assertEqual(E.llt_name(list(c3.mem_classes)[0]), "s8")
+        self.assertEqual(E.llt_name(next(iter(c3.mem_classes))), "s8")
         self.assertEqual(c3.rules[0].guard[0][1], True)
         self.assertTrue(c3.rules[0].guard[0][0].startswith("!("))
 

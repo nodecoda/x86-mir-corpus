@@ -5,6 +5,7 @@ their guards use.  It deliberately does not try to be a C++ interpreter: an
 unknown construct raises and the caller records it.
 """
 
+import contextlib
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -394,14 +395,14 @@ def eval_expr(node, env):
         raise EvalError(f"unsupported unary {node.op}")
     if isinstance(node, Binary):
         if node.op == "&&":
-            l = eval_expr(node.left, env)
-            return truthy(l) and truthy(eval_expr(node.right, env))
+            lhs = eval_expr(node.left, env)
+            return truthy(lhs) and truthy(eval_expr(node.right, env))
         if node.op == "||":
-            l = eval_expr(node.left, env)
-            return truthy(l) or truthy(eval_expr(node.right, env))
-        l = eval_expr(node.left, env)
-        r = eval_expr(node.right, env)
-        return apply_binary(node.op, l, r)
+            lhs = eval_expr(node.left, env)
+            return truthy(lhs) or truthy(eval_expr(node.right, env))
+        lhs = eval_expr(node.left, env)
+        rhs = eval_expr(node.right, env)
+        return apply_binary(node.op, lhs, rhs)
     if isinstance(node, Ternary):
         return eval_expr(node.then if truthy(eval_expr(node.cond, env)) else node.other, env)
     if isinstance(node, ListLit):
@@ -415,39 +416,39 @@ def eval_expr(node, env):
     raise EvalError(f"cannot evaluate {node!r}")
 
 
-def apply_binary(op, l, r):
+def apply_binary(op, lhs, rhs):
     if op == "+":
-        return l + r
+        return lhs + rhs
     if op == "-":
-        return l - r
+        return lhs - rhs
     if op == "*":
-        return l * r
+        return lhs * rhs
     if op == "/":
-        return l // r
+        return lhs // rhs
     if op == "%":
-        return l % r
+        return lhs % rhs
     if op == "<<":
-        return l << r
+        return lhs << rhs
     if op == ">>":
-        return l >> r
+        return lhs >> rhs
     if op == "&":
-        return l & r
+        return lhs & rhs
     if op == "|":
-        return l | r
+        return lhs | rhs
     if op == "^":
-        return l ^ r
+        return lhs ^ rhs
     if op == "==":
-        return l == r
+        return lhs == rhs
     if op == "!=":
-        return l != r
+        return lhs != rhs
     if op == "<":
-        return l < r
+        return lhs < rhs
     if op == ">":
-        return l > r
+        return lhs > rhs
     if op == "<=":
-        return l <= r
+        return lhs <= rhs
     if op == ">=":
-        return l >= r
+        return lhs >= rhs
     raise EvalError(f"unsupported operator {op}")
 
 
@@ -550,22 +551,18 @@ _PRED_SLOT1 = {
     "scalarNarrowerThan", "scalarOrEltNarrowerThan", "scalarWiderThan",
     "sizeNotPow2", "isScalar", "isPointer", "isVector",
 }
-_PRED_SLOT2 = {"typePairInSet", "typePairIs", "typePairInSet"}
+_PRED_SLOT2 = {"typePairInSet", "typePairIs"}
 
 
 def collect_slots(node, env, out):
     if isinstance(node, Call):
         if node.name in _PRED_SLOT1 and node.args:
-            try:
+            with contextlib.suppress(EvalError, TypeError, ValueError):
                 out.add(int(eval_expr(node.args[0], env)))
-            except (EvalError, TypeError, ValueError):
-                pass
         if node.name in _PRED_SLOT2 and len(node.args) >= 2:
             for a in node.args[:2]:
-                try:
+                with contextlib.suppress(EvalError, TypeError, ValueError):
                     out.add(int(eval_expr(a, env)))
-                except (EvalError, TypeError, ValueError):
-                    pass
         for a in node.args:
             collect_slots(a, env, out)
     elif isinstance(node, ListLit):
@@ -587,10 +584,8 @@ def collect_slots(node, env, out):
             if body[i].text == "Types" and i + 1 < len(body) and body[i + 1].text == "[":
                 j = i + 2
                 if body[j].kind == "num":
-                    try:
+                    with contextlib.suppress(ValueError):
                         out.add(int(body[j].text))
-                    except ValueError:
-                        pass
                 elif body[j].kind == "id" and isinstance(env.get(body[j].text), int):
                     out.add(env[body[j].text])
                 i = j

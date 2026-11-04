@@ -6,12 +6,15 @@ an LLVM build/corpus directory is available:
     X86_MIR_SIDECAR_BUILD=<sidecar build dir>     # default <repo>/.build
     X86_MIR_LLVM_BUILD=<llvm build dir>           # for the legacy X86Tests
     X86_MIR_CORPUS_DIR=<dir with up-C{0..3}.json> # cached corpora
+
+The pinned-baseline test is additionally opt-in through ``X86_MIR_PARITY=1``:
+it compares against a witness recorded on one LLVM revision, so it must not
+fail on a checkout whose LLVM has drifted.  See ``docs/PRODUCTIZATION.md``.
 """
 
 import json
 import os
 import subprocess
-import sys
 import tempfile
 import unittest
 
@@ -23,6 +26,7 @@ SIDECAR_ORACLE = testlib.sidecar_binary("x86-mir-oracle")
 IN_TREE = testlib.in_tree_driver()
 BASELINE = os.path.join(testlib.TOOL_DIR, "src", "x86_mir_corpus", "assets",
                         "mir-baseline-witness.json")
+PARITY_ENABLED = os.environ.get("X86_MIR_PARITY") == "1"
 
 
 def corpus(name):
@@ -72,7 +76,7 @@ class MirParityTest(unittest.TestCase):
         # Exit 1 means the report is complete but A3 (zero new findings) is
         # not met; that is the expected state of the current baseline.
         self.assertIn(proc.returncode, (0, 1), proc.stderr)
-        with open(out, "r", encoding="utf-8") as handle:
+        with open(out, encoding="utf-8") as handle:
             return json.load(handle)
 
     def test_sidecar_mir_matches_in_tree_driver_c2(self):
@@ -95,9 +99,13 @@ class MirParityTest(unittest.TestCase):
         self.assertEqual(diffs, [])
 
     def test_four_config_counts_match_baseline(self):
+        if not PARITY_ENABLED:
+            self.skipTest(
+                "pinned-baseline parity is opt-in; set X86_MIR_PARITY=1 and "
+                "use the LLVM revision the witness was recorded on")
         if SIDECAR_RUN is None:
             self.skipTest("sidecar driver is missing")
-        with open(BASELINE, "r", encoding="utf-8") as handle:
+        with open(BASELINE, encoding="utf-8") as handle:
             baseline = json.load(handle)["configs"]
         missing = [config for config in baseline
                    if corpus(f"up-{config}.json") is None]

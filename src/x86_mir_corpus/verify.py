@@ -6,7 +6,6 @@ corpus generator; it only reports where the two ledgers differ.
 
 import re
 
-
 ROW_RE = re.compile(
     r'\{"(X86_[^"]+)",\s*"(G_[^"]+)",\s*\{[^}]*\},\s*\{[^}]*\},\s*'
     r'(?:true|false),\s*\d+,\s*(\d+),\s*(\d+)\}')

@@ -120,12 +120,12 @@ def parse_jsonl(text):
 
 def load_corpus(path):
     try:
-        with open(path, "r", encoding="utf-8") as handle:
+        with open(path, encoding="utf-8") as handle:
             doc = json.load(handle)
     except OSError as err:
-        raise MirRunInfraError(f"cannot read corpus {path}: {err}")
+        raise MirRunInfraError(f"cannot read corpus {path}: {err}") from err
     except ValueError as err:
-        raise MirRunInfraError(f"corpus {path} is not valid JSON: {err}")
+        raise MirRunInfraError(f"corpus {path} is not valid JSON: {err}") from err
     if not isinstance(doc, dict):
         raise MirRunInfraError(f"corpus {path} is not a JSON object")
     return doc
@@ -966,10 +966,10 @@ def _run_shard(binary, corpus_path, out_path, rules, max_steps, shard_index,
     except subprocess.TimeoutExpired:
         timed_out = True
     except OSError as err:
-        raise MirRunInfraError(f"cannot run driver {binary}: {err}")
+        raise MirRunInfraError(f"cannot run driver {binary}: {err}") from err
     stderr = ""
     try:
-        with open(stderr_path, "r", encoding="utf-8") as stderr_handle:
+        with open(stderr_path, encoding="utf-8") as stderr_handle:
             stderr = stderr_handle.read()
     except OSError:
         pass
@@ -989,7 +989,7 @@ def _run_shard(binary, corpus_path, out_path, rules, max_steps, shard_index,
                 "driver did not create its JSONL output "
                 f"{out_path} (exit {returncode})")
     else:
-        with open(out_path, "r", encoding="utf-8") as handle:
+        with open(out_path, encoding="utf-8") as handle:
             text = handle.read()
     events = parse_jsonl(text)
     return classify_shard(

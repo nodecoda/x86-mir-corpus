@@ -3,15 +3,12 @@ import io
 import json
 import os
 import subprocess
-import sys
 import tempfile
 import unittest
 from unittest import mock
 
 import testlib
-from x86_mir_corpus import cli
-from x86_mir_corpus import oracle
-
+from x86_mir_corpus import cli, oracle
 
 MINI = """\
 X86LegalizerInfo::X86LegalizerInfo(const X86Subtarget &STI) : Subtarget(STI) {
@@ -63,7 +60,7 @@ class CliTest(unittest.TestCase):
         proc = run_cli("parse", "--input", self.src, "--allow-opaque",
                        "--out", self.out("a.json"))
         self.assertEqual(proc.returncode, 0, proc.stderr)
-        with open(self.out("a.json"), "r", encoding="utf-8") as handle:
+        with open(self.out("a.json"), encoding="utf-8") as handle:
             doc = json.load(handle)
         self.assertEqual(doc["census"]["builders"], 1)
         self.assertEqual(doc["unknown_methods"][0]["method"], "frobnicate")
@@ -133,7 +130,7 @@ class CliTest(unittest.TestCase):
                        "--td-inc", inc, "--known-deltas", deltas,
                        "--out", self.out("rep2.json"))
         self.assertEqual(proc.returncode, 0, proc.stderr)
-        with open(self.out("rep2.json"), "r", encoding="utf-8") as handle:
+        with open(self.out("rep2.json"), encoding="utf-8") as handle:
             report = json.load(handle)
         self.assertEqual(report["unexplained"], [])
         self.assertEqual(report["known_deltas_used"],
@@ -146,7 +143,7 @@ class CliTest(unittest.TestCase):
         proc = run_cli("corpus", "--input", self.src, "--oracle=none",
                        "--allow-coverage-gaps", "--out", self.out("shapes.json"))
         self.assertEqual(proc.returncode, 0, proc.stderr)
-        with open(self.out("shapes.json"), "r", encoding="utf-8") as handle:
+        with open(self.out("shapes.json"), encoding="utf-8") as handle:
             doc = json.load(handle)
         self.assertEqual(doc["oracle"]["kind"], "none")
         self.assertFalse(doc["oracle"]["cross_revision"])
@@ -156,7 +153,7 @@ class CliTest(unittest.TestCase):
 
 
 def fake_reference_fill(build, points_path, out_path):
-    with open(points_path, "r", encoding="utf-8") as handle:
+    with open(points_path, encoding="utf-8") as handle:
         doc = json.load(handle)
     doc["schema"] = cli.CORPUS_SCHEMA
     doc["atoms"] = doc.pop("points")
@@ -210,7 +207,7 @@ class CrossRevisionTest(unittest.TestCase):
             out = os.path.join(self.tmp.name, "corpus.json")
             with contextlib.redirect_stdout(io.StringIO()):
                 cli.main(self.corpus_args(out, "--allow-cross-revision"))
-        with open(out, "r", encoding="utf-8") as handle:
+        with open(out, encoding="utf-8") as handle:
             doc = json.load(handle)
         self.assertEqual(doc["oracle"]["kind"], "reference")
         self.assertTrue(doc["oracle"]["cross_revision"])
@@ -231,7 +228,7 @@ class CrossRevisionTest(unittest.TestCase):
         proc = run_cli("points", "--input", path, "--allow-coverage-gaps",
                        "--out", self.out("p2.json"))
         self.assertEqual(proc.returncode, 0, proc.stderr)
-        with open(self.out("p2.json"), "r", encoding="utf-8") as handle:
+        with open(self.out("p2.json"), encoding="utf-8") as handle:
             doc = json.load(handle)
         self.assertEqual(len(doc["coverage"]["rules"]["unprobed"]), 1)
         self.assertEqual(doc["coverage"]["rules"]["unprobed"][0]["rule_set"],
@@ -244,14 +241,14 @@ class CrossRevisionTest(unittest.TestCase):
         proc = subprocess.run(
             ["git", "-C", root, "rev-parse", "--verify",
              "upstream/main^{commit}"],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            capture_output=True, text=True)
         if proc.returncode != 0:
             self.skipTest("upstream/main is not available")
         expected = proc.stdout.strip()
         out = self.out("upstream.json")
         proc = run_cli("parse", "--source-rev", "upstream/main", "--out", out)
         self.assertEqual(proc.returncode, 0, proc.stderr)
-        with open(out, "r", encoding="utf-8") as handle:
+        with open(out, encoding="utf-8") as handle:
             doc = json.load(handle)
         self.assertEqual(doc["source"]["rev"], "upstream/main")
         self.assertEqual(doc["source"]["revision"], expected)
@@ -269,7 +266,7 @@ class MigrateTest(unittest.TestCase):
             out = os.path.join(tmp, "witness-v2.json")
             proc = run_cli("migrate", "--input", source, "--out", out)
             self.assertEqual(proc.returncode, 0, proc.stderr)
-            with open(out, "r", encoding="utf-8") as handle:
+            with open(out, encoding="utf-8") as handle:
                 doc = json.load(handle)
         self.assertEqual(doc["version"], 2)
         self.assertEqual(doc["migrated_from_version"], 1)

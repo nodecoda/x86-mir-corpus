@@ -5,7 +5,6 @@ import os
 
 from . import expr as E
 
-
 AST_SCHEMA = "llvm-x86-legalizer-cpp-ast"
 POINTS_SCHEMA = "llvm-x86-legalizer-points"
 VERSION = 2

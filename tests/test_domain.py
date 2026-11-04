@@ -3,12 +3,10 @@ import re
 import tempfile
 import unittest
 
-import testlib  # noqa: F401  (sets sys.path)
-from x86_mir_corpus import domain
-from x86_mir_corpus import emit
+import testlib
+from x86_mir_corpus import domain, emit, parse
 from x86_mir_corpus import expr as E
 from x86_mir_corpus.target import CONFIGS
-from x86_mir_corpus import parse
 
 MINI = """\
 X86LegalizerInfo::X86LegalizerInfo(const X86Subtarget &STI) : Subtarget(STI) {

@@ -5,9 +5,8 @@ import os
 import tempfile
 import unittest
 
-import testlib  # noqa: F401  (sets sys.path)
-from x86_mir_corpus import cli
-from x86_mir_corpus import corpusdiff
+import testlib
+from x86_mir_corpus import cli, corpusdiff
 
 
 def atom(opcode, types, expected=None, rule_set="X86_ADD", mem=None,
@@ -170,15 +169,15 @@ class CorpusDiffCliTest(unittest.TestCase):
         out = os.path.join(self.tmp.name, "diff.json")
         with contextlib.redirect_stdout(io.StringIO()):
             cli.main(["diff", "--left", left, "--right", right, "--out", out])
-        with open(out, "r", encoding="utf-8") as handle:
+        with open(out, encoding="utf-8") as handle:
             report = json.load(handle)
         self.assertEqual(report["schema"], "llvm-x86-legalizer-corpus-diff")
         self.assertEqual(len(report["expected_diff"]), 1)
 
-        with self.assertRaises(SystemExit) as caught:
-            with contextlib.redirect_stdout(io.StringIO()):
-                cli.main(["diff", "--left", left, "--right", right,
-                          "--out", out, "--strict"])
+        with self.assertRaises(SystemExit) as caught, \
+                contextlib.redirect_stdout(io.StringIO()):
+            cli.main(["diff", "--left", left, "--right", right,
+                      "--out", out, "--strict"])
         self.assertEqual(caught.exception.code, 1)
 
 

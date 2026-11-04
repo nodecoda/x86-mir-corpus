@@ -1,6 +1,5 @@
 """Unit tests for LLVM discovery and doctor checks (no LLVM required)."""
 
-import json
 import os
 import tempfile
 import unittest

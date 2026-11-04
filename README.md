@@ -36,9 +36,21 @@ x86-mir-corpus --help
 ```
 
 Bundled witness corpora and reports live in `corpora/` (see
-`corpora/README.md`).  Requires Python >= 3.10.  See
-[docs/USAGE.md](docs/USAGE.md) for commands and
+`corpora/README.md`).  Requires Python >= 3.10.  See the
+[docs index](docs/README.md), [docs/USAGE.md](docs/USAGE.md) for commands, and
 [docs/LLVM-INTEGRATION.md](docs/LLVM-INTEGRATION.md) for the sidecar build.
+
+## Quality gates
+
+```bash
+pip install -e ".[dev]"
+ruff check src tests
+python -m unittest discover -s tests -q
+```
+
+The pinned-baseline parity test only runs with `X86_MIR_PARITY=1` against the
+LLVM revision its witness was recorded on; see
+[docs/PRODUCTIZATION.md](docs/PRODUCTIZATION.md) for the refresh procedure.
 
 ## Quick start
 
@@ -76,3 +88,14 @@ Phase 1: Python tool, sidecar oracle/MIR drivers, parity gates, triage,
 baseline, and doctor are implemented.  The two trace drivers remain legacy
 (`mir-run --driver $LLVM_BUILD/unittests/Target/X86/X86Tests` keeps the old
 gtest entry points working).
+
+## Repository layout
+
+```
+src/x86_mir_corpus/   Python package (parser, corpus emission, runner, triage)
+sidecar/              out-of-tree LLVM drivers in C++ (oracle, MIR runner, smoke)
+corpora/              witness corpora; generated full corpora live in corpora/full/ (ignored)
+docs/                 usage, pipeline, evidence contract, governance (see docs/README.md)
+tests/                unittest suite, also runnable with pytest
+scripts/              nightly and upstream drift automation
+```

@@ -54,7 +54,7 @@ def _provenance_path():
 def reference_revision():
     """The commit the frozen C++ reference was captured from."""
     try:
-        with open(_provenance_path(), "r", encoding="utf-8") as handle:
+        with open(_provenance_path(), encoding="utf-8") as handle:
             return json.load(handle)["source_commit"]
     except (OSError, KeyError, ValueError):
         return None
@@ -63,7 +63,7 @@ def reference_revision():
 def _git_show(root, revision):
     proc = subprocess.run(
         ["git", "-C", root, "show", f"{revision}:{SOURCE_PATH}"],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        capture_output=True, text=True)
     if proc.returncode != 0:
         return None
     return proc.stdout
@@ -143,7 +143,7 @@ def run_cli(*args, env=None, cwd=None):
     env["PYTHONPATH"] = SRC_DIR if not existing else SRC_DIR + os.pathsep + existing
     return subprocess.run(
         cli_argv(*args),
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+        capture_output=True, text=True,
         env=env, cwd=cwd or cli_cwd())
 
 

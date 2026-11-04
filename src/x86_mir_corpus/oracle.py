@@ -26,7 +26,7 @@ def reference_revision(repo="."):
     """
     for path in (os.path.join(repo, REFERENCE_PROVENANCE), BUNDLED_PROVENANCE):
         try:
-            with open(path, "r", encoding="utf-8") as handle:
+            with open(path, encoding="utf-8") as handle:
                 data = json.load(handle)
         except (OSError, ValueError):
             continue

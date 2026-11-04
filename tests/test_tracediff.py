@@ -1,6 +1,3 @@
-import json
-import os
-import tempfile
 import unittest
 
 import testlib  # noqa: F401  (sets sys.path)

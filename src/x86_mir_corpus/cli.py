@@ -7,8 +7,21 @@ import os
 import subprocess
 import sys
 
-from . import baseline, corpusdiff, domain, emit, llvm, mirrun, oracle, parse
-from . import schemas, target, tracediff, triage, verify
+from . import (
+    baseline,
+    corpusdiff,
+    domain,
+    emit,
+    llvm,
+    mirrun,
+    oracle,
+    parse,
+    schemas,
+    target,
+    tracediff,
+    triage,
+    verify,
+)
 from . import expr as E
 
 CORPUS_SCHEMA = schemas.CORPUS_SCHEMA
@@ -31,7 +44,7 @@ def resolve_revision(repo, revision):
         return None
     proc = subprocess.run(
         ["git", "-C", repo, "rev-parse", "--verify", f"{revision}^{{commit}}"],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        capture_output=True, text=True)
     if proc.returncode != 0:
         return revision
     return proc.stdout.strip()
@@ -39,7 +52,7 @@ def resolve_revision(repo, revision):
 
 def load_source(args):
     if args.input:
-        with open(args.input, "r", encoding="utf-8") as handle:
+        with open(args.input, encoding="utf-8") as handle:
             text = handle.read()
         return text, _source_info(text, None, None,
                                   os.path.abspath(args.input))
@@ -47,7 +60,7 @@ def load_source(args):
     spec = f"{revision}:{args.source_path}"
     proc = subprocess.run(
         ["git", "-C", args.repo, "show", spec],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        capture_output=True, text=True)
     if proc.returncode != 0:
         raise SystemExit(proc.stderr.strip() or f"git show {spec} failed")
     text = proc.stdout
@@ -59,7 +72,7 @@ def load_source(args):
 def read_revision(repo, revision, path):
     proc = subprocess.run(
         ["git", "-C", repo, "show", f"{revision}:{path}"],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        capture_output=True, text=True)
     if proc.returncode != 0:
         return None
     return proc.stdout
@@ -129,13 +142,13 @@ def cmd_points(args):
 
 
 def cmd_verify(args):
-    with open(args.ast, "r", encoding="utf-8") as handle:
+    with open(args.ast, encoding="utf-8") as handle:
         ast = json.load(handle)
     if ast.get("config") != "C2":
         raise SystemExit(
             "verify compares the unconditional TableGen rule emission; "
             f"re-run parse with --config C2 (got {ast.get('config')})")
-    with open(args.td_inc, "r", encoding="utf-8") as handle:
+    with open(args.td_inc, encoding="utf-8") as handle:
         td = verify.parse_td_inc(handle.read())
     report = verify.build_report(ast, td)
     known = set()
@@ -148,7 +161,7 @@ def cmd_verify(args):
         if not os.path.exists(registry):
             registry = None
     if registry:
-        with open(registry, "r", encoding="utf-8") as handle:
+        with open(registry, encoding="utf-8") as handle:
             data = json.load(handle)
         known = {(x["rule_set"], x["class"]) for x in data.get("deltas", [])}
     report["known_deltas_used"] = sorted(f"{a}:{b}" for a, b in known)
@@ -305,7 +318,7 @@ def cmd_corpus(args):
     else:
         oracle.run_reference_filler(args.build, points_path, args.out)
 
-    with open(args.out, "r", encoding="utf-8") as handle:
+    with open(args.out, encoding="utf-8") as handle:
         filled = json.load(handle)
     if filled.get("schema") != CORPUS_SCHEMA:
         raise SystemExit(f"{args.out} is not a {CORPUS_SCHEMA} document")
@@ -415,7 +428,7 @@ def cmd_migrate(args):
     try:
         migrated = corpusdiff.migrate_v1(doc, rule_opcodes, source)
     except ValueError as err:
-        raise SystemExit(str(err))
+        raise SystemExit(str(err)) from err
     if migrated is None:
         raise SystemExit(f"{args.input} is not a version-1 document")
     emit.write_json(args.out, migrated)
@@ -437,7 +450,7 @@ def cmd_mir_run(args):
             jobs=args.jobs)
     except mirrun.MirRunInfraError as err:
         print(f"mir-run infrastructure error: {err}", file=sys.stderr)
-        raise SystemExit(2)
+        raise SystemExit(2) from None
     summary = {
         "out": os.path.abspath(args.out),
         "atoms": report["corpus"]["atoms"],

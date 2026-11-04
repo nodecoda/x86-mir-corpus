@@ -5,4 +5,4 @@ legality-point corpus, and drives an external LLVM build through the
 out-of-tree sidecar binaries.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
