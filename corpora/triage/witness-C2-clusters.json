@@ -1,0 +1,749 @@
+{
+  "schema": "x86-legalizer-mir-triage",
+  "version": 1,
+  "source_report": ".omx/evidence/x86-mir-corpus/reports/mir-M1-C2-final2.json",
+  "corpus": {
+    "atoms": 2217,
+    "config": "C2",
+    "path": "/home/ubuntu/llvm/trees/explore/.omx/evidence/x86-mir-corpus/corpus/up-C2.json",
+    "sha256": "7b7634f5ed50516e194d80523702b8f09b5973a454a54cc6aa38b26b80e0a769"
+  },
+  "counts": {
+    "failed": 1034,
+    "construction_mismatch": 304,
+    "unbuildable": 447,
+    "legalized": 388,
+    "crash": 24,
+    "budget": 20
+  },
+  "reached_legalizer": 1466,
+  "crash_cluster_count": 5,
+  "budget_cluster_count": 20,
+  "crash_clusters": [
+    {
+      "assert_site": "MachineIRBuilder.cpp:780",
+      "function": "llvm::MachineInstrBuilder llvm::MachineIRBuilder::buildUnmerge(llvm::ArrayRef<llvm::Register>, const llvm::SrcOp&)",
+      "expression": "TmpVec.size() > 1",
+      "count": 8,
+      "opcodes": {
+        "G_ICMP": 8
+      },
+      "type_shapes": [
+        {
+          "shape": [],
+          "count": 8
+        }
+      ],
+      "expected_actions": {
+        "NarrowScalar": 8
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/0",
+          "opcode": "G_ICMP",
+          "types": [
+            "s129",
+            "s32"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/0 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/1",
+          "opcode": "G_ICMP",
+          "types": [
+            "s24",
+            "s32"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/1 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/2",
+          "opcode": "G_ICMP",
+          "types": [
+            "s256",
+            "s32"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/2 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/4",
+          "opcode": "G_ICMP",
+          "types": [
+            "s32",
+            "s100"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/4 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/5",
+          "opcode": "G_ICMP",
+          "types": [
+            "s32",
+            "s200"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/5 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "MachineIRBuilder.cpp:218",
+      "function": "void llvm::MachineIRBuilder::validateBinaryOp(llvm::LLT, llvm::LLT, llvm::LLT)",
+      "expression": "(Res.isScalar() || Res.isVector()) && \"invalid operand type\"",
+      "count": 6,
+      "opcodes": {
+        "G_ADD": 1,
+        "G_SUB": 1,
+        "G_AND": 1,
+        "G_OR": 1,
+        "G_XOR": 1,
+        "G_MUL": 1
+      },
+      "type_shapes": [
+        {
+          "shape": [],
+          "count": 6
+        }
+      ],
+      "expected_actions": {
+        "FewerElements": 6
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_ADD/G_ADD/rule/15",
+          "opcode": "G_ADD",
+          "types": [
+            "v2p0:64"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_ADD/G_ADD/rule/15 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ADD/G_SUB/rule/31",
+          "opcode": "G_SUB",
+          "types": [
+            "v2p0:64"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_ADD/G_SUB/rule/31 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_AND/G_AND/rule/11",
+          "opcode": "G_AND",
+          "types": [
+            "v2p0:64"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_AND/G_AND/rule/11 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_AND/G_OR/rule/23",
+          "opcode": "G_OR",
+          "types": [
+            "v2p0:64"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_AND/G_OR/rule/23 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_AND/G_XOR/rule/35",
+          "opcode": "G_XOR",
+          "types": [
+            "v2p0:64"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_AND/G_XOR/rule/35 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "MachineIRBuilder.cpp:1592",
+      "function": "virtual llvm::MachineInstrBuilder llvm::MachineIRBuilder::buildInstr(unsigned int, llvm::ArrayRef<llvm::DstOp>, llvm::ArrayRef<llvm::SrcOp>, std::optional<unsigned int>)",
+      "expression": "DstOps[1].getLLTTy(*getMRI()) == SrcOps[2].getLLTTy(*getMRI()) && \"type mismatch\"",
+      "count": 4,
+      "opcodes": {
+        "G_UADDE": 3,
+        "G_UADDO": 1
+      },
+      "type_shapes": [
+        {
+          "shape": [],
+          "count": 4
+        }
+      ],
+      "expected_actions": {
+        "WidenScalar": 2,
+        "NarrowScalar": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/0",
+          "opcode": "G_UADDE",
+          "types": [
+            "s129",
+            "s32"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/0 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/2",
+          "opcode": "G_UADDE",
+          "types": [
+            "s256",
+            "s32"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/2 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/10",
+          "opcode": "G_UADDE",
+          "types": [
+            "s65",
+            "s32"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDO/boundary/14",
+          "opcode": "G_UADDO",
+          "types": [
+            "s256",
+            "s32"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDO/boundary/14 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "LegalizerHelper.cpp:5367",
+      "function": "llvm::LegalizerHelper::LegalizeResult llvm::LegalizerHelper::fewerElementsVectorMultiEltType(llvm::GenericMachineInstr&, unsigned int, std::initializer_list<unsigned int>)",
+      "expression": "hasSameNumEltsOnAllVectorOperands(MI, MRI, NonVecOpIndices) && \"Non-compatible opcode or not specified non-vector operands\"",
+      "count": 4,
+      "opcodes": {
+        "G_UADDE": 1,
+        "G_UADDO": 1,
+        "G_USUBE": 1,
+        "G_USUBO": 1
+      },
+      "type_shapes": [
+        {
+          "shape": [],
+          "count": 4
+        }
+      ],
+      "expected_actions": {
+        "FewerElements": 4
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/rule/5",
+          "opcode": "G_UADDE",
+          "types": [
+            "v2p0:64",
+            "p0:64"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/rule/5 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDO/rule/11",
+          "opcode": "G_UADDO",
+          "types": [
+            "v2p0:64",
+            "p0:64"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDO/rule/11 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_USUBE/rule/17",
+          "opcode": "G_USUBE",
+          "types": [
+            "v2p0:64",
+            "p0:64"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_USUBE/rule/17 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_USUBO/rule/23",
+          "opcode": "G_USUBO",
+          "types": [
+            "v2p0:64",
+            "p0:64"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_USUBO/rule/23 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "MachineIRBuilder.cpp:224",
+      "function": "void llvm::MachineIRBuilder::validateShiftOp(llvm::LLT, llvm::LLT, llvm::LLT)",
+      "expression": "(Res.isScalar() || Res.isVector()) && \"invalid operand type\"",
+      "count": 2,
+      "opcodes": {
+        "G_SEXT_INREG": 2
+      },
+      "type_shapes": [
+        {
+          "shape": [],
+          "count": 2
+        }
+      ],
+      "expected_actions": {
+        "Lower": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_SEXT_INREG/G_SEXT_INREG/as/0",
+          "opcode": "G_SEXT_INREG",
+          "types": [
+            "p1:64"
+          ],
+          "expected": "Lower",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_SEXT_INREG/G_SEXT_INREG/as/0 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_SEXT_INREG/G_SEXT_INREG/as/1",
+          "opcode": "G_SEXT_INREG",
+          "types": [
+            "p2:64"
+          ],
+          "expected": "Lower",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_SEXT_INREG/G_SEXT_INREG/as/1 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    }
+  ],
+  "budget_clusters": [
+    {
+      "opcode": "G_ADD",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_ADD": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_ADD/G_ADD/boundary/10",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_ADD/G_ADD/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_SUB",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_ADD": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_ADD/G_SUB/boundary/22",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_ADD/G_SUB/boundary/22 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_AND",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_AND": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_AND/G_AND/boundary/10",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_AND/G_AND/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_OR",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_AND": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_AND/G_OR/boundary/22",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_AND/G_OR/boundary/22 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_XOR",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_AND": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_AND/G_XOR/boundary/34",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_AND/G_XOR/boundary/34 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_BUILD_VECTOR",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_BUILD_VECTOR": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/boundary/10",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_FABS",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_FABS": 1
+      },
+      "expected_actions": {
+        "Lower": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_FABS/G_FABS/boundary/10",
+          "steps": 10001,
+          "expected": "Lower",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_FABS/G_FABS/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_FNEG",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_FNEG": 1
+      },
+      "expected_actions": {
+        "Lower": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_FNEG/G_FNEG/boundary/10",
+          "steps": 10001,
+          "expected": "Lower",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_FNEG/G_FNEG/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_FREEZE",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_IMPLICIT_DEF": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_IMPLICIT_DEF/G_FREEZE/boundary/22",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_IMPLICIT_DEF/G_FREEZE/boundary/22 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_IMPLICIT_DEF",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_IMPLICIT_DEF": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/boundary/34",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/boundary/34 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_MUL",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_MUL": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_MUL/G_MUL/boundary/10",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_MUL/G_MUL/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_SMULH",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_SMULH": 1
+      },
+      "expected_actions": {
+        "FewerElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_SMULH/G_SMULH/boundary/10",
+          "steps": 10001,
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_SMULH/G_SMULH/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_UMULH",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_SMULH": 1
+      },
+      "expected_actions": {
+        "FewerElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_SMULH/G_UMULH/boundary/22",
+          "steps": 10001,
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_SMULH/G_UMULH/boundary/22 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_BUILD_VECTOR",
+      "type_shape": [
+        "v2s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_BUILD_VECTOR": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/1",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/1 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_BUILD_VECTOR",
+      "type_shape": [
+        "v2s16"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_BUILD_VECTOR": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/2",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/2 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_BUILD_VECTOR",
+      "type_shape": [
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_BUILD_VECTOR": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/3",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/3 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_BUILD_VECTOR",
+      "type_shape": [
+        "v3p0:64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_BUILD_VECTOR": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/5",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/5 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_IMPLICIT_DEF",
+      "type_shape": [
+        "v2s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_IMPLICIT_DEF": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/37",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/37 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_IMPLICIT_DEF",
+      "type_shape": [
+        "v2s16"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_IMPLICIT_DEF": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/38",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/38 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_IMPLICIT_DEF",
+      "type_shape": [
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_IMPLICIT_DEF": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/39",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/up-C2.json --build builds/explore --rules production --only-atom cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/39 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    }
+  ]
+}

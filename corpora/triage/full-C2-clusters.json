@@ -1,0 +1,5739 @@
+{
+  "schema": "x86-legalizer-mir-triage",
+  "version": 1,
+  "source_report": ".omx/evidence/x86-mir-corpus/reports/mir-full-C2.json",
+  "corpus": {
+    "atoms": 208851,
+    "config": "C2",
+    "path": "/home/ubuntu/llvm/trees/explore/.omx/evidence/x86-mir-corpus/corpus/upfull-C2.json",
+    "sha256": "4327c233e88118ae660567729ebd2f9ab7ce457dd7a03d36ad056314b263b69f"
+  },
+  "counts": {
+    "failed": 17891,
+    "construction_mismatch": 97605,
+    "unbuildable": 86756,
+    "legalized": 3109,
+    "crash": 3265,
+    "budget": 225
+  },
+  "reached_legalizer": 24490,
+  "crash_cluster_count": 12,
+  "budget_cluster_count": 192,
+  "crash_clusters": [
+    {
+      "assert_site": "LegalizerHelper.cpp:5367",
+      "function": "llvm::LegalizerHelper::LegalizeResult llvm::LegalizerHelper::fewerElementsVectorMultiEltType(llvm::GenericMachineInstr&, unsigned int, std::initializer_list<unsigned int>)",
+      "expression": "hasSameNumEltsOnAllVectorOperands(MI, MRI, NonVecOpIndices) && \"Non-compatible opcode or not specified non-vector operands\"",
+      "count": 1544,
+      "opcodes": {
+        "G_UADDE": 386,
+        "G_UADDO": 386,
+        "G_USUBE": 386,
+        "G_USUBO": 386
+      },
+      "type_shapes": [
+        {
+          "shape": [
+            "v16s16",
+            "v64s8"
+          ],
+          "count": 12
+        },
+        {
+          "shape": [
+            "v64s8",
+            "v16s16"
+          ],
+          "count": 12
+        },
+        {
+          "shape": [
+            "v16s16",
+            "p0:64"
+          ],
+          "count": 8
+        },
+        {
+          "shape": [
+            "v16s16",
+            "s1"
+          ],
+          "count": 8
+        },
+        {
+          "shape": [
+            "v16s16",
+            "s8"
+          ],
+          "count": 8
+        },
+        {
+          "shape": [
+            "v16s16",
+            "v2p0:64"
+          ],
+          "count": 8
+        },
+        {
+          "shape": [
+            "v16s16",
+            "v2s32"
+          ],
+          "count": 8
+        },
+        {
+          "shape": [
+            "v16s16",
+            "v2s64"
+          ],
+          "count": 8
+        }
+      ],
+      "expected_actions": {
+        "FewerElements": 1340,
+        "WidenScalar": 204
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/312",
+          "opcode": "G_UADDE",
+          "types": [
+            "v16s16",
+            "p0:64"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/312 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/313",
+          "opcode": "G_UADDE",
+          "types": [
+            "v16s16",
+            "s1"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/313 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/321",
+          "opcode": "G_UADDE",
+          "types": [
+            "v16s16",
+            "s3"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/321 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/326",
+          "opcode": "G_UADDE",
+          "types": [
+            "v16s16",
+            "s7"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/326 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/327",
+          "opcode": "G_UADDE",
+          "types": [
+            "v16s16",
+            "s8"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/327 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "MachineIRBuilder.cpp:618",
+      "function": "llvm::MachineInstrBuilder llvm::MachineIRBuilder::buildExtOrTrunc(unsigned int, const llvm::DstOp&, const llvm::SrcOp&)",
+      "expression": "Res.getLLTTy(*getMRI()).isScalar() == Op.getLLTTy(*getMRI()).isScalar()",
+      "count": 652,
+      "opcodes": {
+        "G_CTLZ": 163,
+        "G_CTPOP": 163,
+        "G_CTTZ": 163,
+        "G_CTTZ_ZERO_POISON": 163
+      },
+      "type_shapes": [
+        {
+          "shape": [
+            "v16s16",
+            "s1"
+          ],
+          "count": 8
+        },
+        {
+          "shape": [
+            "v16s16",
+            "s8"
+          ],
+          "count": 8
+        },
+        {
+          "shape": [
+            "v16s16",
+            "s80"
+          ],
+          "count": 8
+        },
+        {
+          "shape": [
+            "v64s8",
+            "s1"
+          ],
+          "count": 8
+        },
+        {
+          "shape": [
+            "v64s8",
+            "s8"
+          ],
+          "count": 8
+        },
+        {
+          "shape": [
+            "v64s8",
+            "s80"
+          ],
+          "count": 8
+        },
+        {
+          "shape": [
+            "v16s16",
+            "s100"
+          ],
+          "count": 4
+        },
+        {
+          "shape": [
+            "v16s16",
+            "s129"
+          ],
+          "count": 4
+        }
+      ],
+      "expected_actions": {
+        "WidenScalar": 652
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CTLZ/G_CTLZ/boundary/301",
+          "opcode": "G_CTLZ",
+          "types": [
+            "v16s16",
+            "s1"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CTLZ/G_CTLZ/boundary/301 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_CTLZ/G_CTLZ/boundary/302",
+          "opcode": "G_CTLZ",
+          "types": [
+            "v16s16",
+            "s100"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CTLZ/G_CTLZ/boundary/302 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_CTLZ/G_CTLZ/boundary/304",
+          "opcode": "G_CTLZ",
+          "types": [
+            "v16s16",
+            "s129"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CTLZ/G_CTLZ/boundary/304 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_CTLZ/G_CTLZ/boundary/306",
+          "opcode": "G_CTLZ",
+          "types": [
+            "v16s16",
+            "s200"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CTLZ/G_CTLZ/boundary/306 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_CTLZ/G_CTLZ/boundary/307",
+          "opcode": "G_CTLZ",
+          "types": [
+            "v16s16",
+            "s24"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CTLZ/G_CTLZ/boundary/307 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "MachineIRBuilder.cpp:1406",
+      "function": "virtual llvm::MachineInstrBuilder llvm::MachineIRBuilder::buildInstr(unsigned int, llvm::ArrayRef<llvm::DstOp>, llvm::ArrayRef<llvm::SrcOp>, std::optional<unsigned int>)",
+      "expression": "[&]() -> bool { LLT Op0Ty = SrcOps[1].getLLTTy(*getMRI()); LLT DstTy = DstOps[0].getLLTTy(*getMRI()); if (Op0Ty.isScalar() || Op0Ty.isPointer()) return DstTy.isScalar(); else return DstTy.isVector() && DstTy.getElementCount() == Op0Ty.getElementCount(); }() && \"Type Mismatch\"",
+      "count": 535,
+      "opcodes": {
+        "G_UADDO": 176,
+        "G_USUBE": 176,
+        "G_USUBO": 176,
+        "G_ICMP": 7
+      },
+      "type_shapes": [
+        {
+          "shape": [
+            "s1",
+            "v16s16"
+          ],
+          "count": 6
+        },
+        {
+          "shape": [
+            "s1",
+            "v64s8"
+          ],
+          "count": 6
+        },
+        {
+          "shape": [
+            "s80",
+            "v16s16"
+          ],
+          "count": 6
+        },
+        {
+          "shape": [
+            "s80",
+            "v64s8"
+          ],
+          "count": 6
+        },
+        {
+          "shape": [
+            "s1",
+            "v3s32"
+          ],
+          "count": 3
+        },
+        {
+          "shape": [
+            "s100",
+            "p0:64"
+          ],
+          "count": 3
+        },
+        {
+          "shape": [
+            "s100",
+            "v16s16"
+          ],
+          "count": 3
+        },
+        {
+          "shape": [
+            "s100",
+            "v16s32"
+          ],
+          "count": 3
+        }
+      ],
+      "expected_actions": {
+        "WidenScalar": 533,
+        "NarrowScalar": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/0",
+          "opcode": "G_ICMP",
+          "types": [
+            "p0:64",
+            "s100"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/0 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/1",
+          "opcode": "G_ICMP",
+          "types": [
+            "p0:64",
+            "s129"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/1 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/2",
+          "opcode": "G_ICMP",
+          "types": [
+            "p0:64",
+            "s200"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/2 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/4",
+          "opcode": "G_ICMP",
+          "types": [
+            "p0:64",
+            "s256"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/4 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/7",
+          "opcode": "G_ICMP",
+          "types": [
+            "p0:64",
+            "s65"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/7 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "MachineIRBuilder.cpp:1591",
+      "function": "virtual llvm::MachineInstrBuilder llvm::MachineIRBuilder::buildInstr(unsigned int, llvm::ArrayRef<llvm::DstOp>, llvm::ArrayRef<llvm::SrcOp>, std::optional<unsigned int>)",
+      "expression": "DstOps[1].getLLTTy(*getMRI()).isScalar() && \"Invalid operand\"",
+      "count": 218,
+      "opcodes": {
+        "G_UADDE": 181,
+        "G_UADDO": 37
+      },
+      "type_shapes": [
+        {
+          "shape": [
+            "s1",
+            "v16s16"
+          ],
+          "count": 2
+        },
+        {
+          "shape": [
+            "s1",
+            "v64s8"
+          ],
+          "count": 2
+        },
+        {
+          "shape": [
+            "s80",
+            "v16s16"
+          ],
+          "count": 2
+        },
+        {
+          "shape": [
+            "s80",
+            "v64s8"
+          ],
+          "count": 2
+        },
+        {
+          "shape": [
+            "s128",
+            "v16s16"
+          ],
+          "count": 2
+        },
+        {
+          "shape": [
+            "s128",
+            "v64s8"
+          ],
+          "count": 2
+        },
+        {
+          "shape": [
+            "s1",
+            "v3s32"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s100",
+            "p0:64"
+          ],
+          "count": 1
+        }
+      ],
+      "expected_actions": {
+        "WidenScalar": 176,
+        "NarrowScalar": 37,
+        "FewerElements": 5
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/21",
+          "opcode": "G_UADDE",
+          "types": [
+            "s1",
+            "v16s16"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/21 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/22",
+          "opcode": "G_UADDE",
+          "types": [
+            "s1",
+            "v3s32"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/22 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/23",
+          "opcode": "G_UADDE",
+          "types": [
+            "s1",
+            "v64s8"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/23 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/24",
+          "opcode": "G_UADDE",
+          "types": [
+            "s100",
+            "p0:64"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/24 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/32",
+          "opcode": "G_UADDE",
+          "types": [
+            "s100",
+            "v16s16"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/32 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "MachineIRBuilder.cpp:780",
+      "function": "llvm::MachineInstrBuilder llvm::MachineIRBuilder::buildUnmerge(llvm::ArrayRef<llvm::Register>, const llvm::SrcOp&)",
+      "expression": "TmpVec.size() > 1",
+      "count": 129,
+      "opcodes": {
+        "G_ICMP": 129
+      },
+      "type_shapes": [
+        {
+          "shape": [
+            "s100",
+            "p0:64"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s100",
+            "s128"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s100",
+            "s16"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s100",
+            "s32"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s100",
+            "s64"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s100",
+            "s8"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s100",
+            "s80"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s128",
+            "s100"
+          ],
+          "count": 1
+        }
+      ],
+      "expected_actions": {
+        "NarrowScalar": 129
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/24",
+          "opcode": "G_ICMP",
+          "types": [
+            "s100",
+            "p0:64"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/24 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/26",
+          "opcode": "G_ICMP",
+          "types": [
+            "s100",
+            "s128"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/26 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/27",
+          "opcode": "G_ICMP",
+          "types": [
+            "s100",
+            "s16"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/27 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/28",
+          "opcode": "G_ICMP",
+          "types": [
+            "s100",
+            "s32"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/28 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/29",
+          "opcode": "G_ICMP",
+          "types": [
+            "s100",
+            "s64"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/29 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "MachineIRBuilder.cpp:1592",
+      "function": "virtual llvm::MachineInstrBuilder llvm::MachineIRBuilder::buildInstr(unsigned int, llvm::ArrayRef<llvm::DstOp>, llvm::ArrayRef<llvm::SrcOp>, std::optional<unsigned int>)",
+      "expression": "DstOps[1].getLLTTy(*getMRI()) == SrcOps[2].getLLTTy(*getMRI()) && \"type mismatch\"",
+      "count": 118,
+      "opcodes": {
+        "G_UADDE": 97,
+        "G_UADDO": 21
+      },
+      "type_shapes": [
+        {
+          "shape": [
+            "s128",
+            "s100"
+          ],
+          "count": 2
+        },
+        {
+          "shape": [
+            "s128",
+            "s129"
+          ],
+          "count": 2
+        },
+        {
+          "shape": [
+            "s128",
+            "s200"
+          ],
+          "count": 2
+        },
+        {
+          "shape": [
+            "s128",
+            "s24"
+          ],
+          "count": 2
+        },
+        {
+          "shape": [
+            "s128",
+            "s256"
+          ],
+          "count": 2
+        },
+        {
+          "shape": [
+            "s128",
+            "s3"
+          ],
+          "count": 2
+        },
+        {
+          "shape": [
+            "s128",
+            "s33"
+          ],
+          "count": 2
+        },
+        {
+          "shape": [
+            "s128",
+            "s65"
+          ],
+          "count": 2
+        }
+      ],
+      "expected_actions": {
+        "NarrowScalar": 79,
+        "WidenScalar": 39
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/26",
+          "opcode": "G_UADDE",
+          "types": [
+            "s100",
+            "s128"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/26 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/27",
+          "opcode": "G_UADDE",
+          "types": [
+            "s100",
+            "s16"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/27 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/28",
+          "opcode": "G_UADDE",
+          "types": [
+            "s100",
+            "s32"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/28 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/29",
+          "opcode": "G_UADDE",
+          "types": [
+            "s100",
+            "s64"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/29 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/boundary/30",
+          "opcode": "G_UADDE",
+          "types": [
+            "s100",
+            "s8"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/boundary/30 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "MachineIRBuilder.cpp:218",
+      "function": "void llvm::MachineIRBuilder::validateBinaryOp(llvm::LLT, llvm::LLT, llvm::LLT)",
+      "expression": "(Res.isScalar() || Res.isVector()) && \"invalid operand type\"",
+      "count": 33,
+      "opcodes": {
+        "G_ASHR": 5,
+        "G_LSHR": 5,
+        "G_SHL": 5,
+        "G_ADD": 3,
+        "G_SUB": 3,
+        "G_AND": 3,
+        "G_OR": 3,
+        "G_XOR": 3,
+        "G_MUL": 3
+      },
+      "type_shapes": [
+        {
+          "shape": [
+            "v2p0:64"
+          ],
+          "count": 12
+        },
+        {
+          "shape": [
+            "v4p0:64"
+          ],
+          "count": 6
+        },
+        {
+          "shape": [
+            "s100",
+            "p0:64"
+          ],
+          "count": 3
+        },
+        {
+          "shape": [
+            "s200",
+            "p0:64"
+          ],
+          "count": 3
+        },
+        {
+          "shape": [
+            "s256",
+            "p0:64"
+          ],
+          "count": 3
+        },
+        {
+          "shape": [
+            "s128",
+            "p0:64"
+          ],
+          "count": 3
+        },
+        {
+          "shape": [
+            "s80",
+            "p0:64"
+          ],
+          "count": 3
+        }
+      ],
+      "expected_actions": {
+        "FewerElements": 18,
+        "NarrowScalar": 15
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_SHL/G_ASHR/boundary/24",
+          "opcode": "G_ASHR",
+          "types": [
+            "s100",
+            "p0:64"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SHL/G_ASHR/boundary/24 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_SHL/G_ASHR/boundary/96",
+          "opcode": "G_ASHR",
+          "types": [
+            "s200",
+            "p0:64"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SHL/G_ASHR/boundary/96 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_SHL/G_ASHR/boundary/144",
+          "opcode": "G_ASHR",
+          "types": [
+            "s256",
+            "p0:64"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SHL/G_ASHR/boundary/144 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_SHL/G_LSHR/boundary/600",
+          "opcode": "G_LSHR",
+          "types": [
+            "s100",
+            "p0:64"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SHL/G_LSHR/boundary/600 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_SHL/G_LSHR/boundary/672",
+          "opcode": "G_LSHR",
+          "types": [
+            "s200",
+            "p0:64"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SHL/G_LSHR/boundary/672 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "LegalizerHelper.cpp:1939",
+      "function": "llvm::LegalizerHelper::LegalizeResult llvm::LegalizerHelper::narrowScalar(llvm::MachineInstr&, unsigned int, llvm::LLT)",
+      "expression": "Xors.size() >= 2 && \"Should have gotten at least two Xors?\"",
+      "count": 12,
+      "opcodes": {
+        "G_ICMP": 12
+      },
+      "type_shapes": [
+        {
+          "shape": [
+            "s100",
+            "s1"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s129",
+            "s1"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s200",
+            "s1"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s24",
+            "s1"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s256",
+            "s1"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s33",
+            "s1"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s65",
+            "s1"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s128",
+            "s1"
+          ],
+          "count": 1
+        }
+      ],
+      "expected_actions": {
+        "NarrowScalar": 12
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/25",
+          "opcode": "G_ICMP",
+          "types": [
+            "s100",
+            "s1"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/25 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/61",
+          "opcode": "G_ICMP",
+          "types": [
+            "s129",
+            "s1"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/61 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/97",
+          "opcode": "G_ICMP",
+          "types": [
+            "s200",
+            "s1"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/97 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/121",
+          "opcode": "G_ICMP",
+          "types": [
+            "s24",
+            "s1"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/121 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_ICMP/G_ICMP/boundary/145",
+          "opcode": "G_ICMP",
+          "types": [
+            "s256",
+            "s1"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ICMP/G_ICMP/boundary/145 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "MachineIRBuilder.cpp:1293",
+      "function": "void llvm::MachineIRBuilder::validateSelectOp(llvm::LLT, llvm::LLT, llvm::LLT, llvm::LLT)",
+      "expression": "TstTy.isScalar() && \"type mismatch\"",
+      "count": 7,
+      "opcodes": {
+        "G_SELECT": 7
+      },
+      "type_shapes": [
+        {
+          "shape": [
+            "s100",
+            "p0:64"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s129",
+            "p0:64"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s200",
+            "p0:64"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s256",
+            "p0:64"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s65",
+            "p0:64"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s128",
+            "p0:64"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s80",
+            "p0:64"
+          ],
+          "count": 1
+        }
+      ],
+      "expected_actions": {
+        "WidenScalar": 5,
+        "NarrowScalar": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_SELECT/G_SELECT/boundary/24",
+          "opcode": "G_SELECT",
+          "types": [
+            "s100",
+            "p0:64"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SELECT/G_SELECT/boundary/24 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_SELECT/G_SELECT/boundary/60",
+          "opcode": "G_SELECT",
+          "types": [
+            "s129",
+            "p0:64"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SELECT/G_SELECT/boundary/60 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_SELECT/G_SELECT/boundary/96",
+          "opcode": "G_SELECT",
+          "types": [
+            "s200",
+            "p0:64"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SELECT/G_SELECT/boundary/96 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_SELECT/G_SELECT/boundary/144",
+          "opcode": "G_SELECT",
+          "types": [
+            "s256",
+            "p0:64"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SELECT/G_SELECT/boundary/144 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_SELECT/G_SELECT/boundary/240",
+          "opcode": "G_SELECT",
+          "types": [
+            "s65",
+            "p0:64"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SELECT/G_SELECT/boundary/240 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "MachineIRBuilder.cpp:1278",
+      "function": "void llvm::MachineIRBuilder::validateTruncExt(llvm::LLT, llvm::LLT, bool)",
+      "expression": "TypeSize::isKnownGT(DstTy.getSizeInBits(), SrcTy.getSizeInBits()) && \"invalid narrowing extend\"",
+      "count": 7,
+      "opcodes": {
+        "G_USUBE": 7
+      },
+      "type_shapes": [
+        {
+          "shape": [
+            "s100",
+            "s8"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s129",
+            "s8"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s200",
+            "s8"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s256",
+            "s8"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s65",
+            "s8"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s128",
+            "s8"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "s80",
+            "s8"
+          ],
+          "count": 1
+        }
+      ],
+      "expected_actions": {
+        "WidenScalar": 5,
+        "NarrowScalar": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UADDE/G_USUBE/boundary/1182",
+          "opcode": "G_USUBE",
+          "types": [
+            "s100",
+            "s8"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_USUBE/boundary/1182 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_USUBE/boundary/1218",
+          "opcode": "G_USUBE",
+          "types": [
+            "s129",
+            "s8"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_USUBE/boundary/1218 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_USUBE/boundary/1254",
+          "opcode": "G_USUBE",
+          "types": [
+            "s200",
+            "s8"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_USUBE/boundary/1254 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_USUBE/boundary/1302",
+          "opcode": "G_USUBE",
+          "types": [
+            "s256",
+            "s8"
+          ],
+          "expected": "NarrowScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_USUBE/boundary/1302 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_USUBE/boundary/1398",
+          "opcode": "G_USUBE",
+          "types": [
+            "s65",
+            "s8"
+          ],
+          "expected": "WidenScalar",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_USUBE/boundary/1398 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "MachineIRBuilder.cpp:1587",
+      "function": "virtual llvm::MachineInstrBuilder llvm::MachineIRBuilder::buildInstr(unsigned int, llvm::ArrayRef<llvm::DstOp>, llvm::ArrayRef<llvm::SrcOp>, std::optional<unsigned int>)",
+      "expression": "DstOps[0].getLLTTy(*getMRI()).isScalar() && \"Invalid operand\"",
+      "count": 7,
+      "opcodes": {
+        "G_UADDE": 7
+      },
+      "type_shapes": [
+        {
+          "shape": [
+            "v2p0:64",
+            "v2p0:64"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "v2p0:64",
+            "v2s32"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "v2p0:64",
+            "v2s64"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "v4p0:64",
+            "v4p0:64"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "v4p0:64",
+            "v4s32"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "v4p0:64",
+            "v4s64"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "v4p0:64",
+            "v4s8"
+          ],
+          "count": 1
+        }
+      ],
+      "expected_actions": {
+        "FewerElements": 7
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/classpair/275",
+          "opcode": "G_UADDE",
+          "types": [
+            "v2p0:64",
+            "v2p0:64"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/classpair/275 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/classpair/276",
+          "opcode": "G_UADDE",
+          "types": [
+            "v2p0:64",
+            "v2s32"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/classpair/276 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/classpair/277",
+          "opcode": "G_UADDE",
+          "types": [
+            "v2p0:64",
+            "v2s64"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/classpair/277 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/classpair/400",
+          "opcode": "G_UADDE",
+          "types": [
+            "v4p0:64",
+            "v4p0:64"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/classpair/400 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/classpair/401",
+          "opcode": "G_UADDE",
+          "types": [
+            "v4p0:64",
+            "v4s32"
+          ],
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/classpair/401 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "assert_site": "MachineIRBuilder.cpp:224",
+      "function": "void llvm::MachineIRBuilder::validateShiftOp(llvm::LLT, llvm::LLT, llvm::LLT)",
+      "expression": "(Res.isScalar() || Res.isVector()) && \"invalid operand type\"",
+      "count": 3,
+      "opcodes": {
+        "G_SEXT_INREG": 3
+      },
+      "type_shapes": [
+        {
+          "shape": [
+            "p1:64"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "p2:64"
+          ],
+          "count": 1
+        },
+        {
+          "shape": [
+            "p0:64"
+          ],
+          "count": 1
+        }
+      ],
+      "expected_actions": {
+        "Lower": 3
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_SEXT_INREG/G_SEXT_INREG/as/0",
+          "opcode": "G_SEXT_INREG",
+          "types": [
+            "p1:64"
+          ],
+          "expected": "Lower",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SEXT_INREG/G_SEXT_INREG/as/0 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_SEXT_INREG/G_SEXT_INREG/as/1",
+          "opcode": "G_SEXT_INREG",
+          "types": [
+            "p2:64"
+          ],
+          "expected": "Lower",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SEXT_INREG/G_SEXT_INREG/as/1 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_SEXT_INREG/G_SEXT_INREG/classpair/0",
+          "opcode": "G_SEXT_INREG",
+          "types": [
+            "p0:64"
+          ],
+          "expected": "Lower",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SEXT_INREG/G_SEXT_INREG/classpair/0 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    }
+  ],
+  "budget_clusters": [
+    {
+      "opcode": "G_STORE",
+      "type_shape": [
+        "v2s32",
+        "p0:64"
+      ],
+      "count": 12,
+      "rule_sets": {
+        "X86_STORE": 12
+      },
+      "expected_actions": {
+        "Custom": 9,
+        "Legal": 3
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_STORE/G_STORE/boundary/775",
+          "steps": 10001,
+          "expected": "Custom",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_STORE/G_STORE/boundary/775 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_STORE/G_STORE/boundary/779",
+          "steps": 10001,
+          "expected": "Custom",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_STORE/G_STORE/boundary/779 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_STORE/G_STORE/boundary/781",
+          "steps": 10001,
+          "expected": "Custom",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_STORE/G_STORE/boundary/781 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_STORE",
+      "type_shape": [
+        "v4s8",
+        "p0:64"
+      ],
+      "count": 8,
+      "rule_sets": {
+        "X86_STORE": 8
+      },
+      "expected_actions": {
+        "Custom": 6,
+        "Legal": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_STORE/G_STORE/boundary/991",
+          "steps": 10001,
+          "expected": "Custom",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_STORE/G_STORE/boundary/991 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_STORE/G_STORE/boundary/995",
+          "steps": 10001,
+          "expected": "Custom",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_STORE/G_STORE/boundary/995 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_STORE/G_STORE/boundary/1001",
+          "steps": 10001,
+          "expected": "Custom",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_STORE/G_STORE/boundary/1001 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v16s16",
+        "v2s32"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 2
+      },
+      "expected_actions": {
+        "Unsupported": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/boundary/334",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/boundary/334 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/204",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/204 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v16s16",
+        "v4s8"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 2
+      },
+      "expected_actions": {
+        "Unsupported": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/boundary/342",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/boundary/342 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/211",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/211 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v64s8",
+        "v2s32"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 2
+      },
+      "expected_actions": {
+        "Unsupported": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/boundary/526",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/boundary/526 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/492",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/492 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v64s8",
+        "v4s8"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 2
+      },
+      "expected_actions": {
+        "Unsupported": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/boundary/534",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/boundary/534 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/499",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/499 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "v16s16"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_EXTRACT": 2
+      },
+      "expected_actions": {
+        "Unsupported": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/393",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/393 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/296",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/296 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "v64s8"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_EXTRACT": 2
+      },
+      "expected_actions": {
+        "Unsupported": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/395",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/395 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/308",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/308 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "v16s16"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_EXTRACT": 2
+      },
+      "expected_actions": {
+        "Unsupported": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/501",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/501 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/464",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/464 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "v64s8"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_EXTRACT": 2
+      },
+      "expected_actions": {
+        "Unsupported": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/503",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/503 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/476",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/476 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v16s16",
+        "v2s32"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_EXTRACT": 2
+      },
+      "expected_actions": {
+        "Unsupported": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/910",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/910 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/780",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/780 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v16s16",
+        "v4s8"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_EXTRACT": 2
+      },
+      "expected_actions": {
+        "Unsupported": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/918",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/918 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/787",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/787 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v64s8",
+        "v2s32"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_EXTRACT": 2
+      },
+      "expected_actions": {
+        "Unsupported": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1102",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1102 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/1068",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/1068 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v64s8",
+        "v4s8"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_EXTRACT": 2
+      },
+      "expected_actions": {
+        "Unsupported": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1110",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1110 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/1075",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/1075 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_UNMERGE_VALUES",
+      "type_shape": [
+        "v4s8",
+        "v64s8"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_UNMERGE_VALUES": 2
+      },
+      "expected_actions": {
+        "Legal": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/boundary/503",
+          "steps": 10001,
+          "expected": "Legal",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/boundary/503 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/476",
+          "steps": 10001,
+          "expected": "Legal",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/476 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_BUILD_VECTOR",
+      "type_shape": [
+        "v2s32"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_BUILD_VECTOR": 2
+      },
+      "expected_actions": {
+        "MoreElements": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/classpair/12",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/classpair/12 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/3",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/3 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_IMPLICIT_DEF",
+      "type_shape": [
+        "v2s32"
+      ],
+      "count": 2,
+      "rule_sets": {
+        "X86_IMPLICIT_DEF": 2
+      },
+      "expected_actions": {
+        "MoreElements": 2
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/classpair/52",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/classpair/52 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        },
+        {
+          "id": "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/39",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/39 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_ADD",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_ADD": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_ADD/G_ADD/boundary/10",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ADD/G_ADD/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_SUB",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_ADD": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_ADD/G_SUB/boundary/22",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_ADD/G_SUB/boundary/22 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_AND",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_AND": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_AND/G_AND/boundary/10",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_AND/G_AND/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_OR",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_AND": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_AND/G_OR/boundary/22",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_AND/G_OR/boundary/22 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_XOR",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_AND": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_AND/G_XOR/boundary/34",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_AND/G_XOR/boundary/34 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_BUILD_VECTOR",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_BUILD_VECTOR": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/boundary/10",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "p0:64",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/10",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "s24",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/139",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/139 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "s33",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/216",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/216 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "s64",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/238",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/238 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "s80",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/310",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/310 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/394",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/394 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v3s32",
+        "s128"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/434",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/434 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v3s32",
+        "v16s16"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/440",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/440 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v3s32",
+        "v16s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/441",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/441 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v3s32",
+        "v16s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/442",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/442 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v3s32",
+        "v2s64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/445",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/445 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v3s32",
+        "v32s16"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/446",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/446 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v3s32",
+        "v32s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/447",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/447 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v3s32",
+        "v4s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/449",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/449 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v3s32",
+        "v4s64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/450",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/450 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v3s32",
+        "v64s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/452",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/452 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v3s32",
+        "v8s16"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/453",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/453 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v3s32",
+        "v8s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/454",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/454 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v3s32",
+        "v8s64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/455",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/455 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "s256"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/boundary/496",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/boundary/496 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s100",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/612",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/612 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s100",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/619",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/619 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s128",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/634",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/634 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s129",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/648",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/648 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s129",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/655",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/655 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s200",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/684",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/684 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s200",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/691",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/691 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s256",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/732",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/732 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s256",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/739",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/739 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s33",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/799",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/799 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s65",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/828",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/828 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s65",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/835",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/835 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v16s16",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/914",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/914 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v16s32",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/934",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/934 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v16s8",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/946",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/946 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v2s32",
+        "s24"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/963",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/963 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v2s32",
+        "s3"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/965",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/965 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v2s32",
+        "s33"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/966",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/966 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v2s32",
+        "s7"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/968",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/968 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v2s64",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/982",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/982 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v32s16",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/994",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/994 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v32s8",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1006",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1006 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v3s32",
+        "p0:64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1008",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1008 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v3s32",
+        "s1"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1009",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1009 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v3s32",
+        "s16"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1011",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1011 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v3s32",
+        "s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1012",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1012 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v3s32",
+        "s64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1013",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1013 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v3s32",
+        "s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1014",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1014 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v3s32",
+        "s80"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1015",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1015 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v3s32",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1020",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1020 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v3s32",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1027",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1027 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v4s32",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1054",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1054 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v4s64",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1066",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1066 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v4s8",
+        "s24"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1071",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1071 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v4s8",
+        "s3"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1073",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1073 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v4s8",
+        "s7"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1076",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1076 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v64s8",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1106",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1106 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v8s16",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1126",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1126 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v8s32",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1138",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1138 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v8s64",
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/boundary/1150",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/boundary/1150 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_FABS",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_FABS": 1
+      },
+      "expected_actions": {
+        "Lower": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_FABS/G_FABS/boundary/10",
+          "steps": 10001,
+          "expected": "Lower",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_FABS/G_FABS/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_FNEG",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_FNEG": 1
+      },
+      "expected_actions": {
+        "Lower": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_FNEG/G_FNEG/boundary/10",
+          "steps": 10001,
+          "expected": "Lower",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_FNEG/G_FNEG/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_FREEZE",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_IMPLICIT_DEF": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_IMPLICIT_DEF/G_FREEZE/boundary/22",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_IMPLICIT_DEF/G_FREEZE/boundary/22 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_IMPLICIT_DEF",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_IMPLICIT_DEF": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/boundary/34",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/boundary/34 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_MUL",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_MUL": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_MUL/G_MUL/boundary/10",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_MUL/G_MUL/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_SMULH",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_SMULH": 1
+      },
+      "expected_actions": {
+        "FewerElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_SMULH/G_SMULH/boundary/10",
+          "steps": 10001,
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SMULH/G_SMULH/boundary/10 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_UMULH",
+      "type_shape": [
+        "v3s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_SMULH": 1
+      },
+      "expected_actions": {
+        "FewerElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_SMULH/G_UMULH/boundary/22",
+          "steps": 10001,
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SMULH/G_UMULH/boundary/22 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_BUILD_VECTOR",
+      "type_shape": [
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_BUILD_VECTOR": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/classpair/19",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/classpair/19 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v16s32",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/228",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/228 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v16s32",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/235",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/235 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v16s8",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/252",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/252 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v16s8",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/259",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/259 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v32s16",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/348",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/348 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v32s16",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/355",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/355 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v32s8",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/372",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/372 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v32s8",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/379",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/379 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v4p0:64",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/396",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/396 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v4s32",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/420",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/420 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v4s64",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/444",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/444 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v4s8",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/468",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/468 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v8s16",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/516",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/516 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v8s16",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/523",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/523 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v8s32",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/540",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/540 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v8s32",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/547",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/547 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v8s64",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/564",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/564 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_CONCAT_VECTORS",
+      "type_shape": [
+        "v8s64",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_CONCAT_VECTORS": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/571",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_CONCAT_VECTORS/G_CONCAT_VECTORS/classpair/571 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "s16",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/91",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/91 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "s128"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/290",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/290 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "s80"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/295",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/295 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "v16s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/297",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/297 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "v16s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/298",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/298 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "v2s64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/301",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/301 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "v32s16"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/302",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/302 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "v32s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/303",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/303 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "v4s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/305",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/305 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "v4s64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/306",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/306 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "v8s16"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/309",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/309 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "v8s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/310",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/310 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v2s32",
+        "v8s64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/311",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/311 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "p0:64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/456",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/456 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "s128"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/458",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/458 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "s64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/461",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/461 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "s80"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/463",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/463 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "v16s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/465",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/465 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "v16s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/466",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/466 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "v2s64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/469",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/469 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "v32s16"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/470",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/470 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "v32s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/471",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/471 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "v4s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/473",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/473 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "v4s64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/474",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/474 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "v8s16"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/477",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/477 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "v8s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/478",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/478 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_EXTRACT",
+      "type_shape": [
+        "v4s8",
+        "v8s64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_EXTRACT/classpair/479",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_EXTRACT/classpair/479 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "p0:64",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/595",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/595 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s128",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/636",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/636 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s128",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/643",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/643 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s64",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/715",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/715 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s80",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/756",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/756 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "s80",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/763",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/763 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v16s32",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/804",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/804 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v16s32",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/811",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/811 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v16s8",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/828",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/828 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v16s8",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/835",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/835 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v2s32",
+        "s1"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/865",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/865 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v2s32",
+        "s16"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/867",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/867 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v2s32",
+        "s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/868",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/868 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v2s32",
+        "s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/870",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/870 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v2s32",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/883",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/883 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v2s64",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/900",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/900 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v2s64",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/907",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/907 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v32s16",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/924",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/924 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v32s16",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/931",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/931 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v32s8",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/948",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/948 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v32s8",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/955",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/955 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v4s32",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/996",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/996 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v4s32",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/1003",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/1003 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v4s64",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/1020",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/1020 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v4s64",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/1027",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/1027 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v4s8",
+        "s1"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/1033",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/1033 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v4s8",
+        "s16"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/1035",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/1035 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v4s8",
+        "s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/1038",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/1038 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v8s16",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/1092",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/1092 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v8s16",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/1099",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/1099 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v8s32",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/1116",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/1116 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v8s32",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/1123",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/1123 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v8s64",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/1140",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/1140 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_INSERT",
+      "type_shape": [
+        "v8s64",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_EXTRACT": 1
+      },
+      "expected_actions": {
+        "Unsupported": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_EXTRACT/G_INSERT/classpair/1147",
+          "steps": 10001,
+          "expected": "Unsupported",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_EXTRACT/G_INSERT/classpair/1147 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_IMPLICIT_DEF",
+      "type_shape": [
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_IMPLICIT_DEF": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/classpair/58",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/classpair/58 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_MUL",
+      "type_shape": [
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_MUL": 1
+      },
+      "expected_actions": {
+        "FewerElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_MUL/G_MUL/classpair/19",
+          "steps": 10001,
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_MUL/G_MUL/classpair/19 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_SMULH",
+      "type_shape": [
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_SMULH": 1
+      },
+      "expected_actions": {
+        "FewerElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_SMULH/G_SMULH/classpair/12",
+          "steps": 10001,
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SMULH/G_SMULH/classpair/12 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_SMULH",
+      "type_shape": [
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_SMULH": 1
+      },
+      "expected_actions": {
+        "FewerElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_SMULH/G_SMULH/classpair/19",
+          "steps": 10001,
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SMULH/G_SMULH/classpair/19 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_UMULH",
+      "type_shape": [
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_SMULH": 1
+      },
+      "expected_actions": {
+        "FewerElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_SMULH/G_UMULH/classpair/36",
+          "steps": 10001,
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SMULH/G_UMULH/classpair/36 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_UMULH",
+      "type_shape": [
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_SMULH": 1
+      },
+      "expected_actions": {
+        "FewerElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_SMULH/G_UMULH/classpair/43",
+          "steps": 10001,
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_SMULH/G_UMULH/classpair/43 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_UADDE",
+      "type_shape": [
+        "v4s8",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_UADDE": 1
+      },
+      "expected_actions": {
+        "FewerElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UADDE/G_UADDE/classpair/475",
+          "steps": 10001,
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDE/classpair/475 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_UADDO",
+      "type_shape": [
+        "v4s8",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_UADDE": 1
+      },
+      "expected_actions": {
+        "FewerElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UADDE/G_UADDO/classpair/1051",
+          "steps": 10001,
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_UADDO/classpair/1051 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_USUBE",
+      "type_shape": [
+        "v4s8",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_UADDE": 1
+      },
+      "expected_actions": {
+        "FewerElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UADDE/G_USUBE/classpair/1627",
+          "steps": 10001,
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_USUBE/classpair/1627 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_USUBO",
+      "type_shape": [
+        "v4s8",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_UADDE": 1
+      },
+      "expected_actions": {
+        "FewerElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UADDE/G_USUBO/classpair/2203",
+          "steps": 10001,
+          "expected": "FewerElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UADDE/G_USUBO/classpair/2203 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_UNMERGE_VALUES",
+      "type_shape": [
+        "v2s32",
+        "v16s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_UNMERGE_VALUES": 1
+      },
+      "expected_actions": {
+        "Legal": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/297",
+          "steps": 10001,
+          "expected": "Legal",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/297 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_UNMERGE_VALUES",
+      "type_shape": [
+        "v2s32",
+        "v2s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_UNMERGE_VALUES": 1
+      },
+      "expected_actions": {
+        "Legal": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/300",
+          "steps": 10001,
+          "expected": "Legal",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/300 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_UNMERGE_VALUES",
+      "type_shape": [
+        "v2s32",
+        "v4s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_UNMERGE_VALUES": 1
+      },
+      "expected_actions": {
+        "Legal": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/305",
+          "steps": 10001,
+          "expected": "Legal",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/305 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_UNMERGE_VALUES",
+      "type_shape": [
+        "v2s32",
+        "v8s32"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_UNMERGE_VALUES": 1
+      },
+      "expected_actions": {
+        "Legal": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/310",
+          "steps": 10001,
+          "expected": "Legal",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/310 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_UNMERGE_VALUES",
+      "type_shape": [
+        "v4s8",
+        "v16s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_UNMERGE_VALUES": 1
+      },
+      "expected_actions": {
+        "Legal": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/466",
+          "steps": 10001,
+          "expected": "Legal",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/466 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_UNMERGE_VALUES",
+      "type_shape": [
+        "v4s8",
+        "v32s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_UNMERGE_VALUES": 1
+      },
+      "expected_actions": {
+        "Legal": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/471",
+          "steps": 10001,
+          "expected": "Legal",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/471 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_UNMERGE_VALUES",
+      "type_shape": [
+        "v4s8",
+        "v4s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_UNMERGE_VALUES": 1
+      },
+      "expected_actions": {
+        "Legal": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/475",
+          "steps": 10001,
+          "expected": "Legal",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_UNMERGE_VALUES/G_UNMERGE_VALUES/classpair/475 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_BUILD_VECTOR",
+      "type_shape": [
+        "v2s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_BUILD_VECTOR": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/1",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/1 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_BUILD_VECTOR",
+      "type_shape": [
+        "v2s16"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_BUILD_VECTOR": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/2",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/2 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_BUILD_VECTOR",
+      "type_shape": [
+        "v3p0:64"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_BUILD_VECTOR": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/5",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/5 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_IMPLICIT_DEF",
+      "type_shape": [
+        "v2s8"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_IMPLICIT_DEF": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/37",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/37 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    },
+    {
+      "opcode": "G_IMPLICIT_DEF",
+      "type_shape": [
+        "v2s16"
+      ],
+      "count": 1,
+      "rule_sets": {
+        "X86_IMPLICIT_DEF": 1
+      },
+      "expected_actions": {
+        "MoreElements": 1
+      },
+      "representatives": [
+        {
+          "id": "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/38",
+          "steps": 10001,
+          "expected": "MoreElements",
+          "repro": "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json --build builds/explore --rules production --only-atom cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/38 --max-steps 10000 --timeout 120 --out /tmp/atom.json"
+        }
+      ]
+    }
+  ]
+}

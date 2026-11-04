@@ -1,7 +1,8 @@
 # Migration: replaying the `.omx` evidence
 
 The original evidence under `llvm/trees/explore/.omx/evidence/x86-mir-corpus`
-can be reproduced with the public commands.  The four witness corpora and
+is copied to `corpora/` (see `corpora/MANIFEST.json`) and can be reproduced
+with the public commands.  The four witness corpora and
 their counts are the compatibility anchor:
 
 | config | atoms | corpus |

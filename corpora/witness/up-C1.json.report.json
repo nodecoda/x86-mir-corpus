@@ -1,0 +1,640 @@
+{
+ "corpus": "/home/ubuntu/llvm/trees/explore/.omx/evidence/x86-mir-corpus/corpus/up-C1.json",
+ "counts": {
+  "opcodes_total": 115,
+  "opcodes_uncovered": 0,
+  "origins": {
+   "as": 336,
+   "boundary": 1380,
+   "opcode": 53,
+   "rule": 400
+  },
+  "points": 2169,
+  "pruned_pointer_element_size": 0,
+  "rules_active": 239,
+  "rules_excepted": 6,
+  "rules_source_total": 271,
+  "rules_unprobed": 0,
+  "rules_verified": 233
+ },
+ "coverage": {
+  "opcodes": {
+   "multi_opcode_builders": 19,
+   "per_opcode_atoms": {
+    "X86_ADD": {
+     "G_ADD": 27,
+     "G_SUB": 28
+    },
+    "X86_AND": {
+     "G_AND": 24,
+     "G_OR": 25,
+     "G_XOR": 25
+    },
+    "X86_DYN_STACKALLOC": {
+     "G_DYN_STACKALLOC": 15,
+     "G_STACKRESTORE": 16,
+     "G_STACKSAVE": 16
+    },
+    "X86_EXTRACT": {
+     "G_EXTRACT": 16,
+     "G_INSERT": 17
+    },
+    "X86_FADD": {
+     "G_FADD": 18,
+     "G_FDIV": 19,
+     "G_FMUL": 19,
+     "G_FSUB": 19
+    },
+    "X86_FCOS": {
+     "G_FACOS": 16,
+     "G_FASIN": 16,
+     "G_FATAN": 16,
+     "G_FATAN2": 16,
+     "G_FCEIL": 16,
+     "G_FCOS": 15,
+     "G_FCOSH": 16,
+     "G_FEXP": 16,
+     "G_FEXP10": 16,
+     "G_FEXP2": 16,
+     "G_FFLOOR": 16,
+     "G_FLOG": 16,
+     "G_FLOG10": 16,
+     "G_FLOG2": 16,
+     "G_FPOW": 16,
+     "G_FPOWI": 16,
+     "G_FSIN": 16,
+     "G_FSINCOS": 16,
+     "G_FSINH": 16,
+     "G_FTAN": 16,
+     "G_FTANH": 16
+    },
+    "X86_GET_ROUNDING": {
+     "G_GET_ROUNDING": 15,
+     "G_SET_ROUNDING": 16
+    },
+    "X86_IMPLICIT_DEF": {
+     "G_CONSTANT_FOLD_BARRIER": 27,
+     "G_FREEZE": 27,
+     "G_IMPLICIT_DEF": 26,
+     "G_PHI": 27
+    },
+    "X86_INTRINSIC": {
+     "G_INTRINSIC": 15,
+     "G_INTRINSIC_W_SIDE_EFFECTS": 16
+    },
+    "X86_INTRINSIC_ROUNDEVEN": {
+     "G_INTRINSIC_ROUNDEVEN": 17,
+     "G_INTRINSIC_TRUNC": 18
+    },
+    "X86_LROUND": {
+     "G_LLROUND": 19,
+     "G_LROUND": 18
+    },
+    "X86_MEMCPY": {
+     "G_MEMCPY": 15,
+     "G_MEMMOVE": 16,
+     "G_MEMSET": 16
+    },
+    "X86_SDIV": {
+     "G_SDIV": 17,
+     "G_SREM": 18,
+     "G_UDIV": 18,
+     "G_UREM": 18
+    },
+    "X86_SEXT": {
+     "G_SEXT": 21,
+     "G_ZEXT": 22
+    },
+    "X86_SHL": {
+     "G_ASHR": 21,
+     "G_LSHR": 21,
+     "G_SHL": 20
+    },
+    "X86_SMULH": {
+     "G_SMULH": 19,
+     "G_UMULH": 20
+    },
+    "X86_TRAP": {
+     "G_DEBUGTRAP": 16,
+     "G_TRAP": 15,
+     "G_UBSANTRAP": 16
+    },
+    "X86_UADDE": {
+     "G_UADDE": 22,
+     "G_UADDO": 23,
+     "G_USUBE": 23,
+     "G_USUBO": 23
+    },
+    "X86_UMIN": {
+     "G_SMAX": 17,
+     "G_SMIN": 17,
+     "G_UMAX": 17,
+     "G_UMIN": 16
+    }
+   },
+   "per_opcode_shape_atoms": {
+    "X86_ADD": {
+     "G_ADD": 27,
+     "G_SUB": 27
+    },
+    "X86_AND": {
+     "G_AND": 24,
+     "G_OR": 24,
+     "G_XOR": 24
+    },
+    "X86_DYN_STACKALLOC": {
+     "G_DYN_STACKALLOC": 15,
+     "G_STACKRESTORE": 15,
+     "G_STACKSAVE": 15
+    },
+    "X86_EXTRACT": {
+     "G_EXTRACT": 16,
+     "G_INSERT": 16
+    },
+    "X86_FADD": {
+     "G_FADD": 18,
+     "G_FDIV": 18,
+     "G_FMUL": 18,
+     "G_FSUB": 18
+    },
+    "X86_FCOS": {
+     "G_FACOS": 15,
+     "G_FASIN": 15,
+     "G_FATAN": 15,
+     "G_FATAN2": 15,
+     "G_FCEIL": 15,
+     "G_FCOS": 15,
+     "G_FCOSH": 15,
+     "G_FEXP": 15,
+     "G_FEXP10": 15,
+     "G_FEXP2": 15,
+     "G_FFLOOR": 15,
+     "G_FLOG": 15,
+     "G_FLOG10": 15,
+     "G_FLOG2": 15,
+     "G_FPOW": 15,
+     "G_FPOWI": 15,
+     "G_FSIN": 15,
+     "G_FSINCOS": 15,
+     "G_FSINH": 15,
+     "G_FTAN": 15,
+     "G_FTANH": 15
+    },
+    "X86_GET_ROUNDING": {
+     "G_GET_ROUNDING": 15,
+     "G_SET_ROUNDING": 15
+    },
+    "X86_IMPLICIT_DEF": {
+     "G_CONSTANT_FOLD_BARRIER": 26,
+     "G_FREEZE": 26,
+     "G_IMPLICIT_DEF": 26,
+     "G_PHI": 26
+    },
+    "X86_INTRINSIC": {
+     "G_INTRINSIC": 15,
+     "G_INTRINSIC_W_SIDE_EFFECTS": 15
+    },
+    "X86_INTRINSIC_ROUNDEVEN": {
+     "G_INTRINSIC_ROUNDEVEN": 17,
+     "G_INTRINSIC_TRUNC": 17
+    },
+    "X86_LROUND": {
+     "G_LLROUND": 18,
+     "G_LROUND": 18
+    },
+    "X86_MEMCPY": {
+     "G_MEMCPY": 15,
+     "G_MEMMOVE": 15,
+     "G_MEMSET": 15
+    },
+    "X86_SDIV": {
+     "G_SDIV": 17,
+     "G_SREM": 17,
+     "G_UDIV": 17,
+     "G_UREM": 17
+    },
+    "X86_SEXT": {
+     "G_SEXT": 21,
+     "G_ZEXT": 21
+    },
+    "X86_SHL": {
+     "G_ASHR": 20,
+     "G_LSHR": 20,
+     "G_SHL": 20
+    },
+    "X86_SMULH": {
+     "G_SMULH": 19,
+     "G_UMULH": 19
+    },
+    "X86_TRAP": {
+     "G_DEBUGTRAP": 15,
+     "G_TRAP": 15,
+     "G_UBSANTRAP": 15
+    },
+    "X86_UADDE": {
+     "G_UADDE": 22,
+     "G_UADDO": 22,
+     "G_USUBE": 22,
+     "G_USUBO": 22
+    },
+    "X86_UMIN": {
+     "G_SMAX": 16,
+     "G_SMIN": 16,
+     "G_UMAX": 16,
+     "G_UMIN": 16
+    }
+   },
+   "secondary_opcodes": 53,
+   "total": 115,
+   "uncovered": []
+  },
+  "policy": "A rule entry is probed only when its candidate shape is the first matching rule under the modelled predicates. Opaque lambdas are reported as unverified candidates. Every active rule is either verified, listed in coverage_exceptions.json, or reported in rules.unprobed.",
+  "rules": {
+   "active": 239,
+   "excepted": [
+    {
+     "arg": "scalarOrEltWiderThan ( 0 , 64 ) , 0",
+     "config": "C1",
+     "exception": "shadowed by clampScalarOrElt(0, s8, sMaxScalar): a scalar or element wider than 64 is clamped before scalarizeIf is reached.",
+     "first_match": 7,
+     "kind": "shadowed",
+     "method": "scalarizeIf",
+     "reason": "every candidate is shadowed by rule 7",
+     "rule_index": 14,
+     "rule_set": "X86_IMPLICIT_DEF"
+    },
+    {
+     "arg": "[ = ] ( const LegalityQuery & Q ) { switch ( Q . Types [ BigTyIdx ] . getSizeInBits ( ) ) { case 16 : case 32 : case 64 : case 128 : case 256 : case 512 : break ; default : return false ; } switch ( Q . Types [ LitTyIdx ] . getSizeInBits ( ) ) { case 8 : case 16 : case 32 : case 64 : case 128 : case 256 : return true ; default : return false ; } }",
+     "config": "C1",
+     "exception": "opaque lambda: a switch on BigTyIdx/LitTyIdx sizes has no literal predicate witness.",
+     "first_match": null,
+     "kind": "no_candidate",
+     "method": "legalIf",
+     "reason": "no candidate shape",
+     "rule_index": 4,
+     "rule_set": "X86_MERGE_VALUES"
+    },
+    {
+     "arg": "[ = ] ( const LegalityQuery & Q ) { switch ( Q . Types [ BigTyIdx ] . getSizeInBits ( ) ) { case 16 : case 32 : case 64 : case 128 : case 256 : case 512 : break ; default : return false ; } switch ( Q . Types [ LitTyIdx ] . getSizeInBits ( ) ) { case 8 : case 16 : case 32 : case 64 : case 128 : case 256 : return true ; default : return false ; } }",
+     "config": "C1",
+     "exception": "opaque lambda: a switch on BigTyIdx/LitTyIdx sizes has no literal predicate witness.",
+     "first_match": null,
+     "kind": "no_candidate",
+     "method": "legalIf",
+     "reason": "no candidate shape",
+     "rule_index": 4,
+     "rule_set": "X86_UNMERGE_VALUES"
+    },
+    {
+     "arg": "0 , s64 , 2",
+     "config": "C1",
+     "exception": "clampMinNumElements(0, s64, 2) can never fire: a one-element fixed vector is represented as a scalar, and every other s64 vector is handled by the preceding clamps.",
+     "first_match": null,
+     "kind": "predicate_false",
+     "method": "clampMinNumElements",
+     "reason": "predicate false for every candidate in this configuration",
+     "rule_index": 9,
+     "rule_set": "X86_ADD"
+    },
+    {
+     "arg": "{ s64 }",
+     "config": "C1",
+     "exception": "s64 is legal through the earlier legalFor(Is64Bit, {s64}) rule in 64-bit configs.",
+     "first_match": 1,
+     "kind": "shadowed",
+     "method": "libcallFor",
+     "reason": "every candidate is shadowed by rule 1",
+     "rule_index": 2,
+     "rule_set": "X86_SDIV"
+    },
+    {
+     "arg": "[ = ] ( const LegalityQuery & Query ) { unsigned SubIdx = Query . Opcode == G_EXTRACT ? 0 : 1 ; unsigned FullIdx = Query . Opcode == G_EXTRACT ? 1 : 0 ; return ( HasAVX && typePairInSet ( SubIdx , FullIdx , { { v16s8 , v32s8 } , { v8s16 , v16s16 } , { v4s32 , v8s32 } , { v2s64 , v4s64 } } ) ( Query ) ) || ( HasAVX512 && typePairInSet ( SubIdx , FullIdx , { { v16s8 , v64s8 } , { v32s8 , v64s8 } , { v8s16 , v32s16 } , { v16s16 , v32s16 } , { v4s32 , v16s32 } , { v8s32 , v16s32 } , { v2s64 , v8s64 } , { v4s64 , v8s64 } } ) ( Query ) ) ; }",
+     "config": "C1",
+     "exception": "the lambda accepts only HasAVX or HasAVX512 type pairs; C0/C1/C3 have no AVX, so the predicate is false there.",
+     "first_match": null,
+     "kind": "predicate_false",
+     "method": "legalIf",
+     "reason": "predicate false for every candidate in this configuration",
+     "rule_index": 0,
+     "rule_set": "X86_EXTRACT"
+    }
+   ],
+   "inactive": [
+    {
+     "arg": "HasAVX , { v32s8 , v16s16 , v8s32 , v4s64 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 4,
+     "rule_set": "X86_IMPLICIT_DEF"
+    },
+    {
+     "arg": "HasAVX512 , { v64s8 , v32s16 , v16s32 , v8s64 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 5,
+     "rule_set": "X86_IMPLICIT_DEF"
+    },
+    {
+     "arg": "UseX87 && ! HasSSE1 , { s32 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 0,
+     "rule_set": "X86_FNEG"
+    },
+    {
+     "arg": "UseX87 && ! HasSSE2 , { s64 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 1,
+     "rule_set": "X86_FNEG"
+    },
+    {
+     "arg": "HasAVX2 , { v32s8 , v16s16 , v8s32 , v4s64 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 3,
+     "rule_set": "X86_ADD"
+    },
+    {
+     "arg": "HasAVX512 , { v16s32 , v8s64 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 4,
+     "rule_set": "X86_ADD"
+    },
+    {
+     "arg": "HasBWI , { v64s8 , v32s16 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 5,
+     "rule_set": "X86_ADD"
+    },
+    {
+     "arg": "HasSSE41 , { v4s32 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 3,
+     "rule_set": "X86_MUL"
+    },
+    {
+     "arg": "HasAVX2 , { v16s16 , v8s32 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 4,
+     "rule_set": "X86_MUL"
+    },
+    {
+     "arg": "HasAVX512 , { v16s32 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 5,
+     "rule_set": "X86_MUL"
+    },
+    {
+     "arg": "HasDQI , { v8s64 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 6,
+     "rule_set": "X86_MUL"
+    },
+    {
+     "arg": "HasDQI && HasVLX , { v2s64 , v4s64 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 7,
+     "rule_set": "X86_MUL"
+    },
+    {
+     "arg": "HasBWI , { v32s16 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 8,
+     "rule_set": "X86_MUL"
+    },
+    {
+     "arg": "HasAVX , { v32s8 , v16s16 , v8s32 , v4s64 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 3,
+     "rule_set": "X86_AND"
+    },
+    {
+     "arg": "HasAVX512 , { v64s8 , v32s16 , v16s32 , v8s64 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 4,
+     "rule_set": "X86_AND"
+    },
+    {
+     "arg": "HasPOPCNT , { { s16 , s16 } , { s32 , s32 } }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 0,
+     "rule_set": "X86_CTPOP"
+    },
+    {
+     "arg": "HasPOPCNT && Is64Bit , { { s64 , s64 } }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 1,
+     "rule_set": "X86_CTPOP"
+    },
+    {
+     "arg": "HasLZCNT , { { s16 , s16 } , { s32 , s32 } }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 0,
+     "rule_set": "X86_CTLZ"
+    },
+    {
+     "arg": "HasLZCNT && Is64Bit , { { s64 , s64 } }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 1,
+     "rule_set": "X86_CTLZ"
+    },
+    {
+     "arg": "HasBMI , { { s16 , s16 } , { s32 , s32 } }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 0,
+     "rule_set": "X86_CTTZ"
+    },
+    {
+     "arg": "HasBMI && Is64Bit , { { s64 , s64 } }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 1,
+     "rule_set": "X86_CTTZ"
+    },
+    {
+     "arg": "HasAVX , { v8s32 , v4s64 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 3,
+     "rule_set": "X86_FADD"
+    },
+    {
+     "arg": "HasAVX512 , { v16s32 , v8s64 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 4,
+     "rule_set": "X86_FADD"
+    },
+    {
+     "arg": "UseX87 && ! Is64Bit , { s64 }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 1,
+     "rule_set": "X86_FABS"
+    },
+    {
+     "arg": "HasAVX , { { v4s64 , v4s32 } }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 1,
+     "rule_set": "X86_FPEXT"
+    },
+    {
+     "arg": "HasAVX512 , { { v8s64 , v8s32 } }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 2,
+     "rule_set": "X86_FPEXT"
+    },
+    {
+     "arg": "HasAVX , { { v4s32 , v4s64 } }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 1,
+     "rule_set": "X86_FPTRUNC"
+    },
+    {
+     "arg": "HasAVX512 , { { v8s32 , v8s64 } }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 2,
+     "rule_set": "X86_FPTRUNC"
+    },
+    {
+     "arg": "HasAVX512 , { { s32 , s32 } , { s32 , s64 } , { s64 , s32 } , { s64 , s64 } }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 0,
+     "rule_set": "X86_UITOFP"
+    },
+    {
+     "arg": "HasAVX512 , { { s32 , s32 } , { s32 , s64 } , { s64 , s32 } , { s64 , s64 } }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 0,
+     "rule_set": "X86_FPTOUI"
+    },
+    {
+     "arg": "HasAVX , { { v64s8 , v16s8 } , { v64s8 , v32s8 } , { v32s16 , v8s16 } , { v32s16 , v16s16 } , { v16s32 , v4s32 } , { v16s32 , v8s32 } , { v8s64 , v2s64 } , { v8s64 , v4s64 } }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 1,
+     "rule_set": "X86_CONCAT_VECTORS"
+    },
+    {
+     "arg": "! HasCMOV , { { s8 , s32 } }",
+     "first_match": null,
+     "kind": "unknown",
+     "method": "legalFor",
+     "reason": "feature predicate false",
+     "rule_index": 1,
+     "rule_set": "X86_SELECT"
+    }
+   ],
+   "probed_candidates": 233,
+   "source_total": 271,
+   "unprobed": [],
+   "verified": 233
+  }
+ },
+ "oracle": {
+  "cross_revision": true,
+  "kind": "reference",
+  "revision": "ebac17721d12da88b03da36bde87a9c25bf2b7f4",
+  "spec": "ebac17721d12"
+ },
+ "points_sha256": "8ae401b3816e24087985afde41a6e31d8f6258e3533917c7017716be9c3771ce",
+ "schema": "llvm-x86-legalizer-corpus-report",
+ "source": {
+  "lines": 1059,
+  "path": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+  "rev": "fed20e0e68323be32cb0fe8af679b8cb34e72112",
+  "revision": "fed20e0e68323be32cb0fe8af679b8cb34e72112",
+  "sha256": "79f2376096c3271910840a42c6270932011078df9fff343bfd96c226523336cd"
+ },
+ "source_oracle_delta": {
+  "oracle_only": [],
+  "oracle_rules": 239,
+  "source_only": [],
+  "source_rules": 239
+ },
+ "version": 2
+}

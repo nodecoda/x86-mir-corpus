@@ -35,7 +35,9 @@ pip install -e .
 x86-mir-corpus --help
 ```
 
-Requires Python >= 3.10.  See [docs/USAGE.md](docs/USAGE.md) for commands and
+Bundled witness corpora and reports live in `corpora/` (see
+`corpora/README.md`).  Requires Python >= 3.10.  See
+[docs/USAGE.md](docs/USAGE.md) for commands and
 [docs/LLVM-INTEGRATION.md](docs/LLVM-INTEGRATION.md) for the sidecar build.
 
 ## Quick start

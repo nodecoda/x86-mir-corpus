@@ -178,4 +178,8 @@ def in_tree_driver():
 
 
 def corpus_dir():
-    return os.environ.get("X86_MIR_CORPUS_DIR")
+    env = os.environ.get("X86_MIR_CORPUS_DIR")
+    if env:
+        return env
+    local = os.path.join(TOOL_DIR, "corpora", "witness")
+    return local if os.path.isdir(local) else None

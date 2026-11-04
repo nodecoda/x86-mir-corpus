@@ -6,3 +6,4 @@ dist/
 .venv/
 .build/
 .omx/
+corpora/full/*.json

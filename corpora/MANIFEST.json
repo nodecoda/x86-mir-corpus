@@ -1,0 +1,232 @@
+{
+ "full_c2": {
+  "atoms": 208851,
+  "committed": false,
+  "config": "C2",
+  "note": "51 MB; gitignored. Regenerate with the corpus command or copy from .omx/evidence/x86-mir-corpus/corpus/upfull-C2.json.",
+  "path": "corpora/full/upfull-C2.json",
+  "sha256": "4327c233e88118ae660567729ebd2f9ab7ce457dd7a03d36ad056314b263b69f"
+ },
+ "full_c2_report": {
+  "atoms": 208851,
+  "committed": false,
+  "counts": {
+   "budget": 225,
+   "construction_mismatch": 97605,
+   "crash": 3265,
+   "failed": 17891,
+   "hang": 0,
+   "legalized": 3109,
+   "not_run": 0,
+   "unbuildable": 86756
+  },
+  "note": "85 MB; gitignored. Enables triage replay without an LLVM build.",
+  "path": "corpora/full/mir-full-C2.json",
+  "sha256": "a1ea1bc8c75867c87edf208eaa193b2d19ddadb82686e25d89f244113069a00b"
+ },
+ "reports": {
+  "C0": {
+   "atoms": 2062,
+   "counts": {
+    "budget": 5,
+    "construction_mismatch": 303,
+    "crash": 24,
+    "failed": 1119,
+    "hang": 0,
+    "legalized": 170,
+    "not_run": 0,
+    "unbuildable": 441
+   },
+   "note": "source report for mir-baseline-witness.json; predates failed_on_opcode",
+   "path": "corpora/reports/mir-M1-C0.json",
+   "sha256": "dfb8f6afe940b19d0be5f98db51fd7df1603adf738b2aaa379b53e903240d57c"
+  },
+  "C1": {
+   "atoms": 2169,
+   "counts": {
+    "budget": 21,
+    "construction_mismatch": 304,
+    "crash": 24,
+    "failed": 1059,
+    "hang": 0,
+    "legalized": 316,
+    "not_run": 0,
+    "unbuildable": 445
+   },
+   "note": "source report for mir-baseline-witness.json; predates failed_on_opcode",
+   "path": "corpora/reports/mir-M1-C1.json",
+   "sha256": "3b228b64c13b18b9de0480b261dec18ef8e4a6ccddfd0cee4277c2f434ecf5bf"
+  },
+  "C2": {
+   "atoms": 2217,
+   "counts": {
+    "budget": 20,
+    "construction_mismatch": 304,
+    "crash": 24,
+    "failed": 1034,
+    "hang": 0,
+    "legalized": 388,
+    "not_run": 0,
+    "unbuildable": 447
+   },
+   "note": "source report for mir-baseline-witness.json; predates failed_on_opcode",
+   "path": "corpora/reports/mir-M1-C2.json",
+   "sha256": "6cf024c349439f70e547cc8460bade51464064ac806d0f69eb370064438a5e48"
+  },
+  "C3": {
+   "atoms": 2093,
+   "counts": {
+    "budget": 5,
+    "construction_mismatch": 303,
+    "crash": 24,
+    "failed": 1103,
+    "hang": 0,
+    "legalized": 216,
+    "not_run": 0,
+    "unbuildable": 442
+   },
+   "note": "source report for mir-baseline-witness.json; predates failed_on_opcode",
+   "path": "corpora/reports/mir-M1-C3.json",
+   "sha256": "f79c37b32e9e7855645d7b0ca48e7ac3fe94b575ebc88fd0155f6e3fc337d873"
+  }
+ },
+ "schema": "x86-mir-corpus/corpora/v1",
+ "source": ".omx/evidence/x86-mir-corpus (llvm-project 8bc4cd96f4bb worktree)",
+ "triage": {
+  "full-C2-clusters": {
+   "budget_clusters": 192,
+   "crash_clusters": 12,
+   "path": "corpora/triage/full-C2-clusters.json",
+   "sha256": "00738d0cbc766cea16ed479bb87706b074af488f370dce1d3ba27f87f607d5bd"
+  },
+  "full-C2-verified": {
+   "all_match": true,
+   "checks": 34,
+   "path": "corpora/triage/full-C2-verified.json",
+   "sha256": "f66e895b4b2abd8c038b09028825e508e29062beca7133f8f2fe7961c5cf2809"
+  }
+ },
+ "version": 1,
+ "witness": {
+  "C0": {
+   "atoms": 2062,
+   "corpus": "corpora/witness/up-C0.json",
+   "corpus_report": "corpora/witness/up-C0.json.report.json",
+   "corpus_report_sha256": "8b9cc311dd17d4cc5400fdac07fb52458c0ea1ad1737a30ae9173164747cd414",
+   "corpus_sha256": "953c8e01ef389371fcc8af485751142ef5a540096f36e794b2a513e649c8c402",
+   "counts": {
+    "opcodes_total": 115,
+    "opcodes_uncovered": 0,
+    "origins": {
+     "as": 336,
+     "boundary": 1380,
+     "opcode": 53,
+     "rule": 293
+    },
+    "points": 2062,
+    "pruned_pointer_element_size": 0,
+    "rules_active": 180,
+    "rules_excepted": 20,
+    "rules_source_total": 262,
+    "rules_unprobed": 0,
+    "rules_verified": 160
+   },
+   "oracle_cross_revision": true,
+   "oracle_revision": "ebac17721d12da88b03da36bde87a9c25bf2b7f4",
+   "point_count": 2062,
+   "points": "corpora/witness/up-C0.json.points.json",
+   "points_sha256": "e547679dcfab84118fe5840295058bb2993cc4c5d969dd456adf3ddda6aa5e71",
+   "source_rev": "fed20e0e68323be32cb0fe8af679b8cb34e72112"
+  },
+  "C1": {
+   "atoms": 2169,
+   "corpus": "corpora/witness/up-C1.json",
+   "corpus_report": "corpora/witness/up-C1.json.report.json",
+   "corpus_report_sha256": "a9e92eeec7d8c33fd5720aa2b6e44c42e6a17c7262b3cc9a93e3ee65c28d91d2",
+   "corpus_sha256": "a6f142e49a3f38c63a128a31a5a59945b2f18c2f892ecd84380a8b0118e45814",
+   "counts": {
+    "opcodes_total": 115,
+    "opcodes_uncovered": 0,
+    "origins": {
+     "as": 336,
+     "boundary": 1380,
+     "opcode": 53,
+     "rule": 400
+    },
+    "points": 2169,
+    "pruned_pointer_element_size": 0,
+    "rules_active": 239,
+    "rules_excepted": 6,
+    "rules_source_total": 271,
+    "rules_unprobed": 0,
+    "rules_verified": 233
+   },
+   "oracle_cross_revision": true,
+   "oracle_revision": "ebac17721d12da88b03da36bde87a9c25bf2b7f4",
+   "point_count": 2169,
+   "points": "corpora/witness/up-C1.json.points.json",
+   "points_sha256": "8ae401b3816e24087985afde41a6e31d8f6258e3533917c7017716be9c3771ce",
+   "source_rev": "fed20e0e68323be32cb0fe8af679b8cb34e72112"
+  },
+  "C2": {
+   "atoms": 2217,
+   "corpus": "corpora/witness/up-C2.json",
+   "corpus_report": "corpora/witness/up-C2.json.report.json",
+   "corpus_report_sha256": "f34d8f4d5ce3ec714cdf4401e51fda6030db6561aca79a1f108d3c310704c2e1",
+   "corpus_sha256": "7b7634f5ed50516e194d80523702b8f09b5973a454a54cc6aa38b26b80e0a769",
+   "counts": {
+    "opcodes_total": 115,
+    "opcodes_uncovered": 0,
+    "origins": {
+     "as": 336,
+     "boundary": 1380,
+     "opcode": 53,
+     "rule": 448
+    },
+    "points": 2217,
+    "pruned_pointer_element_size": 0,
+    "rules_active": 271,
+    "rules_excepted": 10,
+    "rules_source_total": 275,
+    "rules_unprobed": 0,
+    "rules_verified": 261
+   },
+   "oracle_cross_revision": true,
+   "oracle_revision": "ebac17721d12da88b03da36bde87a9c25bf2b7f4",
+   "point_count": 2217,
+   "points": "corpora/witness/up-C2.json.points.json",
+   "points_sha256": "4f4d33f3ec3db90541ec4e4575485eec7a8bb2e4529bc6743385be2ec724171d",
+   "source_rev": "fed20e0e68323be32cb0fe8af679b8cb34e72112"
+  },
+  "C3": {
+   "atoms": 2093,
+   "corpus": "corpora/witness/up-C3.json",
+   "corpus_report": "corpora/witness/up-C3.json.report.json",
+   "corpus_report_sha256": "b3c1513262dcac12cd59f6e0eb844ab796d4d187c131828f6a5683e09b0faab3",
+   "corpus_sha256": "c31522bbc1b29c258a46097130ae15f0e1b85f61ea1c9b33c2f70d9f3dab78d5",
+   "counts": {
+    "opcodes_total": 115,
+    "opcodes_uncovered": 0,
+    "origins": {
+     "as": 336,
+     "boundary": 1380,
+     "opcode": 53,
+     "rule": 324
+    },
+    "points": 2093,
+    "pruned_pointer_element_size": 0,
+    "rules_active": 203,
+    "rules_excepted": 18,
+    "rules_source_total": 262,
+    "rules_unprobed": 0,
+    "rules_verified": 185
+   },
+   "oracle_cross_revision": true,
+   "oracle_revision": "ebac17721d12da88b03da36bde87a9c25bf2b7f4",
+   "point_count": 2093,
+   "points": "corpora/witness/up-C3.json.points.json",
+   "points_sha256": "5b6fd865694da565f795d09a4bfd4882de263eb96359026854c7a85c30f5499f",
+   "source_rev": "fed20e0e68323be32cb0fe8af679b8cb34e72112"
+  }
+ }
+}
