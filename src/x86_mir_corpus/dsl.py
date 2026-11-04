@@ -29,6 +29,7 @@ SCHEMA = "mir-corpus-dsl-symbols"
 VERSION = 2
 LEGALIZER_HEADER = "llvm/include/llvm/CodeGen/GlobalISel/LegalizerInfo.h"
 LEGALIZER_SOURCE = "llvm/lib/CodeGen/GlobalISel/LegalizerInfo.cpp"
+LEGALIZE_MUTATIONS_SOURCE = "llvm/lib/CodeGen/GlobalISel/LegalizeMutations.cpp"
 LOWLEVELTYPE_HEADER = "llvm/include/llvm/CodeGenTypes/LowLevelType.h"
 TYPESIZE_HEADER = "llvm/include/llvm/Support/TypeSize.h"
 LEGALIZER_HELPER_HEADER = "llvm/include/llvm/CodeGen/GlobalISel/LegalizerHelper.h"
@@ -43,9 +44,9 @@ CHECK_SCHEMA = "mir-corpus-dsl-symbols-check"
 # authoritative in the headers; the implementations and target sources are
 # used for semantics, hashes, and region classification.
 _SOURCE_FILES = (
-    LEGALIZER_HEADER, LEGALIZER_SOURCE, LOWLEVELTYPE_HEADER, TYPESIZE_HEADER,
-    LEGALIZER_HELPER_HEADER, CODEGEN_HEADER, GENERIC_OPCODES, X86_SOURCE,
-    AARCH64_SOURCE,
+    LEGALIZER_HEADER, LEGALIZER_SOURCE, LEGALIZE_MUTATIONS_SOURCE,
+    LOWLEVELTYPE_HEADER, TYPESIZE_HEADER, LEGALIZER_HELPER_HEADER,
+    CODEGEN_HEADER, GENERIC_OPCODES, X86_SOURCE, AARCH64_SOURCE,
 )
 _HEADER_NAMES = _SOURCE_FILES
 TARGET_SOURCES = (X86_SOURCE, AARCH64_SOURCE)
@@ -654,6 +655,22 @@ def _extract_mutations(text):
     return mutations
 
 
+_MUTATION_DEF_RE = re.compile(
+    r"LegalizeMutation\s+LegalizeMutations::([A-Za-z_]\w*)\s*\(")
+
+
+def _extract_mutation_definitions(text):
+    """Definitions of the mutation factories, from LegalizeMutations.cpp."""
+    found = {}
+    for match in _MUTATION_DEF_RE.finditer(text):
+        name = match.group(1)
+        found.setdefault(name, {
+            "file": LEGALIZE_MUTATIONS_SOURCE,
+            "line": text[:match.start(1)].count("\n") + 1,
+        })
+    return found
+
+
 def _extract_actions(text):
     match = re.search(r"enum\s+LegalizeAction[^{]*\{", text)
     if not match:
@@ -895,6 +912,8 @@ def extract(llvm_src=None, repo=None, revision=None):
         "methods": _extract_methods(legalizer),
         "predicates": _extract_predicates(legalizer),
         "mutations": _extract_mutations(legalizer),
+        "mutation_definitions": _extract_mutation_definitions(
+            texts[LEGALIZE_MUTATIONS_SOURCE]),
         "actions": _extract_actions(legalizer),
         "llt": _extract_llt(lowlevel),
         # values used inside predicates and mutations
@@ -981,9 +1000,13 @@ def build_table(extracted, revision=None):
     mutations = []
     for name in sorted(extracted["mutations"]):
         entry = extracted["mutations"][name]
+        definition = extracted["mutation_definitions"].get(name)
         mutations.append({
             "name": name,
             "source": f"LegalizerInfo.h:{entry['line']}",
+            "definition": (
+                f"LegalizeMutations.cpp:{definition['line']}"
+                if definition else None),
             "arity": max(len(overload["params"])
                          for overload in entry["overloads"]),
             "overloads": _overloads(entry),
@@ -1408,6 +1431,20 @@ def verify(llvm_src=None, repo=None, revision=None, table=None,
                 "current": [source["num_types"], source["num_imms"]],
             })
     check("opcode-arity", not opcode_drift, opcode_drift)
+
+    definition_drift = []
+    for entry in doc["mutations"]:
+        source = extracted["mutation_definitions"].get(entry["name"])
+        if source is None:
+            definition_drift.append({"name": entry["name"],
+                                     "issue": "missing"})
+            continue
+        expected = f"LegalizeMutations.cpp:{source['line']}"
+        if entry.get("definition") != expected:
+            definition_drift.append({"name": entry["name"],
+                                     "recorded": entry.get("definition"),
+                                     "current": expected})
+    check("mutation-definitions", not definition_drift, definition_drift)
 
     unknown = [entry["name"] for entry in doc["methods"]
                if entry["kind"] == "unknown"]

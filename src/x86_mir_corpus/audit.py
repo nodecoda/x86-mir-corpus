@@ -388,16 +388,27 @@ def write_manifest(report):
     return path
 
 
+def _unknown_sites(report, scope, limit=5):
+    sites = [f"{entry['name']} at line {entry['line']}"
+             for entry in report.get("unknown", [])
+             if entry.get("scope") == scope]
+    if len(sites) > limit:
+        sites = [*sites[:limit], f"... and {len(sites) - limit} more"]
+    return ", ".join(sites)
+
+
 def gate(report, strict=True):
     """Failures that ``--strict`` treats as errors."""
     problems = []
     scopes = report["scopes"]
     if scopes.get("constructor", {}).get("unknown"):
         problems.append(
-            f"constructor has {scopes['constructor']['unknown']} unknown call(s)")
+            f"constructor has {scopes['constructor']['unknown']} unknown "
+            f"call(s): {_unknown_sites(report, 'constructor')}")
     if scopes.get("lambda", {}).get("unknown"):
         problems.append(
-            f"lambda has {scopes['lambda']['unknown']} unknown call(s)")
+            f"lambda has {scopes['lambda']['unknown']} unknown call(s): "
+            f"{_unknown_sites(report, 'lambda')}")
     if strict:
         manifest = load_manifest(report["target"])
         if manifest is None:

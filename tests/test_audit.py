@@ -1,9 +1,12 @@
 """Region-aware DSL audit: constructor/lambda gate, lowering is separate."""
 
 import os
+import subprocess
+import sys
+import tempfile
 import unittest
 
-import testlib  # noqa: F401  (sets sys.path)
+import testlib
 from x86_mir_corpus import audit, pin
 
 KNOWN = """\
@@ -70,7 +73,9 @@ class AuditTextTest(unittest.TestCase):
         unknown = [u for u in report["unknown"] if u["scope"] == "constructor"]
         self.assertEqual(unknown[0]["name"], "widenScalarToNextPow3")
         self.assertEqual(unknown[0]["line"], 3)
-        self.assertTrue(audit.gate(report, strict=False))
+        problems = audit.gate(report, strict=False)
+        self.assertTrue(problems)
+        self.assertIn("widenScalarToNextPow3 at line 3", problems[0])
 
     def test_unknown_llt_query_fails_the_lambda_gate(self):
         report = audit.audit_text(UNKNOWN_LAMBDA, "aarch64")
@@ -97,6 +102,25 @@ class AuditTextTest(unittest.TestCase):
             "return H.buildInstr(MI.getOpcode()).getReg() != 0; }\n",
             "aarch64")
         self.assertEqual(first["surface_sha256"], other["surface_sha256"])
+
+
+class AuditCliTest(unittest.TestCase):
+    def test_synthetic_unknown_exits_one_with_a_line_number(self):
+        with tempfile.NamedTemporaryFile(
+                "w", suffix=".cpp", delete=False) as handle:
+            handle.write(UNKNOWN_CONSTRUCTOR)
+            path = handle.name
+        try:
+            proc = subprocess.run(
+                [sys.executable, "-m", "x86_mir_corpus", "dsl", "audit",
+                 "--target", "aarch64", "--input", path],
+                cwd=testlib.repo_root(), capture_output=True, text=True,
+                env=dict(os.environ, PYTHONPATH=testlib.SRC_DIR))
+        finally:
+            os.unlink(path)
+        self.assertEqual(proc.returncode, 1, proc.stderr)
+        self.assertIn("widenScalarToNextPow3", proc.stderr)
+        self.assertIn("line 3", proc.stderr)
 
 
 class SnapshotAuditTest(unittest.TestCase):

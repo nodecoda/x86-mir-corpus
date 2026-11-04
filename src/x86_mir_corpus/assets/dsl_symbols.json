@@ -3167,6 +3167,7 @@
   "mutations": [
     {
       "arity": 2,
+      "definition": "LegalizeMutations.cpp:46",
       "name": "changeElementCountTo",
       "overloads": [
         {
@@ -3190,6 +3191,7 @@
     },
     {
       "arity": 2,
+      "definition": "LegalizeMutations.cpp:65",
       "name": "changeElementSizeTo",
       "overloads": [
         {
@@ -3213,6 +3215,7 @@
     },
     {
       "arity": 2,
+      "definition": "LegalizeMutations.cpp:29",
       "name": "changeElementTo",
       "overloads": [
         {
@@ -3236,6 +3239,7 @@
     },
     {
       "arity": 2,
+      "definition": "LegalizeMutations.cpp:17",
       "name": "changeTo",
       "overloads": [
         {
@@ -3259,6 +3263,7 @@
     },
     {
       "arity": 2,
+      "definition": "LegalizeMutations.cpp:104",
       "name": "moreElementsToNextPow2",
       "overloads": [
         {
@@ -3274,6 +3279,7 @@
     },
     {
       "arity": 1,
+      "definition": "LegalizeMutations.cpp:115",
       "name": "scalarize",
       "overloads": [
         {
@@ -3288,6 +3294,7 @@
     },
     {
       "arity": 2,
+      "definition": "LegalizeMutations.cpp:95",
       "name": "widenScalarOrEltToNextMultipleOf",
       "overloads": [
         {
@@ -3303,6 +3310,7 @@
     },
     {
       "arity": 2,
+      "definition": "LegalizeMutations.cpp:84",
       "name": "widenScalarOrEltToNextPow2",
       "overloads": [
         {
@@ -5551,6 +5559,7 @@
     "llvm/include/llvm/Support/CodeGen.h": "c869294f93ec3efbca57a7c514a9845eeaa1db76958c8bd93f567deba7a4f786",
     "llvm/include/llvm/Support/TypeSize.h": "1b9a41326d321678319b82a8ae2b1a72e87d7935909fac6628eba84212a78868",
     "llvm/include/llvm/Target/GenericOpcodes.td": "d4e8c9220afd181478e1172ed592dd03ee02740b03124c31cf48a514032f9c52",
+    "llvm/lib/CodeGen/GlobalISel/LegalizeMutations.cpp": "9f59ce6f2a302893e723ba62af63eb5670ecb3a4f9b7aea9554c7a6ab7f47b5b",
     "llvm/lib/CodeGen/GlobalISel/LegalizerInfo.cpp": "27cf91e365bc90e523a3de7fdeb44f054db673f4b816f4fa780d2616b0a6b4db",
     "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp": "2b5377c3eedddf82f17758e7cab763d99ce362e4c5422bb8e24bc4b7c8945d55",
     "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp": "79f2376096c3271910840a42c6270932011078df9fff343bfd96c226523336cd"

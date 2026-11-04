@@ -4,7 +4,8 @@ import os
 import unittest
 
 import testlib  # noqa: F401  (sets sys.path)
-from x86_mir_corpus import parse, pin, targets
+from x86_mir_corpus import domain, parse, pin, targets
+from x86_mir_corpus import expr as E
 
 MINI = """\
 AArch64LegalizerInfo::AArch64LegalizerInfo(const AArch64Subtarget &ST) {
@@ -93,6 +94,110 @@ class MutationParseTest(unittest.TestCase):
         result = aarch64(MINI)
         slots = result.builders[0].slots
         self.assertTrue({0, 1}.issubset(slots))
+
+
+def apply(name, type_idx, target, types, **env):
+    mutation = {"kind": "call", "name": name, "type_idx": type_idx,
+                "target": target}
+    return domain.apply_mutation(mutation, types, env)
+
+
+class MutationSemanticsTest(unittest.TestCase):
+    """The Python model mirrors LegalizeMutations.cpp at the pinned pin."""
+
+    def test_change_to_type_or_slot(self):
+        self.assertEqual(apply("changeTo", 0, {"kind": "llt", "llt": "i64"},
+                               [E.scalar(8)]), (0, E.integer(64)))
+        self.assertEqual(
+            apply("changeTo", 0, {"kind": "slot", "type_idx": 1},
+                  [E.scalar(8), E.vec(4, E.scalar(16))]),
+            (0, E.vec(4, E.scalar(16))))
+
+    def test_change_element_to_keeps_the_shape(self):
+        self.assertEqual(
+            apply("changeElementTo", 0, {"kind": "llt", "llt": "f32"},
+                  [E.vec(4, E.scalar(32))]),
+            (0, E.vec(4, E.float_(32))))
+        self.assertEqual(
+            apply("changeElementTo", 0, {"kind": "slot", "type_idx": 1},
+                  [E.vec(2, E.scalar(32)), E.scalar(16)]),
+            (0, E.vec(2, E.scalar(16))))
+        # A scalar LLT changes to the new element type wholesale.
+        self.assertEqual(
+            apply("changeElementTo", 0, {"kind": "llt", "llt": "s16"},
+                  [E.scalar(32)]), (0, E.scalar(16)))
+
+    def test_change_element_size_discards_the_element_kind(self):
+        self.assertEqual(
+            apply("changeElementSizeTo", 0, {"kind": "llt", "llt": "s16"},
+                  [E.vec(4, E.integer(32))]),
+            (0, E.vec(4, E.integer(16))))
+        self.assertEqual(
+            apply("changeElementSizeTo", 0, {"kind": "llt", "llt": "s16"},
+                  [E.vec(4, E.scalar(32))]),
+            (0, E.vec(4, E.scalar(16))))
+        self.assertEqual(
+            apply("changeElementSizeTo", 0, {"kind": "slot", "type_idx": 1},
+                  [E.scalar(8), E.vec(2, E.scalar(64))]),
+            (0, E.scalar(64)))
+        # changeElementSize asserts on pointers; the query is not well formed.
+        self.assertIsNone(
+            apply("changeElementSizeTo", 0, {"kind": "llt", "llt": "s16"},
+                  [E.ptr(0)]))
+
+    def test_change_element_count_from_slot_or_element_count(self):
+        self.assertEqual(
+            apply("changeElementCountTo", 0, {"kind": "slot", "type_idx": 1},
+                  [E.scalar(32), E.vec(8, E.scalar(16))]),
+            (0, E.vec(8, E.scalar(32))))
+        self.assertEqual(
+            apply("changeElementCountTo", 0, {"kind": "slot", "type_idx": 1},
+                  [E.vec(4, E.scalar(16)), E.scalar(32)]),
+            (0, E.scalar(16)))
+        self.assertEqual(
+            apply("changeElementCountTo", 0,
+                  {"kind": "element_count", "scalable": False, "count": 2},
+                  [E.scalar(32)]), (0, E.vec(2, E.scalar(32))))
+
+    def test_widen_to_the_next_power_of_two_or_multiple(self):
+        self.assertEqual(
+            apply("widenScalarOrEltToNextPow2", 0,
+                  {"kind": "size", "bits": 32}, [E.scalar(8)]),
+            (0, E.scalar(32)))
+        self.assertEqual(
+            apply("widenScalarOrEltToNextPow2", 0,
+                  {"kind": "size", "bits": 0}, [E.vec(2, E.scalar(24))]),
+            (0, E.vec(2, E.scalar(32))))
+        self.assertEqual(
+            apply("widenScalarOrEltToNextMultipleOf", 0,
+                  {"kind": "size", "bits": 32}, [E.scalar(24)]),
+            (0, E.scalar(32)))
+
+    def test_more_elements_and_scalarize(self):
+        self.assertEqual(
+            apply("moreElementsToNextPow2", 0,
+                  {"kind": "size", "bits": 0}, [E.vec(3, E.scalar(32))]),
+            (0, E.vec(4, E.scalar(32))))
+        self.assertEqual(
+            apply("moreElementsToNextPow2", 0,
+                  {"kind": "size", "bits": 8}, [E.vec(3, E.scalar(32))]),
+            (0, E.vec(8, E.scalar(32))))
+        self.assertEqual(
+            apply("scalarize", 0, None, [E.vec(4, E.scalar(32))]),
+            (0, E.scalar(32)))
+        # getNumElements() is fatal for scalable vectors.
+        self.assertIsNone(
+            apply("moreElementsToNextPow2", 0, None,
+                  [E.scalable_vec(4, E.scalar(32))]))
+        self.assertIsNone(apply("scalarize", 0, None, [E.scalar(32)]))
+
+    def test_opaque_mutations_are_not_applied(self):
+        self.assertIsNone(domain.apply_mutation(
+            {"kind": "lambda", "name": None, "type_idx": None,
+             "target": None}, [E.scalar(32)]))
+        self.assertIsNone(domain.apply_mutation(
+            {"kind": "call", "name": "notAMutation", "type_idx": 0,
+             "target": None}, [E.scalar(32)]))
 
 
 class AArch64SnapshotTest(unittest.TestCase):

@@ -50,6 +50,12 @@ class SymbolTableTest(unittest.TestCase):
             dsl.llt_query_entry("getSizeInBits", self.table)["returns"],
             "typesize")
 
+    def test_mutation_definitions_are_pinned(self):
+        self.assertEqual(len(self.table["source_files"]), 10)
+        for entry in self.table["mutations"]:
+            self.assertRegex(entry["definition"],
+                             r"^LegalizeMutations\.cpp:\d+$", entry["name"])
+
     def test_query_fields_and_enum_values(self):
         names = dsl.query_api_names(self.table)
         for name in ("Types", "MMODescrs", "Immediates", "MemDesc.MemoryTy"):

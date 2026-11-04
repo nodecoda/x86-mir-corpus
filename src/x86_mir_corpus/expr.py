@@ -197,6 +197,30 @@ def llt_name(t):
     raise ExprError(f"bad LLT {t!r}")
 
 
+def parse_llt_name(name):
+    """Inverse of :func:`llt_name` for the names the corpus carries."""
+    if not isinstance(name, str) or not name:
+        raise ExprError(f"bad LLT name {name!r}")
+    if name == "bf16":
+        return float_(16, "bfloat")
+    if name == "ppcf128":
+        return float_(128, "ppc")
+    if name[0] in ("p", "s", "i", "f") and name[1:].isdigit():
+        bits = int(name[1:])
+        return {"p": ptr, "s": scalar, "i": integer, "f": float_}[name[0]](bits)
+    for prefix, factory in (("nxv", scalable_vec), ("v", vec)):
+        if not name.startswith(prefix):
+            continue
+        rest = name[len(prefix):]
+        lanes = ""
+        while rest and rest[0].isdigit():
+            lanes, rest = lanes + rest[0], rest[1:]
+        if not lanes or not rest:
+            break
+        return factory(int(lanes), parse_llt_name(rest))
+    raise ExprError(f"bad LLT name {name!r}")
+
+
 def llt_bits(t, ptr_bits=0):
     """LLT::getSizeInBits() as a plain integer (known-minimum for scalable)."""
     if t[0] == "p":

@@ -2,7 +2,7 @@
 
 import unittest
 
-from x86_mir_corpus import dsl
+from x86_mir_corpus import domain, dsl
 from x86_mir_corpus import expr as E
 from x86_mir_corpus.lexer import lex
 
@@ -31,6 +31,15 @@ class DispatchEqualityTest(unittest.TestCase):
         expected = {entry["name"] for entry in self.table["llt_constructors"]
                     if entry["resolution"] == "exact"}
         self.assertEqual(expected, set(E.LLT_CTOR_IMPL))
+
+    def test_every_exact_predicate_has_an_implementation(self):
+        expected = {entry["name"] for entry in self.table["predicates"]
+                    if entry["domain"] == "exact"}
+        self.assertEqual(expected, set(domain.PREDICATE_IMPL))
+
+    def test_every_mutation_factory_has_an_implementation(self):
+        self.assertEqual(dsl.mutation_names(self.table),
+                         set(domain.MUTATION_IMPL))
 
 
 class LltModelTest(unittest.TestCase):
@@ -96,6 +105,43 @@ class LltModelTest(unittest.TestCase):
     def test_unknown_query_reports_a_table_gap(self):
         with self.assertRaises(E.EvalError):
             evaluate("T.notARealQuery()", T=E.scalar(32))
+
+
+def match(source, types=(), mem=None, align=0, **env):
+    toks = lex(source)
+    node = E.Parser(toks, 0, len(toks)).parse_expr()
+    return domain._pred_match(node, list(types), mem, align, dict(env))
+
+
+class PredicateModelTest(unittest.TestCase):
+    def test_combinators_and_type_sets(self):
+        s8, s16 = E.scalar(8), E.scalar(16)
+        self.assertTrue(match("all(isScalar(0), typeIs(0, s8))",
+                              [s8], s8=s8))
+        self.assertFalse(match("any(isVector(0), typeIsNot(0, s8))",
+                               [s8], s8=s8))
+        self.assertTrue(match("typeInSet(0, {s8, s16})",
+                              [s16], s8=s8, s16=s16))
+        self.assertTrue(match("typePairInSet(0, 1, {{s8, s16}})",
+                              [s8, s16], s8=s8, s16=s16))
+        self.assertTrue(match("typeTupleInSet(0, 1, 2, {{s8, s16, s8}})",
+                              [s8, s16, s8], s8=s8, s16=s16))
+
+    def test_pointer_and_memory_queries(self):
+        p0, p1 = E.ptr(0), E.ptr(1)
+        self.assertTrue(match("isPointer(0, 1)", [p1]))
+        self.assertFalse(match("isPointer(0, 1)", [p0]))
+        s24 = E.scalar(24)
+        self.assertTrue(match("memSizeInBytesNotPow2()", [], mem=s24))
+        self.assertTrue(match(
+            "typePairAndMemDescInSet(0, 1, 0, {{s8, s16, s24, 8}})",
+            [E.scalar(8), E.scalar(16)], mem=s24, align=16,
+            s8=E.scalar(8), s16=E.scalar(16), s24=s24))
+
+    def test_opaque_predicates_stay_undecided(self):
+        self.assertIsNone(match("immIs(0, 5)", [E.scalar(32)]))
+        self.assertIsNone(match(
+            "atomicOrderingAtLeastOrStrongerThan(0, Acquire)", []))
 
 
 class ElementCountTest(unittest.TestCase):
