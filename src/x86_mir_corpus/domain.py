@@ -398,11 +398,21 @@ def _arg_list(args, index, env):
 def _query_value(node, types, mem, env):
     """An LLT/int value read from the query, or None."""
     if isinstance(node, E.Call):
-        if node.name == "Query.Types.__index__":
+        if node.name.endswith(".Types.__index__"):
             idx = _arg_int(node.args, 0, env)
             if idx is not None and 0 <= idx < len(types):
                 return types[idx]
             return None
+        if node.receiver is not None:
+            base = _query_value(node.receiver, types, mem, env)
+            if base is None:
+                return None
+            ctx = dict(env, __types__=types, __mem__=mem)
+            try:
+                return E.apply_member(node.name.rsplit(".", 1)[-1], base,
+                                      node.args, ctx)
+            except E.ExprError:
+                return None
         if node.name.endswith(".__index__.MemoryTy"):
             return mem
         if node.name.endswith(".getSizeInBits"):
@@ -456,6 +466,9 @@ def _pred_match(node, types, mem, align, env):
     None means "the Python side does not model this predicate", which is how a
     first-match verdict stays honest instead of guessing.
     """
+    # Bind the query values so chained LLT queries can be evaluated.
+    if env.get("__types__") is not types:
+        env = dict(env, __types__=types, __mem__=mem)
     if isinstance(node, E.Call):
         name = node.name
         # ``::any(...)`` parses with the namespace prefix attached.
@@ -941,11 +954,14 @@ def lambda_local_env(lam, opcode, types=None, mem=None, base_env=None):
     if lam is None:
         return {}
     env = dict(base_env or {})
+    param = E.lambda_param_name(lam)
     env.update({
         "Query.Opcode": E.Opcode(opcode) if opcode else None,
         "G_EXTRACT": E.Opcode("G_EXTRACT"),
         "G_INSERT": E.Opcode("G_INSERT"),
         "Query.Types": None,
+        f"{param}.Opcode": E.Opcode(opcode) if opcode else None,
+        f"{param}.Types": None,
     })
     body = lam.body
     i = 0
@@ -1278,6 +1294,8 @@ def rule_probes(builder, classes, mem_classes, env):
     rep = rep_class(classes)
     mem = (sorted_llts(mem_classes) or [rep])[0]
     opcodes = list(builder.opcodes)
+    env = dict(env)
+    env.update(getattr(builder, "locals", None) or {})
     for rule in builder.rules:
         if rule.active is False:
             continue

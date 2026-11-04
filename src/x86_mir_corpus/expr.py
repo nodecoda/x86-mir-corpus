@@ -9,7 +9,8 @@ import contextlib
 from dataclasses import dataclass, field
 from typing import Any
 
-from .lexer import Token, matching
+from . import dsl as _dsl
+from .lexer import Token, lex, matching
 
 
 class ExprError(Exception):
@@ -43,6 +44,9 @@ class Ident:
 class Call:
     name: str
     args: list
+    # ``a.b()`` keeps ``a`` so chained queries such as
+    # ``Query.Types[0].getScalarType().isFloat16()`` stay evaluable.
+    receiver: Any = None
 
 
 @dataclass
@@ -313,7 +317,8 @@ class Parser:
                 name = self.take()
                 if self.at("("):
                     args, _ = self.parse_args()
-                    node = Call(f"{node_name(node)}.{name.text}", args)
+                    node = Call(f"{node_name(node)}.{name.text}", args,
+                                receiver=node)
                 else:
                     node = Ident(f"{node_name(node)}.{name.text}")
             elif t.text == "(":
@@ -561,120 +566,687 @@ def _float_like(bits, semantics, env):
     return float_(bits, semantics)
 
 
+_TABLE = _dsl.load()
+_LLT_QUERIES = {entry["name"]: entry for entry in _TABLE["llt_queries"]}
+_ELEMENT_COUNT_OPS = {
+    entry["name"]: entry for entry in _TABLE["element_count"]}
+_CODE_MODEL_VALUES = _dsl.enum_values("CodeModel", _TABLE)
+
+# Registries are the runtime half of the v2 symbol table: every entry the
+# table marks ``exact`` must have an implementation here, and vice versa.
+# ``tests/test_dsl_dispatch.py`` enforces that equality.
+LLT_CTOR_IMPL = {}
+LLT_QUERY_IMPL = {}
+ELEMENT_COUNT_IMPL = {}
+
+
+def llt_ctor(name):
+    def register(fn):
+        LLT_CTOR_IMPL[name] = fn
+        return fn
+    return register
+
+
+def llt_query(name):
+    def register(fn):
+        LLT_QUERY_IMPL[name] = fn
+        return fn
+    return register
+
+
+def element_count_op(name):
+    def register(fn):
+        ELEMENT_COUNT_IMPL[name] = fn
+        return fn
+    return register
+
+
+def _int(value):
+    if isinstance(value, bool):
+        return int(value)
+    if isinstance(value, int):
+        return value
+    raise EvalError(f"expected an integer, got {value!r}")
+
+
+def _is_ec(value):
+    return (isinstance(value, tuple) and len(value) == 3
+            and value[0] == "ec")
+
+
+def _ec_count(value):
+    return value[2]
+
+
+def _ec_is_scalable(value):
+    return value[1] == "scalable"
+
+
+def _round_up_bytes(bits):
+    return (int(bits) + 7) // 8
+
+
+def _llt_element_size(t):
+    return t[1] if not is_vec(t) else _llt_element_size(t[2])
+
+
+def _float_semantics_bits(name):
+    return {
+        "S_IEEEhalf": 16,
+        "S_IEEEsingle": 32,
+        "S_IEEEdouble": 64,
+        "S_IEEEquad": 128,
+        "S_BFloat": 16,
+        "S_x87DoubleExtended": 80,
+        "S_PPCDoubleDouble": 128,
+    }.get(str(name).rsplit("::", 1)[-1])
+
+
+# --- LLT constructors ------------------------------------------------------
+
+@llt_ctor("scalar")
+def _ctor_scalar(args, env):
+    return scalar(_int(eval_expr(args[0], env)))
+
+
+@llt_ctor("integer")
+def _ctor_integer(args, env):
+    bits = _int(eval_expr(args[0], env))
+    return integer(bits) if _llt_extended(env) else scalar(bits)
+
+
+@llt_ctor("pointer")
+def _ctor_pointer(args, env):
+    return ptr(_int(eval_expr(args[0], env)))
+
+
+@llt_ctor("token")
+def _ctor_token(args, env):
+    return scalar(0)
+
+
+@llt_ctor("fixed_vector")
+def _ctor_fixed_vector(args, env):
+    return vec(_int(eval_expr(args[0], env)),
+               eval_expr(args[1], env))
+
+
+@llt_ctor("scalable_vector")
+def _ctor_scalable_vector(args, env):
+    return scalable_vec(_int(eval_expr(args[0], env)),
+                        eval_expr(args[1], env))
+
+
+@llt_ctor("vector")
+def _ctor_vector(args, env):
+    count, elem = eval_expr(args[0], env), eval_expr(args[1], env)
+    if _is_ec(count):
+        if not is_llt(elem):
+            elem = scalar(_int(elem))
+        factory = scalable_vec if _ec_is_scalable(count) else vec
+        return factory(_ec_count(count), elem)
+    return vec(_int(count), elem)
+
+
+@llt_ctor("scalarOrVector")
+def _ctor_scalar_or_vector(args, env):
+    count, elem = eval_expr(args[0], env), eval_expr(args[1], env)
+    if not _is_ec(count):
+        raise EvalError("scalarOrVector needs an ElementCount")
+    if not is_llt(elem):
+        elem = scalar(_int(elem))
+    if not _ec_is_scalable(count) and _ec_count(count) == 1:
+        return elem
+    factory = scalable_vec if _ec_is_scalable(count) else vec
+    return factory(_ec_count(count), elem)
+
+
+@llt_ctor("floatingPoint")
+def _ctor_floating_point(args, env):
+    value = eval_expr(args[0], env)
+    bits = _float_semantics_bits(value)
+    if bits is None:
+        raise EvalError(f"unknown floatingPoint semantics {value}")
+    semantics = {16: "bfloat" if "BFloat" in str(value) else "ieee",
+                 80: "x86", 128: "ppc" if "PPC" in str(value) else "ieee"}
+    return _float_like(bits, semantics.get(bits, "ieee"), env)
+
+
+@llt_ctor("floatIEEE")
+def _ctor_float_ieee(args, env):
+    return _float_like(_int(eval_expr(args[0], env)), "ieee", env)
+
+
+def _float_ctor(bits, semantics):
+    def ctor(args, env):
+        return _float_like(bits, semantics, env)
+    return ctor
+
+
+for _name, _bits, _sem in (
+        ("float16", 16, "ieee"), ("float32", 32, "ieee"),
+        ("float64", 64, "ieee"), ("float128", 128, "ieee"),
+        ("bfloat16", 16, "bfloat"), ("x86fp80", 80, "x86"),
+        ("ppcf128", 128, "ppc")):
+    LLT_CTOR_IMPL[_name] = _float_ctor(_bits, _sem)
+
+
+# --- LLT queries -----------------------------------------------------------
+
+@llt_query("isValid")
+def _q_is_valid(t, args, env):
+    return is_llt(t)
+
+
+@llt_query("isToken")
+def _q_is_token(t, args, env):
+    return t == ("s", 0)
+
+
+@llt_query("isAnyScalar")
+def _q_is_any_scalar(t, args, env):
+    return t[0] == "s"
+
+
+@llt_query("isInteger")
+def _q_is_integer(t, args, env):
+    return t[0] == "i"
+
+
+@llt_query("isFloat")
+def _q_is_float(t, args, env):
+    return t[0] == "f"
+
+
+@llt_query("isPointer")
+def _q_is_pointer(t, args, env):
+    return t[0] == "p"
+
+
+@llt_query("isAnyVector")
+def _q_is_any_vector(t, args, env):
+    return is_vec(t) and t[2][0] == "s"
+
+
+@llt_query("isIntegerVector")
+def _q_is_integer_vector(t, args, env):
+    return is_vec(t) and t[2][0] == "i"
+
+
+@llt_query("isFloatVector")
+def _q_is_float_vector(t, args, env):
+    return is_vec(t) and t[2][0] == "f"
+
+
+@llt_query("isPointerVector")
+def _q_is_pointer_vector(t, args, env):
+    return is_vec(t) and t[2][0] == "p"
+
+
+@llt_query("isPointerOrPointerVector")
+def _q_is_pointer_or_pointer_vector(t, args, env):
+    return is_ptr(t) or (is_vec(t) and t[2][0] == "p")
+
+
+@llt_query("isFloatOrFloatVector")
+def _q_is_float_or_float_vector(t, args, env):
+    return is_float(t) or (is_vec(t) and t[2][0] == "f")
+
+
+@llt_query("isScalar")
+def _q_is_scalar(t, args, env):
+    return is_scalar(t)
+
+
+@llt_query("isVector")
+def _q_is_vector(t, args, env):
+    return is_vec(t)
+
+
+@llt_query("isFloatIEEE")
+def _q_is_float_ieee(t, args, env):
+    return is_float(t) and t[2] == "ieee"
+
+
+@llt_query("isFloat16")
+def _q_is_float16(t, args, env):
+    if not _llt_extended(env):
+        return t[0] == "s" and t[1] == 16
+    return is_float(t) and t[1] == 16 and t[2] == "ieee"
+
+
+@llt_query("isFloat32")
+def _q_is_float32(t, args, env):
+    return is_float(t) and t[1] == 32 and t[2] == "ieee"
+
+
+@llt_query("isFloat64")
+def _q_is_float64(t, args, env):
+    return is_float(t) and t[1] == 64 and t[2] == "ieee"
+
+
+@llt_query("isFloat128")
+def _q_is_float128(t, args, env):
+    return is_float(t) and t[1] == 128 and t[2] == "ieee"
+
+
+@llt_query("isBFloat16")
+def _q_is_bfloat16(t, args, env):
+    return is_float(t) and t[1] == 16 and t[2] == "bfloat"
+
+
+@llt_query("isX86FP80")
+def _q_is_x86fp80(t, args, env):
+    return is_float(t) and t[1] == 80 and t[2] == "x86"
+
+
+@llt_query("isPPCF128")
+def _q_is_ppcf128(t, args, env):
+    return is_float(t) and t[1] == 128 and t[2] == "ppc"
+
+
+@llt_query("getNumElements")
+def _q_get_num_elements(t, args, env):
+    return llt_lanes(t)
+
+
+@llt_query("getElementCount")
+def _q_get_element_count(t, args, env):
+    if not is_vec(t):
+        raise EvalError("getElementCount on a non-vector LLT")
+    return element_count("scalable" if is_scalable(t) else "fixed", t[1])
+
+
+@llt_query("isScalable")
+def _q_is_scalable(t, args, env):
+    return is_scalable(t)
+
+
+@llt_query("isFixedVector")
+def _q_is_fixed_vector(t, args, env):
+    return t[0] == "v"
+
+
+@llt_query("isScalableVector")
+def _q_is_scalable_vector(t, args, env):
+    return t[0] == "nxv"
+
+
+@llt_query("getSizeInBits")
+def _q_get_size_in_bits(t, args, env):
+    return llt_bits(t, env.get("__pointer_bits__", 0))
+
+
+@llt_query("getSizeInBytes")
+def _q_get_size_in_bytes(t, args, env):
+    return _round_up_bytes(llt_bits(t, env.get("__pointer_bits__", 0)))
+
+
+@llt_query("getScalarType")
+def _q_get_scalar_type(t, args, env):
+    return elem_type(t) if is_vec(t) else t
+
+
+@llt_query("getElementType")
+def _q_get_element_type(t, args, env):
+    if not is_vec(t):
+        raise EvalError("getElementType on a non-vector LLT")
+    return t[2]
+
+
+@llt_query("getScalarSizeInBits")
+def _q_get_scalar_size(t, args, env):
+    return llt_scalar_bits(t, env.get("__pointer_bits__", 0))
+
+
+@llt_query("getAddressSpace")
+def _q_get_address_space(t, args, env):
+    target = elem_type(t) if is_vec(t) else t
+    if target[0] != "p":
+        raise EvalError("getAddressSpace on a non-pointer LLT")
+    return target[1]
+
+
+@llt_query("changeVectorElementType")
+def _q_change_vector_element_type(t, args, env):
+    new_elem = eval_expr(args[0], env)
+    if not is_vec(t):
+        raise EvalError("changeVectorElementType on a non-vector LLT")
+    factory = scalable_vec if is_scalable(t) else vec
+    return factory(t[1], new_elem)
+
+
+@llt_query("changeElementType")
+def _q_change_element_type(t, args, env):
+    new_elem = eval_expr(args[0], env)
+    if not is_vec(t):
+        return new_elem
+    factory = scalable_vec if is_scalable(t) else vec
+    return factory(t[1], new_elem)
+
+
+@llt_query("changeElementSize")
+def _q_change_element_size(t, args, env):
+    size = _int(eval_expr(args[0], env))
+    if is_ptr(t):
+        raise EvalError("changeElementSize on a pointer LLT")
+    if is_vec(t):
+        new_elem = _change_element_size(elem_type(t), size, env)
+        factory = scalable_vec if is_scalable(t) else vec
+        return factory(t[1], new_elem)
+    return _change_element_size(t, size, env)
+
+
+def _change_element_size(t, size, env):
+    if t[0] == "i":
+        return integer(size)
+    if t[0] == "f" and t[2] == "ieee":
+        return float_(size, "ieee")
+    return scalar(size)
+
+
+@llt_query("changeVectorElementCount")
+def _q_change_vector_element_count(t, args, env):
+    count = eval_expr(args[0], env)
+    if not is_vec(t):
+        raise EvalError("changeVectorElementCount on a non-vector LLT")
+    if not _is_ec(count):
+        raise EvalError("changeVectorElementCount needs an ElementCount")
+    factory = scalable_vec if _ec_is_scalable(count) else vec
+    return factory(_ec_count(count), t[2])
+
+
+@llt_query("changeElementCount")
+def _q_change_element_count(t, args, env):
+    count = eval_expr(args[0], env)
+    if not _is_ec(count):
+        raise EvalError("changeElementCount needs an ElementCount")
+    elem = elem_type(t) if is_vec(t) else t
+    if not _ec_is_scalable(count) and _ec_count(count) == 1:
+        return elem
+    factory = scalable_vec if _ec_is_scalable(count) else vec
+    return factory(_ec_count(count), elem)
+
+
+@llt_query("divide")
+def _q_divide(t, args, env):
+    factor = _int(eval_expr(args[0], env))
+    if factor == 1:
+        raise EvalError("divide by one is not a legal LLT mutation")
+    if is_vec(t):
+        if t[1] % factor:
+            raise EvalError("divide: lane count is not divisible")
+        factory = scalable_vec if is_scalable(t) else vec
+        return factory(t[1] // factor, t[2])
+    bits = llt_scalar_bits(t, env.get("__pointer_bits__", 0))
+    if bits % factor:
+        raise EvalError("divide: scalar size is not divisible")
+    return integer(bits // factor) if t[0] == "i" else scalar(bits // factor)
+
+
+@llt_query("multiplyElements")
+def _q_multiply_elements(t, args, env):
+    factor = _int(eval_expr(args[0], env))
+    if is_vec(t):
+        factory = scalable_vec if is_scalable(t) else vec
+        return factory(t[1] * factor, t[2])
+    return vec(factor, t)
+
+
+@llt_query("isByteSized")
+def _q_is_byte_sized(t, args, env):
+    return llt_bits(t, env.get("__pointer_bits__", 0)) % 8 == 0
+
+
+@llt_query("changeToInteger")
+def _q_change_to_integer(t, args, env):
+    if is_ptr(t):
+        return t
+    if is_vec(t):
+        factory = scalable_vec if is_scalable(t) else vec
+        return factory(t[1], integer(llt_scalar_bits(t, env.get("__pointer_bits__", 0))))
+    return integer(llt_bits(t, env.get("__pointer_bits__", 0)))
+
+
+@llt_query("getUseExtended")
+def _q_get_use_extended(t, args, env):
+    return _llt_extended(env)
+
+
+@llt_query("setUseExtended")
+def _q_set_use_extended(t, args, env):
+    return None
+
+
+# --- ElementCount ----------------------------------------------------------
+
+@element_count_op("getFixed")
+def _ec_get_fixed(value, args, env):
+    return element_count("fixed", _int(eval_expr(args[0], env)))
+
+
+@element_count_op("getScalable")
+def _ec_get_scalable(value, args, env):
+    return element_count("scalable", _int(eval_expr(args[0], env)))
+
+
+@element_count_op("get")
+def _ec_get(value, args, env):
+    count = _int(eval_expr(args[0], env))
+    scalable = bool(eval_expr(args[1], env))
+    return element_count("scalable" if scalable else "fixed", count)
+
+
+@element_count_op("isScalar")
+def _ec_is_scalar(value, args, env):
+    return not _ec_is_scalable(value) and _ec_count(value) == 1
+
+
+@element_count_op("isVector")
+def _ec_is_vector(value, args, env):
+    return ((_ec_is_scalable(value) and _ec_count(value) != 0)
+            or _ec_count(value) > 1)
+
+
+@element_count_op("isPowerOf2")
+def _ec_is_pow2(value, args, env):
+    count = _ec_count(value)
+    return count > 0 and (count & (count - 1)) == 0
+
+
+@element_count_op("isZero")
+def _ec_is_zero(value, args, env):
+    return _ec_count(value) == 0
+
+
+@element_count_op("isNonZero")
+def _ec_is_nonzero(value, args, env):
+    return _ec_count(value) != 0
+
+
+@element_count_op("getKnownMinValue")
+def _ec_get_known_min_value(value, args, env):
+    return _ec_count(value)
+
+
+@element_count_op("isScalable")
+def _ec_is_scalable_op(value, args, env):
+    return _ec_is_scalable(value)
+
+
+@element_count_op("isFixed")
+def _ec_is_fixed(value, args, env):
+    return not _ec_is_scalable(value)
+
+
+@element_count_op("isKnownEven")
+def _ec_is_known_even(value, args, env):
+    return _ec_count(value) % 2 == 0
+
+
+@element_count_op("isKnownMultipleOf")
+def _ec_is_known_multiple_of(value, args, env):
+    return _ec_count(value) % _int(eval_expr(args[0], env)) == 0
+
+
+@element_count_op("divideCoefficientBy")
+def _ec_divide_coefficient(value, args, env):
+    return element_count(value[1], _ec_count(value)
+                         // _int(eval_expr(args[0], env)))
+
+
+@element_count_op("coefficientNextPowerOf2")
+def _ec_coefficient_next_pow2(value, args, env):
+    count = max(1, _ec_count(value))
+    return element_count(value[1], 1 << (count - 1).bit_length())
+
+
+@element_count_op("hasKnownScalarFactor")
+def _ec_has_known_scalar_factor(value, args, env):
+    factor = eval_expr(args[0], env)
+    if _is_ec(factor):
+        factor = _ec_count(factor)
+    return _ec_count(value) % _int(factor) == 0
+
+
+@element_count_op("getKnownScalarFactor")
+def _ec_get_known_scalar_factor(value, args, env):
+    factor = eval_expr(args[0], env)
+    if _is_ec(factor):
+        factor = _ec_count(factor)
+    factor = _int(factor)
+    if _ec_count(value) % factor:
+        raise EvalError("not a known scalar factor")
+    return _ec_count(value) // factor
+
+
+@element_count_op("getFixedValue")
+def _ec_get_fixed_value(value, args, env):
+    if _ec_is_scalable(value):
+        raise EvalError("cannot take the fixed value of a scalable count")
+    return _ec_count(value)
+
+
+# --- member dispatch -------------------------------------------------------
+
+def _member_call(method, receiver, args, env):
+    if is_llt(receiver):
+        impl = LLT_QUERY_IMPL.get(method)
+        if impl is None:
+            entry = _LLT_QUERIES.get(method)
+            if entry is None:
+                raise EvalError(f"unknown LLT query {method}")
+            raise EvalError(
+                f"LLT query {method} is {entry['resolution']}, not modeled")
+        return impl(receiver, args, env)
+    if _is_ec(receiver):
+        impl = ELEMENT_COUNT_IMPL.get(method)
+        if impl is None:
+            raise EvalError(f"unknown ElementCount query {method}")
+        return impl(receiver, args, env)
+    if receiver == "TargetLowering" and method == "getTargetMachine":
+        return "TargetMachine"
+    if receiver == "TargetMachine" and method == "getCodeModel":
+        value = env.get("__code_model__")
+        if value is None:
+            raise EvalError("getCodeModel without a target code model")
+        return value
+    if receiver == "ST" and method == "getTargetLowering":
+        return "TargetLowering"
+    raise EvalError(f"cannot call {method} on {receiver!r}")
+
+
+def apply_member(method, receiver, args, env):
+    """Apply one LLT/ElementCount member method (public for the domain)."""
+    return _member_call(method, receiver, args, env)
+
+
+def _pow2(value):
+    return value > 0 and (value & (value - 1)) == 0
+
+
+FREE_FUNCTIONS = {
+    "isPowerOf2_32": lambda value: _pow2(int(value)),
+    "isPowerOf2_64": lambda value: _pow2(int(value)),
+    "isPowerOf2": lambda value: _pow2(int(value)),
+    "Log2_32": lambda value: int(value).bit_length() - 1,
+    "Log2_64": lambda value: int(value).bit_length() - 1,
+    "alignTo": lambda value, align: (int(value) + int(align) - 1)
+                                   // int(align) * int(align),
+    "alignDown": lambda value, align: int(value) // int(align) * int(align),
+    "divideCeil": lambda value, divisor: (int(value) + int(divisor) - 1)
+                                         // int(divisor),
+    "PowerOf2Ceil": lambda value: 1 << (max(1, int(value)) - 1).bit_length(),
+}
+
+
 def eval_call(node, env):
     name = node.name
-    if name in ("LLT::scalar", "LLT::integer", "LLT::pointer",
-                "LLT::fixed_vector", "LLT::scalable_vector", "LLT::vector",
-                "LLT::scalarOrVector"):
-        args = [eval_expr(a, env) for a in node.args]
-        if name == "LLT::scalar":
-            return scalar(int(args[0]))
-        if name == "LLT::integer":
-            return integer(int(args[0])) if _llt_extended(env) else scalar(int(args[0]))
-        if name == "LLT::pointer":
-            return ptr(int(args[0]))
-        if name == "LLT::scalarOrVector":
-            count, elem = args[0], args[1]
-            if isinstance(count, tuple) and len(count) == 3 and count[0] == "ec":
-                if count[1] == "fixed" and count[2] == 1:
-                    return elem if is_llt(elem) else scalar(int(elem))
-                if not is_llt(elem):
-                    elem = scalar(int(elem))
-                factory = scalable_vec if count[1] == "scalable" else vec
-                return factory(count[2], elem)
-            raise EvalError("scalarOrVector needs an ElementCount")
-        if name == "LLT::vector":
-            count, elem = args[0], args[1]
-            if isinstance(count, tuple) and len(count) == 3 and count[0] == "ec":
-                if not is_llt(elem):
-                    elem = scalar(int(elem))
-                factory = scalable_vec if count[1] == "scalable" else vec
-                return factory(count[2], elem)
-            return _llt_vector(name, args)
-        return _llt_vector(name, args)
-    if name in ("ElementCount::getFixed", "ElementCount::getScalable"):
-        args = [eval_expr(a, env) for a in node.args]
-        return element_count(name.rsplit("::", 1)[1].replace("get", "").lower(),
-                             int(args[0]))
-    if name in ("LLT::float16", "LLT::float32", "LLT::float64", "LLT::float128",
-                "LLT::bfloat16", "LLT::x86fp80", "LLT::ppcf128", "LLT::floatIEEE"):
-        bits = {"LLT::float16": 16, "LLT::float32": 32, "LLT::float64": 64,
-                "LLT::float128": 128, "LLT::bfloat16": 16, "LLT::x86fp80": 80,
-                "LLT::ppcf128": 128}[name]
-        if name == "LLT::floatIEEE":
-            bits = int(eval_expr(node.args[0], env))
-        elif name in ("LLT::bfloat16",):
-            return float_(16, "bfloat")
-        elif name == "LLT::x86fp80":
-            return float_(80, "x86")
-        elif name == "LLT::ppcf128":
-            return float_(128, "ppc")
-        return _float_like(bits, "ieee", env)
-    if name == "LLT::token":
-        return scalar(0)
-    if name.endswith(".getTargetLowering"):
-        return "TargetLowering"
-    if name.endswith(".getTargetMachine"):
-        return "TargetMachine"
-    if name.startswith(("Subtarget.", "ST.")):
+    if name in FREE_FUNCTIONS:
+        args = [eval_expr(arg, env) for arg in node.args]
+        return FREE_FUNCTIONS[name](*args)
+
+    if name.endswith(".Types.__index__"):
+        idx = _int(eval_expr(node.args[0], env))
+        types = env.get("__types__") or []
+        if 0 <= idx < len(types):
+            return types[idx]
+        raise EvalError(f"type index {idx} is out of range")
+    if name.endswith(".MMODescrs.__index__.MemoryTy"):
+        if env.get("__mem__") is None:
+            raise EvalError("no memory type in this query")
+        return env["__mem__"]
+        if env.get("__mem__") is None:
+            raise EvalError("no memory type in this query")
+        return env["__mem__"]
+
+    if name.startswith(("Subtarget.", "ST.")) and name.count(".") == 1:
         method = name.split(".", 1)[1]
         feats = env.get("__features__", {})
         if method in feats:
             return feats[method]
         raise EvalError(f"unknown subtarget predicate {method}")
-    if name.endswith(".getCodeModel"):
+
+    suffix = name.rsplit(".", 1)[-1]
+    if suffix == "getCodeModel":
         value = env.get("__code_model__")
         if value is None:
             raise EvalError("getCodeModel without a target code model")
         return value
-    if name in ("Query.Types.__index__",):
-        raise EvalError("Query.Types.__index__ is not a value")
-    if name.endswith(".getNumElements"):
-        obj = env.get(name[:-len(".getNumElements")])
-        if not is_llt(obj):
-            raise EvalError(f"getNumElements on non-LLT {name}")
-        return llt_lanes(obj)
-    if name.endswith(".getScalarSizeInBits"):
-        obj = env.get(name[:-len(".getScalarSizeInBits")])
-        if not is_llt(obj):
-            raise EvalError(f"getScalarSizeInBits on non-LLT {name}")
-        return llt_scalar_bits(obj, env.get("__pointer_bits__", 0))
-    if name.endswith(".getSizeInBits"):
-        obj = env.get(name[:-len(".getSizeInBits")])
-        if not is_llt(obj):
-            raise EvalError(f"getSizeInBits on non-LLT {name}")
-        return llt_bits(obj, env.get("__pointer_bits__", 0))
-    if name.endswith(".getSizeInBytes"):
-        obj = env.get(name[:-len(".getSizeInBytes")])
-        if not is_llt(obj):
-            raise EvalError(f"getSizeInBytes on non-LLT {name}")
-        return llt_bits(obj, env.get("__pointer_bits__", 0)) // 8
-    if name.endswith(".getElementType"):
-        obj = env.get(name[:-len(".getElementType")])
-        if not is_llt(obj):
-            raise EvalError(f"getElementType on non-LLT {name}")
-        return elem_type(obj)
-    if name.endswith(".getElementCount"):
-        obj = env.get(name[:-len(".getElementCount")])
-        if not is_llt(obj):
-            raise EvalError(f"getElementCount on non-LLT {name}")
-        return element_count("scalable" if is_scalable(obj) else "fixed",
-                             llt_lanes(obj))
-    if name.endswith(".isScalar"):
-        obj = env.get(name[:-len(".isScalar")])
-        return is_llt(obj) and is_scalar(obj)
-    if name.endswith(".isVector"):
-        obj = env.get(name[:-len(".isVector")])
-        return is_llt(obj) and is_vec(obj)
-    if name.endswith(".isFixedVector"):
-        obj = env.get(name[:-len(".isFixedVector")])
-        return is_llt(obj) and llt_is_fixed_vector(obj)
-    if name.endswith(".isScalableVector"):
-        obj = env.get(name[:-len(".isScalableVector")])
-        return is_llt(obj) and is_scalable(obj)
-    if name.endswith(".isPointer"):
-        obj = env.get(name[:-len(".isPointer")])
-        return is_llt(obj) and is_ptr(obj)
+    if suffix == "getTargetLowering":
+        return "TargetLowering"
+    if suffix == "getTargetMachine":
+        return "TargetMachine"
+    if suffix == "getInstrInfo":
+        return "MCInstrInfo"
+
+    if name.startswith("LLT::"):
+        ctor = name[len("LLT::"):]
+        impl = LLT_CTOR_IMPL.get(ctor)
+        if impl is None:
+            raise EvalError(f"unknown LLT constructor {ctor}")
+        return impl(node.args, env)
+    if name.startswith("ElementCount::"):
+        op = name[len("ElementCount::"):]
+        impl = ELEMENT_COUNT_IMPL.get(op)
+        if impl is None:
+            raise EvalError(f"unknown ElementCount constructor {op}")
+        return impl(None, node.args, env)
+
+    if node.receiver is not None:
+        return _member_call(name.rsplit(".", 1)[-1],
+                            eval_expr(node.receiver, env), node.args, env)
+
+    # Legacy dotted form (no receiver preserved): resolve the prefix in env.
+    if "." in name:
+        prefix, method = name.rsplit(".", 1)
+        value = env.get(prefix)
+        if value is not None:
+            return _member_call(method, value, node.args, env)
+
+    if name in ("ElementCount::getFixed", "ElementCount::getScalable"):
+        raise EvalError(f"unhandled ElementCount constructor {name}")
+
     # A literal predicate call such as typeIs(0, s8) is not a value.
     raise EvalError(f"unsupported call {name}")
 
@@ -809,6 +1381,14 @@ def collect_slots(node, env, out):
                     out.add(env[body[j].text])
                 i = j
             i += 1
+
+
+def lambda_param_name(lam):
+    """The LegalityQuery parameter name (``Q``, ``Query``, ...)."""
+    if lam is None:
+        return "Query"
+    names = [tok.text for tok in lex(lam.params) if tok.kind == "id"]
+    return names[-1] if names else "Query"
 
 
 def lambda_has_mem(lam):

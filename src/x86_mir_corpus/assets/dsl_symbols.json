@@ -439,6 +439,7 @@
       "corpus_spelling": "bf16",
       "kind": "bfloat",
       "name": "bfloat16",
+      "resolution": "exact",
       "source": "LowLevelType.h:164",
       "syntax": true
     },
@@ -446,6 +447,7 @@
       "corpus_spelling": "v<lanes><elem>",
       "kind": "vector",
       "name": "fixed_vector",
+      "resolution": "exact",
       "source": "LowLevelType.h:204",
       "syntax": true
     },
@@ -453,6 +455,7 @@
       "corpus_spelling": "f128",
       "kind": "float",
       "name": "float128",
+      "resolution": "exact",
       "source": "LowLevelType.h:191",
       "syntax": true
     },
@@ -460,6 +463,7 @@
       "corpus_spelling": "f16",
       "kind": "float",
       "name": "float16",
+      "resolution": "exact",
       "source": "LowLevelType.h:169",
       "syntax": true
     },
@@ -467,6 +471,7 @@
       "corpus_spelling": "f32",
       "kind": "float",
       "name": "float32",
+      "resolution": "exact",
       "source": "LowLevelType.h:174",
       "syntax": true
     },
@@ -474,6 +479,7 @@
       "corpus_spelling": "f64",
       "kind": "float",
       "name": "float64",
+      "resolution": "exact",
       "source": "LowLevelType.h:179",
       "syntax": true
     },
@@ -481,6 +487,7 @@
       "corpus_spelling": null,
       "kind": "float",
       "name": "floatIEEE",
+      "resolution": "exact",
       "source": "LowLevelType.h:145",
       "syntax": false
     },
@@ -488,6 +495,7 @@
       "corpus_spelling": null,
       "kind": "float",
       "name": "floatingPoint",
+      "resolution": "exact",
       "source": "LowLevelType.h:100",
       "syntax": false
     },
@@ -495,6 +503,7 @@
       "corpus_spelling": "s<bits>",
       "kind": "integer",
       "name": "integer",
+      "resolution": "exact",
       "source": "LowLevelType.h:93",
       "syntax": true
     },
@@ -502,6 +511,7 @@
       "corpus_spelling": "p<as>:<bits>",
       "kind": "pointer",
       "name": "pointer",
+      "resolution": "exact",
       "source": "LowLevelType.h:116",
       "syntax": true
     },
@@ -509,6 +519,7 @@
       "corpus_spelling": "ppcf128",
       "kind": "float",
       "name": "ppcf128",
+      "resolution": "exact",
       "source": "LowLevelType.h:197",
       "syntax": true
     },
@@ -516,6 +527,7 @@
       "corpus_spelling": "nxv<lanes><elem>",
       "kind": "scalable_vector",
       "name": "scalable_vector",
+      "resolution": "exact",
       "source": "LowLevelType.h:218",
       "syntax": true
     },
@@ -523,6 +535,7 @@
       "corpus_spelling": "s<bits>",
       "kind": "integer",
       "name": "scalar",
+      "resolution": "exact",
       "source": "LowLevelType.h:89",
       "syntax": true
     },
@@ -530,6 +543,7 @@
       "corpus_spelling": "s|v<lanes><elem>",
       "kind": "union",
       "name": "scalarOrVector",
+      "resolution": "exact",
       "source": "LowLevelType.h:230",
       "syntax": true
     },
@@ -537,6 +551,7 @@
       "corpus_spelling": null,
       "kind": "token",
       "name": "token",
+      "resolution": "exact",
       "source": "LowLevelType.h:110",
       "syntax": false
     },
@@ -544,6 +559,7 @@
       "corpus_spelling": "v<lanes><elem>",
       "kind": "vector",
       "name": "vector",
+      "resolution": "exact",
       "source": "LowLevelType.h:123",
       "syntax": true
     },
@@ -551,6 +567,7 @@
       "corpus_spelling": "f80",
       "kind": "float",
       "name": "x86fp80",
+      "resolution": "exact",
       "source": "LowLevelType.h:185",
       "syntax": true
     }
@@ -1517,7 +1534,7 @@
           "signature": "static void setUseExtended(bool Enable)"
         }
       ],
-      "resolution": "ignore",
+      "resolution": "exact",
       "returns": "void",
       "scope": "lambda",
       "source": "LowLevelType.h:713"

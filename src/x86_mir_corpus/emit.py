@@ -52,6 +52,7 @@ def ast_document(result, source):
             "has_mem": b.has_mem,
             "line": b.line,
             "aligns": sorted(b.aligns),
+            "locals": dict(sorted(b.locals.items())),
             "mem_classes": [E.llt_name(t) for t in sorted(b.mem_classes, key=repr)],
             "rules": rules,
         })

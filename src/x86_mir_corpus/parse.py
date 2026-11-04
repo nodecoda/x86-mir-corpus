@@ -81,6 +81,9 @@ class Builder:
     has_mem: bool = False
     mem_classes: set = field(default_factory=set)
     aligns: set = field(default_factory=set)
+    # Scalar constructor locals (BigTyIdx, HasFP16, ...) the rule lambdas
+    # close over.  They are needed to evaluate those lambdas later.
+    locals: dict = field(default_factory=dict)
 
     @property
     def num_slots(self):
@@ -132,11 +135,8 @@ class ParserState:
         self.aligns = set()
 
 
-_PREDICATE_IGNORE = frozenset({
-    "static_cast", "std", "LLT", "LegalityQuery",
-    # Functional casts from a lambda to the predicate/mutation typedef.
-    "LegalityPredicate", "LegalizeMutation",
-})
+_PREDICATE_IGNORE = frozenset(_dsl.ignore_names(_TABLE))
+_CODEMODEL_VALUES = tuple(_dsl.enum_values("CodeModel", _TABLE))
 _DSL_CALLS = (_dsl.vocabulary_names(_TABLE) | {"all", "any", "predNot"}
               | _PREDICATE_IGNORE)
 
@@ -164,7 +164,7 @@ def parse_source(src, source, config="C2", features=None,
     start, end = body
     env = {"__features__": state.features, "__llt_extended__": llt_extended,
            "__code_model__": state.features.get("codeModel")}
-    for value in ("Tiny", "Small", "Kernel", "Large", "LargePIC"):
+    for value in _CODEMODEL_VALUES:
         env[f"CodeModel::{value}"] = value
     env.update(state.features)
     bp = BodyParser(toks, state)
@@ -424,6 +424,7 @@ class BodyParser:
             name=self.state.rule_set_prefix + opcodes[0][2:],
             opcodes=opcodes,
             line=self.toks[i].line,
+            locals=scalar_locals(env),
         )
         self.state.builders.append(builder)
         self.state.call_sites += 1
@@ -740,6 +741,19 @@ def skip_statement(toks, i, end):
             return i + 1
         i += 1
     return end
+
+
+def scalar_locals(env):
+    """The JSON-safe constructor locals a rule lambda may close over."""
+    out = {}
+    for name, value in env.items():
+        if name.startswith("__"):
+            continue
+        if isinstance(value, (bool, int, str)):
+            out[name] = value
+        elif isinstance(value, E.Opcode):
+            out[name] = value.name
+    return out
 
 
 def finalize(result):

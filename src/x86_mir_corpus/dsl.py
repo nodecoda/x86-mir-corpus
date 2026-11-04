@@ -244,9 +244,8 @@ LLT_QUERY_SEMANTICS = {
     "multiplyElements": ("llt", "exact"),
     "isByteSized": ("bool", "exact"),
     "changeToInteger": ("llt", "exact"),
-    "isKnownMultipleOf": ("bool", "exact"),
     "getUseExtended": ("bool", "exact"),
-    "setUseExtended": ("void", "ignore"),
+    "setUseExtended": ("void", "exact"),
     "getFpSemantics": ("semantics", "opaque"),
     "getKind": ("kind", "opaque"),
     "print": ("void", "ignore"),
@@ -274,13 +273,11 @@ ELEMENT_COUNT_SEMANTICS = {
     "isZero": ("bool", "exact"),
     "isNonZero": ("bool", "exact"),
     "getKnownMinValue": ("int", "exact"),
-    "getKnownMinSize": ("int", "exact"),
     "isScalable": ("bool", "exact"),
     "isFixed": ("bool", "exact"),
     "isKnownEven": ("bool", "exact"),
     "isKnownMultipleOf": ("bool", "exact"),
     "divideCoefficientBy": ("ec", "exact"),
-    "multiplyCoefficientBy": ("ec", "exact"),
     "coefficientNextPowerOf2": ("ec", "exact"),
     "getFixedValue": ("int", "exact"),
     "getKnownScalarFactor": ("int", "exact"),
@@ -965,6 +962,7 @@ def build_table(extracted, revision=None):
             "source": f"LowLevelType.h:{extracted['llt'][name]['line']}",
             "syntax": spelling is not None,
             "corpus_spelling": spelling,
+            "resolution": "exact" if kind != "unknown" else "ignore",
         })
 
     actions = [{
