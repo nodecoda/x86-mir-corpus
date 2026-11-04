@@ -1,0 +1,312 @@
+{
+ "atom_count": 20,
+ "atoms": [
+  {
+   "config": "A2",
+   "id": "smoke/a64/00/G_ADD",
+   "opcode": "G_ADD",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "s32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/01/G_ADD",
+   "opcode": "G_ADD",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "s64"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/02/G_ADD",
+   "opcode": "G_ADD",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "v4s32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/03/G_ADD",
+   "opcode": "G_ADD",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "nxv4s32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/04/G_FCONSTANT",
+   "opcode": "G_FCONSTANT",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "bf16"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/05/G_FCONSTANT",
+   "opcode": "G_FCONSTANT",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "f16"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/06/G_FCONSTANT",
+   "opcode": "G_FCONSTANT",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "f32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/07/G_FCONSTANT",
+   "opcode": "G_FCONSTANT",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "f64"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/08/G_ICMP",
+   "opcode": "G_ICMP",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "s1",
+     "s32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/09/G_ICMP",
+   "opcode": "G_ICMP",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "v4s1",
+     "v4s32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/10/G_SELECT",
+   "opcode": "G_SELECT",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "s32",
+     "s1"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/11/G_EXTRACT_VECTOR_ELT",
+   "opcode": "G_EXTRACT_VECTOR_ELT",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "s32",
+     "v4s32",
+     "s64"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/12/G_EXTRACT_VECTOR_ELT",
+   "opcode": "G_EXTRACT_VECTOR_ELT",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "s32",
+     "nxv4s32",
+     "s64"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/13/G_INSERT_VECTOR_ELT",
+   "opcode": "G_INSERT_VECTOR_ELT",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "v4s32",
+     "s32",
+     "s64"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/14/G_ZEXT",
+   "opcode": "G_ZEXT",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "s32",
+     "s8"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/15/G_TRUNC",
+   "opcode": "G_TRUNC",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "s8",
+     "s32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/16/G_FNEG",
+   "opcode": "G_FNEG",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "f32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/17/G_CONSTANT",
+   "opcode": "G_CONSTANT",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "s64"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/18/G_IMPLICIT_DEF",
+   "opcode": "G_IMPLICIT_DEF",
+   "origin": "smoke",
+   "query": {
+    "types": [
+     "s32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  },
+  {
+   "config": "A2",
+   "id": "smoke/a64/19/G_LOAD",
+   "opcode": "G_LOAD",
+   "origin": "smoke",
+   "query": {
+    "mem": {
+     "align": 4,
+     "type": "s32"
+    },
+    "types": [
+     "s32",
+     "p0:64"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_smoke"
+  }
+ ],
+ "config": "A2",
+ "config_descriptor": {
+  "features": {
+   "codeModel": "Small",
+   "hasBF16": true,
+   "hasCSSC": true,
+   "hasFPARMv8": true,
+   "hasFullFP16": true,
+   "hasLSE": true,
+   "hasMOPS": true,
+   "hasNEON": true,
+   "hasRCPC3": true,
+   "hasSVE": true,
+   "is64Bit": true,
+   "outlineAtomics": false
+  },
+  "fset": "+neon,+fp-armv8,+fullfp16,+sve,+cssc,+rcpc3,+bf16,+lse,+mops",
+  "id": "A2",
+  "target": "aarch64",
+  "triple": "aarch64"
+ },
+ "schema": "llvm-x86-legalizer-cpp-corpus",
+ "smoke": {
+  "anchors": [
+   "G_ADD s32 legalized",
+   "G_FCONSTANT f16/bf16 not unbuildable",
+   "G_EXTRACT_VECTOR_ELT three-slot legalized"
+  ],
+  "purpose": "AArch64 S9 20-atom legalizer smoke"
+ },
+ "version": 2
+}

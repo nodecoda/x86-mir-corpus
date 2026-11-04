@@ -7,8 +7,8 @@ LLVM revision, not maintained by hand:
 | Section | Source of truth | Used for |
 |---|---|---|
 | `methods` | `LegalizerInfo.h` | chain methods and their positional `roles` |
-| `predicates` | `LegalizerInfo.h` | `LegalityPredicates` and combinators |
-| `mutations` | `LegalizerInfo.h` | `LegalizeMutations` and their argument roles |
+| `predicates` | `LegalizerInfo.h` | `LegalityPredicates` and combinators; `domain.PREDICATE_IMPL` |
+| `mutations` | `LegalizerInfo.h`, `LegalizeMutations.cpp` | `LegalizeMutations` argument roles, `definition` line, and `domain.MUTATION_IMPL` |
 | `llt_constructors`, `llt_queries` | `LowLevelType.h` | LLT construction and queries |
 | `element_count` | `TypeSize.h` | `ElementCount` and `TypeSize` helpers |
 | `query_api` | `LegalizerInfo.h` | `LegalityQuery` fields |
@@ -27,9 +27,12 @@ Every entry carries `source` (`file:line`), `resolution`
 2. **Table** (`dsl_symbols.json`) is the curated surface.
 3. **Runtime** (`expr.py`, `parse.py`, `domain.py`) reads the table.
 
-`tests/test_dsl_dispatch.py` asserts that the runtime registries and the table's
-`exact` sets are equal in both directions. A name added to one side without the
-other fails the suite.
+`tests/test_dsl_dispatch.py` asserts that all five runtime registries
+(`LLT_QUERY_IMPL`, `ELEMENT_COUNT_IMPL`, `LLT_CTOR_IMPL`, `PREDICATE_IMPL`,
+`MUTATION_IMPL`) equal the table's `exact` sets in both directions. A name
+added to one side without the other fails the suite. `domain.apply_mutation`
+implements the eight factories from `LegalizeMutations.cpp`; an unregistered or
+opaque mutation returns `None` instead of guessing.
 
 ## Scope model
 
