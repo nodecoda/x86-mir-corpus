@@ -364,6 +364,10 @@ IGNORE_IDENTS = [
     {"name": "bool", "reason": "cxx_type"},
     {"name": "auto", "reason": "cxx_type"},
     {"name": "const", "reason": "cxx_qualifier"},
+    {"name": "Log2_32_Ceil", "reason": "llvm_intrinsic"},
+    {"name": "Log2_64_Ceil", "reason": "llvm_intrinsic"},
+    {"name": "isPowerOf2_64", "reason": "llvm_intrinsic"},
+    {"name": "is_contained", "reason": "llvm_intrinsic"},
 ]
 
 ENUM_NAMES = ("CodeModel", "LegalizeResult")

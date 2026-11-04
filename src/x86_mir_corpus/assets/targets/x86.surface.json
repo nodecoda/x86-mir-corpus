@@ -1,0 +1,1545 @@
+{
+ "class": "X86LegalizerInfo",
+ "opaque": [
+  {
+   "detail": "method",
+   "line": 121,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  }
+ ],
+ "revision": "fed20e0e68323be32cb0fe8af679b8cb34e72112",
+ "schema": "x86-mir-corpus-legalizer-surface",
+ "scopes": {
+  "constructor": {
+   "exact": 364,
+   "ignore": 14,
+   "opaque": 1,
+   "unknown": 0
+  },
+  "file": {
+   "exact": 0,
+   "ignore": 1,
+   "opaque": 0,
+   "unknown": 0
+  },
+  "lambda": {
+   "exact": 27,
+   "ignore": 4,
+   "opaque": 0,
+   "unknown": 0
+  },
+  "lowering": {
+   "exact": 30,
+   "ignore": 13,
+   "opaque": 0,
+   "unknown": 214
+  }
+ },
+ "source": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+ "surface_sha256": "13b28ec76ca2ba780d8f156d825320028286fa21fa10d16b6be8a431931416d2",
+ "symbols": 66,
+ "target": "x86",
+ "unknown": [
+  {
+   "detail": "member",
+   "line": 635,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 636,
+   "name": "getMRI",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 637,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 660,
+   "name": "llvm_unreachable",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 666,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 667,
+   "name": "getMF",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 668,
+   "name": "getFirst2RegLLTs",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 676,
+   "name": "getStackTemporaryAlignment",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 677,
+   "name": "createStackTemporary",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 678,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 679,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 682,
+   "name": "buildStore",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 684,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 685,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 686,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 687,
+   "name": "addDef",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 688,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 688,
+   "name": "getReg",
+   "receiver": "SlotPointer",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 689,
+   "name": "addMemOperand",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 691,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 698,
+   "name": "getMF",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 699,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 700,
+   "name": "getFirst2RegLLTs",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 704,
+   "name": "getStackTemporaryAlignment",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 705,
+   "name": "createStackTemporary",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 706,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 707,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 709,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 710,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 711,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 711,
+   "name": "getReg",
+   "receiver": "SlotPointer",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 712,
+   "name": "addMemOperand",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 714,
+   "name": "buildLoad",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 714,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 715,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 722,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 724,
+   "name": "getReg",
+   "receiver": "BuildVector",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 725,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 726,
+   "name": "getMF",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 727,
+   "name": "getFunction",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 727,
+   "name": "getContext",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 731,
+   "name": "getNumSources",
+   "receiver": "BuildVector",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 732,
+   "name": "getSourceReg",
+   "receiver": "BuildVector",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 734,
+   "name": "getIConstantVRegValWithLookThrough",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 736,
+   "name": "emplace_back",
+   "receiver": "CstIdxs",
+   "scope": "lowering"
+  },
+  {
+   "detail": "qualifier",
+   "line": 736,
+   "name": "get",
+   "receiver": "ConstantInt",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 736,
+   "name": "Value",
+   "receiver": "ValueAndReg",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 740,
+   "name": "getFConstantVRegValWithLookThrough",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 742,
+   "name": "emplace_back",
+   "receiver": "CstIdxs",
+   "scope": "lowering"
+  },
+  {
+   "detail": "qualifier",
+   "line": 742,
+   "name": "get",
+   "receiver": "ConstantFP",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 742,
+   "name": "Value",
+   "receiver": "FPValueAndReg",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 747,
+   "name": "emplace_back",
+   "receiver": "CstIdxs",
+   "scope": "lowering"
+  },
+  {
+   "detail": "qualifier",
+   "line": 747,
+   "name": "get",
+   "receiver": "UndefValue",
+   "scope": "lowering"
+  },
+  {
+   "detail": "qualifier",
+   "line": 747,
+   "name": "getIntNTy",
+   "receiver": "Type",
+   "scope": "lowering"
+  },
+  {
+   "detail": "qualifier",
+   "line": 753,
+   "name": "get",
+   "receiver": "ConstantVector",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 755,
+   "name": "getDataLayout",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 756,
+   "name": "getDefaultGlobalsAddressSpace",
+   "receiver": "DL",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 757,
+   "name": "getABITypeAlign",
+   "receiver": "DL",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 757,
+   "name": "getType",
+   "receiver": "ConstVal",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 758,
+   "name": "buildConstantPool",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 759,
+   "name": "getPointerSizeInBits",
+   "receiver": "DL",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 760,
+   "name": "getConstantPool",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 760,
+   "name": "getConstantPoolIndex",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 762,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "qualifier",
+   "line": 762,
+   "name": "getConstantPool",
+   "receiver": "MachinePointerInfo",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 765,
+   "name": "buildLoad",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 766,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 773,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 774,
+   "name": "getFirst2RegLLTs",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 781,
+   "name": "buildFPTOSI",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 782,
+   "name": "buildTrunc",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 783,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 793,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 794,
+   "name": "getFirst2RegLLTs",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 800,
+   "name": "buildZExt",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 801,
+   "name": "buildSITOFP",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 802,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 813,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 814,
+   "name": "memoperands_begin",
+   "receiver": "Store",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 815,
+   "name": "getMF",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 816,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 816,
+   "name": "getValueReg",
+   "receiver": "Store",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 817,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 817,
+   "name": "getPointerInfo",
+   "receiver": "MMO",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 819,
+   "name": "Observer",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 819,
+   "name": "changingInstr",
+   "receiver": "Observer",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 820,
+   "name": "setMemRefs",
+   "receiver": "Store",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 821,
+   "name": "Observer",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 821,
+   "name": "changedInstr",
+   "receiver": "Observer",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 850,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 851,
+   "name": "getMF",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 852,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 852,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 853,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 860,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 862,
+   "name": "createStackTemporary",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "qualifier",
+   "line": 862,
+   "name": "getFixed",
+   "receiver": "TypeSize",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 864,
+   "name": "getReg",
+   "receiver": "StackTemp",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 866,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 870,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 871,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 872,
+   "name": "addMemOperand",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 875,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 879,
+   "name": "buildZExt",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 879,
+   "name": "buildLoad",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 880,
+   "name": "buildTrunc",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 881,
+   "name": "buildLShr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 881,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 882,
+   "name": "buildZExt",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 883,
+   "name": "buildAnd",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 883,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 889,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 890,
+   "name": "buildLShr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 892,
+   "name": "buildAnd",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 892,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 893,
+   "name": "buildZExtOrTrunc",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 895,
+   "name": "buildCopy",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 897,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 904,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 905,
+   "name": "getMF",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 906,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 906,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 913,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 915,
+   "name": "createStackTemporary",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "qualifier",
+   "line": 915,
+   "name": "getFixed",
+   "receiver": "TypeSize",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 917,
+   "name": "getReg",
+   "receiver": "StackTemp",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 920,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 920,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 921,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 922,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 923,
+   "name": "addMemOperand",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 926,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 926,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 927,
+   "name": "buildLoad",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 931,
+   "name": "buildAnd",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 931,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 938,
+   "name": "mi_match",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 938,
+   "name": "m_ICst",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 939,
+   "name": "getZExtValue",
+   "receiver": "SrcCst",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 944,
+   "name": "getFunction",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 944,
+   "name": "getContext",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 945,
+   "name": "diagnose",
+   "receiver": "C",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 945,
+   "name": "DiagnosticInfoUnsupported",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 946,
+   "name": "getFunction",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 947,
+   "name": "DiagnosticLocation",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 947,
+   "name": "getDebugLoc",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 952,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 952,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 953,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 953,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 957,
+   "name": "buildZExtOrTrunc",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 958,
+   "name": "buildAdd",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 959,
+   "name": "buildShl",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 959,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 960,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 961,
+   "name": "buildTrunc",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 962,
+   "name": "buildShl",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 962,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 965,
+   "name": "buildAnd",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 965,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 966,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 969,
+   "name": "buildZExt",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 971,
+   "name": "buildShl",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 971,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 972,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 976,
+   "name": "buildOr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 980,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 980,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 981,
+   "name": "buildStore",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 985,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 985,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 986,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 987,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 988,
+   "name": "addMemOperand",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 992,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 993,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 994,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 995,
+   "name": "addIntrinsicID",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 996,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 997,
+   "name": "addMemOperand",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1000,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 1001,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1002,
+   "name": "buildLoad",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1005,
+   "name": "buildAnd",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1006,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1009,
+   "name": "buildOr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1012,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 1013,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1014,
+   "name": "buildStore",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1017,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 1018,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1019,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1020,
+   "name": "addIntrinsicID",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1021,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1022,
+   "name": "addMemOperand",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1025,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1032,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1032,
+   "name": "getGlobal",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1033,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1033,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1034,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1035,
+   "name": "classifyGlobalReference",
+   "receiver": "Subtarget",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 1038,
+   "name": "isGlobalStubReference",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1039,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1040,
+   "name": "getMF",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1042,
+   "name": "createGenericVirtualRegister",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1043,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1044,
+   "name": "addDef",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1045,
+   "name": "addGlobalAddress",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1047,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "qualifier",
+   "line": 1048,
+   "name": "getGOT",
+   "receiver": "MachinePointerInfo",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 1049,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1050,
+   "name": "buildLoad",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1051,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  }
+ ],
+ "version": 1
+}

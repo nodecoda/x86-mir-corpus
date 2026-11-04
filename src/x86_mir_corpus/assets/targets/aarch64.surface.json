@@ -1,0 +1,5073 @@
+{
+ "class": "AArch64LegalizerInfo",
+ "opaque": [
+  {
+   "detail": "method",
+   "line": 324,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 327,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 464,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 491,
+   "name": "widenScalarFor",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 495,
+   "name": "widenScalarFor",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 514,
+   "name": "moreElementsIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "predicate",
+   "line": 528,
+   "name": "atomicOrderingAtLeastOrStrongerThan",
+   "receiver": null,
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 595,
+   "name": "narrowScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 604,
+   "name": "bitcastIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 622,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "predicate",
+   "line": 624,
+   "name": "atomicOrderingAtLeastOrStrongerThan",
+   "receiver": null,
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 661,
+   "name": "bitcastIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "predicate",
+   "line": 711,
+   "name": "atomicOrderingAtLeastOrStrongerThan",
+   "receiver": null,
+   "scope": "constructor"
+  },
+  {
+   "detail": "predicate",
+   "line": 716,
+   "name": "atomicOrderingAtLeastOrStrongerThan",
+   "receiver": null,
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 783,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 910,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 938,
+   "name": "narrowScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 946,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 952,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 959,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 988,
+   "name": "narrowScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 997,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 1003,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 1010,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 1053,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 1060,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 1339,
+   "name": "moreElementsIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 1346,
+   "name": "moreElementsIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 1358,
+   "name": "bitcastIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 1371,
+   "name": "bitcastIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 1448,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 1465,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 1503,
+   "name": "widenScalarIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 1530,
+   "name": "moreElementsIf",
+   "receiver": ")",
+   "scope": "constructor"
+  },
+  {
+   "detail": "method",
+   "line": 1549,
+   "name": "fewerElementsIf",
+   "receiver": ")",
+   "scope": "constructor"
+  }
+ ],
+ "revision": "fed20e0e68323be32cb0fe8af679b8cb34e72112",
+ "schema": "x86-mir-corpus-legalizer-surface",
+ "scopes": {
+  "constructor": {
+   "exact": 846,
+   "ignore": 10,
+   "opaque": 35,
+   "unknown": 0
+  },
+  "file": {
+   "exact": 0,
+   "ignore": 1,
+   "opaque": 0,
+   "unknown": 0
+  },
+  "lambda": {
+   "exact": 316,
+   "ignore": 43,
+   "opaque": 0,
+   "unknown": 0
+  },
+  "lowering": {
+   "exact": 151,
+   "ignore": 85,
+   "opaque": 0,
+   "unknown": 684
+  }
+ },
+ "source": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+ "surface_sha256": "59b6b19cb64750ec6e99269050a38b826125a63c6ff3cef7f5b7968cfb89a375",
+ "symbols": 126,
+ "target": "aarch64",
+ "unknown": [
+  {
+   "detail": "member",
+   "line": 1594,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1595,
+   "name": "getMRI",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1596,
+   "name": "Observer",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1597,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1639,
+   "name": "lowerAbsToCNeg",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 1656,
+   "name": "llvm_unreachable",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1661,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1662,
+   "name": "getFirst2RegLLTs",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1669,
+   "name": "createStackStoreLoad",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1670,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1679,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1680,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1684,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1684,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1685,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 1686,
+   "name": "getIConstantVRegValWithLookThrough",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1690,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1690,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1690,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1694,
+   "name": "Value",
+   "receiver": "VRegAndVal",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1694,
+   "name": "urem",
+   "receiver": "Value",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1695,
+   "name": "lowerFunnelShiftAsShifts",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1698,
+   "name": "Value",
+   "receiver": "VRegAndVal",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1698,
+   "name": "urem",
+   "receiver": "Value",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1700,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1704,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1705,
+   "name": "Value",
+   "receiver": "VRegAndVal",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1705,
+   "name": "ult",
+   "receiver": "Value",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1709,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1709,
+   "name": "zext",
+   "receiver": "Amount",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1711,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1712,
+   "name": "changingInstr",
+   "receiver": "Observer",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1713,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1713,
+   "name": "setReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1713,
+   "name": "getReg",
+   "receiver": "Cast64",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1714,
+   "name": "changedInstr",
+   "receiver": "Observer",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1718,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1719,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1719,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1719,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1720,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1720,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1720,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1720,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1721,
+   "name": "getReg",
+   "receiver": "Cast64",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1722,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1730,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1730,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1731,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1731,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1732,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1732,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1733,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1734,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1744,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1744,
+   "name": "getPredicate",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1749,
+   "name": "buildICmp",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1749,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1750,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1751,
+   "name": "buildNot",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1753,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1762,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1762,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1763,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1767,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1767,
+   "name": "buildZExt",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1768,
+   "name": "Observer",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1768,
+   "name": "changingInstr",
+   "receiver": "Observer",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1769,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1769,
+   "name": "setReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1769,
+   "name": "getReg",
+   "receiver": "NewAmt",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1770,
+   "name": "Observer",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1770,
+   "name": "changedInstr",
+   "receiver": "Observer",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1777,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1782,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1784,
+   "name": "isSymbol",
+   "receiver": "GlobalOp",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1786,
+   "name": "getGlobal",
+   "receiver": "GlobalOp",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1787,
+   "name": "isThreadLocal",
+   "receiver": "GV",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1791,
+   "name": "ClassifyGlobalReference",
+   "receiver": "ST",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1796,
+   "name": "getOffset",
+   "receiver": "GlobalOp",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1797,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1797,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1798,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1799,
+   "name": "addGlobalAddress",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1801,
+   "name": "setRegClass",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1801,
+   "name": "getReg",
+   "receiver": "ADRP",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1819,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1820,
+   "name": "addGlobalAddress",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1822,
+   "name": "addImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1823,
+   "name": "setRegClass",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1823,
+   "name": "getReg",
+   "receiver": "ADRP",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1826,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1827,
+   "name": "addGlobalAddress",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1829,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1835,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1836,
+   "name": "getMRI",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1839,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1839,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1839,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1840,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1844,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1844,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1845,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1845,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1846,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1850,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1850,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1851,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1851,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1851,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1852,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1856,
+   "name": "getIntrinsicID",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1859,
+   "name": "getMF",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1860,
+   "name": "getDataLayout",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1861,
+   "name": "getPointerSize",
+   "receiver": "DL",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1862,
+   "name": "getVaListSizeInBits",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1863,
+   "name": "getRegInfo",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1863,
+   "name": "createGenericVirtualRegister",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1865,
+   "name": "buildLoad",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1865,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1866,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 1866,
+   "name": "MachinePointerInfo",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 1868,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1869,
+   "name": "buildStore",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1869,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1870,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 1870,
+   "name": "MachinePointerInfo",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 1872,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1873,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1877,
+   "name": "buildConstant",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1877,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1877,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1878,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1882,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1885,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1886,
+   "name": "buildAnyExt",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1886,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1887,
+   "name": "setReg",
+   "receiver": "Value",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1891,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1893,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1893,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1894,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1894,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1895,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1895,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1896,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1896,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1903,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1903,
+   "name": "addImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1903,
+   "name": "add",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1904,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1908,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1910,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1910,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1911,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1911,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1914,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1915,
+   "name": "addImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1916,
+   "name": "add",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1917,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1917,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1917,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1918,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1922,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1923,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1923,
+   "name": "addImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1923,
+   "name": "add",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1924,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1937,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1937,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1938,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1939,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1939,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1939,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1943,
+   "name": "createGenericVirtualRegister",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1945,
+   "name": "Observer",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1945,
+   "name": "changingInstr",
+   "receiver": "Observer",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1946,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1946,
+   "name": "setReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1947,
+   "name": "Observer",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1947,
+   "name": "changedInstr",
+   "receiver": "Observer",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1949,
+   "name": "setInsertPt",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1949,
+   "name": "getMBB",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1949,
+   "name": "getInsertPt",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1950,
+   "name": "buildExtOrTrunc",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1960,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1960,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1960,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1961,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1970,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1970,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1971,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1971,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1972,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1984,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1984,
+   "name": "getOperand",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1984,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1986,
+   "name": "buildConstant",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1986,
+   "name": "getOperand",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1986,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1987,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1989,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1992,
+   "name": "buildTrunc",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1994,
+   "name": "buildCopy",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 1996,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2001,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2003,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2005,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2007,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2009,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2012,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2014,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2016,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2018,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2020,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2022,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2024,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2026,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2028,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2030,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2030,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2030,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2033,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2034,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2034,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2034,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2035,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2035,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2035,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2037,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2037,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2038,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2042,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2042,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2042,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2045,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2046,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2046,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2046,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2047,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2047,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2047,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2049,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2049,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2050,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2054,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2054,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2054,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2057,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2058,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2058,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2058,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2059,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2059,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2059,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2061,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2061,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2062,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2066,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2066,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2066,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2069,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2070,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2070,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2070,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2071,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2071,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2071,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2073,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2073,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2074,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2078,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2078,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2078,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2081,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2082,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2082,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2082,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2083,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2083,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2083,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2085,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2085,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2086,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2090,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2090,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2090,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2093,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2094,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2094,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2094,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2095,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2095,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2095,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2097,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2097,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2098,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2104,
+   "name": "isConstantOrConstantSplatVector",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2104,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2104,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2107,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2107,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2108,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2109,
+   "name": "addImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2109,
+   "name": "getSExtValue",
+   "receiver": "ShiftAmount",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2110,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2116,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2117,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2118,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2118,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2118,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2118,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2119,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2123,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2124,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2125,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2125,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2125,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2125,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2126,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2131,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2131,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2131,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2132,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2136,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2138,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2138,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2138,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2139,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2143,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2143,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2143,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2144,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2148,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2148,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2148,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2149,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2153,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2153,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2153,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2154,
+   "name": "LowerBinOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2158,
+   "name": "LowerTriOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2160,
+   "name": "LowerTriOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2162,
+   "name": "LowerTriOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2164,
+   "name": "LowerUnaryOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2166,
+   "name": "LowerUnaryOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2168,
+   "name": "LowerUnaryOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2170,
+   "name": "LowerUnaryOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2172,
+   "name": "LowerUnaryOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2174,
+   "name": "LowerUnaryOp",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2187,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2188,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2189,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2192,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2192,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2193,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2194,
+   "name": "getIConstantVRegValWithLookThrough",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2198,
+   "name": "Value",
+   "receiver": "VRegAndVal",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2198,
+   "name": "getSExtValue",
+   "receiver": "Value",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2202,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2203,
+   "name": "changingInstr",
+   "receiver": "Observer",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2204,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2204,
+   "name": "setReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2204,
+   "name": "getReg",
+   "receiver": "ExtCst",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2205,
+   "name": "changedInstr",
+   "receiver": "Observer",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2216,
+   "name": "mi_match",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2216,
+   "name": "m_GPtrAdd",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2216,
+   "name": "m_Reg",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2216,
+   "name": "m_ICst",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2228,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2229,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2239,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2239,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2240,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2244,
+   "name": "memoperands_begin",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2244,
+   "name": "getSuccessOrdering",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2245,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2268,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2269,
+   "name": "buildMergeLikeInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2270,
+   "name": "getOperand",
+   "receiver": "NewI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2270,
+   "name": "getOperand",
+   "receiver": "NewI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2272,
+   "name": "buildUnmerge",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2272,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2273,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2274,
+   "name": "getOperand",
+   "receiver": "Split",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2274,
+   "name": "getOperand",
+   "receiver": "Split",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2278,
+   "name": "addUse",
+   "receiver": "NewI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2278,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2278,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2282,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2282,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2283,
+   "name": "addUse",
+   "receiver": "NewI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2284,
+   "name": "addImm",
+   "receiver": "NewI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2287,
+   "name": "cloneMemRefs",
+   "receiver": "NewI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2288,
+   "name": "constrainSelectedInstRegOperands",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2289,
+   "name": "getTargetRegisterInfo",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2291,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2297,
+   "name": "LLVM_DEBUG",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2297,
+   "name": "dbgs",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2303,
+   "name": "memoperands_begin",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2304,
+   "name": "setType",
+   "receiver": "MMO",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2306,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2307,
+   "name": "buildBitcast",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2308,
+   "name": "buildStore",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2308,
+   "name": "getReg",
+   "receiver": "Bitcast",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2308,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2310,
+   "name": "buildLoad",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2310,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2311,
+   "name": "buildBitcast",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2313,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2320,
+   "name": "getMF",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2321,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2321,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2322,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2322,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2323,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2323,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2325,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2329,
+   "name": "Align",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2330,
+   "name": "buildLoad",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2332,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2332,
+   "name": "MachinePointerInfo",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2339,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2339,
+   "name": "value",
+   "receiver": "Alignment",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2340,
+   "name": "buildPtrAdd",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2340,
+   "name": "getReg",
+   "receiver": "AlignMinus1",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2341,
+   "name": "buildMaskLowPtrBits",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2341,
+   "name": "Log2",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2345,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2347,
+   "name": "buildLoad",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2349,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2349,
+   "name": "MachinePointerInfo",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2352,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2352,
+   "name": "alignTo",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2354,
+   "name": "buildPtrAdd",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2354,
+   "name": "getReg",
+   "receiver": "Size",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2356,
+   "name": "buildStore",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2357,
+   "name": "getMachineMemOperand",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2357,
+   "name": "MachinePointerInfo",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2361,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2369,
+   "name": "getIConstantVRegValWithLookThrough",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2369,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2369,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2370,
+   "name": "getIConstantVRegValWithLookThrough",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2370,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2370,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2396,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2397,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2397,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2398,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2398,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2399,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2407,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2412,
+   "name": "buildUnmerge",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2413,
+   "name": "buildCTPOP",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2413,
+   "name": "getOperand",
+   "receiver": "Split",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2414,
+   "name": "buildCTPOP",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2414,
+   "name": "getOperand",
+   "receiver": "Split",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2415,
+   "name": "buildAdd",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2417,
+   "name": "buildZExt",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2418,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2423,
+   "name": "getMF",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2423,
+   "name": "getFunction",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2423,
+   "name": "hasFnAttribute",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2426,
+   "name": "lowerBitCount",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2437,
+   "name": "buildZExt",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2437,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2440,
+   "name": "buildBitcast",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2440,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2443,
+   "name": "buildCTPOP",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2449,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2450,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2455,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2456,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2458,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2460,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2462,
+   "name": "llvm_unreachable",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2465,
+   "name": "getOperand",
+   "receiver": "Sum",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2465,
+   "name": "setReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2466,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2470,
+   "name": "getReg",
+   "receiver": "CTPOP",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2475,
+   "name": "push_back",
+   "receiver": "HAddTys",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2478,
+   "name": "push_back",
+   "receiver": "HAddTys",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2481,
+   "name": "push_back",
+   "receiver": "HAddTys",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2482,
+   "name": "push_back",
+   "receiver": "HAddTys",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2485,
+   "name": "push_back",
+   "receiver": "HAddTys",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2486,
+   "name": "push_back",
+   "receiver": "HAddTys",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2487,
+   "name": "push_back",
+   "receiver": "HAddTys",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2490,
+   "name": "push_back",
+   "receiver": "HAddTys",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2493,
+   "name": "push_back",
+   "receiver": "HAddTys",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2494,
+   "name": "push_back",
+   "receiver": "HAddTys",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2499,
+   "name": "buildIntrinsic",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2499,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2500,
+   "name": "getReg",
+   "receiver": "UADD",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2505,
+   "name": "buildZExt",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2507,
+   "name": "getOperand",
+   "receiver": "UADD",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2507,
+   "name": "setReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2508,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2514,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2516,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2516,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2517,
+   "name": "buildUnmerge",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2517,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2518,
+   "name": "buildUnmerge",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2518,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2519,
+   "name": "createGenericVirtualRegister",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2520,
+   "name": "createGenericVirtualRegister",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2533,
+   "name": "memoperands_begin",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2533,
+   "name": "getMergedOrdering",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2552,
+   "name": "createGenericVirtualRegister",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2553,
+   "name": "createGenericVirtualRegister",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2554,
+   "name": "createGenericVirtualRegister",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2555,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2556,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2556,
+   "name": "getOperand",
+   "receiver": "DesiredI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2556,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2557,
+   "name": "addImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2558,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2558,
+   "name": "getOperand",
+   "receiver": "DesiredI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2558,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2559,
+   "name": "addImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2560,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2561,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2561,
+   "name": "getOperand",
+   "receiver": "NewI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2561,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2562,
+   "name": "addImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2563,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2563,
+   "name": "getOperand",
+   "receiver": "NewI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2563,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2564,
+   "name": "addImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2566,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2568,
+   "name": "buildExtract",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2569,
+   "name": "buildExtract",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2574,
+   "name": "memoperands_begin",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2574,
+   "name": "getMergedOrdering",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2592,
+   "name": "createVirtualRegister",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2593,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2594,
+   "name": "getOperand",
+   "receiver": "DesiredI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2595,
+   "name": "getOperand",
+   "receiver": "DesiredI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2595,
+   "name": "getOperand",
+   "receiver": "NewI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2596,
+   "name": "getOperand",
+   "receiver": "NewI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2599,
+   "name": "cloneMemRefs",
+   "receiver": "CAS",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2600,
+   "name": "constrainSelectedInstRegOperands",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2601,
+   "name": "getTargetRegisterInfo",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2604,
+   "name": "buildMergeLikeInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2604,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2605,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2611,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2612,
+   "name": "getMRI",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2613,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2613,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2613,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2614,
+   "name": "buildBitReverse",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2614,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2615,
+   "name": "buildCTLZ",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2615,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2615,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2616,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2622,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2625,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2626,
+   "name": "getOpcode",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2629,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2631,
+   "name": "buildAnyExt",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2631,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2632,
+   "name": "setReg",
+   "receiver": "Value",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2643,
+   "name": "getIConstantVRegValWithLookThrough",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2643,
+   "name": "getIndexReg",
+   "receiver": "Element",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2646,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2646,
+   "name": "getVectorReg",
+   "receiver": "Element",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2649,
+   "name": "lowerExtractInsertVectorElt",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2655,
+   "name": "getParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2655,
+   "name": "getParent",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2656,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2657,
+   "name": "getMRI",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2661,
+   "name": "getFunction",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2661,
+   "name": "hasFnAttribute",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2662,
+   "name": "getFunction",
+   "receiver": "MF",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2662,
+   "name": "getFnAttribute",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2662,
+   "name": "getValueAsString",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2664,
+   "name": "lowerDynStackAlloc",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2668,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2668,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2669,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2669,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2670,
+   "name": "assumeAligned",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2670,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2670,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2672,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2674,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2677,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2679,
+   "name": "getStackPointerRegisterToSaveRestore",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2681,
+   "name": "getDynStackAllocTargetPtr",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2683,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2684,
+   "name": "setRegClass",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2684,
+   "name": "getReg",
+   "receiver": "NewMI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2685,
+   "name": "setInsertPt",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2685,
+   "name": "getParent",
+   "receiver": "NewMI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2686,
+   "name": "buildCopy",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2688,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2694,
+   "name": "MIRBuilder",
+   "receiver": "Helper",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2695,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2697,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2697,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2698,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2698,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2699,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2699,
+   "name": "getImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2712,
+   "name": "buildInstr",
+   "receiver": "MIB",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2712,
+   "name": "addImm",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2712,
+   "name": "add",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2713,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2723,
+   "name": "getReg",
+   "receiver": "Concat",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2724,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "call",
+   "line": 2728,
+   "name": "PowerOf2Ceil",
+   "receiver": null,
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2729,
+   "name": "getType",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2729,
+   "name": "getSourceReg",
+   "receiver": "Concat",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2734,
+   "name": "getNumSources",
+   "receiver": "Concat",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2735,
+   "name": "buildAnyExt",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2735,
+   "name": "getSourceReg",
+   "receiver": "Concat",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2736,
+   "name": "push_back",
+   "receiver": "WideSrcs",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2736,
+   "name": "getReg",
+   "receiver": "Wide",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2739,
+   "name": "buildConcatVectors",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2740,
+   "name": "buildTrunc",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2741,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2748,
+   "name": "getFirst2RegLLTs",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2756,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2757,
+   "name": "getFlags",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2758,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2758,
+   "name": "getFlags",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2759,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2786,
+   "name": "push_back",
+   "receiver": "RegsToUnmergeTo",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2789,
+   "name": "push_back",
+   "receiver": "RegsToUnmergeTo",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2789,
+   "name": "createGenericVirtualRegister",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2791,
+   "name": "buildUnmerge",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2797,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2798,
+   "name": "getFlags",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2799,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2800,
+   "name": "push_back",
+   "receiver": "TruncOddDstRegs",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2810,
+   "name": "buildMergeLikeInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2812,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2814,
+   "name": "push_back",
+   "receiver": "RegsToMerge",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2815,
+   "name": "buildFPTrunc",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2815,
+   "name": "getFlags",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2815,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2817,
+   "name": "push_back",
+   "receiver": "RegsToMerge",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2819,
+   "name": "buildFPTrunc",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2819,
+   "name": "getFlags",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2820,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2825,
+   "name": "size",
+   "receiver": "RegsToMerge",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2826,
+   "name": "replaceRegWith",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2826,
+   "name": "pop_back_val",
+   "receiver": "RegsToMerge",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2827,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2832,
+   "name": "buildMergeLikeInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2832,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2833,
+   "name": "replaceRegWith",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2834,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2845,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2845,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2846,
+   "name": "createGenericVirtualRegister",
+   "receiver": "MRI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2848,
+   "name": "buildIntrinsic",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2857,
+   "name": "buildTrunc",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2858,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2859,
+   "name": "buildAdd",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2860,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2861,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2862,
+   "name": "buildInstr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2864,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2877,
+   "name": "getOperand",
+   "receiver": "MI",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2877,
+   "name": "getReg",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2878,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2879,
+   "name": "buildSub",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2880,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2881,
+   "name": "buildAnd",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2882,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2883,
+   "name": "buildShl",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2887,
+   "name": "buildIntrinsic",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2890,
+   "name": "buildConstant",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2891,
+   "name": "buildAnd",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2892,
+   "name": "buildZExt",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2893,
+   "name": "buildOr",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2896,
+   "name": "buildIntrinsic",
+   "receiver": "MIRBuilder",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2897,
+   "name": "addUse",
+   "receiver": ")",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2897,
+   "name": "getReg",
+   "receiver": "FPCRUpdated",
+   "scope": "lowering"
+  },
+  {
+   "detail": "member",
+   "line": 2899,
+   "name": "eraseFromParent",
+   "receiver": "MI",
+   "scope": "lowering"
+  }
+ ],
+ "version": 1
+}

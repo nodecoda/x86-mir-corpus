@@ -10,6 +10,7 @@ import sys
 
 from . import (
     __version__,
+    audit,
     baseline,
     corpusdiff,
     domain,
@@ -641,6 +642,41 @@ def cmd_dsl_report(args):
                   f"arity={entry['arity']}")
 
 
+def cmd_dsl_audit(args):
+    text = None
+    if args.input:
+        with open(args.input, encoding="utf-8") as handle:
+            text = handle.read()
+    revision = None if text is not None else (
+        args.source_rev or pin.revision(target=args.target))
+    try:
+        report = audit.audit_source(
+            args.target, repo=args.repo, revision=revision,
+            source_path=args.source_path, text=text)
+    except (OSError, RuntimeError, ValueError) as err:
+        print(f"dsl audit failed: {err}", file=sys.stderr)
+        raise SystemExit(2) from None
+    if args.update_manifest:
+        path = audit.write_manifest(report)
+        print(f"surface manifest: {path}", file=sys.stderr)
+    problems = audit.gate(report, strict=args.strict)
+    if args.json:
+        print(json.dumps(report, sort_keys=True))
+    else:
+        print(f"{report['target']}  {report.get('revision') or '<input>'}")
+        for scope in ("constructor", "lambda", "lowering", "file"):
+            counts = report["scopes"][scope]
+            gate = " (out of gate)" if scope in ("lowering", "file") else ""
+            print(f"  {scope:11s} exact={counts['exact']:4d} "
+                  f"opaque={counts['opaque']:3d} ignore={counts['ignore']:3d} "
+                  f"unknown={counts['unknown']:4d}{gate}")
+        print(f"  surface      {report['surface_sha256']}")
+    for problem in problems:
+        print(f"dsl audit: {problem}", file=sys.stderr)
+    if problems:
+        raise SystemExit(1)
+
+
 def cmd_llvm_build(args):
     binaries = llvm.build_sidecar(
         args.llvm_build, args.out, llvm_src=args.llvm_src,
@@ -694,6 +730,22 @@ def build_parser():
                     help="fail when the header hashes differ from the table")
     dp.add_argument("--json", action="store_true")
     dp.set_defaults(func=cmd_dsl_verify)
+    dp = dsl_sub.add_parser(
+        "audit", help="classify the whole target source by scope")
+    dp.add_argument("--input", help="read this C++ file instead of a revision")
+    dp.add_argument("--repo", default=os.environ.get("X86_MIR_LLVM_SRC", "."))
+    dp.add_argument("--target", default="x86", choices=target.names())
+    dp.add_argument("--source-rev", default=None,
+                    help="git revision (default: the target's pinned commit)")
+    dp.add_argument("--source-path", default=None,
+                    help="constructor source path (default: the target's)")
+    dp.add_argument("--strict", action="store_true",
+                    help="fail on unknown constructor/lambda calls or a "
+                         "surface-manifest change")
+    dp.add_argument("--update-manifest", action="store_true",
+                    help="rewrite assets/targets/<target>.surface.json")
+    dp.add_argument("--json", action="store_true")
+    dp.set_defaults(func=cmd_dsl_audit)
     dp = dsl_sub.add_parser("report", help="print the symbol table")
     dp.add_argument("--table", help="symbol table JSON (default: bundled)")
     dp.add_argument("--methods", action="store_true")
