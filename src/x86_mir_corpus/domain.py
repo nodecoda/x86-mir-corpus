@@ -2361,8 +2361,18 @@ def rule_probes(builder, classes, mem_classes, env, profile=None):
             if got is not None:
                 chosen[opcode] = got
         if chosen:
+            excluded = getattr(profile, "rule_probe_exclusions", frozenset())
             for opcode, got in chosen.items():
                 types, probe_mem, probe_align, _confidence = got
+                key = (opcode, tuple(E.llt_name(t) for t in types))
+                if key in excluded:
+                    issues.append(rule_issue(
+                        builder, rule,
+                        "probe shape " + ", ".join(key[1]) + " is normalised "
+                        "by the pre-legalizer combiner; the raw legalizer "
+                        "query is not IR-reachable",
+                        None, "pipeline_unreachable"))
+                    continue
                 out.append(point(builder.name, opcode, "rule", types,
                                  probe_mem, probe_align, rule.index))
             continue

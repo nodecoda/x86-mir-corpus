@@ -263,6 +263,12 @@ enum class SlotCheck {
   AtomicCmpXchg,
   /// Slot 0 integer; slot 1 (when the descriptor has one) the same type.
   UnaryInt,
+  /// G_ATOMIC_CMPXCHG_WITH_SUCCESS: value, i1 success flag, pointer address.
+  AtomicCmpXchgSuccess,
+  /// G_BUILD_VECTOR_TRUNC: slot 0 a fixed vector, the rest scalar integers.
+  BuildVectorTrunc,
+  /// Every slot a vector of the same shape (G_VECTOR_COMPRESS).
+  AllVectorsSameShape,
 };
 
 struct SlotRule {
@@ -366,6 +372,14 @@ const SlotRule CompareRules[] = {{0, SlotCheck::ICmpResult, "result"}};
 const SlotRule SelectRules[] = {{1, SlotCheck::SelectCond, "condition"}};
 const SlotRule SextInRegRules[] = {{0, SlotCheck::Int, "operand"}};
 const SlotRule IntegerOnlyRules[] = {{0, SlotCheck::AllInt, "operands"}};
+const SlotRule AtomicCmpXchgSuccessRules[] = {
+    {0, SlotCheck::AtomicCmpXchgSuccess, "value, success, address"}};
+const SlotRule BuildVectorTruncRules[] = {
+    {0, SlotCheck::BuildVectorTrunc, "result and elements"}};
+const SlotRule FcopysignRules[] = {{0, SlotCheck::Float, "result"},
+                                   {1, SlotCheck::ShapeOf0, "source"}};
+const SlotRule VectorCompressRules[] = {
+    {0, SlotCheck::AllVectorsSameShape, "result and operands"}};
 
 const OpcodeContract Contracts[] = {
     {"G_UADDE", CarryRules},      {"G_UADDO", CarryRules},
@@ -414,7 +428,11 @@ const OpcodeContract Contracts[] = {
     {"G_VECREDUCE_FMINIMUM", VectorReduceRules},
     {"G_VECREDUCE_FMAXIMUM", VectorReduceRules},
     {"G_BUILD_VECTOR", BuildVectorRules},
+    {"G_BUILD_VECTOR_TRUNC", BuildVectorTruncRules},
+    {"G_VECTOR_COMPRESS", VectorCompressRules},
+    {"G_FCOPYSIGN", FcopysignRules},
     {"G_ATOMIC_CMPXCHG", AtomicCmpXchgRules},
+    {"G_ATOMIC_CMPXCHG_WITH_SUCCESS", AtomicCmpXchgSuccessRules},
 };
 
 /// Scalable vectors whose legalizer path uses fixed-width geometry today.
@@ -688,6 +706,52 @@ std::optional<std::string> checkTypeContract(
              Values.getNumElements() != Ty.getNumElements()))
           return contractFailure(Rule.Index, Rule.Role,
                                  "a vector with the values' lane count", Ty);
+        break;
+      }
+      case SlotCheck::AtomicCmpXchgSuccess: {
+        if (Ty.isVector() || !isIntLike(Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a scalar integer value", Ty);
+        const uint64_t Bits = Ty.getScalarSizeInBits();
+        if (Bits != 8 && Bits != 16 && Bits != 32 && Bits != 64 && Bits != 128)
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "an 8/16/32/64/128-bit integer value", Ty);
+        if (Rule.Index + 2 >= Types.size())
+          return "type contract: atomic cmpxchg needs a success flag and a "
+                 "pointer address";
+        const LLT &Flag = Types[Rule.Index + 1];
+        if (Flag.isVector() || !isI1Like(Flag))
+          return contractFailure(
+              Rule.Index + 1, "success",
+              "a scalar i1 success flag; IR derives it, it is not a value "
+              "type",
+              Flag);
+        if (!Types[Rule.Index + 2].isPointer())
+          return contractFailure(Rule.Index + 2, "address",
+                                 "a pointer address",
+                                 Types[Rule.Index + 2]);
+        break;
+      }
+      case SlotCheck::BuildVectorTrunc: {
+        if (!Ty.isVector() || Ty.isScalableVector())
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a fixed-width vector", Ty);
+        if (Types.size() < 2)
+          return "type contract: build vector needs an element type slot";
+        for (unsigned I = 1; I != Types.size(); ++I)
+          if (Types[I].isVector() || !isIntLike(Types[I]))
+            return contractFailure(I, "element",
+                                   "a scalar integer", Types[I]);
+        break;
+      }
+      case SlotCheck::AllVectorsSameShape: {
+        const LLT &First = Types[0];
+        if (!First.isVector())
+          return contractFailure(0, Rule.Role,
+                                 "a vector result", First);
+        if (!Ty.isVector() || !sameShape(First, Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a vector with slot 0's shape", Ty);
         break;
       }
       }

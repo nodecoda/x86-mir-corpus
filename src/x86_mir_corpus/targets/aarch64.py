@@ -138,6 +138,27 @@ def _aliases(features):
 SKIP_WITNESS_SLOT1_AS = frozenset()
 
 
+# Shapes the AArch64 pre-legalizer combiner rewrites before the legalizer runs.
+# A raw legality query for them is not IR-reachable: llc on the pinned revision
+# compiles the equivalent IR (v3i16 abs, v3i1/v5i1 integer arithmetic) without
+# asserting, while the legalizer queried directly either ping-pongs between
+# minScalarOrEltIf(s16) and minScalarOrEltIf(s8) or trips
+# mutationIsSane(mutation invalid for match).  Excluding them keeps the witness
+# focused on legalizer-boundary shapes the pipeline can produce; the rules stay
+# visible as pipeline_unreachable coverage issues.
+_UNREACHABLE_PROBE_TYPES = (
+    ("G_ABS", "v3s16"),
+    ("G_ADD", "v3s1"), ("G_ADD", "v5s1"),
+    ("G_AND", "v3s1"), ("G_AND", "v5s1"),
+    ("G_OR", "v3s1"), ("G_OR", "v5s1"),
+    ("G_SUB", "v3s1"), ("G_SUB", "v5s1"),
+    ("G_XOR", "v3s1"), ("G_XOR", "v5s1"),
+    ("G_MUL", "v3s1"), ("G_MUL", "v5s1"),
+)
+RULE_PROBE_EXCLUSIONS = frozenset(
+    (opcode, (types,)) for opcode, types in _UNREACHABLE_PROBE_TYPES)
+
+
 PROFILE = TargetProfile(
     name="aarch64",
     source_path="llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
@@ -151,5 +172,6 @@ PROFILE = TargetProfile(
     skip_witness_slot1_as=SKIP_WITNESS_SLOT1_AS,
     llt_extended=True,
     probe_opcode_arity=True,
+    rule_probe_exclusions=RULE_PROBE_EXCLUSIONS,
     feature_aliases=_aliases,
 )

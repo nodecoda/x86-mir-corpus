@@ -1,5 +1,5 @@
 {
- "atom_count": 18,
+ "atom_count": 22,
  "atoms": [
   {
    "config": "A2",
@@ -254,6 +254,63 @@
    },
    "rule_index": null,
    "rule_set": "AArch64_BUILD_VECTOR"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/18/G_ATOMIC_CMPXCHG_WITH_SUCCESS",
+   "opcode": "G_ATOMIC_CMPXCHG_WITH_SUCCESS",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "s8",
+     "s32",
+     "p0:64"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "contract"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/19/G_BUILD_VECTOR_TRUNC",
+   "opcode": "G_BUILD_VECTOR_TRUNC",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "s32",
+     "s32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "contract"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/20/G_VECTOR_COMPRESS",
+   "opcode": "G_VECTOR_COMPRESS",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "s32",
+     "s32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "contract"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/21/G_FCOPYSIGN",
+   "opcode": "G_FCOPYSIGN",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "s1",
+     "s32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "contract"
   }
  ],
  "config": "A2",
@@ -280,7 +337,11 @@
   "a64-contract/14/G_ATOMIC_CMPXCHG": "type_contract",
   "a64-contract/15/G_ATOMIC_CMPXCHG": "legal",
   "a64-contract/16/G_BUILD_VECTOR": "legal",
-  "a64-contract/17/G_BUILD_VECTOR": "type_contract"
+  "a64-contract/17/G_BUILD_VECTOR": "type_contract",
+  "a64-contract/18/G_ATOMIC_CMPXCHG_WITH_SUCCESS": "type_contract",
+  "a64-contract/19/G_BUILD_VECTOR_TRUNC": "type_contract",
+  "a64-contract/20/G_VECTOR_COMPRESS": "type_contract",
+  "a64-contract/21/G_FCOPYSIGN": "type_contract"
  },
  "schema": "llvm-x86-legalizer-cpp-corpus",
  "version": 2

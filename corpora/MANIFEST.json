@@ -1,20 +1,20 @@
 {
  "aarch64_witness_a2": {
-  "atoms": 13156,
+  "atoms": 13854,
   "config": "A2",
   "counts": {
    "budget": 0,
-   "construction_mismatch": 5221,
+   "construction_mismatch": 5649,
    "crash": 0,
-   "failed": 2879,
+   "failed": 2982,
    "hang": 0,
-   "legalized": 1852,
+   "legalized": 1986,
    "not_run": 0,
-   "unbuildable": 3204
+   "unbuildable": 3237
   },
-  "note": "13,156 atoms; crash/hang/budget/not_run all zero after the AArch64 type contracts. Points file is committed; the full report is reproducible with mir-run.",
+  "note": "13,854 atoms; crash/hang/budget/not_run all zero. 582/611 active rules verified, 37 pipeline_unreachable coverage rows excepted, 0 unprobed. Points file is committed; the report is reproducible with mir-run.",
   "points_path": "corpora/aarch64/witness-A2.points.json",
-  "points_sha256": "b9590b7350c45d25ec84819fe3dd8ce0a05699ff5dfa14ebe0e7a1b1951afcdd",
+  "points_sha256": "c6f53f56a201adc4871f4b48a014f709de85b35735bd504768954b648cd34a59",
   "report_path": "corpora/aarch64/witness-A2.report.json",
   "target": "aarch64",
   "tier": "witness"

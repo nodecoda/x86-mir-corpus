@@ -28,6 +28,12 @@ class TargetProfile:
     # slot 1 in any argument, so slot-index inference undercounts the query
     # and leaves those rules undecided.
     probe_opcode_arity: bool = False
+    # Rule-witness shapes (opcode, type-name tuple) that are excluded from
+    # execution because the pre-legalizer pipeline normalises them before the
+    # legalizer can ever see them.  Each entry needs reviewed evidence; the
+    # rule is reported as a pipeline_unreachable coverage issue, never silently
+    # counted as verified.
+    rule_probe_exclusions: frozenset = frozenset()
     feature_aliases: Callable[[dict], dict] | None = field(default=None)
 
     def features(self, config):

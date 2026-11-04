@@ -1,212 +1,473 @@
 {
-  "schema": "llvm-x86-legalizer-coverage-exceptions",
-  "version": 1,
-  "note": "A rule listed here is a reviewed, non-silent coverage gap. Reasons are semantic: the rule is shadowed by an earlier rule, its lambda cannot be read as a literal predicate, or its predicate is false for the listed configurations. Adding an entry requires re-running all four configs.",
-  "exceptions": [
-    {
-      "rule_set": "X86_IMPLICIT_DEF",
-      "rule_index": 14,
-      "method": "scalarizeIf",
-      "arg_contains": "scalarOrEltWiderThan",
-      "reason": "shadowed by clampScalarOrElt(0, s8, sMaxScalar): a scalar or element wider than 64 is clamped before scalarizeIf is reached."
-    },
-    {
-      "rule_set": "X86_MERGE_VALUES",
-      "rule_index": 4,
-      "method": "legalIf",
-      "arg_contains": "switch",
-      "reason": "opaque lambda: a switch on BigTyIdx/LitTyIdx sizes has no literal predicate witness."
-    },
-    {
-      "rule_set": "X86_UNMERGE_VALUES",
-      "rule_index": 4,
-      "method": "legalIf",
-      "arg_contains": "switch",
-      "reason": "opaque lambda: a switch on BigTyIdx/LitTyIdx sizes has no literal predicate witness."
-    },
-    {
-      "rule_set": "X86_EXTRACT",
-      "rule_index": 0,
-      "method": "legalIf",
-      "arg_contains": "typePairInSet",
-      "reason": "the lambda accepts only HasAVX or HasAVX512 type pairs; C0/C1/C3 have no AVX, so the predicate is false there.",
-      "configs": [
-        "C0",
-        "C1",
-        "C3"
-      ]
-    },
-    {
-      "rule_set": "X86_SDIV",
-      "rule_index": 2,
-      "method": "libcallFor",
-      "reason": "s64 is legal through the earlier legalFor(Is64Bit, {s64}) rule in 64-bit configs."
-    },
-    {
-      "rule_set": "X86_IMPLICIT_DEF",
-      "rule_index": 12,
-      "method": "clampNumElements",
-      "configs": [
-        "C0",
-        "C3"
-      ],
-      "reason": "on i386 sMaxScalar is s32, so clampScalarOrElt catches every s64 vector before clampNumElements(0, v2s64, ...) is reached."
-    },
-    {
-      "rule_set": "X86_FCMP",
-      "rule_index": 5,
-      "method": "widenScalarToNextPow2",
-      "configs": [
-        "C0",
-        "C3"
-      ],
-      "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
-    },
-    {
-      "rule_set": "X86_SITOFP",
-      "rule_index": 5,
-      "method": "widenScalarToNextPow2",
-      "configs": [
-        "C0",
-        "C3"
-      ],
-      "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
-    },
-    {
-      "rule_set": "X86_SITOFP",
-      "rule_index": 8,
-      "method": "widenScalarToNextPow2",
-      "configs": [
-        "C0",
-        "C3"
-      ],
-      "reason": "clampScalar(0, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
-    },
-    {
-      "rule_set": "X86_FPTOSI",
-      "rule_index": 5,
-      "method": "widenScalarToNextPow2",
-      "configs": [
-        "C0",
-        "C3"
-      ],
-      "reason": "clampScalar(0, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
-    },
-    {
-      "rule_set": "X86_FPTOSI",
-      "rule_index": 8,
-      "method": "widenScalarToNextPow2",
-      "configs": [
-        "C0",
-        "C3"
-      ],
-      "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
-    },
-    {
-      "rule_set": "X86_UITOFP",
-      "rule_index": 4,
-      "method": "widenScalarToNextPow2",
-      "configs": [
-        "C0",
-        "C3"
-      ],
-      "reason": "clampScalar(0, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
-    },
-    {
-      "rule_set": "X86_UITOFP",
-      "rule_index": 6,
-      "method": "widenScalarToNextPow2",
-      "configs": [
-        "C0",
-        "C3"
-      ],
-      "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
-    },
-    {
-      "rule_set": "X86_FPTOUI",
-      "rule_index": 4,
-      "method": "widenScalarToNextPow2",
-      "configs": [
-        "C0",
-        "C3"
-      ],
-      "reason": "clampScalar(0, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
-    },
-    {
-      "rule_set": "X86_FPTOUI",
-      "rule_index": 6,
-      "method": "widenScalarToNextPow2",
-      "configs": [
-        "C0",
-        "C3"
-      ],
-      "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
-    },
-    {
-      "rule_set": "X86_UITOFP",
-      "rule_index": 1,
-      "method": "customIf",
-      "configs": [
-        "C0",
-        "C2",
-        "C3"
-      ],
-      "reason": "the lambda requires !HasAVX512 and SSE1/SSE2; C2 has AVX512, C0/C3 have no SSE, so the predicate is false."
-    },
-    {
-      "rule_set": "X86_UITOFP",
-      "rule_index": 2,
-      "method": "lowerIf",
-      "configs": [
-        "C0",
-        "C2",
-        "C3"
-      ],
-      "reason": "the lambda requires !HasAVX512 and SSE1/SSE2; C2 has AVX512, C0/C3 have no SSE, so the predicate is false."
-    },
-    {
-      "rule_set": "X86_FPTOUI",
-      "rule_index": 1,
-      "method": "customIf",
-      "configs": [
-        "C0",
-        "C2",
-        "C3"
-      ],
-      "reason": "the lambda requires !HasAVX512 and SSE1/SSE2; C2 has AVX512, C0/C3 have no SSE, so the predicate is false."
-    },
-    {
-      "rule_set": "X86_FPTOUI",
-      "rule_index": 2,
-      "method": "lowerIf",
-      "configs": [
-        "C0",
-        "C2",
-        "C3"
-      ],
-      "reason": "the lambda requires !HasAVX512 and SSE1/SSE2; C2 has AVX512, C0/C3 have no SSE, so the predicate is false."
-    },
-    {
-      "rule_set": "X86_BUILD_VECTOR",
-      "rule_index": 0,
-      "method": "customIf",
-      "configs": [
-        "C0",
-        "C3"
-      ],
-      "reason": "the lambda is an OR of SSE1/SSE2/AVX/AVX512 type sets; C0 and C3 have none of those features."
-    },
-    {
-      "rule_set": "X86_ADD",
-      "rule_index": 9,
-      "method": "clampMinNumElements",
-      "reason": "clampMinNumElements(0, s64, 2) can never fire: a one-element fixed vector is represented as a scalar, and every other s64 vector is handled by the preceding clamps."
-    },
-    {
-      "rule_set": "X86_MUL",
-      "rule_index": 11,
-      "method": "clampMinNumElements",
-      "reason": "clampMinNumElements(0, s64, HasVLX ? 2 : 8) can never fire when the bound is 2: a one-element fixed vector is represented as a scalar; for larger bounds the preceding clamps win."
-    }
-  ]
+ "schema": "llvm-x86-legalizer-coverage-exceptions",
+ "version": 1,
+ "note": "A rule listed here is a reviewed, non-silent coverage gap. Reasons are semantic: the rule is shadowed by an earlier rule, its lambda cannot be read as a literal predicate, its predicate is false, or the only probe shape is normalised away before the legalizer. Adding an entry requires re-running the configs it names.",
+ "exceptions": [
+  {
+   "rule_set": "X86_IMPLICIT_DEF",
+   "rule_index": 14,
+   "method": "scalarizeIf",
+   "arg_contains": "scalarOrEltWiderThan",
+   "reason": "shadowed by clampScalarOrElt(0, s8, sMaxScalar): a scalar or element wider than 64 is clamped before scalarizeIf is reached."
+  },
+  {
+   "rule_set": "X86_MERGE_VALUES",
+   "rule_index": 4,
+   "method": "legalIf",
+   "arg_contains": "switch",
+   "reason": "opaque lambda: a switch on BigTyIdx/LitTyIdx sizes has no literal predicate witness."
+  },
+  {
+   "rule_set": "X86_UNMERGE_VALUES",
+   "rule_index": 4,
+   "method": "legalIf",
+   "arg_contains": "switch",
+   "reason": "opaque lambda: a switch on BigTyIdx/LitTyIdx sizes has no literal predicate witness."
+  },
+  {
+   "rule_set": "X86_EXTRACT",
+   "rule_index": 0,
+   "method": "legalIf",
+   "arg_contains": "typePairInSet",
+   "reason": "the lambda accepts only HasAVX or HasAVX512 type pairs; C0/C1/C3 have no AVX, so the predicate is false there.",
+   "configs": [
+    "C0",
+    "C1",
+    "C3"
+   ]
+  },
+  {
+   "rule_set": "X86_SDIV",
+   "rule_index": 2,
+   "method": "libcallFor",
+   "reason": "s64 is legal through the earlier legalFor(Is64Bit, {s64}) rule in 64-bit configs."
+  },
+  {
+   "rule_set": "X86_IMPLICIT_DEF",
+   "rule_index": 12,
+   "method": "clampNumElements",
+   "configs": [
+    "C0",
+    "C3"
+   ],
+   "reason": "on i386 sMaxScalar is s32, so clampScalarOrElt catches every s64 vector before clampNumElements(0, v2s64, ...) is reached."
+  },
+  {
+   "rule_set": "X86_FCMP",
+   "rule_index": 5,
+   "method": "widenScalarToNextPow2",
+   "configs": [
+    "C0",
+    "C3"
+   ],
+   "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+  },
+  {
+   "rule_set": "X86_SITOFP",
+   "rule_index": 5,
+   "method": "widenScalarToNextPow2",
+   "configs": [
+    "C0",
+    "C3"
+   ],
+   "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+  },
+  {
+   "rule_set": "X86_SITOFP",
+   "rule_index": 8,
+   "method": "widenScalarToNextPow2",
+   "configs": [
+    "C0",
+    "C3"
+   ],
+   "reason": "clampScalar(0, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+  },
+  {
+   "rule_set": "X86_FPTOSI",
+   "rule_index": 5,
+   "method": "widenScalarToNextPow2",
+   "configs": [
+    "C0",
+    "C3"
+   ],
+   "reason": "clampScalar(0, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+  },
+  {
+   "rule_set": "X86_FPTOSI",
+   "rule_index": 8,
+   "method": "widenScalarToNextPow2",
+   "configs": [
+    "C0",
+    "C3"
+   ],
+   "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+  },
+  {
+   "rule_set": "X86_UITOFP",
+   "rule_index": 4,
+   "method": "widenScalarToNextPow2",
+   "configs": [
+    "C0",
+    "C3"
+   ],
+   "reason": "clampScalar(0, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+  },
+  {
+   "rule_set": "X86_UITOFP",
+   "rule_index": 6,
+   "method": "widenScalarToNextPow2",
+   "configs": [
+    "C0",
+    "C3"
+   ],
+   "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+  },
+  {
+   "rule_set": "X86_FPTOUI",
+   "rule_index": 4,
+   "method": "widenScalarToNextPow2",
+   "configs": [
+    "C0",
+    "C3"
+   ],
+   "reason": "clampScalar(0, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+  },
+  {
+   "rule_set": "X86_FPTOUI",
+   "rule_index": 6,
+   "method": "widenScalarToNextPow2",
+   "configs": [
+    "C0",
+    "C3"
+   ],
+   "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+  },
+  {
+   "rule_set": "X86_UITOFP",
+   "rule_index": 1,
+   "method": "customIf",
+   "configs": [
+    "C0",
+    "C2",
+    "C3"
+   ],
+   "reason": "the lambda requires !HasAVX512 and SSE1/SSE2; C2 has AVX512, C0/C3 have no SSE, so the predicate is false."
+  },
+  {
+   "rule_set": "X86_UITOFP",
+   "rule_index": 2,
+   "method": "lowerIf",
+   "configs": [
+    "C0",
+    "C2",
+    "C3"
+   ],
+   "reason": "the lambda requires !HasAVX512 and SSE1/SSE2; C2 has AVX512, C0/C3 have no SSE, so the predicate is false."
+  },
+  {
+   "rule_set": "X86_FPTOUI",
+   "rule_index": 1,
+   "method": "customIf",
+   "configs": [
+    "C0",
+    "C2",
+    "C3"
+   ],
+   "reason": "the lambda requires !HasAVX512 and SSE1/SSE2; C2 has AVX512, C0/C3 have no SSE, so the predicate is false."
+  },
+  {
+   "rule_set": "X86_FPTOUI",
+   "rule_index": 2,
+   "method": "lowerIf",
+   "configs": [
+    "C0",
+    "C2",
+    "C3"
+   ],
+   "reason": "the lambda requires !HasAVX512 and SSE1/SSE2; C2 has AVX512, C0/C3 have no SSE, so the predicate is false."
+  },
+  {
+   "rule_set": "X86_BUILD_VECTOR",
+   "rule_index": 0,
+   "method": "customIf",
+   "configs": [
+    "C0",
+    "C3"
+   ],
+   "reason": "the lambda is an OR of SSE1/SSE2/AVX/AVX512 type sets; C0 and C3 have none of those features."
+  },
+  {
+   "rule_set": "X86_ADD",
+   "rule_index": 9,
+   "method": "clampMinNumElements",
+   "reason": "clampMinNumElements(0, s64, 2) can never fire: a one-element fixed vector is represented as a scalar, and every other s64 vector is handled by the preceding clamps."
+  },
+  {
+   "rule_set": "X86_MUL",
+   "rule_index": 11,
+   "method": "clampMinNumElements",
+   "reason": "clampMinNumElements(0, s64, HasVLX ? 2 : 8) can never fire when the bound is 2: a one-element fixed vector is represented as a scalar; for larger bounds the preceding clamps win."
+  },
+  {
+   "rule_set": "AArch64_ADD",
+   "rule_index": 9,
+   "method": "minScalarOrEltIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "pre-legalizer pipeline exclusion: the probe shape is rewritten by the AArch64 pre-legalizer combiner before the legalizer runs (verified with llc on the pinned revision), so the raw query is not IR-reachable."
+  },
+  {
+   "rule_set": "AArch64_ADD",
+   "rule_index": 10,
+   "method": "minScalarOrEltIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "pre-legalizer pipeline exclusion: the probe shape is rewritten by the AArch64 pre-legalizer combiner before the legalizer runs (verified with llc on the pinned revision), so the raw query is not IR-reachable."
+  },
+  {
+   "rule_set": "AArch64_MUL",
+   "rule_index": 8,
+   "method": "minScalarOrEltIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "pre-legalizer pipeline exclusion: the probe shape is rewritten by the AArch64 pre-legalizer combiner before the legalizer runs (verified with llc on the pinned revision), so the raw query is not IR-reachable."
+  },
+  {
+   "rule_set": "AArch64_MUL",
+   "rule_index": 9,
+   "method": "minScalarOrEltIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "pre-legalizer pipeline exclusion: the probe shape is rewritten by the AArch64 pre-legalizer combiner before the legalizer runs (verified with llc on the pinned revision), so the raw query is not IR-reachable."
+  },
+  {
+   "rule_set": "AArch64_ABS",
+   "rule_index": 6,
+   "method": "clampNumElements",
+   "configs": [
+    "A2"
+   ],
+   "reason": "pre-legalizer pipeline exclusion: the probe shape is rewritten by the AArch64 pre-legalizer combiner before the legalizer runs (verified with llc on the pinned revision), so the raw query is not IR-reachable."
+  },
+  {
+   "rule_set": "AArch64_FABS",
+   "rule_index": 8,
+   "method": "lowerFor",
+   "configs": [
+    "A2"
+   ],
+   "reason": "shadowed by rule 1: every candidate the modelled predicates can produce matches the earlier rule first."
+  },
+  {
+   "rule_set": "AArch64_SEXTLOAD",
+   "rule_index": 0,
+   "method": "lowerIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "no candidate in the parsed class/mem/align vocabulary satisfies this rule's predicate in the reviewed configuration."
+  },
+  {
+   "rule_set": "AArch64_LOAD",
+   "rule_index": 0,
+   "method": "customIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "first match depends on opaque rule 0: the rule's lambda is not reducible by the expression layer, so the verdict stays undecided instead of guessing."
+  },
+  {
+   "rule_set": "AArch64_LOAD",
+   "rule_index": 1,
+   "method": "customIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "first match depends on opaque rule 0: the rule's lambda is not reducible by the expression layer, so the verdict stays undecided instead of guessing."
+  },
+  {
+   "rule_set": "AArch64_STORE",
+   "rule_index": 0,
+   "method": "customIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "first match depends on opaque rule 0: the rule's lambda is not reducible by the expression layer, so the verdict stays undecided instead of guessing."
+  },
+  {
+   "rule_set": "AArch64_STORE",
+   "rule_index": 1,
+   "method": "customIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "first match depends on opaque rule 0: the rule's lambda is not reducible by the expression layer, so the verdict stays undecided instead of guessing."
+  },
+  {
+   "rule_set": "AArch64_STORE",
+   "rule_index": 2,
+   "method": "widenScalarIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "no candidate in the parsed class/mem/align vocabulary satisfies this rule's predicate in the reviewed configuration."
+  },
+  {
+   "rule_set": "AArch64_INDEXED_LOAD",
+   "rule_index": 0,
+   "method": "unsupportedIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "no candidate in the parsed class/mem/align vocabulary satisfies this rule's predicate in the reviewed configuration."
+  },
+  {
+   "rule_set": "AArch64_INDEXED_SEXTLOAD",
+   "rule_index": 0,
+   "method": "unsupportedIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "no candidate in the parsed class/mem/align vocabulary satisfies this rule's predicate in the reviewed configuration."
+  },
+  {
+   "rule_set": "AArch64_INDEXED_SEXTLOAD",
+   "rule_index": 1,
+   "method": "legalIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "first match depends on opaque rule 1: the rule's lambda is not reducible by the expression layer, so the verdict stays undecided instead of guessing."
+  },
+  {
+   "rule_set": "AArch64_INDEXED_SEXTLOAD",
+   "rule_index": 2,
+   "method": "unsupported",
+   "configs": [
+    "A2"
+   ],
+   "reason": "first match depends on opaque rule 1: the rule's lambda is not reducible by the expression layer, so the verdict stays undecided instead of guessing."
+  },
+  {
+   "rule_set": "AArch64_FPTRUNC",
+   "rule_index": 5,
+   "method": "lowerFor",
+   "configs": [
+    "A2"
+   ],
+   "reason": "shadowed by rule 1: every candidate the modelled predicates can produce matches the earlier rule first."
+  },
+  {
+   "rule_set": "AArch64_FPTOSI_SAT",
+   "rule_index": 12,
+   "method": "widenScalarOrEltToNextPow2",
+   "configs": [
+    "A2"
+   ],
+   "reason": "shadowed by rule 7: every candidate the modelled predicates can produce matches the earlier rule first."
+  },
+  {
+   "rule_set": "AArch64_MERGE_VALUES",
+   "rule_index": 5,
+   "method": "legalIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "first match depends on opaque rule 5: the rule's lambda is not reducible by the expression layer, so the verdict stays undecided instead of guessing."
+  },
+  {
+   "rule_set": "AArch64_UNMERGE_VALUES",
+   "rule_index": 5,
+   "method": "legalIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "first match depends on opaque rule 5: the rule's lambda is not reducible by the expression layer, so the verdict stays undecided instead of guessing."
+  },
+  {
+   "rule_set": "AArch64_EXTRACT_VECTOR_ELT",
+   "rule_index": 8,
+   "method": "minScalarOrElt",
+   "configs": [
+    "A2"
+   ],
+   "reason": "first match depends on opaque rule 1: the rule's lambda is not reducible by the expression layer, so the verdict stays undecided instead of guessing."
+  },
+  {
+   "rule_set": "AArch64_EXTRACT_VECTOR_ELT",
+   "rule_index": 10,
+   "method": "clampMaxNumElements",
+   "configs": [
+    "A2"
+   ],
+   "reason": "shadowed by rule 2: every candidate the modelled predicates can produce matches the earlier rule first."
+  },
+  {
+   "rule_set": "AArch64_EXTRACT_VECTOR_ELT",
+   "rule_index": 12,
+   "method": "clampMaxNumElements",
+   "configs": [
+    "A2"
+   ],
+   "reason": "shadowed by rule 2: every candidate the modelled predicates can produce matches the earlier rule first."
+  },
+  {
+   "rule_set": "AArch64_EXTRACT_VECTOR_ELT",
+   "rule_index": 13,
+   "method": "clampMaxNumElements",
+   "configs": [
+    "A2"
+   ],
+   "reason": "shadowed by rule 2: every candidate the modelled predicates can produce matches the earlier rule first."
+  },
+  {
+   "rule_set": "AArch64_EXTRACT_VECTOR_ELT",
+   "rule_index": 14,
+   "method": "clampMaxNumElements",
+   "configs": [
+    "A2"
+   ],
+   "reason": "shadowed by rule 2: every candidate the modelled predicates can produce matches the earlier rule first."
+  },
+  {
+   "rule_set": "AArch64_EXTRACT_VECTOR_ELT",
+   "rule_index": 15,
+   "method": "scalarizeIf",
+   "configs": [
+    "A2"
+   ],
+   "reason": "shadowed by rule 2: every candidate the modelled predicates can produce matches the earlier rule first."
+  },
+  {
+   "rule_set": "AArch64_EXTRACT_SUBVECTOR",
+   "rule_index": 9,
+   "method": "immIdx",
+   "configs": [
+    "A2"
+   ],
+   "reason": "shadowed by rule 8: every candidate the modelled predicates can produce matches the earlier rule first."
+  },
+  {
+   "rule_set": "AArch64_MEMSET",
+   "rule_index": 2,
+   "method": "immIdx",
+   "configs": [
+    "A2"
+   ],
+   "reason": "first match depends on opaque rule 2: the rule's lambda is not reducible by the expression layer, so the verdict stays undecided instead of guessing."
+  },
+  {
+   "rule_set": "AArch64_MEMCPY",
+   "rule_index": 1,
+   "method": "immIdx",
+   "configs": [
+    "A2"
+   ],
+   "reason": "first match depends on opaque rule 1: the rule's lambda is not reducible by the expression layer, so the verdict stays undecided instead of guessing."
+  }
+ ]
 }

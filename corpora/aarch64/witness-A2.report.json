@@ -8,49 +8,97 @@
   "new_findings": 0,
   "status": "met"
  },
- "atoms": 13156,
+ "atoms": 13854,
  "config": "A2",
  "corpus": {
   "points_path": "corpora/aarch64/witness-A2.points.json",
-  "points_sha256": "b9590b7350c45d25ec84819fe3dd8ce0a05699ff5dfa14ebe0e7a1b1951afcdd",
-  "sha256": "ee70563881ad673795ba7c7ce7ce3cc100dd9dc8b387ffdc9d829bd3cb0afa22"
+  "points_sha256": "c6f53f56a201adc4871f4b48a014f709de85b35735bd504768954b648cd34a59",
+  "sha256": "016edfde9fd03631153ab15556d64b60d36fa25cc923dc7cf12dfbb792c78bd7"
  },
  "counts": {
   "budget": 0,
-  "construction_mismatch": 5221,
+  "construction_mismatch": 5649,
   "crash": 0,
-  "failed": 2879,
+  "failed": 2982,
   "hang": 0,
-  "legalized": 1852,
+  "legalized": 1986,
   "not_run": 0,
-  "unbuildable": 3204
+  "unbuildable": 3237
+ },
+ "coverage": {
+  "exceptions_config": "A2",
+  "rules_active": 611,
+  "rules_excepted": 37,
+  "rules_inactive": [
+   {
+    "arg": "! HasCSSC , { { s32 , s32 } , { s64 , s64 } }",
+    "first_match": null,
+    "kind": "unknown",
+    "method": "customFor",
+    "reason": "feature predicate false",
+    "rule_index": 2,
+    "rule_set": "AArch64_CTPOP"
+   },
+   {
+    "arg": "! HasCSSC , { s32 , s64 }",
+    "first_match": null,
+    "kind": "unknown",
+    "method": "customFor",
+    "reason": "feature predicate false",
+    "rule_index": 5,
+    "rule_set": "AArch64_CTTZ"
+   },
+   {
+    "arg": "UseOutlineAtomics , { { s8 , p0 } , { s16 , p0 } , { s32 , p0 } , { s64 , p0 } , { s128 , p0 } }",
+    "first_match": null,
+    "kind": "unknown",
+    "method": "libcallFor",
+    "reason": "feature predicate false",
+    "rule_index": 2,
+    "rule_set": "AArch64_ATOMIC_CMPXCHG"
+   },
+   {
+    "arg": "UseOutlineAtomics , { { s8 , p0 } , { s16 , p0 } , { s32 , p0 } , { s64 , p0 } }",
+    "first_match": null,
+    "kind": "unknown",
+    "method": "libcallFor",
+    "reason": "feature predicate false",
+    "rule_index": 1,
+    "rule_set": "AArch64_ATOMICRMW_XCHG"
+   }
+  ],
+  "rules_source_total": 616,
+  "rules_unprobed": 0,
+  "rules_verified": 582
  },
  "detail_codes": {
   "construction_mismatch": {
-   "type_contract": 3692,
-   "type_readback": 167,
-   "verifier": 1362
+   "type_contract": 4067,
+   "type_readback": 176,
+   "verifier": 1406
   },
   "failed": {
-   "libcall_lowering_disabled": 703,
-   "unable_to_legalize": 2176
+   "libcall_lowering_disabled": 740,
+   "unable_to_legalize": 2242
+  },
+  "legalized": {
+   "ok": 1986
   },
   "unbuildable": {
-   "immediate_rule": 671,
-   "shape_guard": 175,
-   "type_assignment_failed": 948,
-   "unbuildable_policy": 1410
+   "immediate_rule": 676,
+   "invalid_mem_operand": 4,
+   "shape_guard": 180,
+   "type_assignment_failed": 937,
+   "unbuildable_policy": 1440
   }
  },
  "driver": {
+  "jobs": 8,
   "max_steps": 10000,
-  "note": "crash/hang/budget/not_run all zero after the AArch64 type contracts",
+  "note": "crash/hang/budget/not_run all zero. Rule witnesses whose raw shape is normalised by the pre-legalizer combiner are excluded at corpus generation and listed as pipeline_unreachable coverage exceptions.",
   "rules": "production",
   "shard_size": 300,
   "timeout_s": 30
- },
- "opaque": {
-  "note": "The 30 opaque builders in docs/quotient-aarch64-A2.json are the next P3 input; the contracts only classify construction, not legalizer decisions."
  },
  "schema": "llvm-legalizer-mir-run-summary",
  "target": "aarch64",
@@ -63,10 +111,16 @@
    "vector reductions with scalar or mismatched-element operands",
    "build vectors with non-vector results or pointer elements",
    "loads/stores whose value and memory size disagree",
-   "atomic cmpxchg values outside 8/16/32/64 bits"
+   "atomic cmpxchg values outside 8/16/32/64 bits",
+   "G_BUILD_VECTOR_TRUNC/G_VECTOR_COMPRESS/FCOPYSIGN role violations",
+   "atomic cmpxchg with success flag that is not i1"
   ],
   "crashes_after": 0,
-  "crashes_before": "552 (277 scalable getNumElements, 76 scalable buildConstant, 56 scalable size conversion, 47/46 vector shape, 96 other)"
+  "crashes_before": "552 (277 scalable getNumElements, 76 scalable buildConstant, 56 scalable size conversion, 47/46 vector shape, 96 other)",
+  "pipeline_unreachable": [
+   "G_ABS v3s16: mutationIsSane on the raw query; llc on the pinned revision compiles the equivalent IR (pre-legalizer combiner widens to v4s16).",
+   "G_ADD/G_AND/G_OR/G_SUB/G_XOR/G_MUL v3s1 and v5s1: minScalarOrEltIf ping-pong on the raw query; llc compiles the equivalent IR after combiner normalisation."
+  ]
  },
  "version": 1
 }
