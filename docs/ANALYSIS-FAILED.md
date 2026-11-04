@@ -160,3 +160,20 @@ builds/pr-lane  → Assertion `mutationIsSane(...)` failed
    `G_UADDE` 的 carry 用 `p0`）。建议在生成阶段加 opcode 级类型约束，
    预期的噪音削减量约为 `failed` 的 37% + `crash` 的一部分。
 4. `failed_on_opcode` 已能区分"新生指令失败"，统计时应同时保留 atom opcode。
+## 7. 全量复跑确认（.td 修复，2026-11-04）
+
+同一份 208,851 atom 语料，driver 换成含 `X86LegalizerInfo.td` 修复的构建
+（`builds/explore`），逐 atom 对比 baseline：
+
+| outcome | baseline | 修复后 |
+|---|---|---|
+| budget | 225 | **0** |
+| failed | 17,891 | 18,116 |
+| crash | 3,265 | 3,265 |
+| construction_mismatch | 97,605 | 97,605 |
+| unbuildable | 86,756 | 86,756 |
+| legalized | 3,109 | 3,109 |
+
+状态迁移只有一种：`budget -> failed` × 225；其余 208,626 个 atom 完全不变。
+这验证了 `6706952f`（table-driven port）的声明：修复只把不可终止变成
+"不支持 + fallback"，没有顺带改变其它合法化结果。

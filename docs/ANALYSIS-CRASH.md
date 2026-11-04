@@ -234,6 +234,34 @@ assert((Res.isScalar() || Res.isVector()) && "invalid operand type");
 - 对 UADDE/UADDO/USUBE/USUBO、SELECT、SEXT_INREG 没有对应的槽位契约检查。
 - 因此 `MF.verify()` 通过，断言推迟到 legalizer 内部。
 
+## 上游可达性：分三类，不要一概而论
+
+| 类别 | 定义 | 数量（本语料） | 上游价值 |
+|---|---|---|---|
+| A | IR 可表达 + 槽位契约合法 | 205,586 中的大部分（含全部 225 个 livelock atom） | 高：真实 bug（如 `<3 x i32>` 的 G_BUILD_VECTOR 死循环） |
+| B | 槽位契约合法，但 clang 基本不会生成（`i100`、`i1` 算术、怪 lane 数） | 少量 | 低：健壮性/覆盖率，仍属合法 MIR |
+| C | 槽位契约不合法（本文 12 个家族） | 3,265 | 仅模糊测试：不能作为 "LLVM bug" 证据 |
+
+判据来自 IR 自身的类型规则，而不是我们的猜测：
+
+- `icmp` 的结果**按定义为 i1 / `<N x i1>`**；本文 535 例把结果赋成指针或 i100；
+- `select` 的条件必须是 i1 / `<N x i1>`；本文 7 例用了指针；
+- `llvm.*add/sub.with.overflow` 的 carry 是 i1 或与结果同 lane 数的 `<N x i1>`；
+  本文 1,544 + 218 + 118 + 7 例把 carry 赋成向量、指针或 i100；
+- `llvm.ctlz/ctpop/cttz` 的返回类型与参数类型相同；本文 652 例是 `v16s16 ← s1`；
+- `sext_inreg` 只作用于整数；本文 3 例作用在指针；
+- IR 的 `add` 不接受指针（指针算术只有 `getelementptr`/`G_PTR_ADD`）；
+  本文 33 例对 `<2 x ptr>` 或 `s100 + p0` 做算术/移位。
+
+所以 C 类不是"上游暂时没测到"，而是**任何 IR（包括手写 IR）都无法生成**：
+语料按 descriptor 的 generic type index 独立赋值，绕过了 IR 的类型系统。
+把它们当作 LLVM 缺陷去报，上游只会回复 "invalid MIR"。
+
+反面对照：225 个 livelock atom 是 `v3s32` 等形状（`<3 x i32>`），
+`vector_size(12)` 的 C 代码就能生成，槽位完全合法——这是 A 类，也是真正
+值得修的部分。全量复跑已确认修复效果：`budget 225 → 0`，且只有
+`budget → failed` 这一种状态迁移，其余 208,626 个 atom 结果不变。
+
 ## 对工具的影响与建议
 
 1. **成本**：3,265 次 crash 意味着 3,265 次进程重启。`run_shard_with_resume`
