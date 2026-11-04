@@ -243,6 +243,26 @@ enum class SlotCheck {
   ICmpResult,
   /// i1 or <N x i1>; a vector condition must match slot 0's lane count.
   SelectCond,
+  /// Scalar or vector float, never a pointer or integer.
+  Float,
+  /// Slot 0 integer, slot 1 float with the same scalar/vector shape.
+  IntResultFloatSource,
+  /// Slot 0 float, slot 1 integer with the same scalar/vector shape.
+  FloatResultIntSource,
+  /// Slot 0 scalar, slot 1 vector; slot 0's element type equals slot 1's.
+  VectorReduce,
+  /// Slot 0 vector, the remaining slots its scalar elements.
+  BuildVector,
+  /// Slots 0 and 1 are the same integer type; slot 2 is integer.
+  FunnelShift,
+  /// Slots 0 and 1 are the same float type; slot 2 is an integer exponent.
+  FloatExponent,
+  /// AArch64 G_ABDS/G_ABDU: integer scalar, or a reviewed fixed vector shape.
+  AbdsVector,
+  /// G_ATOMIC_CMPXCHG: scalar integer value up to 64 bits plus a pointer.
+  AtomicCmpXchg,
+  /// Slot 0 integer; slot 1 (when the descriptor has one) the same type.
+  UnaryInt,
 };
 
 struct SlotRule {
@@ -275,6 +295,33 @@ bool sameShape(const LLT &A, const LLT &B) {
           A.getNumElements() == B.getNumElements());
 }
 
+bool isFloatLike(const LLT &Ty) {
+  if (Ty.isPointer() || Ty.isPointerVector())
+    return false;
+  LLT Elem = Ty.isVector() ? Ty.getElementType() : Ty;
+  return Elem.isFloat();
+}
+
+bool sameElementType(const LLT &A, const LLT &B) {
+  LLT AElem = A.isVector() ? A.getElementType() : A;
+  LLT BElem = B.isVector() ? B.getElementType() : B;
+  // ``LLT::operator==`` folds ANY_SCALAR to any same-size scalar, so s32 ==
+  // f32 in a target without extended kinds.  Compare the kind explicitly.
+  if (AElem.isPointer() != BElem.isPointer())
+    return false;
+  if (AElem.isFloat() != BElem.isFloat())
+    return false;
+  return AElem.getScalarSizeInBits() == BElem.getScalarSizeInBits();
+}
+
+bool sameType(const LLT &A, const LLT &B) {
+  if (A.isVector() != B.isVector())
+    return false;
+  if (A.isVector() && !sameShape(A, B))
+    return false;
+  return sameElementType(A, B);
+}
+
 /// getSizeInBits().getFixedValue(), guarded for scalable TypeSize.
 std::optional<uint64_t> fixedBits(const LLT &Ty) {
   if (Ty.isScalableVector())
@@ -298,8 +345,23 @@ std::optional<std::string> contractFailure(unsigned Index, const char *Role,
 
 const SlotRule CarryRules[] = {{0, SlotCheck::Int, "result"},
                                {1, SlotCheck::CarryOf0, "carry"}};
-const SlotRule UnaryIntRules[] = {{0, SlotCheck::Int, "result"},
-                                  {1, SlotCheck::ShapeOf0, "source"}};
+const SlotRule IntResultFloatRules[] = {
+    {0, SlotCheck::IntResultFloatSource, "result and source"}};
+const SlotRule FloatResultIntRules[] = {
+    {0, SlotCheck::FloatResultIntSource, "result and source"}};
+const SlotRule VectorReduceRules[] = {{0, SlotCheck::VectorReduce,
+                                       "result and operand"}};
+const SlotRule BuildVectorRules[] = {{0, SlotCheck::BuildVector,
+                                      "result and elements"}};
+const SlotRule FunnelShiftRules[] = {{0, SlotCheck::FunnelShift,
+                                      "operands"}};
+const SlotRule FloatExponentRules[] = {{0, SlotCheck::FloatExponent,
+                                        "operands"}};
+const SlotRule AbdsRules[] = {{0, SlotCheck::AbdsVector, "operands"}};
+const SlotRule AtomicCmpXchgRules[] = {{0, SlotCheck::AtomicCmpXchg,
+                                        "value and address"}};
+const SlotRule UnaryIntRules[] = {{0, SlotCheck::UnaryInt,
+                                   "result and source"}};
 const SlotRule CompareRules[] = {{0, SlotCheck::ICmpResult, "result"}};
 const SlotRule SelectRules[] = {{1, SlotCheck::SelectCond, "condition"}};
 const SlotRule SextInRegRules[] = {{0, SlotCheck::Int, "operand"}};
@@ -325,7 +387,63 @@ const OpcodeContract Contracts[] = {
     {"G_SADDSAT", IntegerOnlyRules}, {"G_UADDSAT", IntegerOnlyRules},
     {"G_SSUBSAT", IntegerOnlyRules}, {"G_USUBSAT", IntegerOnlyRules},
     {"G_SSHLSAT", IntegerOnlyRules}, {"G_USHLSAT", IntegerOnlyRules},
+    {"G_ABDS", AbdsRules},         {"G_ABDU", AbdsRules},
+    {"G_BITREVERSE", UnaryIntRules}, {"G_UMULH", UnaryIntRules},
+    {"G_SMULH", UnaryIntRules},    {"G_CTLS", UnaryIntRules},
+    {"G_ROTR", FunnelShiftRules},  {"G_FSHL", FunnelShiftRules},
+    {"G_FSHR", FunnelShiftRules},  {"G_FLDEXP", FloatExponentRules},
+    {"G_FPTOSI", IntResultFloatRules},
+    {"G_FPTOUI", IntResultFloatRules},
+    {"G_FPTOSI_SAT", IntResultFloatRules},
+    {"G_FPTOUI_SAT", IntResultFloatRules},
+    {"G_SITOFP", FloatResultIntRules},
+    {"G_UITOFP", FloatResultIntRules},
+    {"G_VECREDUCE_ADD", VectorReduceRules},
+    {"G_VECREDUCE_MUL", VectorReduceRules},
+    {"G_VECREDUCE_AND", VectorReduceRules},
+    {"G_VECREDUCE_OR", VectorReduceRules},
+    {"G_VECREDUCE_XOR", VectorReduceRules},
+    {"G_VECREDUCE_SMAX", VectorReduceRules},
+    {"G_VECREDUCE_SMIN", VectorReduceRules},
+    {"G_VECREDUCE_UMAX", VectorReduceRules},
+    {"G_VECREDUCE_UMIN", VectorReduceRules},
+    {"G_VECREDUCE_FADD", VectorReduceRules},
+    {"G_VECREDUCE_FMUL", VectorReduceRules},
+    {"G_VECREDUCE_FMIN", VectorReduceRules},
+    {"G_VECREDUCE_FMAX", VectorReduceRules},
+    {"G_VECREDUCE_FMINIMUM", VectorReduceRules},
+    {"G_VECREDUCE_FMAXIMUM", VectorReduceRules},
+    {"G_BUILD_VECTOR", BuildVectorRules},
+    {"G_ATOMIC_CMPXCHG", AtomicCmpXchgRules},
 };
+
+/// Scalable vectors whose legalizer path uses fixed-width geometry today.
+/// Every name here was observed aborting in the A2 witness triage; remove a
+/// name only after the corresponding path survives a re-run, not before.
+bool scalableConstructible(StringRef Opcode) {
+  static const StringLiteral Unsupported[] = {
+      "G_ABDS", "G_ABDU", "G_ABS", "G_BITREVERSE", "G_BUILD_VECTOR",
+      "G_CTLS", "G_EXTRACT", "G_FACOS", "G_FASIN", "G_FATAN",
+      "G_FATAN2", "G_FCOS", "G_FCOSH", "G_FEXP", "G_FEXP10",
+      "G_FEXP2", "G_FLDEXP", "G_FLOG", "G_FLOG10", "G_FLOG2",
+      "G_FMODF", "G_FPOW", "G_FPTOSI_SAT", "G_FPTOUI_SAT", "G_FREM",
+      "G_FSHL", "G_FSHR", "G_FSIN", "G_FSINH", "G_FTAN",
+      "G_FTANH", "G_GET_FPENV", "G_GET_FPMODE", "G_INSERT", "G_MUL",
+      "G_SDIV", "G_SDIVREM", "G_SET_FPENV", "G_SET_FPMODE",
+      "G_SEXT_INREG", "G_SMAX", "G_SMIN", "G_SMULH", "G_SREM",
+      "G_UDIV", "G_UDIVREM", "G_UMAX", "G_UMIN", "G_UMULH",
+      "G_UREM", "G_VECREDUCE_ADD", "G_VECREDUCE_AND",
+      "G_VECREDUCE_FADD", "G_VECREDUCE_FMAX", "G_VECREDUCE_FMAXIMUM",
+      "G_VECREDUCE_FMIN", "G_VECREDUCE_FMINIMUM", "G_VECREDUCE_FMUL",
+      "G_VECREDUCE_MUL", "G_VECREDUCE_OR", "G_VECREDUCE_SMAX",
+      "G_VECREDUCE_SMIN", "G_VECREDUCE_UMAX", "G_VECREDUCE_UMIN",
+      "G_VECREDUCE_XOR",
+  };
+  for (StringRef Name : Unsupported)
+    if (Name == Opcode)
+      return false;
+  return true;
+}
 
 /// IR can only form pointer-typed generic operations for a small family.
 /// Everything else is a corpus construction bug, and many target legalizers
@@ -342,8 +460,17 @@ bool opcodeAllowsPointer(StringRef Name) {
 }
 
 /// Returns a stable reason when the atom's types violate the opcode contract.
-std::optional<std::string> checkTypeContract(StringRef Opcode,
-                                             ArrayRef<LLT> Types) {
+std::optional<std::string> checkTypeContract(
+    StringRef Opcode, ArrayRef<LLT> Types,
+    const std::optional<LLT> &MemType = std::nullopt) {
+  if (!scalableConstructible(Opcode)) {
+    for (unsigned I = 0; I != Types.size(); ++I)
+      if (Types[I].isScalableVector())
+        return contractFailure(I, "operand",
+                               "a fixed-width vector for this opcode "
+                               "(scalable construction is not supported yet)",
+                               Types[I]);
+  }
   if (!opcodeAllowsPointer(Opcode)) {
     for (unsigned I = 0; I != Types.size(); ++I)
       if (Types[I].isPointer() || Types[I].isPointerVector())
@@ -391,10 +518,10 @@ std::optional<std::string> checkTypeContract(StringRef Opcode,
       }
       case SlotCheck::ShapeOf0: {
         const LLT &Dst = Types[0];
-        if (!sameShape(Dst, Ty))
+        if (!sameType(Dst, Ty))
           return contractFailure(
               Rule.Index, Rule.Role,
-              "the same scalar/vector shape as slot 0", Ty);
+              "the same type as slot 0", Ty);
         break;
       }
       case SlotCheck::ICmpResult: {
@@ -411,6 +538,147 @@ std::optional<std::string> checkTypeContract(StringRef Opcode,
         }
         break;
       }
+      case SlotCheck::Float:
+        if (!isFloatLike(Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a scalar or vector float", Ty);
+        break;
+      case SlotCheck::IntResultFloatSource: {
+        if (!isIntLike(Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "an integer or integer vector", Ty);
+        if (Rule.Index + 1 >= Types.size())
+          return "type contract: conversion atom has no source slot";
+        const LLT &Src = Types[Rule.Index + 1];
+        if (!isFloatLike(Src) || !sameShape(Ty, Src))
+          return contractFailure(Rule.Index + 1, "source",
+                                 "a float with the result's shape", Src);
+        break;
+      }
+      case SlotCheck::FloatResultIntSource: {
+        if (!isFloatLike(Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a scalar or vector float", Ty);
+        if (Rule.Index + 1 >= Types.size())
+          return "type contract: conversion atom has no source slot";
+        const LLT &Src = Types[Rule.Index + 1];
+        if (!isIntLike(Src) || !sameShape(Ty, Src))
+          return contractFailure(Rule.Index + 1, "source",
+                                 "an integer with the result's shape", Src);
+        break;
+      }
+      case SlotCheck::VectorReduce: {
+        if (Ty.isVector() || !isIntLike(Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a scalar integer result", Ty);
+        if (Rule.Index + 1 >= Types.size())
+          return "type contract: reduction atom has no operand slot";
+        const LLT &Src = Types[Rule.Index + 1];
+        if (!Src.isVector())
+          return contractFailure(Rule.Index + 1, "operand",
+                                 "a vector operand", Src);
+        if (!sameElementType(Ty, Src))
+          return contractFailure(Rule.Index + 1, "operand",
+                                 "the result's element type", Src);
+        break;
+      }
+      case SlotCheck::BuildVector: {
+        if (!Ty.isVector() || Ty.isScalableVector())
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a fixed-width vector", Ty);
+        if (Types.size() < 2)
+          return "type contract: build vector needs an element type slot";
+        for (unsigned I = 1; I != Types.size(); ++I)
+          if (Types[I].isVector() || !sameElementType(Ty, Types[I]))
+            return contractFailure(I, "element",
+                                   "a scalar of the vector's element type",
+                                   Types[I]);
+        break;
+      }
+      case SlotCheck::FunnelShift: {
+        if (!isIntLike(Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "an integer or integer vector", Ty);
+        if (Rule.Index + 1 >= Types.size())
+          return "type contract: funnel shift has no second operand";
+        if (!sameType(Types[Rule.Index + 1], Ty))
+          return contractFailure(Rule.Index + 1, "operand",
+                                 "the same type as slot 0",
+                                 Types[Rule.Index + 1]);
+        if (Rule.Index + 2 < Types.size() &&
+            !isIntLike(Types[Rule.Index + 2]))
+          return contractFailure(Rule.Index + 2, "shift",
+                                 "an integer shift amount",
+                                 Types[Rule.Index + 2]);
+        break;
+      }
+      case SlotCheck::FloatExponent: {
+        if (!isFloatLike(Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a scalar or vector float", Ty);
+        if (Rule.Index + 1 >= Types.size())
+          return "type contract: fldexp has no second operand";
+        if (!sameType(Types[Rule.Index + 1], Ty))
+          return contractFailure(Rule.Index + 1, "operand",
+                                 "the same type as slot 0",
+                                 Types[Rule.Index + 1]);
+        if (Rule.Index + 2 < Types.size() &&
+            !isIntLike(Types[Rule.Index + 2]))
+          return contractFailure(Rule.Index + 2, "exponent",
+                                 "an integer exponent",
+                                 Types[Rule.Index + 2]);
+        break;
+      }
+      case SlotCheck::UnaryInt: {
+        if (!isIntLike(Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "an integer or integer vector", Ty);
+        if (Rule.Index + 1 < Types.size() &&
+            !sameType(Types[Rule.Index + 1], Ty))
+          return contractFailure(Rule.Index + 1, "source",
+                                 "the same type as slot 0",
+                                 Types[Rule.Index + 1]);
+        break;
+      }
+      case SlotCheck::AbdsVector: {
+        for (unsigned I = 0; I != Types.size(); ++I) {
+          const LLT &T = Types[I];
+          if (!isIntLike(T))
+            return contractFailure(I, Rule.Role,
+                                   "an integer or integer vector", T);
+          if (!T.isVector())
+            continue;
+          if (T.isScalableVector())
+            return contractFailure(I, Rule.Role,
+                                   "a fixed-width vector", T);
+          const unsigned Bits = T.getScalarSizeInBits();
+          const unsigned Lanes = T.getNumElements();
+          const bool Reviewed =
+              (Bits == 8 && (Lanes == 8 || Lanes == 16)) ||
+              (Bits == 16 && (Lanes == 4 || Lanes == 8)) ||
+              (Bits == 32 && (Lanes == 2 || Lanes == 4));
+          if (!Reviewed)
+            return contractFailure(
+                I, Rule.Role,
+                "a reviewed AArch64 vector shape (v8i8, v16i8, v4i16, v8i16, "
+                "v2i32, v4i32); this shape aborts the lowering path",
+                T);
+        }
+        break;
+      }
+      case SlotCheck::AtomicCmpXchg: {
+        if (Ty.isVector() || !isIntLike(Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a scalar integer value", Ty);
+        const uint64_t Bits = Ty.getScalarSizeInBits();
+        if (Bits != 8 && Bits != 16 && Bits != 32 && Bits != 64)
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "an 8/16/32/64-bit integer value", Ty);
+        if (Rule.Index + 1 >= Types.size() ||
+            !Types[Rule.Index + 1].isPointer())
+          return "type contract: atomic cmpxchg needs a pointer address";
+        break;
+      }
       case SlotCheck::SelectCond: {
         if (!isI1Like(Ty))
           return contractFailure(Rule.Index, Rule.Role, "i1 or <N x i1>", Ty);
@@ -425,6 +693,32 @@ std::optional<std::string> checkTypeContract(StringRef Opcode,
       }
     }
     return std::nullopt;
+  }
+  if (MemType && !Opcode.starts_with("G_ATOMIC") && !Types.empty()) {
+    std::optional<uint64_t> ValueBits = fixedBits(Types[0]);
+    std::optional<uint64_t> MemBits = fixedBits(*MemType);
+    if (ValueBits && MemBits) {
+      const bool ExtLoad =
+          Opcode == "G_SEXTLOAD" || Opcode == "G_ZEXTLOAD";
+      const bool FloatExtLoad = Opcode == "G_FPEXTLOAD";
+      const bool FloatTruncStore = Opcode == "G_FPTRUNCSTORE";
+      if (ExtLoad) {
+        if (!isIntLike(Types[0]) || *ValueBits < *MemBits)
+          return "type contract: extending load needs an integer value at "
+                 "least as wide as the memory type";
+      } else if (FloatExtLoad) {
+        if (!isFloatLike(Types[0]) || *ValueBits <= *MemBits)
+          return "type contract: fp-extending load needs a wider float value";
+      } else if (FloatTruncStore) {
+        if (!isFloatLike(Types[0]) || *ValueBits <= *MemBits)
+          return "type contract: fp-truncating store needs a wider float "
+                 "value";
+      } else if (Opcode == "G_LOAD" || Opcode == "G_STORE") {
+        if (*ValueBits != *MemBits)
+          return "type contract: load/store value and memory types differ in "
+                 "size";
+      }
+    }
   }
   return std::nullopt;
 }
@@ -806,7 +1100,9 @@ int main(int argc, char **argv) {
       Types.push_back(*Ty);
 
     if (std::optional<std::string> Reason =
-            checkTypeContract(A.OpcodeName, Types)) {
+            checkTypeContract(A.OpcodeName, Types,
+                              A.Mem ? std::optional<LLT>(A.Mem->Type)
+                                    : std::nullopt)) {
       emit(A, Index,
            Outcome{"construction_mismatch", 0, "type_contract", *Reason});
       continue;

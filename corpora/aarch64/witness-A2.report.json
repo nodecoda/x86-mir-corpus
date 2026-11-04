@@ -1,0 +1,72 @@
+{
+ "a3": {
+  "coverage_gaps": 0,
+  "exempt": false,
+  "known_anomalies": 0,
+  "known_atoms": 0,
+  "met": true,
+  "new_findings": 0,
+  "status": "met"
+ },
+ "atoms": 13156,
+ "config": "A2",
+ "corpus": {
+  "points_path": "corpora/aarch64/witness-A2.points.json",
+  "points_sha256": "b9590b7350c45d25ec84819fe3dd8ce0a05699ff5dfa14ebe0e7a1b1951afcdd",
+  "sha256": "ee70563881ad673795ba7c7ce7ce3cc100dd9dc8b387ffdc9d829bd3cb0afa22"
+ },
+ "counts": {
+  "budget": 0,
+  "construction_mismatch": 5221,
+  "crash": 0,
+  "failed": 2879,
+  "hang": 0,
+  "legalized": 1852,
+  "not_run": 0,
+  "unbuildable": 3204
+ },
+ "detail_codes": {
+  "construction_mismatch": {
+   "type_contract": 3692,
+   "type_readback": 167,
+   "verifier": 1362
+  },
+  "failed": {
+   "libcall_lowering_disabled": 703,
+   "unable_to_legalize": 2176
+  },
+  "unbuildable": {
+   "immediate_rule": 671,
+   "shape_guard": 175,
+   "type_assignment_failed": 948,
+   "unbuildable_policy": 1410
+  }
+ },
+ "driver": {
+  "max_steps": 10000,
+  "note": "crash/hang/budget/not_run all zero after the AArch64 type contracts",
+  "rules": "production",
+  "shard_size": 300,
+  "timeout_s": 30
+ },
+ "opaque": {
+  "note": "The 30 opaque builders in docs/quotient-aarch64-A2.json are the next P3 input; the contracts only classify construction, not legalizer decisions."
+ },
+ "schema": "llvm-legalizer-mir-run-summary",
+ "target": "aarch64",
+ "tier": "witness",
+ "triage": {
+  "construction_mismatch_families": [
+   "scalable vectors on fixed-width opcode paths",
+   "ABDS/ABDU vector shapes outside the reviewed AArch64 legal set",
+   "role-swapped conversions (FPTOSI/SITOFP result and source)",
+   "vector reductions with scalar or mismatched-element operands",
+   "build vectors with non-vector results or pointer elements",
+   "loads/stores whose value and memory size disagree",
+   "atomic cmpxchg values outside 8/16/32/64 bits"
+  ],
+  "crashes_after": 0,
+  "crashes_before": "552 (277 scalable getNumElements, 76 scalable buildConstant, 56 scalable size conversion, 47/46 vector shape, 96 other)"
+ },
+ "version": 1
+}
