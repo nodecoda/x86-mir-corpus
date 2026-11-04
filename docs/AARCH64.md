@@ -48,10 +48,12 @@ lowering is disabled and libcall-only rules are recorded as
 
 ## Quotient panel
 
-The panel is derived from the finite-quotient analysis
+The panel was reviewed against the finite-quotient analysis
 ([QUOTIENT.md](QUOTIENT.md)): keys are the first-match rule index over a type
 dependency component; axes are rule read sets; lengths count the parsed class
-universe.  The AArch64 report (`docs/quotient-aarch64-A2.json`) covers 616
+universe.  It is still a curated family list rather than mechanically emitted
+from the quotient representatives; the next gap lists make that step
+tractable.  The AArch64 report (`docs/quotient-aarch64-A2.json`) covers 616
 rules, 364 reached by a class tuple, and 32 opaque builders.  Uncovered
 quotient classes are enumerated with an example and a reason: 144
 `panel_gap` and 11 `opaque_predicate`.
@@ -84,6 +86,20 @@ otherwise reject.  Re-running the x86 C2 witness (2,217 atoms) on a HEAD
 build and on this build gives an atom-for-atom match on outcome, detail code,
 and step count; an earlier target-agnostic draft moved 33 atoms and was
 reverted to this scoping.
+
+## Corpus evolution
+
+| Snapshot | atoms | rules verified | rules unprobed | shape_arity |
+|---|---:|---:|---:|---:|
+| first witness | 13,156 | 239 | 372 | 16 |
+| committed witness | 13,854 | 582 | 0 | 0 |
+
+Rule witnesses added predicate-driven shapes for opaque builders and the type
+arity fills closed the missing slots; the 37 remaining rule rows carry
+reviewed `coverage_exceptions` reasons (`pipeline_unreachable`, `shadowed`,
+`undecided`, `no_candidate`).  The panel itself is quotient-derived (see
+[QUOTIENT.md](QUOTIENT.md)), so the second snapshot is a superset, not a
+re-pick.
 
 ## Results
 
@@ -142,6 +158,10 @@ gitignored (`corpora/MANIFEST.json` records their SHA256).
   134).  Scalar `i128` G_CTLS is not IR-reachable and is classified as
   `type_contract`; the vector repro is in
   [ANALYSIS-AARCH64-CRASH.md](ANALYSIS-AARCH64-CRASH.md).
+- **Panel emission is curated.**  `unrepresented_detail` reports 144
+  `panel_gap` classes the current panel misses; emitting the panel from
+  quotient representatives is the next P3 increment, and would change the
+  corpus point set.
 - **No frozen oracle and no result-semantics check.**  AArch64 evidence is
   termination, constructibility, and explicit failure only.
 - **Empty A3 family list.**  Every anomaly in a future full run is a new

@@ -1,6 +1,8 @@
 # AArch64 A2 witness crash triage (2026-11-05)
 
-Corpus: `corpora/aarch64/witness-A2.points.json`, 13,156 atoms, config A2.
+Corpus: `corpora/aarch64/witness-A2.points.json`, config A2.  The first run
+(Round 1) had 13,156 atoms; rule witnesses and type-arity fills brought the
+committed corpus to 13,854, which is what the final numbers below use.
 Driver: `mir-run` built from `trees/explore` with assertions enabled.
 
 ## Before
