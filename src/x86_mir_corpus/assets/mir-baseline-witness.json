@@ -1,0 +1,1272 @@
+{
+  "configs": {
+    "C0": {
+      "a3": {
+        "coverage_gaps": 0,
+        "exempt": false,
+        "known_anomalies": 5,
+        "known_atoms": 5,
+        "met": false,
+        "new_findings": 24,
+        "status": "not met"
+      },
+      "construction_mismatch": 303,
+      "construction_mismatch_reasons": {
+        "G_ANYEXT": {
+          "verifier": 16
+        },
+        "G_ASHR": {
+          "verifier": 3
+        },
+        "G_BSWAP": {
+          "verifier": 11
+        },
+        "G_EXTRACT": {
+          "verifier": 9
+        },
+        "G_FCMP": {
+          "verifier": 3
+        },
+        "G_FPEXT": {
+          "verifier": 13
+        },
+        "G_FPEXTLOAD": {
+          "verifier": 17
+        },
+        "G_FPTRUNC": {
+          "verifier": 11
+        },
+        "G_FPTRUNCSTORE": {
+          "verifier": 17
+        },
+        "G_ICMP": {
+          "verifier": 3
+        },
+        "G_INSERT": {
+          "verifier": 12
+        },
+        "G_INTTOPTR": {
+          "verifier": 16
+        },
+        "G_IS_FPCLASS": {
+          "verifier": 7
+        },
+        "G_LLROUND": {
+          "verifier": 7
+        },
+        "G_LOAD": {
+          "verifier": 10
+        },
+        "G_LROUND": {
+          "verifier": 7
+        },
+        "G_LSHR": {
+          "verifier": 3
+        },
+        "G_PTRTOINT": {
+          "verifier": 18
+        },
+        "G_PTR_ADD": {
+          "verifier": 18
+        },
+        "G_SELECT": {
+          "verifier": 2
+        },
+        "G_SEXT": {
+          "verifier": 16
+        },
+        "G_SEXTLOAD": {
+          "verifier": 17
+        },
+        "G_SHL": {
+          "verifier": 3
+        },
+        "G_SMAX": {
+          "verifier": 2
+        },
+        "G_SMIN": {
+          "verifier": 2
+        },
+        "G_STORE": {
+          "verifier": 11
+        },
+        "G_TRUNC": {
+          "verifier": 11
+        },
+        "G_UMAX": {
+          "verifier": 2
+        },
+        "G_UMIN": {
+          "verifier": 2
+        },
+        "G_ZEXT": {
+          "verifier": 17
+        },
+        "G_ZEXTLOAD": {
+          "verifier": 17
+        }
+      },
+      "corpus": {
+        "atoms": 2062,
+        "config": "C0",
+        "file": "up-C0.json",
+        "sha256": "953c8e01ef389371fcc8af485751142ef5a540096f36e794b2a513e649c8c402"
+      },
+      "counts": {
+        "budget": 5,
+        "construction_mismatch": 303,
+        "crash": 24,
+        "failed": 1119,
+        "hang": 0,
+        "legalized": 170,
+        "not_run": 0,
+        "unbuildable": 441
+      },
+      "crash": {
+        "atom_ids": [
+          "cpp/X86_ADD/G_ADD/rule/10",
+          "cpp/X86_ADD/G_SUB/rule/21",
+          "cpp/X86_AND/G_AND/rule/7",
+          "cpp/X86_AND/G_OR/rule/15",
+          "cpp/X86_AND/G_XOR/rule/23",
+          "cpp/X86_ICMP/G_ICMP/boundary/0",
+          "cpp/X86_ICMP/G_ICMP/boundary/1",
+          "cpp/X86_ICMP/G_ICMP/boundary/10",
+          "cpp/X86_ICMP/G_ICMP/boundary/2",
+          "cpp/X86_ICMP/G_ICMP/boundary/4",
+          "cpp/X86_ICMP/G_ICMP/boundary/5",
+          "cpp/X86_ICMP/G_ICMP/boundary/6",
+          "cpp/X86_ICMP/G_ICMP/boundary/7",
+          "cpp/X86_MUL/G_MUL/rule/9",
+          "cpp/X86_SEXT_INREG/G_SEXT_INREG/as/0",
+          "cpp/X86_SEXT_INREG/G_SEXT_INREG/as/1",
+          "cpp/X86_UADDE/G_UADDE/boundary/0",
+          "cpp/X86_UADDE/G_UADDE/boundary/10",
+          "cpp/X86_UADDE/G_UADDE/boundary/2",
+          "cpp/X86_UADDE/G_UADDE/rule/4",
+          "cpp/X86_UADDE/G_UADDO/boundary/14",
+          "cpp/X86_UADDE/G_UADDO/rule/9",
+          "cpp/X86_UADDE/G_USUBE/rule/14",
+          "cpp/X86_UADDE/G_USUBO/rule/19"
+        ],
+        "count": 24,
+        "detail_codes": {
+          "crash:assert": 24
+        }
+      },
+      "known_family": {
+        "atom_ids": [
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/boundary/10",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/0",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/1",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/2",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/4"
+        ],
+        "count": 5
+      },
+      "more_elements": {
+        "exercised": 44,
+        "expected_action": 49,
+        "g_phi_unbuildable": 5
+      },
+      "non_family_budget": {
+        "atom_ids": [],
+        "count": 0
+      },
+      "out_of_scope": {
+        "G_BR": 15,
+        "G_BRCOND": 15,
+        "G_PHI": 23
+      },
+      "report": "mir-M1-C0.json",
+      "rules": "production",
+      "unbuildable": {
+        "count": 441,
+        "reasons": {
+          "G_UNMERGE_VALUES": "unmerge source size does not divide by destination"
+        }
+      }
+    },
+    "C1": {
+      "a3": {
+        "coverage_gaps": 0,
+        "exempt": false,
+        "known_anomalies": 5,
+        "known_atoms": 5,
+        "met": false,
+        "new_findings": 40,
+        "status": "not met"
+      },
+      "construction_mismatch": 304,
+      "construction_mismatch_reasons": {
+        "G_ANYEXT": {
+          "verifier": 16
+        },
+        "G_ASHR": {
+          "verifier": 3
+        },
+        "G_BSWAP": {
+          "verifier": 11
+        },
+        "G_EXTRACT": {
+          "verifier": 9
+        },
+        "G_FCMP": {
+          "verifier": 3
+        },
+        "G_FPEXT": {
+          "verifier": 13
+        },
+        "G_FPEXTLOAD": {
+          "verifier": 17
+        },
+        "G_FPTRUNC": {
+          "verifier": 11
+        },
+        "G_FPTRUNCSTORE": {
+          "verifier": 17
+        },
+        "G_ICMP": {
+          "verifier": 3
+        },
+        "G_INSERT": {
+          "verifier": 12
+        },
+        "G_INTTOPTR": {
+          "verifier": 16
+        },
+        "G_IS_FPCLASS": {
+          "verifier": 7
+        },
+        "G_LLROUND": {
+          "verifier": 7
+        },
+        "G_LOAD": {
+          "verifier": 10
+        },
+        "G_LROUND": {
+          "verifier": 7
+        },
+        "G_LSHR": {
+          "verifier": 3
+        },
+        "G_PTRTOINT": {
+          "verifier": 18
+        },
+        "G_PTR_ADD": {
+          "verifier": 19
+        },
+        "G_SELECT": {
+          "verifier": 2
+        },
+        "G_SEXT": {
+          "verifier": 16
+        },
+        "G_SEXTLOAD": {
+          "verifier": 17
+        },
+        "G_SHL": {
+          "verifier": 3
+        },
+        "G_SMAX": {
+          "verifier": 2
+        },
+        "G_SMIN": {
+          "verifier": 2
+        },
+        "G_STORE": {
+          "verifier": 11
+        },
+        "G_TRUNC": {
+          "verifier": 11
+        },
+        "G_UMAX": {
+          "verifier": 2
+        },
+        "G_UMIN": {
+          "verifier": 2
+        },
+        "G_ZEXT": {
+          "verifier": 17
+        },
+        "G_ZEXTLOAD": {
+          "verifier": 17
+        }
+      },
+      "corpus": {
+        "atoms": 2169,
+        "config": "C1",
+        "file": "up-C1.json",
+        "sha256": "a6f142e49a3f38c63a128a31a5a59945b2f18c2f892ecd84380a8b0118e45814"
+      },
+      "counts": {
+        "budget": 21,
+        "construction_mismatch": 304,
+        "crash": 24,
+        "failed": 1059,
+        "hang": 0,
+        "legalized": 316,
+        "not_run": 0,
+        "unbuildable": 445
+      },
+      "crash": {
+        "atom_ids": [
+          "cpp/X86_ADD/G_ADD/rule/12",
+          "cpp/X86_ADD/G_SUB/rule/25",
+          "cpp/X86_AND/G_AND/rule/9",
+          "cpp/X86_AND/G_OR/rule/19",
+          "cpp/X86_AND/G_XOR/rule/29",
+          "cpp/X86_ICMP/G_ICMP/boundary/0",
+          "cpp/X86_ICMP/G_ICMP/boundary/1",
+          "cpp/X86_ICMP/G_ICMP/boundary/10",
+          "cpp/X86_ICMP/G_ICMP/boundary/2",
+          "cpp/X86_ICMP/G_ICMP/boundary/4",
+          "cpp/X86_ICMP/G_ICMP/boundary/5",
+          "cpp/X86_ICMP/G_ICMP/boundary/6",
+          "cpp/X86_ICMP/G_ICMP/boundary/7",
+          "cpp/X86_MUL/G_MUL/rule/11",
+          "cpp/X86_SEXT_INREG/G_SEXT_INREG/as/0",
+          "cpp/X86_SEXT_INREG/G_SEXT_INREG/as/1",
+          "cpp/X86_UADDE/G_UADDE/boundary/0",
+          "cpp/X86_UADDE/G_UADDE/boundary/10",
+          "cpp/X86_UADDE/G_UADDE/boundary/2",
+          "cpp/X86_UADDE/G_UADDE/rule/5",
+          "cpp/X86_UADDE/G_UADDO/boundary/14",
+          "cpp/X86_UADDE/G_UADDO/rule/11",
+          "cpp/X86_UADDE/G_USUBE/rule/17",
+          "cpp/X86_UADDE/G_USUBO/rule/23"
+        ],
+        "count": 24,
+        "detail_codes": {
+          "crash:assert": 24
+        }
+      },
+      "known_family": {
+        "atom_ids": [
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/boundary/10",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/1",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/2",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/3",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/5"
+        ],
+        "count": 5
+      },
+      "more_elements": {
+        "exercised": 44,
+        "expected_action": 49,
+        "g_phi_unbuildable": 5
+      },
+      "non_family_budget": {
+        "atom_ids": [
+          "cpp/X86_ADD/G_ADD/boundary/10",
+          "cpp/X86_ADD/G_SUB/boundary/22",
+          "cpp/X86_AND/G_AND/boundary/10",
+          "cpp/X86_AND/G_OR/boundary/22",
+          "cpp/X86_AND/G_XOR/boundary/34",
+          "cpp/X86_FABS/G_FABS/boundary/10",
+          "cpp/X86_FNEG/G_FNEG/boundary/10",
+          "cpp/X86_IMPLICIT_DEF/G_FREEZE/boundary/22",
+          "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/boundary/34",
+          "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/31",
+          "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/32",
+          "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/33",
+          "cpp/X86_MUL/G_MUL/boundary/10",
+          "cpp/X86_MUL/G_MUL/rule/4",
+          "cpp/X86_SMULH/G_SMULH/boundary/10",
+          "cpp/X86_SMULH/G_UMULH/boundary/22"
+        ],
+        "count": 16
+      },
+      "out_of_scope": {
+        "G_BR": 15,
+        "G_BRCOND": 15,
+        "G_PHI": 27
+      },
+      "report": "mir-M1-C1.json",
+      "rules": "production",
+      "unbuildable": {
+        "count": 445,
+        "reasons": {
+          "G_DEBUGTRAP": "trap opcode is unbuildable",
+          "G_UBSANTRAP": "trap opcode is unbuildable",
+          "G_UNMERGE_VALUES": "unmerge source size does not divide by destination"
+        }
+      }
+    },
+    "C2": {
+      "a3": {
+        "coverage_gaps": 0,
+        "exempt": false,
+        "known_anomalies": 5,
+        "known_atoms": 5,
+        "met": false,
+        "new_findings": 39,
+        "status": "not met"
+      },
+      "construction_mismatch": 304,
+      "construction_mismatch_reasons": {
+        "G_ANYEXT": {
+          "verifier": 16
+        },
+        "G_ASHR": {
+          "verifier": 3
+        },
+        "G_BSWAP": {
+          "verifier": 11
+        },
+        "G_EXTRACT": {
+          "verifier": 9
+        },
+        "G_FCMP": {
+          "verifier": 3
+        },
+        "G_FPEXT": {
+          "verifier": 13
+        },
+        "G_FPEXTLOAD": {
+          "verifier": 17
+        },
+        "G_FPTRUNC": {
+          "verifier": 11
+        },
+        "G_FPTRUNCSTORE": {
+          "verifier": 17
+        },
+        "G_ICMP": {
+          "verifier": 3
+        },
+        "G_INSERT": {
+          "verifier": 12
+        },
+        "G_INTTOPTR": {
+          "verifier": 16
+        },
+        "G_IS_FPCLASS": {
+          "verifier": 7
+        },
+        "G_LLROUND": {
+          "verifier": 7
+        },
+        "G_LOAD": {
+          "verifier": 10
+        },
+        "G_LROUND": {
+          "verifier": 7
+        },
+        "G_LSHR": {
+          "verifier": 3
+        },
+        "G_PTRTOINT": {
+          "verifier": 18
+        },
+        "G_PTR_ADD": {
+          "verifier": 19
+        },
+        "G_SELECT": {
+          "verifier": 2
+        },
+        "G_SEXT": {
+          "verifier": 16
+        },
+        "G_SEXTLOAD": {
+          "verifier": 17
+        },
+        "G_SHL": {
+          "verifier": 3
+        },
+        "G_SMAX": {
+          "verifier": 2
+        },
+        "G_SMIN": {
+          "verifier": 2
+        },
+        "G_STORE": {
+          "verifier": 11
+        },
+        "G_TRUNC": {
+          "verifier": 11
+        },
+        "G_UMAX": {
+          "verifier": 2
+        },
+        "G_UMIN": {
+          "verifier": 2
+        },
+        "G_ZEXT": {
+          "verifier": 17
+        },
+        "G_ZEXTLOAD": {
+          "verifier": 17
+        }
+      },
+      "corpus": {
+        "atoms": 2217,
+        "config": "C2",
+        "file": "up-C2.json",
+        "sha256": "7b7634f5ed50516e194d80523702b8f09b5973a454a54cc6aa38b26b80e0a769"
+      },
+      "counts": {
+        "budget": 20,
+        "construction_mismatch": 304,
+        "crash": 24,
+        "failed": 1034,
+        "hang": 0,
+        "legalized": 388,
+        "not_run": 0,
+        "unbuildable": 447
+      },
+      "crash": {
+        "atom_ids": [
+          "cpp/X86_ADD/G_ADD/rule/15",
+          "cpp/X86_ADD/G_SUB/rule/31",
+          "cpp/X86_AND/G_AND/rule/11",
+          "cpp/X86_AND/G_OR/rule/23",
+          "cpp/X86_AND/G_XOR/rule/35",
+          "cpp/X86_ICMP/G_ICMP/boundary/0",
+          "cpp/X86_ICMP/G_ICMP/boundary/1",
+          "cpp/X86_ICMP/G_ICMP/boundary/10",
+          "cpp/X86_ICMP/G_ICMP/boundary/2",
+          "cpp/X86_ICMP/G_ICMP/boundary/4",
+          "cpp/X86_ICMP/G_ICMP/boundary/5",
+          "cpp/X86_ICMP/G_ICMP/boundary/6",
+          "cpp/X86_ICMP/G_ICMP/boundary/7",
+          "cpp/X86_MUL/G_MUL/rule/16",
+          "cpp/X86_SEXT_INREG/G_SEXT_INREG/as/0",
+          "cpp/X86_SEXT_INREG/G_SEXT_INREG/as/1",
+          "cpp/X86_UADDE/G_UADDE/boundary/0",
+          "cpp/X86_UADDE/G_UADDE/boundary/10",
+          "cpp/X86_UADDE/G_UADDE/boundary/2",
+          "cpp/X86_UADDE/G_UADDE/rule/5",
+          "cpp/X86_UADDE/G_UADDO/boundary/14",
+          "cpp/X86_UADDE/G_UADDO/rule/11",
+          "cpp/X86_UADDE/G_USUBE/rule/17",
+          "cpp/X86_UADDE/G_USUBO/rule/23"
+        ],
+        "count": 24,
+        "detail_codes": {
+          "crash:assert": 24
+        }
+      },
+      "known_family": {
+        "atom_ids": [
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/boundary/10",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/1",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/2",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/3",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/5"
+        ],
+        "count": 5
+      },
+      "more_elements": {
+        "exercised": 43,
+        "expected_action": 48,
+        "g_phi_unbuildable": 5
+      },
+      "non_family_budget": {
+        "atom_ids": [
+          "cpp/X86_ADD/G_ADD/boundary/10",
+          "cpp/X86_ADD/G_SUB/boundary/22",
+          "cpp/X86_AND/G_AND/boundary/10",
+          "cpp/X86_AND/G_OR/boundary/22",
+          "cpp/X86_AND/G_XOR/boundary/34",
+          "cpp/X86_FABS/G_FABS/boundary/10",
+          "cpp/X86_FNEG/G_FNEG/boundary/10",
+          "cpp/X86_IMPLICIT_DEF/G_FREEZE/boundary/22",
+          "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/boundary/34",
+          "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/37",
+          "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/38",
+          "cpp/X86_IMPLICIT_DEF/G_IMPLICIT_DEF/rule/39",
+          "cpp/X86_MUL/G_MUL/boundary/10",
+          "cpp/X86_SMULH/G_SMULH/boundary/10",
+          "cpp/X86_SMULH/G_UMULH/boundary/22"
+        ],
+        "count": 15
+      },
+      "out_of_scope": {
+        "G_BR": 15,
+        "G_BRCOND": 15,
+        "G_PHI": 29
+      },
+      "report": "mir-M1-C2.json",
+      "rules": "production",
+      "unbuildable": {
+        "count": 447,
+        "reasons": {
+          "G_DEBUGTRAP": "trap opcode is unbuildable",
+          "G_UBSANTRAP": "trap opcode is unbuildable",
+          "G_UNMERGE_VALUES": "unmerge source size does not divide by destination"
+        }
+      }
+    },
+    "C3": {
+      "a3": {
+        "coverage_gaps": 0,
+        "exempt": false,
+        "known_anomalies": 5,
+        "known_atoms": 5,
+        "met": false,
+        "new_findings": 24,
+        "status": "not met"
+      },
+      "construction_mismatch": 303,
+      "construction_mismatch_reasons": {
+        "G_ANYEXT": {
+          "verifier": 16
+        },
+        "G_ASHR": {
+          "verifier": 3
+        },
+        "G_BSWAP": {
+          "verifier": 11
+        },
+        "G_EXTRACT": {
+          "verifier": 9
+        },
+        "G_FCMP": {
+          "verifier": 3
+        },
+        "G_FPEXT": {
+          "verifier": 13
+        },
+        "G_FPEXTLOAD": {
+          "verifier": 17
+        },
+        "G_FPTRUNC": {
+          "verifier": 11
+        },
+        "G_FPTRUNCSTORE": {
+          "verifier": 17
+        },
+        "G_ICMP": {
+          "verifier": 3
+        },
+        "G_INSERT": {
+          "verifier": 12
+        },
+        "G_INTTOPTR": {
+          "verifier": 16
+        },
+        "G_IS_FPCLASS": {
+          "verifier": 7
+        },
+        "G_LLROUND": {
+          "verifier": 7
+        },
+        "G_LOAD": {
+          "verifier": 10
+        },
+        "G_LROUND": {
+          "verifier": 7
+        },
+        "G_LSHR": {
+          "verifier": 3
+        },
+        "G_PTRTOINT": {
+          "verifier": 18
+        },
+        "G_PTR_ADD": {
+          "verifier": 18
+        },
+        "G_SELECT": {
+          "verifier": 2
+        },
+        "G_SEXT": {
+          "verifier": 16
+        },
+        "G_SEXTLOAD": {
+          "verifier": 17
+        },
+        "G_SHL": {
+          "verifier": 3
+        },
+        "G_SMAX": {
+          "verifier": 2
+        },
+        "G_SMIN": {
+          "verifier": 2
+        },
+        "G_STORE": {
+          "verifier": 11
+        },
+        "G_TRUNC": {
+          "verifier": 11
+        },
+        "G_UMAX": {
+          "verifier": 2
+        },
+        "G_UMIN": {
+          "verifier": 2
+        },
+        "G_ZEXT": {
+          "verifier": 17
+        },
+        "G_ZEXTLOAD": {
+          "verifier": 17
+        }
+      },
+      "corpus": {
+        "atoms": 2093,
+        "config": "C3",
+        "file": "up-C3.json",
+        "sha256": "c31522bbc1b29c258a46097130ae15f0e1b85f61ea1c9b33c2f70d9f3dab78d5"
+      },
+      "counts": {
+        "budget": 5,
+        "construction_mismatch": 303,
+        "crash": 24,
+        "failed": 1103,
+        "hang": 0,
+        "legalized": 216,
+        "not_run": 0,
+        "unbuildable": 442
+      },
+      "crash": {
+        "atom_ids": [
+          "cpp/X86_ADD/G_ADD/rule/10",
+          "cpp/X86_ADD/G_SUB/rule/21",
+          "cpp/X86_AND/G_AND/rule/7",
+          "cpp/X86_AND/G_OR/rule/15",
+          "cpp/X86_AND/G_XOR/rule/23",
+          "cpp/X86_ICMP/G_ICMP/boundary/0",
+          "cpp/X86_ICMP/G_ICMP/boundary/1",
+          "cpp/X86_ICMP/G_ICMP/boundary/10",
+          "cpp/X86_ICMP/G_ICMP/boundary/2",
+          "cpp/X86_ICMP/G_ICMP/boundary/4",
+          "cpp/X86_ICMP/G_ICMP/boundary/5",
+          "cpp/X86_ICMP/G_ICMP/boundary/6",
+          "cpp/X86_ICMP/G_ICMP/boundary/7",
+          "cpp/X86_MUL/G_MUL/rule/9",
+          "cpp/X86_SEXT_INREG/G_SEXT_INREG/as/0",
+          "cpp/X86_SEXT_INREG/G_SEXT_INREG/as/1",
+          "cpp/X86_UADDE/G_UADDE/boundary/0",
+          "cpp/X86_UADDE/G_UADDE/boundary/10",
+          "cpp/X86_UADDE/G_UADDE/boundary/2",
+          "cpp/X86_UADDE/G_UADDE/rule/4",
+          "cpp/X86_UADDE/G_UADDO/boundary/14",
+          "cpp/X86_UADDE/G_UADDO/rule/9",
+          "cpp/X86_UADDE/G_USUBE/rule/14",
+          "cpp/X86_UADDE/G_USUBO/rule/19"
+        ],
+        "count": 24,
+        "detail_codes": {
+          "crash:assert": 24
+        }
+      },
+      "known_family": {
+        "atom_ids": [
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/boundary/10",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/0",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/1",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/2",
+          "cpp/X86_BUILD_VECTOR/G_BUILD_VECTOR/rule/4"
+        ],
+        "count": 5
+      },
+      "more_elements": {
+        "exercised": 44,
+        "expected_action": 49,
+        "g_phi_unbuildable": 5
+      },
+      "non_family_budget": {
+        "atom_ids": [],
+        "count": 0
+      },
+      "out_of_scope": {
+        "G_BR": 15,
+        "G_BRCOND": 15,
+        "G_PHI": 24
+      },
+      "report": "mir-M1-C3.json",
+      "rules": "production",
+      "unbuildable": {
+        "count": 442,
+        "reasons": {
+          "G_UNMERGE_VALUES": "unmerge source size does not divide by destination"
+        }
+      }
+    }
+  },
+  "provenance": {
+    "notes": "Deterministic projection of the four production witness reports under x86-mir-corpus/reports; counts and atom ids match the previous baseline. A3 is not met: the unfixed rules contain non-family budgets and crashes.",
+    "oracle_revision": "ebac17721d12da88b03da36bde87a9c25bf2b7f4",
+    "regenerate_baseline": "Deterministic projection of the four source reports: keep counts, MoreElements actual/G_PHI/exercised counts, known/new A3 buckets, sorted atom ids, construction_mismatch per-opcode detail codes, unbuildable reasons and out-of-scope opcode counts; write JSON with sort_keys=True and no wall-clock timestamp.",
+    "regenerate_reports": [
+      "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus <corpus-dir>/up-C0.json --build <build> --rules production --shard-size 2000 --jobs 4 --timeout 30 --max-steps 10000 --out <report-dir>/mir-M1-C0.json",
+      "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus <corpus-dir>/up-C1.json --build <build> --rules production --shard-size 2000 --jobs 4 --timeout 30 --max-steps 10000 --out <report-dir>/mir-M1-C1.json",
+      "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus <corpus-dir>/up-C2.json --build <build> --rules production --shard-size 2000 --jobs 4 --timeout 30 --max-steps 10000 --out <report-dir>/mir-M1-C2.json",
+      "python3 llvm/utils/x86-legalizer-corpus/__main__.py mir-run --corpus <corpus-dir>/up-C3.json --build <build> --rules production --shard-size 2000 --jobs 4 --timeout 30 --max-steps 10000 --out <report-dir>/mir-M1-C3.json"
+    ],
+    "source_reports": {
+      "C0": "mir-M1-C0.json",
+      "C1": "mir-M1-C1.json",
+      "C2": "mir-M1-C2.json",
+      "C3": "mir-M1-C3.json"
+    },
+    "source_revision": "fed20e0e68323be32cb0fe8af679b8cb34e72112"
+  },
+  "schema": "llvm-x86-legalizer-mir-baseline",
+  "summary": {
+    "a3_met": false,
+    "construction_mismatch_by_opcode": {
+      "C0": {
+        "G_ANYEXT": {
+          "verifier": 16
+        },
+        "G_ASHR": {
+          "verifier": 3
+        },
+        "G_BSWAP": {
+          "verifier": 11
+        },
+        "G_EXTRACT": {
+          "verifier": 9
+        },
+        "G_FCMP": {
+          "verifier": 3
+        },
+        "G_FPEXT": {
+          "verifier": 13
+        },
+        "G_FPEXTLOAD": {
+          "verifier": 17
+        },
+        "G_FPTRUNC": {
+          "verifier": 11
+        },
+        "G_FPTRUNCSTORE": {
+          "verifier": 17
+        },
+        "G_ICMP": {
+          "verifier": 3
+        },
+        "G_INSERT": {
+          "verifier": 12
+        },
+        "G_INTTOPTR": {
+          "verifier": 16
+        },
+        "G_IS_FPCLASS": {
+          "verifier": 7
+        },
+        "G_LLROUND": {
+          "verifier": 7
+        },
+        "G_LOAD": {
+          "verifier": 10
+        },
+        "G_LROUND": {
+          "verifier": 7
+        },
+        "G_LSHR": {
+          "verifier": 3
+        },
+        "G_PTRTOINT": {
+          "verifier": 18
+        },
+        "G_PTR_ADD": {
+          "verifier": 18
+        },
+        "G_SELECT": {
+          "verifier": 2
+        },
+        "G_SEXT": {
+          "verifier": 16
+        },
+        "G_SEXTLOAD": {
+          "verifier": 17
+        },
+        "G_SHL": {
+          "verifier": 3
+        },
+        "G_SMAX": {
+          "verifier": 2
+        },
+        "G_SMIN": {
+          "verifier": 2
+        },
+        "G_STORE": {
+          "verifier": 11
+        },
+        "G_TRUNC": {
+          "verifier": 11
+        },
+        "G_UMAX": {
+          "verifier": 2
+        },
+        "G_UMIN": {
+          "verifier": 2
+        },
+        "G_ZEXT": {
+          "verifier": 17
+        },
+        "G_ZEXTLOAD": {
+          "verifier": 17
+        }
+      },
+      "C1": {
+        "G_ANYEXT": {
+          "verifier": 16
+        },
+        "G_ASHR": {
+          "verifier": 3
+        },
+        "G_BSWAP": {
+          "verifier": 11
+        },
+        "G_EXTRACT": {
+          "verifier": 9
+        },
+        "G_FCMP": {
+          "verifier": 3
+        },
+        "G_FPEXT": {
+          "verifier": 13
+        },
+        "G_FPEXTLOAD": {
+          "verifier": 17
+        },
+        "G_FPTRUNC": {
+          "verifier": 11
+        },
+        "G_FPTRUNCSTORE": {
+          "verifier": 17
+        },
+        "G_ICMP": {
+          "verifier": 3
+        },
+        "G_INSERT": {
+          "verifier": 12
+        },
+        "G_INTTOPTR": {
+          "verifier": 16
+        },
+        "G_IS_FPCLASS": {
+          "verifier": 7
+        },
+        "G_LLROUND": {
+          "verifier": 7
+        },
+        "G_LOAD": {
+          "verifier": 10
+        },
+        "G_LROUND": {
+          "verifier": 7
+        },
+        "G_LSHR": {
+          "verifier": 3
+        },
+        "G_PTRTOINT": {
+          "verifier": 18
+        },
+        "G_PTR_ADD": {
+          "verifier": 19
+        },
+        "G_SELECT": {
+          "verifier": 2
+        },
+        "G_SEXT": {
+          "verifier": 16
+        },
+        "G_SEXTLOAD": {
+          "verifier": 17
+        },
+        "G_SHL": {
+          "verifier": 3
+        },
+        "G_SMAX": {
+          "verifier": 2
+        },
+        "G_SMIN": {
+          "verifier": 2
+        },
+        "G_STORE": {
+          "verifier": 11
+        },
+        "G_TRUNC": {
+          "verifier": 11
+        },
+        "G_UMAX": {
+          "verifier": 2
+        },
+        "G_UMIN": {
+          "verifier": 2
+        },
+        "G_ZEXT": {
+          "verifier": 17
+        },
+        "G_ZEXTLOAD": {
+          "verifier": 17
+        }
+      },
+      "C2": {
+        "G_ANYEXT": {
+          "verifier": 16
+        },
+        "G_ASHR": {
+          "verifier": 3
+        },
+        "G_BSWAP": {
+          "verifier": 11
+        },
+        "G_EXTRACT": {
+          "verifier": 9
+        },
+        "G_FCMP": {
+          "verifier": 3
+        },
+        "G_FPEXT": {
+          "verifier": 13
+        },
+        "G_FPEXTLOAD": {
+          "verifier": 17
+        },
+        "G_FPTRUNC": {
+          "verifier": 11
+        },
+        "G_FPTRUNCSTORE": {
+          "verifier": 17
+        },
+        "G_ICMP": {
+          "verifier": 3
+        },
+        "G_INSERT": {
+          "verifier": 12
+        },
+        "G_INTTOPTR": {
+          "verifier": 16
+        },
+        "G_IS_FPCLASS": {
+          "verifier": 7
+        },
+        "G_LLROUND": {
+          "verifier": 7
+        },
+        "G_LOAD": {
+          "verifier": 10
+        },
+        "G_LROUND": {
+          "verifier": 7
+        },
+        "G_LSHR": {
+          "verifier": 3
+        },
+        "G_PTRTOINT": {
+          "verifier": 18
+        },
+        "G_PTR_ADD": {
+          "verifier": 19
+        },
+        "G_SELECT": {
+          "verifier": 2
+        },
+        "G_SEXT": {
+          "verifier": 16
+        },
+        "G_SEXTLOAD": {
+          "verifier": 17
+        },
+        "G_SHL": {
+          "verifier": 3
+        },
+        "G_SMAX": {
+          "verifier": 2
+        },
+        "G_SMIN": {
+          "verifier": 2
+        },
+        "G_STORE": {
+          "verifier": 11
+        },
+        "G_TRUNC": {
+          "verifier": 11
+        },
+        "G_UMAX": {
+          "verifier": 2
+        },
+        "G_UMIN": {
+          "verifier": 2
+        },
+        "G_ZEXT": {
+          "verifier": 17
+        },
+        "G_ZEXTLOAD": {
+          "verifier": 17
+        }
+      },
+      "C3": {
+        "G_ANYEXT": {
+          "verifier": 16
+        },
+        "G_ASHR": {
+          "verifier": 3
+        },
+        "G_BSWAP": {
+          "verifier": 11
+        },
+        "G_EXTRACT": {
+          "verifier": 9
+        },
+        "G_FCMP": {
+          "verifier": 3
+        },
+        "G_FPEXT": {
+          "verifier": 13
+        },
+        "G_FPEXTLOAD": {
+          "verifier": 17
+        },
+        "G_FPTRUNC": {
+          "verifier": 11
+        },
+        "G_FPTRUNCSTORE": {
+          "verifier": 17
+        },
+        "G_ICMP": {
+          "verifier": 3
+        },
+        "G_INSERT": {
+          "verifier": 12
+        },
+        "G_INTTOPTR": {
+          "verifier": 16
+        },
+        "G_IS_FPCLASS": {
+          "verifier": 7
+        },
+        "G_LLROUND": {
+          "verifier": 7
+        },
+        "G_LOAD": {
+          "verifier": 10
+        },
+        "G_LROUND": {
+          "verifier": 7
+        },
+        "G_LSHR": {
+          "verifier": 3
+        },
+        "G_PTRTOINT": {
+          "verifier": 18
+        },
+        "G_PTR_ADD": {
+          "verifier": 18
+        },
+        "G_SELECT": {
+          "verifier": 2
+        },
+        "G_SEXT": {
+          "verifier": 16
+        },
+        "G_SEXTLOAD": {
+          "verifier": 17
+        },
+        "G_SHL": {
+          "verifier": 3
+        },
+        "G_SMAX": {
+          "verifier": 2
+        },
+        "G_SMIN": {
+          "verifier": 2
+        },
+        "G_STORE": {
+          "verifier": 11
+        },
+        "G_TRUNC": {
+          "verifier": 11
+        },
+        "G_UMAX": {
+          "verifier": 2
+        },
+        "G_UMIN": {
+          "verifier": 2
+        },
+        "G_ZEXT": {
+          "verifier": 17
+        },
+        "G_ZEXTLOAD": {
+          "verifier": 17
+        }
+      }
+    },
+    "crash_atoms_per_config": {
+      "C0": 24,
+      "C1": 24,
+      "C2": 24,
+      "C3": 24
+    },
+    "known_build_vector_budgets_per_config": 5,
+    "known_build_vector_note": "Each config has exactly 5 X86_BUILD_VECTOR MoreElements atoms that reach budget; these are the expected A3 family, not regressions.",
+    "more_elements_per_config": {
+      "C0": {
+        "exercised": 44,
+        "expected_action": 49,
+        "non_family_budgets": 0,
+        "non_family_crashes": 24
+      },
+      "C1": {
+        "exercised": 44,
+        "expected_action": 49,
+        "non_family_budgets": 16,
+        "non_family_crashes": 24
+      },
+      "C2": {
+        "exercised": 43,
+        "expected_action": 48,
+        "non_family_budgets": 15,
+        "non_family_crashes": 24
+      },
+      "C3": {
+        "exercised": 44,
+        "expected_action": 49,
+        "non_family_budgets": 0,
+        "non_family_crashes": 24
+      }
+    },
+    "non_family_budgets_per_config": {
+      "C0": 0,
+      "C1": 16,
+      "C2": 15,
+      "C3": 0
+    },
+    "reason": "the unfixed production witness reports contain non-family crashes and non-family budgets, so A3 is NOT MET",
+    "status": "not met",
+    "uadde_family_crashes": {
+      "atom_ids_per_config": {
+        "C0": [
+          "cpp/X86_UADDE/G_UADDE/boundary/0",
+          "cpp/X86_UADDE/G_UADDE/boundary/10",
+          "cpp/X86_UADDE/G_UADDE/boundary/2",
+          "cpp/X86_UADDE/G_UADDE/rule/4"
+        ],
+        "C1": [
+          "cpp/X86_UADDE/G_UADDE/boundary/0",
+          "cpp/X86_UADDE/G_UADDE/boundary/10",
+          "cpp/X86_UADDE/G_UADDE/boundary/2",
+          "cpp/X86_UADDE/G_UADDE/rule/5"
+        ],
+        "C2": [
+          "cpp/X86_UADDE/G_UADDE/boundary/0",
+          "cpp/X86_UADDE/G_UADDE/boundary/10",
+          "cpp/X86_UADDE/G_UADDE/boundary/2",
+          "cpp/X86_UADDE/G_UADDE/rule/5"
+        ],
+        "C3": [
+          "cpp/X86_UADDE/G_UADDE/boundary/0",
+          "cpp/X86_UADDE/G_UADDE/boundary/10",
+          "cpp/X86_UADDE/G_UADDE/boundary/2",
+          "cpp/X86_UADDE/G_UADDE/rule/4"
+        ]
+      },
+      "count_per_config": 4,
+      "note": "The 4 G_UADDE [v2p0:*,p0:*] atoms are verifier-accepted legalizer crashes, not construction_mismatch. They are included in the 24 crash atoms per config."
+    },
+    "verified_atoms": {
+      "C0": 2062,
+      "C1": 2169,
+      "C2": 2217,
+      "C3": 2093
+    }
+  },
+  "version": 1
+}

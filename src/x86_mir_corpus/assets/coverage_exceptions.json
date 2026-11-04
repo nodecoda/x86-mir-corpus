@@ -1,0 +1,212 @@
+{
+  "schema": "llvm-x86-legalizer-coverage-exceptions",
+  "version": 1,
+  "note": "A rule listed here is a reviewed, non-silent coverage gap. Reasons are semantic: the rule is shadowed by an earlier rule, its lambda cannot be read as a literal predicate, or its predicate is false for the listed configurations. Adding an entry requires re-running all four configs.",
+  "exceptions": [
+    {
+      "rule_set": "X86_IMPLICIT_DEF",
+      "rule_index": 14,
+      "method": "scalarizeIf",
+      "arg_contains": "scalarOrEltWiderThan",
+      "reason": "shadowed by clampScalarOrElt(0, s8, sMaxScalar): a scalar or element wider than 64 is clamped before scalarizeIf is reached."
+    },
+    {
+      "rule_set": "X86_MERGE_VALUES",
+      "rule_index": 4,
+      "method": "legalIf",
+      "arg_contains": "switch",
+      "reason": "opaque lambda: a switch on BigTyIdx/LitTyIdx sizes has no literal predicate witness."
+    },
+    {
+      "rule_set": "X86_UNMERGE_VALUES",
+      "rule_index": 4,
+      "method": "legalIf",
+      "arg_contains": "switch",
+      "reason": "opaque lambda: a switch on BigTyIdx/LitTyIdx sizes has no literal predicate witness."
+    },
+    {
+      "rule_set": "X86_EXTRACT",
+      "rule_index": 0,
+      "method": "legalIf",
+      "arg_contains": "typePairInSet",
+      "reason": "the lambda accepts only HasAVX or HasAVX512 type pairs; C0/C1/C3 have no AVX, so the predicate is false there.",
+      "configs": [
+        "C0",
+        "C1",
+        "C3"
+      ]
+    },
+    {
+      "rule_set": "X86_SDIV",
+      "rule_index": 2,
+      "method": "libcallFor",
+      "reason": "s64 is legal through the earlier legalFor(Is64Bit, {s64}) rule in 64-bit configs."
+    },
+    {
+      "rule_set": "X86_IMPLICIT_DEF",
+      "rule_index": 12,
+      "method": "clampNumElements",
+      "configs": [
+        "C0",
+        "C3"
+      ],
+      "reason": "on i386 sMaxScalar is s32, so clampScalarOrElt catches every s64 vector before clampNumElements(0, v2s64, ...) is reached."
+    },
+    {
+      "rule_set": "X86_FCMP",
+      "rule_index": 5,
+      "method": "widenScalarToNextPow2",
+      "configs": [
+        "C0",
+        "C3"
+      ],
+      "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+    },
+    {
+      "rule_set": "X86_SITOFP",
+      "rule_index": 5,
+      "method": "widenScalarToNextPow2",
+      "configs": [
+        "C0",
+        "C3"
+      ],
+      "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+    },
+    {
+      "rule_set": "X86_SITOFP",
+      "rule_index": 8,
+      "method": "widenScalarToNextPow2",
+      "configs": [
+        "C0",
+        "C3"
+      ],
+      "reason": "clampScalar(0, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+    },
+    {
+      "rule_set": "X86_FPTOSI",
+      "rule_index": 5,
+      "method": "widenScalarToNextPow2",
+      "configs": [
+        "C0",
+        "C3"
+      ],
+      "reason": "clampScalar(0, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+    },
+    {
+      "rule_set": "X86_FPTOSI",
+      "rule_index": 8,
+      "method": "widenScalarToNextPow2",
+      "configs": [
+        "C0",
+        "C3"
+      ],
+      "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+    },
+    {
+      "rule_set": "X86_UITOFP",
+      "rule_index": 4,
+      "method": "widenScalarToNextPow2",
+      "configs": [
+        "C0",
+        "C3"
+      ],
+      "reason": "clampScalar(0, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+    },
+    {
+      "rule_set": "X86_UITOFP",
+      "rule_index": 6,
+      "method": "widenScalarToNextPow2",
+      "configs": [
+        "C0",
+        "C3"
+      ],
+      "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+    },
+    {
+      "rule_set": "X86_FPTOUI",
+      "rule_index": 4,
+      "method": "widenScalarToNextPow2",
+      "configs": [
+        "C0",
+        "C3"
+      ],
+      "reason": "clampScalar(0, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+    },
+    {
+      "rule_set": "X86_FPTOUI",
+      "rule_index": 6,
+      "method": "widenScalarToNextPow2",
+      "configs": [
+        "C0",
+        "C3"
+      ],
+      "reason": "clampScalar(1, ...) leaves only power-of-two scalars in these configs, so sizeNotPow2 cannot be true."
+    },
+    {
+      "rule_set": "X86_UITOFP",
+      "rule_index": 1,
+      "method": "customIf",
+      "configs": [
+        "C0",
+        "C2",
+        "C3"
+      ],
+      "reason": "the lambda requires !HasAVX512 and SSE1/SSE2; C2 has AVX512, C0/C3 have no SSE, so the predicate is false."
+    },
+    {
+      "rule_set": "X86_UITOFP",
+      "rule_index": 2,
+      "method": "lowerIf",
+      "configs": [
+        "C0",
+        "C2",
+        "C3"
+      ],
+      "reason": "the lambda requires !HasAVX512 and SSE1/SSE2; C2 has AVX512, C0/C3 have no SSE, so the predicate is false."
+    },
+    {
+      "rule_set": "X86_FPTOUI",
+      "rule_index": 1,
+      "method": "customIf",
+      "configs": [
+        "C0",
+        "C2",
+        "C3"
+      ],
+      "reason": "the lambda requires !HasAVX512 and SSE1/SSE2; C2 has AVX512, C0/C3 have no SSE, so the predicate is false."
+    },
+    {
+      "rule_set": "X86_FPTOUI",
+      "rule_index": 2,
+      "method": "lowerIf",
+      "configs": [
+        "C0",
+        "C2",
+        "C3"
+      ],
+      "reason": "the lambda requires !HasAVX512 and SSE1/SSE2; C2 has AVX512, C0/C3 have no SSE, so the predicate is false."
+    },
+    {
+      "rule_set": "X86_BUILD_VECTOR",
+      "rule_index": 0,
+      "method": "customIf",
+      "configs": [
+        "C0",
+        "C3"
+      ],
+      "reason": "the lambda is an OR of SSE1/SSE2/AVX/AVX512 type sets; C0 and C3 have none of those features."
+    },
+    {
+      "rule_set": "X86_ADD",
+      "rule_index": 9,
+      "method": "clampMinNumElements",
+      "reason": "clampMinNumElements(0, s64, 2) can never fire: a one-element fixed vector is represented as a scalar, and every other s64 vector is handled by the preceding clamps."
+    },
+    {
+      "rule_set": "X86_MUL",
+      "rule_index": 11,
+      "method": "clampMinNumElements",
+      "reason": "clampMinNumElements(0, s64, HasVLX ? 2 : 8) can never fire when the bound is 2: a one-element fixed vector is represented as a scalar; for larger bounds the preceding clamps win."
+    }
+  ]
+}

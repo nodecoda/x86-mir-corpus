@@ -1,0 +1,12 @@
+x86-mir-corpus
+
+This product includes software developed by the LLVM Project and
+contributors to the LLVM Project (https://llvm.org).
+
+Derived files retain their LLVM copyright headers and are distributed under
+the Apache License v2.0 with LLVM Exceptions.  See LICENSE.
+
+The Python sources, tests, and assets were extracted from llvm-project commit
+8bc4cd96f4bb95506857422a5f1da92c2b430634.  The C++ sidecar sources were
+extracted from the same commit and are intended to be built out-of-tree
+against a pinned LLVM build.

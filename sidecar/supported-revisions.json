@@ -1,0 +1,8 @@
+{
+  "schema": "x86-mir-corpus-supported-revisions",
+  "version": 1,
+  "revisions": [
+    "8bc4cd96f4bb95506857422a5f1da92c2b430634"
+  ],
+  "notes": "Out-of-tree sidecar clients must match the LLVM build's headers and assertions setting. Add a revision only after running tests/test_sidecar_parity.py."
+}

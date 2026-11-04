@@ -1,0 +1,36 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -e .
+      - run: python -m unittest discover -s tests -q
+
+  sidecar:
+    # Self-hosted runner with a pinned LLVM build and cached corpora.
+    if: ${{ vars.X86_MIR_LLVM_BUILD != '' }}
+    runs-on: [self-hosted, llvm]
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install .
+      - run: |
+          x86-mir-corpus llvm build \
+            --llvm-src "$X86_MIR_LLVM_SRC" \
+            --llvm-build "$X86_MIR_LLVM_BUILD" --out .build
+      - run: x86-mir-corpus doctor --json
+      - run: python -m unittest discover -s tests -p 'test_sidecar_parity.py' -v
+        env:
+          X86_MIR_SIDECAR_BUILD: ${{ github.workspace }}/.build

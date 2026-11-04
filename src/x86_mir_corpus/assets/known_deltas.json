@@ -1,0 +1,17 @@
+{
+  "schema": "llvm-x86-legalizer-known-deltas",
+  "version": 1,
+  "description": "Reviewed differences between the hand-written C++ rule chain and the TableGen rule emission. Every non-match in `verify` must be listed here; an unlisted delta is a failure.",
+  "deltas": [
+    {
+      "rule_set": "X86_EXTRACT",
+      "class": "td_expands_lambda",
+      "reason": "G_EXTRACT/G_INSERT share one builder whose legalIf predicate the C++ reader records as one opaque rule; TableGen expands the predicate over the three element-size classes (s8, s32, s64)."
+    },
+    {
+      "rule_set": "X86_INSERT",
+      "class": "td_expands_lambda",
+      "reason": "G_EXTRACT/G_INSERT share one builder whose legalIf predicate the C++ reader records as one opaque rule; TableGen expands the predicate over the three element-size classes (s8, s32, s64)."
+    }
+  ]
+}

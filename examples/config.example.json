@@ -1,0 +1,12 @@
+{
+  "llvm_src": "/path/to/llvm-project",
+  "llvm_build": "/path/to/llvm-build",
+  "sidecar_build": ".build",
+  "config": "C2",
+  "tier": "witness",
+  "rules": "production",
+  "shard_size": 2000,
+  "timeout": 30,
+  "max_steps": 10000,
+  "jobs": 4
+}

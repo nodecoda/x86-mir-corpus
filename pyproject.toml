@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "x86-mir-corpus"
+version = "0.1.0"
+description = "X86 legalizer corpus reader and MIR legalization corpus supervisor"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0 WITH LLVM-exception" }
+authors = [{ name = "x86-mir-corpus contributors" }]
+keywords = ["llvm", "x86", "globalisel", "legalizer", "mir"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: C++",
+  "Topic :: Software Development :: Compilers",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = []
+
+[project.scripts]
+x86-mir-corpus = "x86_mir_corpus.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+x86_mir_corpus = [
+  "assets/*.json",
+  "assets/source-snapshots/*.cpp",
+]

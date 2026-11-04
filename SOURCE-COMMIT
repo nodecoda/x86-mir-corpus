@@ -1,0 +1,37 @@
+source-repository: https://github.com/llvm/llvm-project
+source-commit: 8bc4cd96f4bb95506857422a5f1da92c2b430634
+extracted: 2026-11-04
+extraction-policy: read-only `git show <commit>:<path>`; no worktree state
+default-source-snapshot: src/x86_mir_corpus/assets/source-snapshots/fed20e0e-X86LegalizerInfo.cpp
+default-source-revision: fed20e0e
+
+python (llvm/utils/x86-legalizer-corpus/):
+  __main__.py cli.py corpusdiff.py domain.py emit.py expr.py lexer.py
+  mirrun.py oracle.py parse.py target.py tracediff.py verify.py
+
+tests (llvm/utils/x86-legalizer-corpus/tests/):
+  test_cli.py test_diff.py test_domain.py test_expr.py test_lexer.py
+  test_mirrun.py test_parse.py test_tracediff.py test_verify.py testlib.py
+
+assets:
+  coverage_exceptions.json
+  known_deltas.json
+  mir-baseline-witness.json
+
+c++ sidecar (llvm/unittests/Target/X86/):
+  X86LegalizerTestSupport.cpp
+  X86LegalizerTestSupport.h
+  X86LegalizerInfoReference.cpp
+  X86LegalizerInfoReference.h
+  X86LegalizerMIRTest.cpp            -> sidecar/mir/MIRRunner.cpp (pending main)
+  X86LegalizerInfoDifferentialTest.cpp:3817-3960 -> sidecar/oracle/ (pending)
+
+fixtures:
+  x86-legalizer-reference-provenance.json
+  x86-legalizer-witness.json
+
+tool-only files (not extracted):
+  src/x86_mir_corpus/{__init__,schemas,llvm,baseline,triage}.py
+  sidecar/{CMakeLists.txt,build-info.json.in,oracle/CorpusOracle.cpp,smoke/smoke.cpp}
+  scripts/*.sh (paths parameterized)
+  tests/{test_llvm,test_baseline,test_triage,test_sidecar_parity}.py

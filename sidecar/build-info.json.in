@@ -1,0 +1,9 @@
+{
+  "schema": "x86-mir-corpus-sidecar-build",
+  "version": 1,
+  "llvm_version": "@LLVM_PACKAGE_VERSION@",
+  "llvm_dir": "@LLVM_DIR@",
+  "llvm_source_dir": "@LLVM_BUILD_MAIN_SRC_DIR@",
+  "assertions": @X86_MIR_ASSERTIONS_JSON@,
+  "generator": "@CMAKE_GENERATOR@"
+}
