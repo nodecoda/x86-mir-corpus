@@ -12,7 +12,7 @@ from . import dsl as _dsl
 from . import expr as E
 from . import targets as target_profiles
 from .lexer import matching
-from .parse import eval_int, parse_args
+from .parse import eval_int, parse_args, predicate_slot_roles
 
 KIND_RANK = {"p": 0, "s": 1, "i": 2, "f": 3, "v": 4, "nxv": 5}
 
@@ -53,6 +53,31 @@ def rep_class(classes):
         if t[0] in ("s", "i"):
             return t
     return classes[0]
+
+
+_OPCODE_ARITY = None
+
+
+def opcode_type_slots(opcode):
+    """Number of type operands the generic opcode declares."""
+    global _OPCODE_ARITY
+    if _OPCODE_ARITY is None:
+        _OPCODE_ARITY = _dsl.opcode_arity()
+    entry = _OPCODE_ARITY.get(opcode)
+    return entry[0] if entry else 0
+
+
+def probe_slot_count(builder, opcode, profile=None):
+    """Type slots a probe should carry for *opcode*.
+
+    X86 keeps the historical "largest slot a rule mentions" rule so its
+    corpus stays byte-identical.  Targets that opt in use the opcode's
+    declared arity, which is what represents a real ``LegalityQuery``.
+    """
+    slots = builder.num_slots
+    if profile is not None and getattr(profile, "probe_opcode_arity", False):
+        slots = max(slots, opcode_type_slots(opcode))
+    return slots
 
 
 # The reference applies the first matching rule's mutation.  A mutation that
@@ -326,6 +351,9 @@ def probe_env(classes, features=None, llt_extended=None):
         if llt_extended is None:
             llt_extended = features.get("lltExtended", True)
         env["__llt_extended__"] = bool(llt_extended)
+    for order in ("NotAtomic", "Unordered", "Monotonic", "Acquire", "Release",
+                  "AcquireRelease", "SequentiallyConsistent"):
+        env[f"AtomicOrdering::{order}"] = order
     return env
 
 
@@ -399,6 +427,14 @@ def _arg_list(args, index, env):
 def _query_value(node, types, mem, env):
     """An LLT/int value read from the query, or None."""
     if isinstance(node, E.Call):
+        if node.name.endswith(".MMODescrs.__index__.MemoryTy"):
+            return mem
+        if node.name.endswith(".MMODescrs.__index__"):
+            idx = _arg_int(node.args, 0, env)
+            return mem if idx == 0 else None
+        if node.name.endswith(".Ordering"):
+            # Corpus memory operands use the LLVM default ordering.
+            return "NotAtomic"
         if node.name.endswith(".Types.__index__"):
             idx = _arg_int(node.args, 0, env)
             if idx is not None and 0 <= idx < len(types):
@@ -429,11 +465,33 @@ def _query_value(node, types, mem, env):
         if node.name.endswith(".MemoryTy"):
             return mem
         value = env.get(node.name)
-        if E.is_llt(value) or isinstance(value, int):
+        if E.is_llt(value) or isinstance(value, (int, str, list, tuple)):
             return value
         return None
     if isinstance(node, E.Num):
         return node.value
+    if isinstance(node, E.ListLit):
+        out = []
+        for item in node.items:
+            value = _query_value(item, types, mem, env)
+            if value is None:
+                return None
+            out.append(value)
+        return out
+    if isinstance(node, E.Binary):
+        left = _query_value(node.left, types, mem, env)
+        right = _query_value(node.right, types, mem, env)
+        if isinstance(left, int) and isinstance(right, int):
+            try:
+                return E.apply_binary(node.op, left, right)
+            except (E.ExprError, ZeroDivisionError):
+                return None
+        return None
+    if isinstance(node, E.Unary) and node.op in ("-", "+", "~"):
+        value = _query_value(node.x, types, mem, env)
+        if isinstance(value, int):
+            return {"-": -value, "+": value, "~": ~value}[node.op]
+        return None
     return None
 
 
@@ -600,12 +658,12 @@ def _pred_scalar_narrower_than(args, types, mem, align, env):
     ty = _slot_at(types, idx)
     if ty is None or bits is None:
         return None
-    size = _size_or_none(ty, env)
-    if size is None:
-        return None
+    # C++: QueryTy.isScalar() && QueryTy.getSizeInBits() < Size.  The scalar
+    # test short-circuits before the TypeSize conversion.
     if not E.is_scalar(ty):
         return False
-    return size < bits
+    size = _size_or_none(ty, env)
+    return None if size is None else size < bits
 
 
 @predicate("scalarWiderThan")
@@ -615,12 +673,10 @@ def _pred_scalar_wider_than(args, types, mem, align, env):
     ty = _slot_at(types, idx)
     if ty is None or bits is None:
         return None
-    size = _size_or_none(ty, env)
-    if size is None:
-        return None
     if not E.is_scalar(ty):
         return False
-    return size > bits
+    size = _size_or_none(ty, env)
+    return None if size is None else size > bits
 
 
 @predicate("scalarOrEltNarrowerThan")
@@ -656,8 +712,10 @@ def _pred_size_not_pow2(args, types, mem, align, env):
     ty = _slot_at(types, idx)
     if ty is None:
         return None
+    if not E.is_scalar(ty):
+        return False
     size = _size_or_none(ty, env)
-    return None if size is None else E.is_scalar(ty) and not pow2(size)
+    return None if size is None else not pow2(size)
 
 
 @predicate("sizeNotMultipleOf")
@@ -821,6 +879,32 @@ def _pred_mem_size_not_byte_size_pow2(args, types, mem, align, env):
     return size == 0 or not pow2(size // 8)
 
 
+_ATOMIC_ORDER = {
+    "NotAtomic": 0,
+    "Unordered": 1,
+    "Monotonic": 2,
+    "Acquire": 3,
+    "Release": 4,
+    "AcquireRelease": 5,
+    "SequentiallyConsistent": 6,
+}
+
+
+@predicate("atomicOrderingAtLeastOrStrongerThan")
+def _pred_atomic_order_at_least(args, types, mem, align, env):
+    # Corpus points do not carry an MMO ordering field; the sidecar builds
+    # every memory operand with the LLVM default, AtomicOrdering::NotAtomic.
+    # Modelling that value is therefore faithful to the executed MIR.
+    if len(args) < 2:
+        return None
+    order = args[1]
+    name = getattr(order, "name", None) or getattr(order, "text", "")
+    name = str(name).rsplit("::", 1)[-1]
+    if name not in _ATOMIC_ORDER:
+        return None
+    return _ATOMIC_ORDER["NotAtomic"] >= _ATOMIC_ORDER[name]
+
+
 @predicate("immIs")
 @predicate("immIsNot")
 @predicate("immInSet")
@@ -843,6 +927,17 @@ def _pred_match(node, types, mem, align, env):
         impl = PREDICATE_IMPL.get(name)
         if impl is not None:
             return impl(node.args, types, mem, align, env)
+        if name in ("LegalityPredicate", "std::function") and node.args:
+            inner = node.args[0]
+            if isinstance(inner, E.Lambda):
+                return lambda_bool(inner, types, mem, align, env)
+            return _pred_match(inner, types, mem, align, env)
+        if name == "is_contained" and len(node.args) >= 2:
+            container = _query_value(node.args[0], types, mem, env)
+            item = _query_value(node.args[1], types, mem, env)
+            if isinstance(container, (list, tuple)) and item is not None:
+                return item in container
+            return None
         # Lambda locals hold LLT values; ``SrcTy.isVector()`` and friends are
         # LLT methods, not DSL predicates.
         try:
@@ -864,6 +959,9 @@ def _pred_match(node, types, mem, align, env):
                     "<": left < right, ">": left > right,
                     "<=": left <= right, ">=": left >= right,
                 }[node.op]
+        value = _query_value(node, types, mem, env)
+        if isinstance(value, int) and not isinstance(value, bool):
+            return bool(value)
         left = _pred_match(node.left, types, mem, align, env)
         if left is None:
             return None
@@ -882,7 +980,18 @@ def _pred_match(node, types, mem, align, env):
         return _pred_match(node.then if cond else node.other,
                            types, mem, align, env)
     if isinstance(node, E.Ident):
+        name = node.name.rsplit("::", 1)[-1]
+        if name in ("always", "true"):
+            return True
+        if name in ("never", "false"):
+            return False
         value = env.get(node.name)
+        if isinstance(value, bool):
+            return value
+        try:
+            value = E.eval_expr(node, env)
+        except E.ExprError:
+            return None
         return value if isinstance(value, bool) else None
     if isinstance(node, E.Num):
         return bool(node.value)
@@ -1128,6 +1237,18 @@ def list_matches(entries, types, mem, align):
                 return True
             continue
         llts = [x for x in item if E.is_llt(x)]
+        # legalFor({{a,b}, ...}) is typePairInSet(0, 1, ...): it only compares
+        # the named type indices, even when the opcode has more operand types
+        # (G_VECREDUCE_FADD has three).
+        if len(llts) == 2:
+            if len(types) >= 2 and types[0] == llts[0] and types[1] == llts[1]:
+                return True
+            continue
+        if len(llts) == 3:
+            if (len(types) >= 3 and types[0] == llts[0]
+                    and types[1] == llts[1] and types[2] == llts[2]):
+                return True
+            continue
         if len(llts) == len(types) and all(
                 a == b for a, b in zip(llts, types, strict=True)):
             return True
@@ -1135,9 +1256,213 @@ def list_matches(entries, types, mem, align):
 
 
 def cartesian_matches(lists, types):
+    # actionForCartesianProduct: one list means "types 0 and 1 are both in
+    # this list"; two/three lists map to their type index respectively.
+    if len(lists) == 1:
+        if not types:
+            return False
+        if len(types) == 1:
+            return types[0] in lists[0]
+        return types[0] in lists[0] and types[1] in lists[0]
     if len(lists) > len(types):
         return False
     return all(types[i] in lst for i, lst in enumerate(lists))
+
+
+def args_without_feature_gate(rule):
+    """Arguments after an optional leading ``HasFeature`` predicate.
+
+    ``minScalar(HasCSSC, 0, s32)`` is the gated overload of
+    ``minScalar(0, s32)``; the feature value is already reflected by
+    ``Rule.active``.  ``Rule.active`` uses the same convention.
+    """
+    args = list(rule.args)
+    values = list(rule.evaluated_args)
+    if values and isinstance(values[0], bool) and len(args) > 1:
+        return args[1:], values[1:]
+    return args, values
+
+
+class _OpaqueLambda(Exception):
+    """The statement subset in a lambda body is not modelled."""
+
+
+_NO_RETURN = object()
+
+
+def _lambda_bool_value(node, types, mem, align, env):
+    value = _pred_match(node, types, mem, align, env)
+    if value is not None:
+        return value
+    try:
+        value = E.eval_expr(node, env)
+    except E.ExprError:
+        return None
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, int):
+        return bool(value)
+    return None
+
+
+def _statement_span(toks, start, end):
+    """(statement_end, next_statement_start) for one C++ statement."""
+    if start >= end:
+        return end, end
+    if toks[start].text == "{":
+        close = matching(toks, start, end)
+        if close < 0:
+            raise _OpaqueLambda()
+        return close + 1, close + 1
+    depth = 0
+    i = start
+    while i < end:
+        text = toks[i].text
+        if text in ("(", "[", "{"):
+            depth += 1
+        elif text in (")", "]", "}"):
+            if depth == 0:
+                break
+            depth -= 1
+        elif text == ";" and depth == 0:
+            return i + 1, i + 1
+        i += 1
+    raise _OpaqueLambda()
+
+
+def _lambda_exec_block(toks, start, end, types, mem, align, env, opcode):
+    """Execute the modelled subset of a lambda body; ``_NO_RETURN`` if none."""
+    i = start
+    while i < end:
+        text = toks[i].text
+        if text == ";":
+            i += 1
+            continue
+        if text in ("switch", "for", "while", "do", "goto"):
+            raise _OpaqueLambda()
+        if text == "{":
+            close = matching(toks, i, end)
+            if close < 0:
+                raise _OpaqueLambda()
+            value = _lambda_exec_block(toks, i + 1, close, types, mem, align,
+                                       env, opcode)
+            if value is not _NO_RETURN:
+                return value
+            i = close + 1
+            continue
+        if text == "return":
+            j = i + 1
+            while j < end and toks[j].text != ";":
+                j += 1
+            if j >= end:
+                raise _OpaqueLambda()
+            node = E.Parser(toks, i + 1, j).parse_expr()
+            value = _lambda_bool_value(node, types, mem, align, env)
+            if value is None:
+                raise _OpaqueLambda()
+            return value
+        if text == "if":
+            if i + 1 >= end or toks[i + 1].text != "(":
+                raise _OpaqueLambda()
+            close = matching(toks, i + 1, end)
+            if close < 0:
+                raise _OpaqueLambda()
+            node = E.Parser(toks, i + 2, close).parse_expr()
+            cond = _lambda_bool_value(node, types, mem, align, env)
+            if cond is None:
+                raise _OpaqueLambda()
+            then_start = close + 1
+            then_end, after = _statement_span(toks, then_start, end)
+            if cond:
+                value = _lambda_exec_block(toks, then_start, then_end, types,
+                                           mem, align, env, opcode)
+                if value is not _NO_RETURN:
+                    return value
+            i = after
+            if i < end and toks[i].text == "else":
+                else_start = i + 1
+                else_end, after_else = _statement_span(toks, else_start, end)
+                if not cond:
+                    value = _lambda_exec_block(toks, else_start, else_end,
+                                               types, mem, align, env, opcode)
+                    if value is not _NO_RETURN:
+                        return value
+                i = after_else
+            continue
+        # Declaration or assignment: find ';' and a top-level '='.
+        depth = 0
+        semi = i
+        while semi < end:
+            part = toks[semi].text
+            if part in ("(", "[", "{"):
+                depth += 1
+            elif part in (")", "]", "}"):
+                if depth == 0:
+                    raise _OpaqueLambda()
+                depth -= 1
+            elif part == ";" and depth == 0:
+                break
+            semi += 1
+        if semi >= end:
+            raise _OpaqueLambda()
+        eq = -1
+        depth = 0
+        for k in range(i, semi):
+            part = toks[k].text
+            if part in ("(", "[", "{"):
+                depth += 1
+            elif part in (")", "]", "}"):
+                depth -= 1
+            elif part == "=" and depth == 0:
+                eq = k
+        if eq > i:
+            name_tok = toks[eq - 1]
+            if name_tok.kind != "id":
+                raise _OpaqueLambda()
+            node = E.Parser(toks, eq + 1, semi).parse_expr()
+            try:
+                value = E.eval_expr(node, env)
+            except E.ExprError:
+                value = _query_value(node, types, mem, env)
+            if value is None:
+                raise _OpaqueLambda()
+            env[name_tok.text] = value
+        i = semi + 1
+    return _NO_RETURN
+
+
+def lambda_bool(lam, types, mem, align, env, opcode=None):
+    """True/False/None for a predicate lambda, including simple statements."""
+    if lam is None:
+        return None
+    expr = lambda_expr(lam)
+    local = dict(env)
+    local.update(lambda_local_env(lam, opcode, types, mem, env))
+    local["__types__"] = types
+    local["__mem__"] = mem
+    if expr is not None:
+        return _pred_match(expr, types, mem, align, local)
+    try:
+        value = _lambda_exec_block(lam.body, 0, len(lam.body), types, mem,
+                                   align, local, opcode)
+    except _OpaqueLambda:
+        return None
+    if value is _NO_RETURN or not isinstance(value, bool):
+        return None
+    return value
+
+
+def predicate_value(node, types, mem, align, env, opcode=None):
+    """Evaluate a predicate argument, resolving inline or named lambdas."""
+    while isinstance(node, E.Call) and node.name.rsplit("::", 1)[-1] in (
+            "LegalityPredicate", "std::function"):
+        if not node.args:
+            return None
+        node = node.args[0]
+    if isinstance(node, E.Lambda):
+        return lambda_bool(node, types, mem, align, env, opcode)
+    return _pred_match(node, types, mem, align, env)
+
 
 
 def rule_matches(rule, types, mem, align, env, opcode=None):
@@ -1147,7 +1472,7 @@ def rule_matches(rule, types, mem, align, env, opcode=None):
     if state is None:
         return None
     method = rule.method
-    a = rule.evaluated_args
+    pred_args, a = args_without_feature_gate(rule)
     if method in ("legalFor", "customFor", "lowerFor", "libcallFor",
                   "legalForTypesWithMemDesc"):
         entries = first_list(a)
@@ -1157,10 +1482,10 @@ def rule_matches(rule, types, mem, align, env, opcode=None):
     if method in ("legalForCartesianProduct", "customForCartesianProduct",
                   "lowerForCartesianProduct", "libcallForCartesianProduct"):
         lists = [v for v in a if isinstance(v, list)]
-        if len(lists) < len(types):
+        if not lists:
             return None
         return cartesian_matches(lists, types)
-    if method in ("alwaysLegal", "lower", "libcall", "custom"):
+    if method in ("alwaysLegal", "lower", "libcall", "custom", "unsupported"):
         return True
     if method in ("clampScalar", "clampScalarOrElt"):
         slot, lo, hi = int_arg(a, 0), llt_arg(a, 1), llt_arg(a, 2)
@@ -1184,6 +1509,17 @@ def rule_matches(rule, types, mem, align, env, opcode=None):
         if method == "minScalar":
             return size < E.llt_bits(bound, env.get("__pointer_bits__", 0))
         return size > E.llt_bits(bound, env.get("__pointer_bits__", 0))
+    if method in ("minScalarSameAs", "maxScalarSameAs"):
+        slot, other = int_arg(a, 0), int_arg(a, 1)
+        if slot is None or other is None:
+            return None
+        if not (0 <= slot < len(types) and 0 <= other < len(types)):
+            return None
+        other_bits = scalar_bits(types[other], env)
+        own_bits = size_bits(types[slot], env)
+        if method == "minScalarSameAs":
+            return other_bits > own_bits
+        return other_bits < own_bits
     if method in ("widenScalarToNextPow2", "widenScalarOrEltToNextPow2"):
         slot = int_arg(a, 0)
         if slot is None or not (0 <= slot < len(types)):
@@ -1226,19 +1562,94 @@ def rule_matches(rule, types, mem, align, env, opcode=None):
             return None
         return scalar_bits(types[idx0], env) != scalar_bits(types[idx1], env)
     if method == "widenScalarIf":
+        if not pred_args:
+            return None
+        return predicate_value(pred_args[0], types, mem, align, env, opcode)
+    if method in ("customIf", "legalIf", "lowerIf", "unsupportedIf",
+                  "narrowScalarIf", "moreElementsIf", "fewerElementsIf",
+                  "bitcastIf"):
+        if not pred_args:
+            return None
+        return predicate_value(pred_args[0], types, mem, align, env, opcode)
+    if method == "scalarizeIf":
+        slot = int_arg(a, 1)
+        if slot is None or not (0 <= slot < len(types)):
+            return None
+        if not pred_args:
+            return None
+        predicate = predicate_value(pred_args[0], types, mem, align, env,
+                                    opcode)
+        return None if predicate is None else (
+            predicate and E.is_vec(types[slot]))
+    if method == "widenVectorEltsToVectorMinSize":
+        slot, min_size = int_arg(a, 0), int_arg(a, 1)
+        if slot is None or min_size is None or not (0 <= slot < len(types)):
+            return None
+        ty = types[slot]
+        if not E.is_vec(ty) or ty[0] != "v":
+            return False
+        return size_bits(ty, env) < min_size
+    if method == "widenScalarOrEltToNextPow2OrMinSize":
+        slot = int_arg(a, 0)
+        min_size = int_arg(a, 1) or 0
+        if slot is None or not (0 <= slot < len(types)):
+            return None
+        ty = types[slot]
+        width = scalar_bits(ty, env)
+        return width < min_size or not pow2(width)
+    if method in ("unsupportedIfMemSizeNotPow2", "lowerIfMemSizeNotPow2",
+                  "lowerIfMemSizeNotByteSizePow2"):
+        if mem is None:
+            return None
+        pred = E.Call(
+            "memSizeNotByteSizePow2" if
+            method == "lowerIfMemSizeNotByteSizePow2"
+            else "memSizeInBytesNotPow2", [])
+        return _pred_match(pred, types, mem, align, env)
+    if method in ("minScalarOrElt", "minScalarOrEltIf",
+                  "minScalarIf", "maxScalarIf"):
+        base = 1 if method in ("minScalarOrEltIf", "minScalarIf",
+                               "maxScalarIf") else 0
+        slot, bound = int_arg(a, base), llt_arg(a, base + 1)
+        if slot is None or bound is None or not (0 <= slot < len(types)):
+            return None
+        predicate = True
+        if base == 1:
+            if not pred_args:
+                return None
+            predicate = predicate_value(pred_args[0], types, mem, align, env,
+                                        opcode)
+            if predicate is None:
+                return None
+        width = scalar_bits(types[slot], env)
+        bound_bits = E.llt_bits(bound, env.get("__pointer_bits__", 0))
+        if method == "maxScalarIf":
+            return predicate and width > bound_bits
+        return predicate and width < bound_bits
+    if method in ("minScalarEltSameAsIf", "maxScalarEltSameAsIf"):
+        small, large = int_arg(a, 1), int_arg(a, 2)
+        if small is None or large is None:
+            return None
+        if not (0 <= small < len(types) and 0 <= large < len(types)):
+            return None
+        if not pred_args:
+            return None
+        predicate = predicate_value(pred_args[0], types, mem, align, env,
+                                    opcode)
+        if predicate is None:
+            return None
+        if method == "minScalarEltSameAsIf":
+            return predicate and (scalar_bits(types[small], env)
+                                  < scalar_bits(types[large], env))
+        return predicate and (scalar_bits(types[small], env)
+                              > scalar_bits(types[large], env))
+    if method in ("widenScalarFor", "unsupportedFor"):
         if not a:
             return None
-        return _pred_match(rule.args[0], types, mem, align, env)
-    if method in ("customIf", "legalIf", "lowerIf"):
-        lam = next((x for x in rule.args if isinstance(x, E.Lambda)), None)
-        expr = lambda_expr(lam)
-        if expr is None:
+        entries = first_list(a)
+        if entries is None:
             return None
-        local = dict(env)
-        local.update(lambda_local_env(lam, opcode, types, mem, env))
-        return _pred_match(expr, types, mem, align, local)
-    if method == "scalarizeIf":
-        return None
+        return list_matches(entries, types, mem, align)
     return None
 
 
@@ -1258,6 +1669,17 @@ def pred_witness(node, classes, env=None):
     if not isinstance(node, E.Call):
         return None
     name, args = node.name, node.args
+    if name in ("isVector", "isScalar", "isPointer", "isPointerVector"):
+        idx = _arg_int(args, 0, env)
+        if idx is None:
+            return None
+        if name == "isVector":
+            return ({idx: E.vec(2, E.scalar(8))}, None, 0)
+        if name == "isScalar":
+            return ({idx: E.scalar(8)}, None, 0)
+        if name == "isPointer":
+            return ({idx: E.ptr(0)}, None, 0)
+        return ({idx: E.vec(2, E.ptr(0))}, None, 0)
     if name in ("typeIs", "typeIsNot", "typeInSet"):
         idx = _arg_int(args, 0, env)
         if name == "typeInSet":
@@ -1412,6 +1834,133 @@ def all_vector_candidates(classes):
     return out
 
 
+def predicate_slots(node, env=None, _depth=0):
+    """Type slot indices a predicate argument reads."""
+    env = env or {}
+    out = set()
+    if _depth > 12:
+        return out
+    if isinstance(node, E.Lambda):
+        toks = node.body
+        k = 0
+        while k + 2 < len(toks):
+            if (toks[k].text == "Types" and toks[k + 1].text == "["
+                    and k + 2 < len(toks)):
+                v = toks[k + 2]
+                if v.kind == "num":
+                    out.add(int(v.text))
+                elif v.kind == "id":
+                    idx = safe_eval(E.Ident(v.text), env)
+                    if isinstance(idx, int):
+                        out.add(idx)
+                k += 3
+                continue
+            k += 1
+        k = 0
+        while k + 2 < len(toks):
+            t = toks[k]
+            if t.kind == "id" and toks[k + 1].text == "(":
+                close = matching(toks, k + 1)
+                if close < 0:
+                    k += 1
+                    continue
+                try:
+                    args = parse_args(toks, k + 1, close, env)
+                except E.ExprError:
+                    args = []
+                for i in predicate_slot_roles(t.text, len(args)):
+                    if i < len(args):
+                        idx = safe_eval(args[i], env)
+                        if isinstance(idx, int):
+                            out.add(idx)
+                k = close
+            k += 1
+        return out
+    if isinstance(node, E.Call):
+        name = node.name.rsplit("::", 1)[-1]
+        for i in predicate_slot_roles(name, len(node.args)):
+            if i < len(node.args):
+                idx = safe_eval(node.args[i], env)
+                if isinstance(idx, int):
+                    out.add(idx)
+        for arg in node.args:
+            out |= predicate_slots(arg, env, _depth + 1)
+        return out
+    if isinstance(node, E.Binary):
+        return (predicate_slots(node.left, env, _depth + 1)
+                | predicate_slots(node.right, env, _depth + 1))
+    if isinstance(node, E.Unary):
+        return predicate_slots(node.x, env, _depth + 1)
+    if isinstance(node, E.Ternary):
+        return (predicate_slots(node.cond, env, _depth + 1)
+                | predicate_slots(node.then, env, _depth + 1)
+                | predicate_slots(node.other, env, _depth + 1))
+    if isinstance(node, E.ListLit):
+        for item in node.items:
+            out |= predicate_slots(item, env, _depth + 1)
+        return out
+    return out
+
+
+def generic_slot_pool(builder, classes, slot):
+    """Representative types for a predicate-driven slot search."""
+    out = set(classes)
+    out.update(E.scalar(b) for b in (1, 3, 7, 8, 16, 32, 64, 128))
+    for elem in (E.scalar(1), E.scalar(8), E.scalar(16), E.scalar(32),
+                 E.scalar(64), E.ptr(0)):
+        out.update(E.vec(lanes, elem) for lanes in (2, 3, 4, 8, 16))
+    for elem in (("f", 16, "ieee"), ("f", 16, "bfloat"),
+                 ("f", 32, "ieee"), ("f", 64, "ieee")):
+        out.update(E.vec(lanes, elem) for lanes in (2, 4, 8))
+    if builder.has_mem and slot == 1:
+        out.add(E.ptr(0))
+    return sorted_llts(out)
+
+
+def generic_probe_candidates(rule, builder, classes, slot_count, env,
+                             opcode=None, limit=6000):
+    """Shapes where every predicate argument of *rule* evaluates true.
+
+    This is the fallback for predicates that ``probe_candidates`` cannot
+    derive syntactically (multi-statement lambdas, ``all(...)`` combinations,
+    member-query comparisons).  It only proposes shapes; ``_search_rule_shape``
+    still requires the rule to be the first match.
+    """
+    slots = set()
+    for node in rule.args:
+        if isinstance(node, (E.Lambda, E.Call, E.Ident)):
+            slots |= predicate_slots(node, env)
+    slots = {0} | {s for s in slots if 0 <= s < slot_count}
+    slots = sorted(slots)
+    if len(slots) > 2:
+        # Keep the result slot and the first predicate slot; a full product is
+        # the P4 shape-space problem, not a single-rule witness.
+        extra = [s for s in slots if s != 0][:1]
+        slots = [0, *extra]
+    pools = [generic_slot_pool(builder, classes, s) for s in slots]
+    base = [E.scalar(32)] * slot_count
+    out = []
+    seen = set()
+    for combo in itertools.product(*[p[:64] for p in pools]):
+        types = list(base)
+        for slot, ty in zip(slots, combo, strict=False):
+            types[slot] = ty
+        key = tuple(types)
+        if key in seen:
+            continue
+        seen.add(key)
+        verdict = rule_matches(rule, types, None, 0, env, opcode)
+        # A memory-dependent predicate cannot be decided without an MMO; the
+        # caller varies mem, so keep None candidates instead of dropping them.
+        if verdict is not False:
+            slots_map = {slot: ty for slot, ty in zip(slots, combo,
+                                                     strict=False)}
+            out.append((slots_map, None, 0, "decided"))
+            if len(out) >= limit:
+                break
+    return out
+
+
 def probe_candidates(builder, rule, classes, rep, mem, opcode=None):
     """Every candidate shape worth trying for *rule*.
 
@@ -1421,7 +1970,7 @@ def probe_candidates(builder, rule, classes, rep, mem, opcode=None):
     if rule.active is False:
         return []
     method = rule.method
-    a = rule.evaluated_args
+    _, a = args_without_feature_gate(rule)
 
     if method == "alwaysLegal":
         return [({}, None, 0, "decided")]
@@ -1450,8 +1999,10 @@ def probe_candidates(builder, rule, classes, rep, mem, opcode=None):
             return []
         out = []
         for combo in itertools.product(*lists):
-            out.append(({i: ty for i, ty in enumerate(combo)}, None, 0,
-                        "decided"))
+            slots = {i: ty for i, ty in enumerate(combo)}
+            if len(lists) == 1 and builder.num_slots >= 2:
+                slots[1] = combo[0]
+            out.append((slots, None, 0, "decided"))
             if len(out) >= 64:
                 break
         return out
@@ -1476,6 +2027,28 @@ def probe_candidates(builder, rule, classes, rep, mem, opcode=None):
             return []
         return [({slot: ty}, None, 0, "decided")
                 for ty in scalar_candidates(classes, lo[0])]
+
+    if method in ("minScalarSameAs", "maxScalarSameAs"):
+        slot, other = int_arg(a, 0), int_arg(a, 1)
+        if slot is None or other is None:
+            return []
+        out = []
+        pool = list(scalar_candidates(classes)) + list(
+            all_vector_candidates(classes))
+        for left in pool:
+            for right in pool:
+                right_bits = E.llt_scalar_bits(right)
+                left_bits = E.llt_bits(left)
+                hit = ((method == "minScalarSameAs"
+                        and right_bits > left_bits)
+                       or (method == "maxScalarSameAs"
+                           and right_bits < left_bits))
+                if hit:
+                    out.append(({slot: left, other: right}, None, 0,
+                                "decided"))
+                    if len(out) >= 128:
+                        return out
+        return out
 
     if method in ("widenScalarToNextPow2", "widenScalarOrEltToNextPow2"):
         slot = int_arg(a, 0)
@@ -1542,10 +2115,107 @@ def probe_candidates(builder, rule, classes, rep, mem, opcode=None):
         got = probe_from_lambda(lam, classes, rep, mem, opcode)
         return [(*got, "opaque")] if got is not None else []
 
-    if method in ("customIf", "legalIf", "lowerIf"):
+    if method in ("customIf", "legalIf", "lowerIf", "narrowScalarIf",
+                  "moreElementsIf", "fewerElementsIf", "bitcastIf"):
         lam = next((x for x in rule.args if isinstance(x, E.Lambda)), None)
-        got = probe_from_lambda(lam, classes, rep, mem, opcode)
+        got = (probe_from_lambda(lam, classes, rep, mem, opcode)
+               if lam is not None else
+               pred_witness(rule.args[0], classes) if rule.args else None)
         return [(*got, "opaque")] if got is not None else []
+
+    if method == "widenVectorEltsToVectorMinSize":
+        slot, min_size = int_arg(a, 0), int_arg(a, 1)
+        if slot is None or min_size is None:
+            return []
+        return [({slot: ty}, None, 0, "decided")
+                for ty in all_vector_candidates(classes)
+                if ty[0] == "v" and E.llt_bits(ty) < min_size]
+
+    if method == "widenScalarOrEltToNextPow2OrMinSize":
+        slot = int_arg(a, 0)
+        min_size = int_arg(a, 1) or 0
+        if slot is None:
+            return []
+        out = []
+        for ty in list(scalar_candidates(classes)) + list(
+                all_vector_candidates(classes)):
+            width = E.llt_scalar_bits(ty)
+            if width < min_size or not pow2(width):
+                out.append(({slot: ty}, None, 0, "decided"))
+        return out
+
+    if method in ("unsupportedIfMemSizeNotPow2", "lowerIfMemSizeNotPow2",
+                  "lowerIfMemSizeNotByteSizePow2"):
+        out = []
+        mem_pool = set(builder.mem_classes)
+        # A predicate about non-power-of-two memory sizes needs a boundary
+        # representative even when the reviewed memory axis has none.
+        mem_pool.update(E.scalar(bits) for bits in
+                        (8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 128, 192,
+                         256))
+        for mem_ty in sorted_llts(mem_pool):
+            if E.llt_bits(mem_ty) % 8:
+                continue
+            bytes_ = E.llt_bits(mem_ty) // 8
+            bad = (not pow2(bytes_)) if method == "lowerIfMemSizeNotByteSizePow2" \
+                else (not pow2(max(1, bytes_)))
+            if bad:
+                out.append(({}, mem_ty, max(1, bytes_), "decided"))
+        return out
+
+    if method in ("minScalarOrElt", "minScalarOrEltIf", "minScalarIf",
+                  "maxScalarIf"):
+        base = 1 if method in ("minScalarOrEltIf", "minScalarIf",
+                               "maxScalarIf") else 0
+        slot, bound = int_arg(a, base), llt_arg(a, base + 1)
+        if slot is None or bound is None:
+            return []
+        bound_bits = E.llt_bits(bound)
+        out = []
+        for ty in list(scalar_candidates(classes)) + list(
+                all_vector_candidates(classes)):
+            width = E.llt_scalar_bits(ty)
+            hit = (width > bound_bits if method == "maxScalarIf"
+                   else width < bound_bits)
+            if hit:
+                out.append(({slot: ty}, None, 0, "decided"))
+        if base == 1 and rule.args:
+            got = (pred_witness(rule.args[0], classes)
+                   if not isinstance(rule.args[0], E.Lambda)
+                   else probe_from_lambda(rule.args[0], classes, rep, mem,
+                                          opcode))
+            if got is None:
+                # The generic predicate search will supply the shape.
+                return out
+            slots, memdesc, align = got
+            out = [({**slots, **probe}, memdesc, align, "decided")
+                   for probe, _, _, _ in out]
+        return out
+
+    if method in ("minScalarEltSameAsIf", "maxScalarEltSameAsIf"):
+        small, large = int_arg(a, 1), int_arg(a, 2)
+        if small is None or large is None:
+            return []
+        out = []
+        for left in scalar_candidates(classes):
+            for right in scalar_candidates(classes):
+                if method == "minScalarEltSameAsIf":
+                    hit = left[1] < right[1]
+                else:
+                    hit = left[1] > right[1]
+                if hit:
+                    out.append(({small: left, large: right}, None, 0,
+                                "decided"))
+        return out
+
+    if method in ("widenScalarFor", "unsupportedFor"):
+        entries = first_list(a)
+        out = []
+        for item in entries or []:
+            got = item_to_probe(item)
+            if got is not None:
+                out.append((*got, "decided"))
+        return out
 
     return []
 
@@ -1587,50 +2257,73 @@ def types_variants(base, target_slots, builder, classes):
 
 
 def _search_rule_shape(builder, rule, classes, mem_classes, rep, mem, env,
-                       opcode=None):
+                       opcode=None, slot_count=None, generic=False):
     """Search one opcode's shapes for a verdict where *rule* is the first match."""
-    candidates = probe_candidates(builder, rule, classes, rep, mem, opcode)
-    if not candidates:
+    slots_total = max(1, slot_count or builder.num_slots)
+    needs_mem = "MemoryTy" in (rule.arg_text[0] if rule.arg_text else "")
+    declared = probe_candidates(builder, rule, classes, rep, mem, opcode)
+
+    def scan(candidates, state):
+        shadow, unknown, self_false, self_unknown, evaluated = state
+        for slots, memdesc, align, confidence in candidates:
+            base = [rep] * slots_total
+            for i, ty in slots.items():
+                if 0 <= i < len(base):
+                    base[i] = ty
+            if builder.has_mem:
+                base = base[:2]
+                while len(base) < 2:
+                    base.append(E.ptr(0))
+                probe_mem = memdesc if memdesc is not None else mem
+                probe_align = align if memdesc is not None else 1
+            else:
+                probe_mem = None
+                probe_align = 0
+            mem_variants = [probe_mem]
+            if builder.has_mem and memdesc is None:
+                mem_pool = [m for m in [probe_mem, *list(mem_classes), base[0]]
+                            if m is not None]
+                if needs_mem:
+                    # The memory type axis is part of the predicate signature;
+                    # an extending/index load can require a narrower memory
+                    # type than the reviewed mem-classes list contains.
+                    mem_pool += [E.scalar(bits) for bits in
+                                 (8, 16, 32, 64, 128)]
+                mem_variants = sorted_llts(set(mem_pool)) or [probe_mem]
+            for candidate_mem in mem_variants:
+                for types in types_variants(base, set(slots), builder, classes):
+                    evaluated = True
+                    own = rule_matches(rule, types, candidate_mem,
+                                       probe_align, env, opcode)
+                    if own is True:
+                        self_false = False
+                    elif own is None:
+                        self_unknown = True
+                    verdict, first = first_match(builder, types, candidate_mem,
+                                                 probe_align, env, opcode)
+                    if verdict == "match" and first == rule.index:
+                        return ((types, candidate_mem, probe_align, confidence),
+                                state)
+                    if verdict == "unknown" and unknown is None:
+                        unknown = first
+                    if verdict == "match":
+                        shadow = first if shadow is None else max(shadow, first)
+        return None, (shadow, unknown, self_false, self_unknown, evaluated)
+
+    state = (None, None, True, False, False)
+    got, state = scan(declared, state)
+    if got is not None:
+        return got, None
+    if generic:
+        extra = generic_probe_candidates(rule, builder, classes, slots_total,
+                                         env, opcode)
+        if extra:
+            got, state = scan(extra, state)
+            if got is not None:
+                return got, None
+    if not state[4]:
         return None, ("no candidate shape", None, "no_candidate")
-    shadow = None
-    unknown = None
-    self_false = True
-    self_unknown = False
-    for slots, memdesc, align, confidence in candidates:
-        base = [rep] * max(1, builder.num_slots)
-        for i, ty in slots.items():
-            if 0 <= i < len(base):
-                base[i] = ty
-        if builder.has_mem:
-            base = base[:2]
-            while len(base) < 2:
-                base.append(E.ptr(0))
-            probe_mem = memdesc if memdesc is not None else mem
-            probe_align = align if memdesc is not None else 1
-        else:
-            probe_mem = None
-            probe_align = 0
-        mem_variants = [probe_mem]
-        if builder.has_mem and memdesc is None:
-            mem_variants = sorted_llts(set(
-                [probe_mem, *list(mem_classes), base[0]]))
-        for candidate_mem in mem_variants:
-            for types in types_variants(base, set(slots), builder, classes):
-                own = rule_matches(rule, types, candidate_mem,
-                                   probe_align, env, opcode)
-                if own is True:
-                    self_false = False
-                elif own is None:
-                    self_unknown = True
-                verdict, first = first_match(builder, types, candidate_mem,
-                                             probe_align, env, opcode)
-                if verdict == "match" and first == rule.index:
-                    return ((types, candidate_mem, probe_align, confidence),
-                            None)
-                if verdict == "unknown" and unknown is None:
-                    unknown = first
-                if verdict == "match":
-                    shadow = first if shadow is None else max(shadow, first)
+    shadow, unknown, self_false, self_unknown, _ = state
     if self_false and not self_unknown:
         return None, ("predicate false for every candidate in this configuration",
                       None, "predicate_false")
@@ -1644,13 +2337,14 @@ def _search_rule_shape(builder, rule, classes, mem_classes, rep, mem, env,
                   None, "no_candidate")
 
 
-def rule_probes(builder, classes, mem_classes, env):
+def rule_probes(builder, classes, mem_classes, env, profile=None):
     out = []
     issues = []
     rep = rep_class(classes)
     mem = (sorted_llts(mem_classes) or [rep])[0]
     opcodes = list(builder.opcodes)
     env = dict(env)
+    env.update(getattr(builder, "predicate_locals", None) or {})
     env.update(getattr(builder, "locals", None) or {})
     for rule in builder.rules:
         if rule.active is False:
@@ -1658,9 +2352,11 @@ def rule_probes(builder, classes, mem_classes, env):
         chosen = {}
         diagnoses = {}
         for opcode in opcodes:
-            got, diagnosis = _search_rule_shape(builder, rule, classes,
-                                                mem_classes, rep, mem, env,
-                                                opcode)
+            got, diagnosis = _search_rule_shape(
+                builder, rule, classes, mem_classes, rep, mem, env, opcode,
+                probe_slot_count(builder, opcode, profile),
+                generic=bool(profile is not None
+                             and getattr(profile, "probe_opcode_arity", False)))
             diagnoses[opcode] = diagnosis
             if got is not None:
                 chosen[opcode] = got
@@ -1928,7 +2624,8 @@ def build_points(result, tier, exceptions=None, profile=None):
         points.extend(address_space(builder, classes,
                                    profile.skip_witness_slot1_as))
         points.extend(opcode_probes(builder, classes, mem_classes))
-        built, rule_issues = rule_probes(builder, classes, mem_classes, env)
+        built, rule_issues = rule_probes(builder, classes, mem_classes, env,
+                                         profile)
         points.extend(built)
         issues.extend(rule_issues)
 

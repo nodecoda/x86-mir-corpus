@@ -185,6 +185,9 @@ class Builder:
     # Scalar constructor locals (BigTyIdx, HasFP16, ...) the rule lambdas
     # close over.  They are needed to evaluate those lambdas later.
     locals: dict = field(default_factory=dict)
+    # Non-scalar constructor locals (e.g. PackedVectorAllTypesVec) that rule
+    # predicates use with llvm::is_contained.  Not serialized in the AST.
+    predicate_locals: dict = field(default_factory=dict, repr=False)
 
     @property
     def num_slots(self):
@@ -526,6 +529,10 @@ class BodyParser:
             opcodes=opcodes,
             line=self.toks[i].line,
             locals=scalar_locals(env),
+            predicate_locals={name: value for name, value in env.items()
+                              if not name.startswith("__")
+                              and (isinstance(value, list)
+                                   or E.is_llt(value))},
         )
         self.state.builders.append(builder)
         self.state.call_sites += 1
@@ -559,6 +566,7 @@ class BodyParser:
         if close < 0:
             return end, None
         args = parse_args(self.toks, open_i, close, env)
+        args = [resolve_local_lambdas(a, env) for a in args]
         evaluated = []
         for arg in args:
             if isinstance(arg, (E.Lambda, E.Unknown)):
@@ -716,6 +724,37 @@ class BodyParser:
                 break
             j += 1
         if eq < 0 or j >= end or self.toks[j].text != ";":
+            # Constructor-style container declaration:
+            #   SmallVector<LLT, 8> PackedVectorAllTypesVec(Name);
+            # It has no '=', but binding the list keeps named class sets
+            # available to llvm::is_contained predicates.
+            k = i
+            depth = 0
+            paren = -1
+            while k < end:
+                part = self.toks[k].text
+                if part == ";":
+                    break
+                if part == "(" and depth == 0:
+                    paren = k
+                    break
+                if part in ("(", "[", "{"):
+                    depth += 1
+                elif part in (")", "]", "}"):
+                    depth -= 1
+                k += 1
+            if paren > i and self.toks[paren - 1].kind == "id":
+                close = matching(self.toks, paren, end)
+                if close > 0:
+                    try:
+                        init_args = parse_args(self.toks, paren, close, env)
+                        value = (E.eval_expr(init_args[0], env)
+                                 if init_args else None)
+                    except E.ExprError:
+                        value = None
+                    if isinstance(value, list):
+                        env[self.toks[paren - 1].text] = value
+                        return close + 1
             return skip_statement(self.toks, i, end)
         name_tok = self.toks[eq - 1] if eq > i else None
         if name_tok is None or name_tok.kind != "id":
@@ -820,6 +859,46 @@ def extract_mutation(method, args, env):
         return {"kind": "none", "name": None, "type_idx": None,
                 "target": None}
     return {"kind": "unknown", "name": None, "type_idx": None, "target": None}
+
+
+def resolve_local_lambdas(node, env, _depth=0):
+    """Replace an identifier bound to a constructor lambda with that lambda.
+
+    Named predicates such as ``ExtLegalFunc``/``IsPtrVecPred`` are locals in
+    the legalizer constructor.  Inlining them keeps the rule AST
+    self-contained and lets the predicate evaluator see the body.
+    """
+    if _depth > 12:
+        return node
+    if isinstance(node, E.Ident):
+        value = env.get(node.name)
+        return value if isinstance(value, E.Lambda) else node
+    if isinstance(node, E.Lambda):
+        return node
+    if isinstance(node, E.Call):
+        node.args = [resolve_local_lambdas(a, env, _depth + 1)
+                     for a in node.args]
+        if node.receiver is not None:
+            node.receiver = resolve_local_lambdas(node.receiver, env,
+                                                  _depth + 1)
+        return node
+    if isinstance(node, E.Binary):
+        node.left = resolve_local_lambdas(node.left, env, _depth + 1)
+        node.right = resolve_local_lambdas(node.right, env, _depth + 1)
+        return node
+    if isinstance(node, E.Unary):
+        node.x = resolve_local_lambdas(node.x, env, _depth + 1)
+        return node
+    if isinstance(node, E.Ternary):
+        node.cond = resolve_local_lambdas(node.cond, env, _depth + 1)
+        node.then = resolve_local_lambdas(node.then, env, _depth + 1)
+        node.other = resolve_local_lambdas(node.other, env, _depth + 1)
+        return node
+    if isinstance(node, E.ListLit):
+        node.items = [resolve_local_lambdas(x, env, _depth + 1)
+                      for x in node.items]
+        return node
+    return node
 
 
 def parse_args(toks, open_i, close, env):

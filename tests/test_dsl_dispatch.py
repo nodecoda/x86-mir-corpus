@@ -140,8 +140,10 @@ class PredicateModelTest(unittest.TestCase):
 
     def test_opaque_predicates_stay_undecided(self):
         self.assertIsNone(match("immIs(0, 5)", [E.scalar(32)]))
-        self.assertIsNone(match(
-            "atomicOrderingAtLeastOrStrongerThan(0, Acquire)", []))
+        # The sidecar pins MMO ordering to NotAtomic, so every "at least X"
+        # query is answered false; the predicate is exact over executed MIR.
+        self.assertIs(
+            match("atomicOrderingAtLeastOrStrongerThan(0, Acquire)", []), False)
 
 
 class ElementCountTest(unittest.TestCase):

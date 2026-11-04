@@ -4,9 +4,9 @@
  "schema": "x86-mir-corpus-legalizer-surface",
  "scopes": {
   "constructor": {
-   "exact": 846,
+   "exact": 850,
    "ignore": 10,
-   "opaque": 35,
+   "opaque": 31,
    "unknown": 0
   },
   "file": {
@@ -29,7 +29,7 @@
   }
  },
  "source": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
- "surface_sha256": "59b6b19cb64750ec6e99269050a38b826125a63c6ff3cef7f5b7968cfb89a375",
+ "surface_sha256": "332a6acc3721eae65afd2eb4cd26abb6b6f620540efbf6dc59e3db79c95587cf",
  "symbols": 126,
  "target": "aarch64",
  "version": 1

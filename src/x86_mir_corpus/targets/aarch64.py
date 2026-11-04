@@ -150,5 +150,6 @@ PROFILE = TargetProfile(
     deep_panel=DEEP_PANEL,
     skip_witness_slot1_as=SKIP_WITNESS_SLOT1_AS,
     llt_extended=True,
+    probe_opcode_arity=True,
     feature_aliases=_aliases,
 )

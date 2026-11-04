@@ -4821,7 +4821,7 @@
     },
     {
       "arity": 2,
-      "domain": "opaque",
+      "domain": "exact",
       "kind": "predicate",
       "name": "atomicOrderingAtLeastOrStrongerThan",
       "overloads": [

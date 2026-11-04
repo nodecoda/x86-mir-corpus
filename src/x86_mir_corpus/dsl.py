@@ -155,9 +155,12 @@ PREDICATE_DOMAIN = {
         "largerThan", "smallerThan", "numElementsNotPow2", "immIs", "immInSet",
         "immIsNot", "all", "any", "predNot")
 }
-# Atomic ordering needs target memory-model state that the corpus does not
-# model; the rule is recorded and reported as a coverage gap.
-PREDICATE_DOMAIN["atomicOrderingAtLeastOrStrongerThan"] = "opaque"
+# The sidecar builds every corpus memory operand through the default
+# MachineMemOperand constructor, which pins AtomicOrdering::NotAtomic.  The
+# predicate is therefore exact *over the executed MIR*: NotAtomic is weaker
+# than every ordering a rule can ask for.  Atomic opcodes still do not model
+# IR orderings; that is a corpus-fidelity gap, not a predicate gap.
+PREDICATE_DOMAIN["atomicOrderingAtLeastOrStrongerThan"] = "exact"
 
 ACTION_CARRIES_TYPE = {
     "Legal": False,

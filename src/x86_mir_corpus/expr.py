@@ -364,6 +364,13 @@ class Parser:
 
     def parse_primary(self):
         t = self.peek()
+        if t.text == "::":
+            # A leading global scope qualifier, e.g. ``::any(...)``.
+            self.take()
+            inner = self.parse_primary()
+            if isinstance(inner, Ident):
+                return Ident(f"::{inner.name}")
+            return inner
         if t.text == "(":
             self.take()
             node = self.parse_expr()
@@ -398,6 +405,11 @@ class Parser:
             items.append(self.parse_expr())
             if self.at(","):
                 self.take()
+                # C++ initializer lists commonly carry a trailing comma,
+                # e.g. legalFor({{i32, i32}, {v8i8, v8i8},}).
+                if self.at("}"):
+                    self.take()
+                    return ListLit(items)
                 continue
             self.expect("}")
             return ListLit(items)
@@ -1194,6 +1206,7 @@ FREE_FUNCTIONS = {
     "isPowerOf2": lambda value: _pow2(int(value)),
     "Log2_32": lambda value: int(value).bit_length() - 1,
     "Log2_64": lambda value: int(value).bit_length() - 1,
+    "Log2_32_Ceil": lambda value: max(0, (int(value) - 1).bit_length()),
     "alignTo": lambda value, align: (int(value) + int(align) - 1)
                                    // int(align) * int(align),
     "alignDown": lambda value, align: int(value) // int(align) * int(align),

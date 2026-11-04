@@ -22,6 +22,12 @@ class TargetProfile:
     deep_panel: tuple
     skip_witness_slot1_as: frozenset
     llt_extended: bool = False
+    # Probe rule shapes with the opcode's declared type arity instead of the
+    # largest slot index a rule mentions.  AArch64 rules often constrain a
+    # pair (src, amount) through ``legalFor({{...}, ...})`` without naming
+    # slot 1 in any argument, so slot-index inference undercounts the query
+    # and leaves those rules undecided.
+    probe_opcode_arity: bool = False
     feature_aliases: Callable[[dict], dict] | None = field(default=None)
 
     def features(self, config):
