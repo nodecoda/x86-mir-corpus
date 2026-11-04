@@ -1,0 +1,5629 @@
+{
+ "aligns": [
+  2,
+  4,
+  8
+ ],
+ "axes": {
+  "config": {
+   "candidates": 1,
+   "keys": 1,
+   "length": 1,
+   "note": "run once per config; the corpus config axis is the profile",
+   "opaque": false,
+   "oversampled": 0,
+   "representatives": [
+    "A2"
+   ],
+   "unrepresented": 0
+  },
+  "mem": {
+   "candidates": 15,
+   "keys": 1,
+   "length": 15,
+   "opaque": false,
+   "oversampled": 0,
+   "representatives": [
+    [
+     "s8"
+    ]
+   ],
+   "unrepresented": 3
+  },
+  "opcode": {
+   "candidates": 227,
+   "keys": 227,
+   "length": 227,
+   "opaque": false,
+   "oversampled": 0,
+   "representatives": [
+    "G_ABDS",
+    "G_ABDU",
+    "G_ABS",
+    "G_ADD",
+    "G_AND",
+    "G_ANYEXT",
+    "G_ASHR",
+    "G_ATOMICRMW_ADD",
+    "G_ATOMICRMW_AND",
+    "G_ATOMICRMW_MAX",
+    "G_ATOMICRMW_MIN",
+    "G_ATOMICRMW_OR",
+    "G_ATOMICRMW_SUB",
+    "G_ATOMICRMW_UMAX",
+    "G_ATOMICRMW_UMIN",
+    "G_ATOMICRMW_XCHG",
+    "G_ATOMICRMW_XOR",
+    "G_ATOMIC_CMPXCHG",
+    "G_ATOMIC_CMPXCHG_WITH_SUCCESS",
+    "G_BITCAST",
+    "G_BITREVERSE",
+    "G_BLOCK_ADDR",
+    "G_BR",
+    "G_BRCOND",
+    "G_BRINDIRECT",
+    "G_BRJT",
+    "G_BSWAP",
+    "G_BUILD_VECTOR",
+    "G_BUILD_VECTOR_TRUNC",
+    "G_BZERO",
+    "G_CLMUL",
+    "G_CONCAT_VECTORS",
+    "G_CONSTANT",
+    "G_CONSTANT_FOLD_BARRIER",
+    "G_CTLS",
+    "G_CTLZ",
+    "G_CTLZ_ZERO_POISON",
+    "G_CTPOP",
+    "G_CTTZ",
+    "G_CTTZ_ZERO_POISON",
+    "G_DEBUGTRAP",
+    "G_DYN_STACKALLOC",
+    "G_EXTRACT",
+    "G_EXTRACT_SUBVECTOR",
+    "G_EXTRACT_VECTOR_ELT",
+    "G_FABS",
+    "G_FACOS",
+    "G_FADD",
+    "G_FASIN",
+    "G_FATAN",
+    "G_FATAN2",
+    "G_FCEIL",
+    "G_FCMP",
+    "G_FCONSTANT",
+    "G_FCOPYSIGN",
+    "G_FCOS",
+    "G_FCOSH",
+    "G_FDIV",
+    "G_FENCE",
+    "G_FEXP",
+    "G_FEXP10",
+    "G_FEXP2",
+    "G_FFLOOR",
+    "G_FLDEXP",
+    "G_FLOG",
+    "G_FLOG10",
+    "G_FLOG2",
+    "G_FMA",
+    "G_FMAD",
+    "G_FMAXIMUM",
+    "G_FMAXNUM",
+    "G_FMINIMUM",
+    "G_FMINNUM",
+    "G_FMODF",
+    "G_FMUL",
+    "G_FNEARBYINT",
+    "G_FNEG",
+    "G_FPEXT",
+    "G_FPOW",
+    "G_FPOWI",
+    "G_FPTOSI",
+    "G_FPTOSI_SAT",
+    "G_FPTOUI",
+    "G_FPTOUI_SAT",
+    "G_FPTRUNC",
+    "G_FRAME_INDEX",
+    "G_FREEZE",
+    "G_FREM",
+    "G_FRINT",
+    "G_FSHL",
+    "G_FSHR",
+    "G_FSIN",
+    "G_FSINH",
+    "G_FSQRT",
+    "G_FSUB",
+    "G_FTAN",
+    "G_FTANH",
+    "G_GET_FPENV",
+    "G_GET_FPMODE",
+    "G_GET_ROUNDING",
+    "G_GLOBAL_VALUE",
+    "G_ICMP",
+    "G_IMPLICIT_DEF",
+    "G_INDEXED_LOAD",
+    "G_INDEXED_SEXTLOAD",
+    "G_INDEXED_STORE",
+    "G_INDEXED_ZEXTLOAD",
+    "G_INSERT",
+    "G_INSERT_SUBVECTOR",
+    "G_INSERT_VECTOR_ELT",
+    "G_INTRINSIC",
+    "G_INTRINSIC_LLRINT",
+    "G_INTRINSIC_LRINT",
+    "G_INTRINSIC_ROUND",
+    "G_INTRINSIC_ROUNDEVEN",
+    "G_INTRINSIC_TRUNC",
+    "G_INTRINSIC_W_SIDE_EFFECTS",
+    "G_INTTOPTR",
+    "G_INVOKE_REGION_START",
+    "G_IS_FPCLASS",
+    "G_JUMP_TABLE",
+    "G_LLROUND",
+    "G_LOAD",
+    "G_LROUND",
+    "G_LSHR",
+    "G_MEMCPY",
+    "G_MEMCPY_INLINE",
+    "G_MEMMOVE",
+    "G_MEMSET",
+    "G_MEMSET_INLINE",
+    "G_MERGE_VALUES",
+    "G_MUL",
+    "G_OR",
+    "G_PHI",
+    "G_PREFETCH",
+    "G_PTRAUTH_GLOBAL_VALUE",
+    "G_PTRMASK",
+    "G_PTRTOINT",
+    "G_PTR_ADD",
+    "G_RESET_FPENV",
+    "G_RESET_FPMODE",
+    "G_ROTL",
+    "G_ROTR",
+    "G_SADDE",
+    "G_SADDO",
+    "G_SADDSAT",
+    "G_SAVGCEIL",
+    "G_SAVGFLOOR",
+    "G_SBFX",
+    "G_SCMP",
+    "G_SDIV",
+    "G_SDIVREM",
+    "G_SELECT",
+    "G_SET_FPENV",
+    "G_SET_FPMODE",
+    "G_SET_ROUNDING",
+    "G_SEXT",
+    "G_SEXTLOAD",
+    "G_SEXT_INREG",
+    "G_SHL",
+    "G_SHUFFLE_VECTOR",
+    "G_SITOFP",
+    "G_SMAX",
+    "G_SMIN",
+    "G_SMULFIX",
+    "G_SMULFIXSAT",
+    "G_SMULH",
+    "G_SMULO",
+    "G_SPLAT_VECTOR",
+    "G_SREM",
+    "G_SSUBE",
+    "G_SSUBO",
+    "G_SSUBSAT",
+    "G_STACKRESTORE",
+    "G_STACKSAVE",
+    "G_STORE",
+    "G_SUB",
+    "G_TRAP",
+    "G_TRUNC",
+    "G_TRUNC_SSAT_S",
+    "G_TRUNC_SSAT_U",
+    "G_TRUNC_USAT_U",
+    "G_UADDE",
+    "G_UADDO",
+    "G_UADDSAT",
+    "G_UAVGCEIL",
+    "G_UAVGFLOOR",
+    "G_UBFX",
+    "G_UBSANTRAP",
+    "G_UCMP",
+    "G_UDIV",
+    "G_UDIVREM",
+    "G_UITOFP",
+    "G_UMAX",
+    "G_UMIN",
+    "G_UMULFIX",
+    "G_UMULFIXSAT",
+    "G_UMULH",
+    "G_UMULO",
+    "G_UNMERGE_VALUES",
+    "G_UREM",
+    "G_USUBE",
+    "G_USUBO",
+    "G_USUBSAT",
+    "G_VAARG",
+    "G_VASTART",
+    "G_VECREDUCE_ADD",
+    "G_VECREDUCE_AND",
+    "G_VECREDUCE_FADD",
+    "G_VECREDUCE_FMAX",
+    "G_VECREDUCE_FMAXIMUM",
+    "G_VECREDUCE_FMIN",
+    "G_VECREDUCE_FMINIMUM",
+    "G_VECREDUCE_FMUL",
+    "G_VECREDUCE_MUL",
+    "G_VECREDUCE_OR",
+    "G_VECREDUCE_SEQ_FADD",
+    "G_VECREDUCE_SEQ_FMUL",
+    "G_VECREDUCE_SMAX",
+    "G_VECREDUCE_SMIN",
+    "G_VECREDUCE_UMAX",
+    "G_VECREDUCE_UMIN",
+    "G_VECREDUCE_XOR",
+    "G_VECTOR_COMPRESS",
+    "G_XOR",
+    "G_ZEXT",
+    "G_ZEXTLOAD"
+   ],
+   "unrepresented": 0
+  },
+  "pair(0,1)": {
+   "candidates": 120050,
+   "keys": 51,
+   "length": 120050,
+   "opaque": false,
+   "oversampled": 79,
+   "representatives": [
+    [
+     "p0",
+     "p0"
+    ],
+    [
+     "s32",
+     "s32"
+    ],
+    [
+     "p0",
+     "s8"
+    ],
+    [
+     "p0",
+     "i64"
+    ],
+    [
+     "p0",
+     "s64"
+    ],
+    [
+     "s8",
+     "p0"
+    ],
+    [
+     "i32",
+     "i32"
+    ],
+    [
+     "nxv2i64",
+     "p0"
+    ],
+    [
+     "s8",
+     "s8"
+    ],
+    [
+     "i32",
+     "i64"
+    ],
+    [
+     "s128",
+     "s128"
+    ],
+    [
+     "v8i8",
+     "v8i8"
+    ],
+    [
+     "p0",
+     "nxv2i64"
+    ],
+    [
+     "f32",
+     "i32"
+    ],
+    [
+     "s64",
+     "s128"
+    ],
+    [
+     "i32",
+     "f16"
+    ],
+    [
+     "i32",
+     "f32"
+    ],
+    [
+     "i64",
+     "f16"
+    ],
+    [
+     "i64",
+     "f32"
+    ],
+    [
+     "s128",
+     "p0"
+    ],
+    [
+     "i32",
+     "p0"
+    ],
+    [
+     "v2s32",
+     "v2s64"
+    ],
+    [
+     "v4s32",
+     "p0"
+    ],
+    [
+     "v8s16",
+     "p0"
+    ],
+    [
+     "v16s8",
+     "p0"
+    ],
+    [
+     "v2s8",
+     "p0"
+    ],
+    [
+     "v2s16",
+     "p0"
+    ],
+    [
+     "v2i32",
+     "v2i64"
+    ],
+    [
+     "p0",
+     "v2s32"
+    ],
+    [
+     "s16",
+     "p0"
+    ],
+    [
+     "bf16",
+     "f32"
+    ],
+    [
+     "f16",
+     "f32"
+    ],
+    [
+     "f16",
+     "f128"
+    ],
+    [
+     "v2p0",
+     "p0"
+    ],
+    [
+     "f32",
+     "bf16"
+    ],
+    [
+     "f128",
+     "f16"
+    ],
+    [
+     "i16",
+     "f16"
+    ],
+    [
+     "f16",
+     "i32"
+    ],
+    [
+     "p0",
+     "s32"
+    ],
+    [
+     "i64",
+     "p0"
+    ],
+    [
+     "s32",
+     "p0"
+    ],
+    [
+     "p0",
+     "s128"
+    ],
+    [
+     "v2s32",
+     "p0"
+    ],
+    [
+     "v4s32",
+     "v2s32"
+    ],
+    [
+     "p0",
+     "v2s8"
+    ],
+    [
+     "p0",
+     "v2s16"
+    ],
+    [
+     "v2s32",
+     "v4s32"
+    ],
+    [
+     "nxv2s64",
+     "s64"
+    ],
+    [
+     "f16",
+     "v4f16"
+    ],
+    [
+     "f32",
+     "v2f32"
+    ],
+    [
+     "i8",
+     "v8i8"
+    ]
+   ],
+   "unrepresented": 59
+  },
+  "pair(0,1)+mem": {
+   "candidates": 48020,
+   "keys": 5,
+   "length": 48020,
+   "opaque": false,
+   "oversampled": 6,
+   "representatives": [
+    [
+     "p0",
+     "p0",
+     "s8"
+    ],
+    [
+     "s8",
+     "p0",
+     "s8"
+    ],
+    [
+     "s64",
+     "p0",
+     "s8"
+    ],
+    [
+     "nxv2i64",
+     "p0",
+     "s8"
+    ],
+    [
+     "s128",
+     "p0",
+     "s8"
+    ]
+   ],
+   "unrepresented": 0
+  },
+  "pair(0,2)": {
+   "candidates": 2401,
+   "keys": 1,
+   "length": 2401,
+   "opaque": false,
+   "oversampled": 1,
+   "representatives": [
+    [
+     "p0",
+     "p0"
+    ]
+   ],
+   "unrepresented": 0
+  },
+  "slot0": {
+   "candidates": 1323,
+   "keys": 16,
+   "length": 1323,
+   "opaque": false,
+   "oversampled": 57,
+   "representatives": [
+    [
+     "p0"
+    ],
+    [
+     "i8"
+    ],
+    [
+     "i128"
+    ],
+    [
+     "v2p0"
+    ],
+    [
+     "nxv2i64"
+    ],
+    [
+     "s8"
+    ],
+    [
+     "i32"
+    ],
+    [
+     "nxv2s64"
+    ],
+    [
+     "v2s8"
+    ],
+    [
+     "v2s16"
+    ],
+    [
+     "v2i32"
+    ],
+    [
+     "f16"
+    ],
+    [
+     "f32"
+    ],
+    [
+     "f128"
+    ],
+    [
+     "bf16"
+    ],
+    [
+     "s128"
+    ]
+   ],
+   "unrepresented": 0
+  },
+  "slot1": {
+   "candidates": 343,
+   "keys": 1,
+   "length": 343,
+   "opaque": false,
+   "oversampled": 7,
+   "representatives": [
+    [
+     "p0"
+    ]
+   ],
+   "unrepresented": 0
+  },
+  "triple(0,1,2)": {
+   "candidates": 705894,
+   "keys": 5,
+   "length": 705894,
+   "opaque": false,
+   "oversampled": 6,
+   "representatives": [
+    [
+     "p0",
+     "p0",
+     "p0"
+    ],
+    [
+     "s16",
+     "nxv8s16",
+     "s64"
+    ],
+    [
+     "p0",
+     "s8",
+     "s64"
+    ],
+    [
+     "p0",
+     "s64",
+     "s64"
+    ],
+    [
+     "p0",
+     "p0",
+     "s64"
+    ]
+   ],
+   "unrepresented": 7
+  }
+ },
+ "classes": [
+  "p0",
+  "s8",
+  "s16",
+  "s32",
+  "s64",
+  "s128",
+  "i8",
+  "i16",
+  "i32",
+  "i64",
+  "i128",
+  "bf16",
+  "f16",
+  "f32",
+  "f64",
+  "f128",
+  "v2p0",
+  "v2s8",
+  "v2s16",
+  "v4s8",
+  "v2f32",
+  "v2i32",
+  "v2s32",
+  "v4bf16",
+  "v4f16",
+  "v4i16",
+  "v4s16",
+  "v8i8",
+  "v8s8",
+  "v2f64",
+  "v2i64",
+  "v2s64",
+  "v4f32",
+  "v4i32",
+  "v4s32",
+  "v8bf16",
+  "v8f16",
+  "v8i16",
+  "v8s16",
+  "v16i8",
+  "v16s8",
+  "nxv2i64",
+  "nxv2s64",
+  "nxv4i32",
+  "nxv4s32",
+  "nxv8i16",
+  "nxv8s16",
+  "nxv16i8",
+  "nxv16s8"
+ ],
+ "config": "A2",
+ "coverage": {
+  "rules_total": 616,
+  "rules_with_representative": 185,
+  "rules_without_representative": 427
+ },
+ "mem_classes": [
+  "s8",
+  "s16",
+  "s32",
+  "s64",
+  "s128"
+ ],
+ "notes": [
+  "A key is the tuple of modelled predicate results (1/0/None) for one dependency component; None is a distinct opaque value.",
+  "The candidate universe is the parsed class list, so class counts are exact for modelled predicates, not a panel sample.",
+  "Predicate calls inside lambdas are not recovered; rule sets with lambdas are listed in opaque_builders and keep the floor of the modelled quotient.",
+  "unrepresented counts quotient classes the target boundary panel never touches; it is a panel-coverage diagnostic, not a gate."
+ ],
+ "opaque_builders": [
+  "AArch64_ABS",
+  "AArch64_ADD",
+  "AArch64_BITCAST",
+  "AArch64_CONCAT_VECTORS",
+  "AArch64_EXTRACT_VECTOR_ELT",
+  "AArch64_FADD",
+  "AArch64_FCMP",
+  "AArch64_FCOPYSIGN",
+  "AArch64_FPEXT",
+  "AArch64_FPTOSI",
+  "AArch64_FPTOSI_SAT",
+  "AArch64_FPTRUNC",
+  "AArch64_ICMP",
+  "AArch64_INTTOPTR",
+  "AArch64_LOAD",
+  "AArch64_MERGE_VALUES",
+  "AArch64_MUL",
+  "AArch64_ROTR",
+  "AArch64_SHL",
+  "AArch64_SHUFFLE_VECTOR",
+  "AArch64_SITOFP",
+  "AArch64_STORE",
+  "AArch64_TRUNC",
+  "AArch64_UNMERGE_VALUES",
+  "AArch64_VECREDUCE_FADD",
+  "AArch64_VECREDUCE_FMIN",
+  "AArch64_VECREDUCE_FMUL",
+  "AArch64_VECREDUCE_OR",
+  "AArch64_VECREDUCE_SMIN",
+  "AArch64_ZEXT"
+ ],
+ "per_builder": {
+  "AArch64_ABDS": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 6,
+    "keys": 6,
+    "length": 6,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_ABDS",
+     "G_ABDU",
+     "G_UAVGFLOOR",
+     "G_UAVGCEIL",
+     "G_SAVGFLOOR",
+     "G_SAVGCEIL"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_ABS": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_ABS"
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 4,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 4,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "i32"
+     ],
+     [
+      "v2p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_ADD": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 5,
+    "keys": 5,
+    "length": 5,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_ADD",
+     "G_SUB",
+     "G_AND",
+     "G_OR",
+     "G_XOR"
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 5,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 5,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "i32"
+     ],
+     [
+      "nxv2i64"
+     ],
+     [
+      "nxv2s64"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_ATOMICRMW_MIN": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 4,
+    "keys": 4,
+    "length": 4,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_ATOMICRMW_MIN",
+     "G_ATOMICRMW_MAX",
+     "G_ATOMICRMW_UMIN",
+     "G_ATOMICRMW_UMAX"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 1,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_ATOMICRMW_XCHG": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 6,
+    "keys": 6,
+    "length": 6,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_ATOMICRMW_XCHG",
+     "G_ATOMICRMW_ADD",
+     "G_ATOMICRMW_SUB",
+     "G_ATOMICRMW_AND",
+     "G_ATOMICRMW_OR",
+     "G_ATOMICRMW_XOR"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 3,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "s32",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_ATOMIC_CMPXCHG": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_ATOMIC_CMPXCHG"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 4,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "s32",
+      "p0"
+     ],
+     [
+      "s128",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_ATOMIC_CMPXCHG_WITH_SUCCESS": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_ATOMIC_CMPXCHG_WITH_SUCCESS"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,2)": {
+    "candidates": 2401,
+    "keys": 1,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_BITCAST": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_BITCAST"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 1,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_BITREVERSE": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_BITREVERSE"
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 3,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "i32"
+     ],
+     [
+      "nxv2i64"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_BLOCK_ADDR": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_BLOCK_ADDR"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_BR": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_BR"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_BRCOND": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_BRCOND"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_BRINDIRECT": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_BRINDIRECT"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_BRJT": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_BRJT"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 2,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s64"
+     ]
+    ],
+    "unrepresented": 1
+   }
+  },
+  "AArch64_BSWAP": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_BSWAP"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_BUILD_VECTOR": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_BUILD_VECTOR"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 3,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "v2p0",
+      "p0"
+     ],
+     [
+      "v2s32",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_BUILD_VECTOR_TRUNC": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_BUILD_VECTOR_TRUNC"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_BZERO": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_BZERO"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_CLMUL": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_CLMUL"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_CONCAT_VECTORS": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_CONCAT_VECTORS"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 2,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "v4s32",
+      "v2s32"
+     ]
+    ],
+    "unrepresented": 1
+   }
+  },
+  "AArch64_CONSTANT": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_CONSTANT"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_CTLZ": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_CTLZ",
+     "G_CTLS"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 4,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "p0",
+      "nxv2i64"
+     ],
+     [
+      "i32",
+      "i32"
+     ]
+    ],
+    "unrepresented": 3
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_CTLZ_ZERO_POISON": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_CTLZ_ZERO_POISON"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_CTPOP": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_CTPOP"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 6,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "s128",
+      "s128"
+     ],
+     [
+      "i32",
+      "i32"
+     ],
+     [
+      "v8i8",
+      "v8i8"
+     ],
+     [
+      "nxv2i64",
+      "p0"
+     ]
+    ],
+    "unrepresented": 3
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 3,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "nxv2i64"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_CTTZ": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_CTTZ"
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_CTTZ_ZERO_POISON": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_CTTZ_ZERO_POISON"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_DYN_STACKALLOC": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_DYN_STACKALLOC"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_EXTRACT": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_EXTRACT"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 1,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "slot1": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_EXTRACT_SUBVECTOR": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_EXTRACT_SUBVECTOR"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 4,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "v2s8"
+     ],
+     [
+      "p0",
+      "v2s16"
+     ],
+     [
+      "v2s32",
+      "v4s32"
+     ]
+    ],
+    "unrepresented": 3
+   }
+  },
+  "AArch64_EXTRACT_VECTOR_ELT": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_EXTRACT_VECTOR_ELT"
+    ],
+    "unrepresented": 0
+   },
+   "slot1": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "triple(0,1,2)": {
+    "candidates": 117649,
+    "keys": 2,
+    "length": 117649,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0",
+      "p0"
+     ],
+     [
+      "s16",
+      "nxv8s16",
+      "s64"
+     ]
+    ],
+    "unrepresented": 1
+   }
+  },
+  "AArch64_FABS": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_FABS",
+     "G_FNEG"
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 3,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "bf16"
+     ],
+     [
+      "f32"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_FADD": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 17,
+    "keys": 17,
+    "length": 17,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_FADD",
+     "G_FSUB",
+     "G_FMUL",
+     "G_FDIV",
+     "G_FMA",
+     "G_FSQRT",
+     "G_FMAXNUM",
+     "G_FMINNUM",
+     "G_FMAXIMUM",
+     "G_FMINIMUM",
+     "G_FCEIL",
+     "G_FFLOOR",
+     "G_FRINT",
+     "G_FNEARBYINT",
+     "G_INTRINSIC_TRUNC",
+     "G_INTRINSIC_ROUND",
+     "G_INTRINSIC_ROUNDEVEN"
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 4,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "f16"
+     ],
+     [
+      "f32"
+     ],
+     [
+      "f128"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_FCMP": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_FCMP"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 4,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 2,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "i32",
+      "f16"
+     ],
+     [
+      "i32",
+      "f32"
+     ]
+    ],
+    "unrepresented": 2
+   },
+   "slot1": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_FCONSTANT": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_FCONSTANT"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_FCOPYSIGN": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_FCOPYSIGN"
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_FENCE": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_FENCE"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_FMAD": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_FMAD"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_FPEXT": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_FPEXT"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 3,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "f32",
+      "bf16"
+     ],
+     [
+      "f128",
+      "f16"
+     ]
+    ],
+    "unrepresented": 2
+   }
+  },
+  "AArch64_FPOWI": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_FPOWI",
+     "G_FLDEXP"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 2,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "f32",
+      "i32"
+     ]
+    ],
+    "unrepresented": 1
+   }
+  },
+  "AArch64_FPTOSI": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_FPTOSI",
+     "G_FPTOUI"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 3,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "i32",
+      "f16"
+     ],
+     [
+      "i32",
+      "f32"
+     ]
+    ],
+    "unrepresented": 2
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "slot1": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_FPTOSI_SAT": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_FPTOSI_SAT",
+     "G_FPTOUI_SAT"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 3,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "i16",
+      "f16"
+     ],
+     [
+      "i32",
+      "f32"
+     ]
+    ],
+    "unrepresented": 2
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "slot1": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_FPTRUNC": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_FPTRUNC"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 7,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "v2s32"
+     ],
+     [
+      "s16",
+      "p0"
+     ],
+     [
+      "bf16",
+      "f32"
+     ],
+     [
+      "f16",
+      "f32"
+     ],
+     [
+      "f16",
+      "f128"
+     ],
+     [
+      "v2p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 4
+   }
+  },
+  "AArch64_FRAME_INDEX": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_FRAME_INDEX"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_FREM": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 19,
+    "keys": 19,
+    "length": 19,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_FREM",
+     "G_FCOS",
+     "G_FSIN",
+     "G_FPOW",
+     "G_FLOG",
+     "G_FLOG2",
+     "G_FLOG10",
+     "G_FTAN",
+     "G_FEXP",
+     "G_FEXP2",
+     "G_FEXP10",
+     "G_FACOS",
+     "G_FASIN",
+     "G_FATAN",
+     "G_FATAN2",
+     "G_FCOSH",
+     "G_FSINH",
+     "G_FTANH",
+     "G_FMODF"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_FSHL": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_FSHL",
+     "G_FSHR"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 2,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "i32",
+      "i32"
+     ]
+    ],
+    "unrepresented": 1
+   }
+  },
+  "AArch64_GET_FPENV": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 6,
+    "keys": 6,
+    "length": 6,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_GET_FPENV",
+     "G_SET_FPENV",
+     "G_RESET_FPENV",
+     "G_GET_FPMODE",
+     "G_SET_FPMODE",
+     "G_RESET_FPMODE"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_GET_ROUNDING": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_GET_ROUNDING",
+     "G_SET_ROUNDING"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_GLOBAL_VALUE": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_GLOBAL_VALUE"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_ICMP": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_ICMP"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 2,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "i32",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 2,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "i32"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "slot1": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_IMPLICIT_DEF": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 3,
+    "keys": 3,
+    "length": 3,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_IMPLICIT_DEF",
+     "G_FREEZE",
+     "G_CONSTANT_FOLD_BARRIER"
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 5,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 5,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "i8"
+     ],
+     [
+      "i128"
+     ],
+     [
+      "v2p0"
+     ],
+     [
+      "nxv2i64"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_INDEXED_LOAD": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_INDEXED_LOAD"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_INDEXED_SEXTLOAD": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_INDEXED_SEXTLOAD",
+     "G_INDEXED_ZEXTLOAD"
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_INDEXED_STORE": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "mem": {
+    "candidates": 5,
+    "keys": 1,
+    "length": 5,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     [
+      "s8"
+     ]
+    ],
+    "unrepresented": 1
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_INDEXED_STORE"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_INSERT": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_INSERT"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 1,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_INSERT_SUBVECTOR": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_INSERT_SUBVECTOR"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_INSERT_VECTOR_ELT": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_INSERT_VECTOR_ELT"
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "triple(0,1,2)": {
+    "candidates": 117649,
+    "keys": 1,
+    "length": 117649,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_INTRINSIC": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_INTRINSIC",
+     "G_INTRINSIC_W_SIDE_EFFECTS"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_INTTOPTR": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_INTTOPTR"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 1,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_INVOKE_REGION_START": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_INVOKE_REGION_START"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_IS_FPCLASS": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_IS_FPCLASS"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_JUMP_TABLE": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_JUMP_TABLE"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_LLROUND": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_LLROUND",
+     "G_INTRINSIC_LLRINT"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 6,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 2,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "s64",
+      "s128"
+     ],
+     [
+      "i64",
+      "f16"
+     ],
+     [
+      "i64",
+      "f32"
+     ]
+    ],
+    "unrepresented": 4
+   }
+  },
+  "AArch64_LOAD": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "mem": {
+    "candidates": 5,
+    "keys": 1,
+    "length": 5,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     [
+      "s8"
+     ]
+    ],
+    "unrepresented": 1
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_LOAD"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 2,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "s128",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)+mem": {
+    "candidates": 12005,
+    "keys": 2,
+    "length": 12005,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0",
+      "s8"
+     ],
+     [
+      "s128",
+      "p0",
+      "s8"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 2,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "s128"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_LROUND": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_LROUND",
+     "G_INTRINSIC_LRINT"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 5,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "s64",
+      "s128"
+     ],
+     [
+      "i32",
+      "f16"
+     ],
+     [
+      "i32",
+      "f32"
+     ]
+    ],
+    "unrepresented": 4
+   }
+  },
+  "AArch64_MEMCPY": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_MEMCPY",
+     "G_MEMMOVE"
+    ],
+    "unrepresented": 0
+   },
+   "triple(0,1,2)": {
+    "candidates": 117649,
+    "keys": 2,
+    "length": 117649,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "p0",
+      "s64"
+     ]
+    ],
+    "unrepresented": 1
+   }
+  },
+  "AArch64_MEMCPY_INLINE": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_MEMCPY_INLINE"
+    ],
+    "unrepresented": 0
+   },
+   "triple(0,1,2)": {
+    "candidates": 117649,
+    "keys": 2,
+    "length": 117649,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "p0",
+      "s64"
+     ]
+    ],
+    "unrepresented": 1
+   }
+  },
+  "AArch64_MEMSET": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_MEMSET"
+    ],
+    "unrepresented": 0
+   },
+   "triple(0,1,2)": {
+    "candidates": 117649,
+    "keys": 3,
+    "length": 117649,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s8",
+      "s64"
+     ],
+     [
+      "p0",
+      "s64",
+      "s64"
+     ]
+    ],
+    "unrepresented": 2
+   }
+  },
+  "AArch64_MEMSET_INLINE": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_MEMSET_INLINE"
+    ],
+    "unrepresented": 0
+   },
+   "triple(0,1,2)": {
+    "candidates": 117649,
+    "keys": 3,
+    "length": 117649,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s8",
+      "s64"
+     ],
+     [
+      "p0",
+      "s64",
+      "s64"
+     ]
+    ],
+    "unrepresented": 2
+   }
+  },
+  "AArch64_MERGE_VALUES": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_MERGE_VALUES"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 5,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s128"
+     ],
+     [
+      "p0",
+      "nxv2i64"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "nxv2i64",
+      "p0"
+     ]
+    ],
+    "unrepresented": 2
+   }
+  },
+  "AArch64_MUL": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_MUL"
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 4,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 4,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "i32"
+     ],
+     [
+      "nxv2i64"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_PHI": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_PHI"
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 4,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 4,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "v2p0"
+     ],
+     [
+      "nxv2i64"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_PREFETCH": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_PREFETCH"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_PTRAUTH_GLOBAL_VALUE": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_PTRAUTH_GLOBAL_VALUE"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 1,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_PTRMASK": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_PTRMASK"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 2,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s64"
+     ]
+    ],
+    "unrepresented": 1
+   }
+  },
+  "AArch64_PTRTOINT": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_PTRTOINT"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 4,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "i64",
+      "p0"
+     ],
+     [
+      "nxv2i64",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_PTR_ADD": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_PTR_ADD"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 3,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "p0",
+      "i64"
+     ]
+    ],
+    "unrepresented": 2
+   }
+  },
+  "AArch64_ROTL": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_ROTL"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_ROTR": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_ROTR"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 3,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "s8",
+      "s8"
+     ],
+     [
+      "i32",
+      "i64"
+     ]
+    ],
+    "unrepresented": 2
+   }
+  },
+  "AArch64_SADDE": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 8,
+    "keys": 8,
+    "length": 8,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_SADDE",
+     "G_SSUBE",
+     "G_UADDE",
+     "G_USUBE",
+     "G_SADDO",
+     "G_SSUBO",
+     "G_UADDO",
+     "G_USUBO"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 5,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "i32",
+      "i32"
+     ],
+     [
+      "nxv2i64",
+      "p0"
+     ]
+    ],
+    "unrepresented": 2
+   }
+  },
+  "AArch64_SBFX": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_SBFX",
+     "G_UBFX"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 2,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "s32",
+      "s32"
+     ]
+    ],
+    "unrepresented": 1
+   }
+  },
+  "AArch64_SCMP": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_SCMP",
+     "G_UCMP"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_SDIV": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_SDIV",
+     "G_UDIV"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_SELECT": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_SELECT"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 5,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "p0",
+      "s32"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "nxv2i64",
+      "p0"
+     ]
+    ],
+    "unrepresented": 2
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 3,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "nxv2i64"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_SEXTLOAD": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_SEXTLOAD"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)+mem": {
+    "candidates": 12005,
+    "keys": 1,
+    "length": 12005,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0",
+      "s8"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_SEXT_INREG": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_SEXT_INREG"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_SHL": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 3,
+    "keys": 3,
+    "length": 3,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_SHL",
+     "G_ASHR",
+     "G_LSHR"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 2,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "s32",
+      "s32"
+     ]
+    ],
+    "unrepresented": 1
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_SHUFFLE_VECTOR": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_SHUFFLE_VECTOR"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 1,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_SITOFP": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_SITOFP",
+     "G_UITOFP"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 3,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "f16",
+      "i32"
+     ],
+     [
+      "f32",
+      "i32"
+     ]
+    ],
+    "unrepresented": 2
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "slot1": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_SMIN": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 4,
+    "keys": 4,
+    "length": 4,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_SMIN",
+     "G_SMAX",
+     "G_UMIN",
+     "G_UMAX"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_SMULFIX": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 4,
+    "keys": 4,
+    "length": 4,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_SMULFIX",
+     "G_UMULFIX",
+     "G_SMULFIXSAT",
+     "G_UMULFIXSAT"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_SMULH": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_SMULH",
+     "G_UMULH"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_SMULO": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_SMULO",
+     "G_UMULO"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_SPLAT_VECTOR": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_SPLAT_VECTOR"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 2,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "v2p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_SPLAT_VECTOR#87": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_SPLAT_VECTOR"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 2,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "nxv2s64",
+      "s64"
+     ]
+    ],
+    "unrepresented": 1
+   }
+  },
+  "AArch64_SREM": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 4,
+    "keys": 4,
+    "length": 4,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_SREM",
+     "G_UREM",
+     "G_SDIVREM",
+     "G_UDIVREM"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_STACKSAVE": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_STACKSAVE",
+     "G_STACKRESTORE"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_STORE": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "mem": {
+    "candidates": 5,
+    "keys": 1,
+    "length": 5,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     [
+      "s8"
+     ]
+    ],
+    "unrepresented": 1
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_STORE"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 2,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "s128",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)+mem": {
+    "candidates": 12005,
+    "keys": 2,
+    "length": 12005,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0",
+      "s8"
+     ],
+     [
+      "s128",
+      "p0",
+      "s8"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 2,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "s128"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_TRAP": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 3,
+    "keys": 3,
+    "length": 3,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_TRAP",
+     "G_DEBUGTRAP",
+     "G_UBSANTRAP"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_TRUNC": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_TRUNC"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 5,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 4,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "v2s32",
+      "v2s64"
+     ],
+     [
+      "v4s32",
+      "p0"
+     ],
+     [
+      "v8s16",
+      "p0"
+     ],
+     [
+      "v16s8",
+      "p0"
+     ]
+    ],
+    "unrepresented": 1
+   }
+  },
+  "AArch64_TRUNC_SSAT_S": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 3,
+    "keys": 3,
+    "length": 3,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_TRUNC_SSAT_S",
+     "G_TRUNC_SSAT_U",
+     "G_TRUNC_USAT_U"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 5,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 4,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "v2s8",
+      "p0"
+     ],
+     [
+      "v2s16",
+      "p0"
+     ],
+     [
+      "v2i32",
+      "v2i64"
+     ],
+     [
+      "v4s32",
+      "p0"
+     ]
+    ],
+    "unrepresented": 1
+   }
+  },
+  "AArch64_UADDSAT": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 4,
+    "keys": 4,
+    "length": 4,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_UADDSAT",
+     "G_SADDSAT",
+     "G_USUBSAT",
+     "G_SSUBSAT"
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 5,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 4,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "v2s8"
+     ],
+     [
+      "v2s16"
+     ],
+     [
+      "v2i32"
+     ],
+     [
+      "nxv2i64"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_UNMERGE_VALUES": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_UNMERGE_VALUES"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 5,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "p0",
+      "nxv2i64"
+     ],
+     [
+      "s128",
+      "p0"
+     ],
+     [
+      "nxv2i64",
+      "p0"
+     ]
+    ],
+    "unrepresented": 2
+   }
+  },
+  "AArch64_VAARG": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_VAARG"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 4,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 4,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "s128",
+      "p0"
+     ],
+     [
+      "nxv2i64",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_VASTART": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_VASTART"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_VECREDUCE_ADD": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_VECREDUCE_ADD"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 2,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "i8",
+      "v8i8"
+     ]
+    ],
+    "unrepresented": 1
+   }
+  },
+  "AArch64_VECREDUCE_FADD": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_VECREDUCE_FADD"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 3,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "f16",
+      "v4f16"
+     ],
+     [
+      "f32",
+      "v2f32"
+     ]
+    ],
+    "unrepresented": 2
+   }
+  },
+  "AArch64_VECREDUCE_FMIN": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 4,
+    "keys": 4,
+    "length": 4,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_VECREDUCE_FMIN",
+     "G_VECREDUCE_FMAX",
+     "G_VECREDUCE_FMINIMUM",
+     "G_VECREDUCE_FMAXIMUM"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 3,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "f16",
+      "v4f16"
+     ],
+     [
+      "f32",
+      "v2f32"
+     ]
+    ],
+    "unrepresented": 2
+   }
+  },
+  "AArch64_VECREDUCE_FMUL": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_VECREDUCE_FMUL"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 1,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_VECREDUCE_MUL": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_VECREDUCE_MUL"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_VECREDUCE_OR": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 3,
+    "keys": 3,
+    "length": 3,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_VECREDUCE_OR",
+     "G_VECREDUCE_AND",
+     "G_VECREDUCE_XOR"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 1,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_VECREDUCE_SEQ_FADD": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 2,
+    "keys": 2,
+    "length": 2,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_VECREDUCE_SEQ_FADD",
+     "G_VECREDUCE_SEQ_FMUL"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_VECREDUCE_SMIN": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 4,
+    "keys": 4,
+    "length": 4,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_VECREDUCE_SMIN",
+     "G_VECREDUCE_SMAX",
+     "G_VECREDUCE_UMIN",
+     "G_VECREDUCE_UMAX"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 2,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "i8",
+      "v8i8"
+     ]
+    ],
+    "unrepresented": 1
+   }
+  },
+  "AArch64_VECTOR_COMPRESS": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_VECTOR_COMPRESS"
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_ZEXT": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 3,
+    "keys": 3,
+    "length": 3,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_ZEXT",
+     "G_SEXT",
+     "G_ANYEXT"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 1,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 1,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  },
+  "AArch64_ZEXTLOAD": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_ZEXTLOAD"
+    ],
+    "unrepresented": 0
+   },
+   "pair(0,1)+mem": {
+    "candidates": 12005,
+    "keys": 4,
+    "length": 12005,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0",
+      "p0",
+      "s8"
+     ],
+     [
+      "s8",
+      "p0",
+      "s8"
+     ],
+     [
+      "s64",
+      "p0",
+      "s8"
+     ],
+     [
+      "nxv2i64",
+      "p0",
+      "s8"
+     ]
+    ],
+    "unrepresented": 0
+   }
+  }
+ },
+ "schema": "llvm-legalizer-quotient-report",
+ "target": "aarch64",
+ "version": 1
+}

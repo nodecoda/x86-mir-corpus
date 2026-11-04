@@ -5,6 +5,7 @@
 | [USAGE.md](USAGE.md) | Commands, environments, and worked examples |
 | [PIPELINE.md](PIPELINE.md) | Parse → points → corpus → run → triage flow |
 | [DSL-SURFACE.md](DSL-SURFACE.md) | Symbol table, scope audit, and verifier invariants |
+| [QUOTIENT.md](QUOTIENT.md) | Finite quotient: keys, axes, lengths, panel coverage |
 | [TRIAGE.md](TRIAGE.md) | Action → `LegalizerHelper` entry-point mapping |
 | [EVIDENCE-CONTRACT.md](EVIDENCE-CONTRACT.md) | Outcome semantics, exit codes, report schema |
 | [LLVM-INTEGRATION.md](LLVM-INTEGRATION.md) | Building and pinning the C++ sidecar |
