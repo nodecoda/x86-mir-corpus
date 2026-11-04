@@ -50,7 +50,8 @@ int main() {
   }
 
   X86LegalizerInfoReference Ref(
-      *S.STI, *static_cast<const X86TargetMachine *>(S.TM.get()));
+      *static_cast<const X86Subtarget *>(S.STI),
+      *static_cast<const X86TargetMachine *>(S.TM.get()));
   SmallVector<LLT, 2> Types = {LLT::scalar(32), LLT::scalar(32)};
   LegalityQuery Q(TargetOpcode::G_ADD, Types);
   LegalizeActionStep Step = Ref.getAction(Q);

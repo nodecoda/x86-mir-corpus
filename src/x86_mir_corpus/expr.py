@@ -308,7 +308,7 @@ class Parser:
                 self.take()
                 name = self.take()
                 node = Ident(f"{node.name}::{name.text}")
-            elif t.text == ".":
+            elif t.text in (".", "->"):
                 self.take()
                 name = self.take()
                 if self.at("("):
@@ -612,12 +612,21 @@ def eval_call(node, env):
         return _float_like(bits, "ieee", env)
     if name == "LLT::token":
         return scalar(0)
-    if name.startswith("Subtarget."):
+    if name.endswith(".getTargetLowering"):
+        return "TargetLowering"
+    if name.endswith(".getTargetMachine"):
+        return "TargetMachine"
+    if name.startswith(("Subtarget.", "ST.")):
         method = name.split(".", 1)[1]
         feats = env.get("__features__", {})
         if method in feats:
             return feats[method]
-        raise EvalError(f"unknown Subtarget predicate {method}")
+        raise EvalError(f"unknown subtarget predicate {method}")
+    if name.endswith(".getCodeModel"):
+        value = env.get("__code_model__")
+        if value is None:
+            raise EvalError("getCodeModel without a target code model")
+        return value
     if name in ("Query.Types.__index__",):
         raise EvalError("Query.Types.__index__ is not a value")
     if name.endswith(".getNumElements"):

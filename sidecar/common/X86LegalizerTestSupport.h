@@ -26,6 +26,7 @@
 namespace llvm {
 
 class X86Subtarget;
+class TargetSubtargetInfo;
 
 namespace x86legalizer {
 
@@ -33,6 +34,7 @@ struct Config {
   const char *ID;
   const char *Triple;
   const char *FS;
+  // X86-only capability flags; unused by target-neutral configs.
   bool Is64;
   bool AVX512;
   bool VPOPCNTDQ;
@@ -41,10 +43,12 @@ struct Config {
 };
 
 const Config *findFullConfig(StringRef ID);
+const Config *findFullConfig(StringRef Target, StringRef ID);
 
 struct Sigma {
   std::unique_ptr<TargetMachine> TM;
-  const X86Subtarget *STI = nullptr;
+  const TargetSubtargetInfo *STI = nullptr;
+  unsigned PointerBits = 0;
 };
 
 Sigma makeSigma(const Config &C);

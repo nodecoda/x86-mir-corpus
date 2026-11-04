@@ -126,6 +126,7 @@ class ParserState:
         self.unknown_methods = []
         self.unknown_predicates = []
         self.unknown_refs = []
+        self.early_return = False
         self.opaque_lambdas = 0
         self.mem_classes = set()
         self.aligns = set()
@@ -153,7 +154,7 @@ def _predicate_names(args):
 
 
 def parse_source(src, source, config="C2", features=None,
-                 rule_set_prefix="X86_"):
+                 rule_set_prefix="X86_", llt_extended=False):
     toks = lex(src)
     state = ParserState(features or {})
     state.rule_set_prefix = rule_set_prefix
@@ -161,7 +162,10 @@ def parse_source(src, source, config="C2", features=None,
     if body is None:
         raise E.ExprError("cannot find the legalizer constructor body")
     start, end = body
-    env = {"__features__": state.features}
+    env = {"__features__": state.features, "__llt_extended__": llt_extended,
+           "__code_model__": state.features.get("codeModel")}
+    for value in ("Tiny", "Small", "Kernel", "Large", "LargePIC"):
+        env[f"CodeModel::{value}"] = value
     env.update(state.features)
     bp = BodyParser(toks, state)
     bp.parse_statements(start + 1, end, env, [])
@@ -256,6 +260,8 @@ class BodyParser:
     # -- statements ---------------------------------------------------------
     def parse_statements(self, i, end, env, guards):
         while i < end:
+            if self.state.early_return:
+                break
             if self.toks[i].text == "}":
                 break
             nxt = self.parse_one(i, end, env, guards)
@@ -290,6 +296,16 @@ class BodyParser:
         # and the config-specific legalFor lists stay out of the wrong builder.
         then_guards = [*guards, (cond_text, value)]
         k = cond_close + 1
+        if self.is_return_branch(k, end):
+            # ``if (!ST.hasNEON()) return;`` disables the rest of the
+            # constructor.  A taken return stops the parse; an undecidable
+            # guard leaves every following rule undecided.
+            if value is True:
+                self.state.early_return = True
+                return end
+            if value is None:
+                guards.append(("early return (" + cond_text + ")", None))
+                return k
         k = self.parse_branch(k, end, env, then_guards, take=value is not False)
         if k < end and self.toks[k].text == "else":
             k += 1
@@ -299,6 +315,19 @@ class BodyParser:
             ]
             k = self.parse_branch(k, end, env, other_guards, take=value is not True)
         return k
+
+    def is_return_branch(self, i, end):
+        if i >= end:
+            return False
+        if self.toks[i].text == "return":
+            return True
+        if self.toks[i].text != "{":
+            return False
+        close = matching(self.toks, i, end)
+        if close < 0:
+            return False
+        body = [t for t in self.toks[i + 1:close] if t.text != ";"]
+        return len(body) == 1 and body[0].text == "return"
 
     def parse_branch(self, i, end, env, guards, take):
         if i >= end:
@@ -543,18 +572,31 @@ class BodyParser:
                         out.add(self._env[v.text])
                     k += 2
                 elif t.text in E._PRED_SLOT1 and k + 2 < len(body) and body[k + 1].text == "(":
+                    # ``X.isVector()`` is an LLT method, not the DSL predicate.
+                    if k and body[k - 1].text in (".", "->"):
+                        k += 1
+                        continue
                     close = matching(body, k + 1)
-                    if close > 0:
-                        arg = E.Parser(body, k + 2, close).parse_expr()
-                        idx = eval_int(arg, self._env)
+                    if close > k + 2:
+                        try:
+                            arg = E.Parser(body, k + 2, close).parse_expr()
+                        except E.ExprError:
+                            arg = None
+                        idx = eval_int(arg, self._env) if arg is not None else None
                         # A lambda-local index (SubIdx/FullIdx) is not in env;
                         # the predicate still reads a slot, so keep 0 and 1.
                         out.update((idx,) if idx is not None else (0, 1))
                         k = close
                 elif t.text in E._PRED_SLOT2 and k + 2 < len(body) and body[k + 1].text == "(":
+                    if k and body[k - 1].text in (".", "->"):
+                        k += 1
+                        continue
                     close = matching(body, k + 1)
-                    if close > 0:
-                        args = parse_args(body, k + 1, close, self._env)
+                    if close > k + 2:
+                        try:
+                            args = parse_args(body, k + 1, close, self._env)
+                        except E.ExprError:
+                            args = []
                         for a in args[:2]:
                             idx = eval_int(a, self._env)
                             out.update((idx,) if idx is not None else (0, 1))

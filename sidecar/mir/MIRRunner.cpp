@@ -257,7 +257,10 @@ struct OpcodeContract {
 };
 
 bool isIntLike(const LLT &Ty) {
-  return !Ty.isPointer() && !Ty.isPointerVector();
+  if (Ty.isPointer() || Ty.isPointerVector())
+    return false;
+  LLT Elem = Ty.isVector() ? Ty.getElementType() : Ty;
+  return Elem.isAnyScalar() || Elem.isInteger();
 }
 
 bool isI1Like(const LLT &Ty) {
@@ -267,7 +270,16 @@ bool isI1Like(const LLT &Ty) {
 bool sameShape(const LLT &A, const LLT &B) {
   if (A.isVector() != B.isVector())
     return false;
-  return !A.isVector() || A.getNumElements() == B.getNumElements();
+  return !A.isVector() ||
+         (A.isScalable() == B.isScalable() &&
+          A.getNumElements() == B.getNumElements());
+}
+
+/// getSizeInBits().getFixedValue(), guarded for scalable TypeSize.
+std::optional<uint64_t> fixedBits(const LLT &Ty) {
+  if (Ty.isScalableVector())
+    return std::nullopt;
+  return Ty.getSizeInBits().getFixedValue();
 }
 
 std::string describeType(const LLT &Ty) {
@@ -315,9 +327,29 @@ const OpcodeContract Contracts[] = {
     {"G_SSHLSAT", IntegerOnlyRules}, {"G_USHLSAT", IntegerOnlyRules},
 };
 
+/// IR can only form pointer-typed generic operations for a small family.
+/// Everything else is a corpus construction bug, and many target legalizers
+/// assert on it (e.g. AArch64 G_ABDS lowering builds a binary op).
+bool opcodeAllowsPointer(StringRef Name) {
+  if (Name.contains("LOAD") || Name.contains("STORE") ||
+      Name.contains("ATOMIC") || Name.contains("PTR") ||
+      Name.contains("MEM") || Name.contains("PREFETCH"))
+    return true;
+  return Name == "G_ICMP" || Name == "G_IMPLICIT_DEF" ||
+         Name == "G_FREEZE" || Name == "G_BITCAST" ||
+         Name == "G_PHI" || Name == "G_VAARG" || Name == "G_VASTART" ||
+         Name == "G_DYN_STACKALLOC" || Name == "G_ALLOCA";
+}
+
 /// Returns a stable reason when the atom's types violate the opcode contract.
 std::optional<std::string> checkTypeContract(StringRef Opcode,
                                              ArrayRef<LLT> Types) {
+  if (!opcodeAllowsPointer(Opcode)) {
+    for (unsigned I = 0; I != Types.size(); ++I)
+      if (Types[I].isPointer() || Types[I].isPointerVector())
+        return contractFailure(I, "operand",
+                               "a non-pointer type for this opcode", Types[I]);
+  }
   for (const OpcodeContract &Contract : Contracts) {
     if (Contract.Name != Opcode)
       continue;
@@ -536,6 +568,18 @@ Type *fpTypeForWidth(LLVMContext &Ctx, unsigned Bits) {
   }
 }
 
+Type *fpTypeForLLT(LLVMContext &Ctx, const LLT &Ty) {
+  if (!Ty.isFloat())
+    return nullptr;
+  if (Ty.isBFloat16())
+    return Type::getBFloatTy(Ctx);
+  if (Ty.isX86FP80())
+    return Type::getX86_FP80Ty(Ctx);
+  if (Ty.isPPCF128())
+    return Type::getPPC_FP128Ty(Ctx);
+  return fpTypeForWidth(Ctx, Ty.getScalarSizeInBits());
+}
+
 /// Reviewed immediate table from PRD 4.3 item 5.  Any descriptor operand that
 /// is not a generic type must be covered here; otherwise the atom is
 /// unbuildable rather than silently given a wrong immediate.
@@ -553,6 +597,9 @@ int main(int argc, char **argv) {
   LLVMInitializeX86TargetInfo();
   LLVMInitializeX86Target();
   LLVMInitializeX86TargetMC();
+  LLVMInitializeAArch64TargetInfo();
+  LLVMInitializeAArch64Target();
+  LLVMInitializeAArch64TargetMC();
 
   const std::string InPath = requireEnv("X86_LEGALIZER_MIR_CORPUS_IN");
   const std::string OutPath = requireEnv("X86_LEGALIZER_MIR_OUT");
@@ -586,9 +633,14 @@ int main(int argc, char **argv) {
   std::optional<StringRef> ConfigText = Root->getString("config");
   if (!ConfigText)
     infraError("corpus has no config");
-  const Config *C = findFullConfig(*ConfigText);
+  StringRef TargetName = "x86";
+  if (const json::Object *Desc = Root->getObject("config_descriptor"))
+    if (std::optional<StringRef> T = Desc->getString("target"))
+      TargetName = *T;
+  const Config *C = findFullConfig(TargetName, *ConfigText);
   if (!C)
-    infraError(Twine("corpus config is not one of C0-C3: ") + *ConfigText);
+    infraError(Twine("corpus config is not known for target ") + TargetName +
+               ": " + *ConfigText);
 
   const json::Array *AtomsJson = Root->getArray("atoms");
   if (!AtomsJson)
@@ -602,7 +654,7 @@ int main(int argc, char **argv) {
   Sigma S = makeSigma(*C);
   if (!S.TM || !S.STI)
     infraError(Twine("cannot create subtarget for config ") + C->ID);
-  const unsigned PointerBits = S.STI->isTarget64BitLP64() ? 64 : 32;
+  const unsigned PointerBits = S.PointerBits;
 
   // Parse and pre-flight every atom before running any of them.  A malformed
   // type, memory description, or pointer width is an infrastructure error,
@@ -672,13 +724,21 @@ int main(int argc, char **argv) {
   }
 
   const MCInstrInfo &MCII = *S.TM->getMCInstrInfo();
-  const X86TargetMachine &TM =
-      *static_cast<const X86TargetMachine *>(S.TM.get());
   std::unique_ptr<LegalizerInfo> Reference;
-  if (Rules == RulesKind::Reference)
-    Reference = std::make_unique<X86LegalizerInfoReference>(*S.STI, TM);
+  if (Rules == RulesKind::Reference) {
+    if (TargetName != "x86")
+      infraError("the frozen reference exists only for x86; use "
+                 "--rules production");
+    const X86TargetMachine &TM =
+        *static_cast<const X86TargetMachine *>(S.TM.get());
+    Reference = std::make_unique<X86LegalizerInfoReference>(
+        *static_cast<const X86Subtarget *>(S.STI), TM);
+  }
+  const LegalizerInfo *Production = S.STI->getLegalizerInfo();
+  if (!Production)
+    infraError(Twine("target ") + TargetName + " has no LegalizerInfo");
   const LegalizerInfo &LI =
-      Rules == RulesKind::Reference ? *Reference : *S.STI->getLegalizerInfo();
+      Rules == RulesKind::Reference ? *Reference : *Production;
 
   std::map<std::string, unsigned> Counts = {{"legalized", 0},
                                             {"failed", 0},
@@ -783,21 +843,21 @@ int main(int argc, char **argv) {
       if (Types[0].isVector() || Types[1].isVector()) {
         ShapeReason = "merge values rejects vector operands";
       } else {
-        const unsigned Size0 = Types[0].getSizeInBits().getFixedValue();
-        const unsigned Size1 = Types[1].getSizeInBits().getFixedValue();
-        if (Size1 == 0 || Size0 % Size1 != 0)
+        std::optional<uint64_t> Size0 = fixedBits(Types[0]);
+        std::optional<uint64_t> Size1 = fixedBits(Types[1]);
+        if (!Size0 || !Size1 || *Size1 == 0 || *Size0 % *Size1 != 0)
           ShapeReason = "merge value sizes do not divide";
         else
-          NumVariadicUses = Size0 / Size1;
+          NumVariadicUses = *Size0 / *Size1;
         VariadicTypeIdx = 1;
       }
     } else if (A.OpcodeName == "G_UNMERGE_VALUES") {
-      const unsigned Size0 = Types[0].getSizeInBits().getFixedValue();
-      const unsigned Size1 = Types[1].getSizeInBits().getFixedValue();
-      if (Size0 == 0 || Size1 % Size0 != 0) {
+      std::optional<uint64_t> Size0 = fixedBits(Types[0]);
+      std::optional<uint64_t> Size1 = fixedBits(Types[1]);
+      if (!Size0 || !Size1 || *Size0 == 0 || *Size1 % *Size0 != 0) {
         ShapeReason = "unmerge source size does not divide by destination";
       } else {
-        NumVariadicDefs = Size1 / Size0;
+        NumVariadicDefs = *Size1 / *Size0;
         VariadicTypeIdx = 0;
       }
     }
@@ -808,7 +868,8 @@ int main(int argc, char **argv) {
     }
 
     // Immediate-table validity.
-    if (A.OpcodeName == "G_CONSTANT" && !Types[0].isScalar()) {
+    if (A.OpcodeName == "G_CONSTANT" &&
+        (!Types[0].isScalar() || Types[0].isFloat())) {
       emit(A, Index,
            Outcome{"unbuildable", 0, "immediate_rule",
                    "G_CONSTANT type is not a scalar integer"});
@@ -816,8 +877,7 @@ int main(int argc, char **argv) {
     }
     if (A.OpcodeName == "G_FCONSTANT") {
       LLVMContext ProbeCtx;
-      if (!Types[0].isScalar() ||
-          !fpTypeForWidth(ProbeCtx, Types[0].getSizeInBits().getFixedValue())) {
+      if (!fpTypeForLLT(ProbeCtx, Types[0])) {
         emit(A, Index,
              Outcome{"unbuildable", 0, "immediate_rule",
                      "G_FCONSTANT width has no exact zero encoding"});
@@ -838,7 +898,8 @@ int main(int argc, char **argv) {
       continue;
     }
 
-    if (A.OpcodeName == "G_SHUFFLE_VECTOR" && !Types[0].isVector()) {
+    if (A.OpcodeName == "G_SHUFFLE_VECTOR" &&
+        (!Types[0].isVector() || Types[0].isScalableVector())) {
       emit(A, Index,
            Outcome{"unbuildable", 0, "shape_guard",
                    "shuffle vector destination is not a vector"});
@@ -856,7 +917,7 @@ int main(int argc, char **argv) {
     // Fresh Module/Function/MMI/MF for every atom: MMI caches MFs by
     // Function*, so reusing either would leak instructions and registers.
     LLVMContext Ctx;
-    Module M("x86-legalizer-mir", Ctx);
+    Module M("legalizer-mir", Ctx);
     const Triple TT(C->Triple);
     M.setTargetTriple(TT);
     M.setDataLayout(TT.computeDataLayout());
@@ -891,11 +952,9 @@ int main(int argc, char **argv) {
     auto addImmediateOperand = [&](unsigned OpIdx) {
       if (A.OpcodeName == "G_CONSTANT") {
         MIB.addCImm(ConstantInt::get(
-            IntegerType::get(Ctx, Types[0].getSizeInBits().getFixedValue()),
-            0));
+            IntegerType::get(Ctx, Types[0].getScalarSizeInBits()), 0));
       } else if (A.OpcodeName == "G_FCONSTANT") {
-        Type *Ty =
-            fpTypeForWidth(Ctx, Types[0].getSizeInBits().getFixedValue());
+        Type *Ty = fpTypeForLLT(Ctx, Types[0]);
         MIB.addFPImm(ConstantFP::get(Ty, 0.0));
       } else if (A.OpcodeName == "G_ICMP") {
         MIB.addPredicate(CmpInst::ICMP_EQ);
@@ -956,8 +1015,14 @@ int main(int argc, char **argv) {
         Flags |= MachineMemOperand::MOLoad;
       if (MI->getDesc().mayStore())
         Flags |= MachineMemOperand::MOStore;
-      const uint64_t Bytes =
-          divideCeil(A.Mem->Type.getSizeInBits().getFixedValue(), 8);
+      std::optional<uint64_t> MemBits = fixedBits(A.Mem->Type);
+      if (!MemBits) {
+        emit(A, Index,
+             Outcome{"unbuildable", 0, "shape_guard",
+                     "scalable memory type has no fixed size"});
+        continue;
+      }
+      const uint64_t Bytes = divideCeil(*MemBits, 8);
       MachineMemOperand *MMO = MF.getMachineMemOperand(
           MachinePointerInfo(), Flags, LocationSize::precise(Bytes),
           Align(A.Mem->Align));

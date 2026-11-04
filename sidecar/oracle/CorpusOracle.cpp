@@ -237,11 +237,13 @@ int main() {
   if (!Desc)
     infraError("points file has no config_descriptor");
   if (std::optional<std::string> Error =
-          validateConfigDescriptor(*Desc, *C, *S.STI))
+          validateConfigDescriptor(
+              *Desc, *C, *static_cast<const X86Subtarget *>(S.STI)))
     infraError(*Error);
 
   X86LegalizerInfoReference Oracle(
-      *S.STI, *static_cast<const X86TargetMachine *>(S.TM.get()));
+      *static_cast<const X86Subtarget *>(S.STI),
+      *static_cast<const X86TargetMachine *>(S.TM.get()));
   const unsigned PointerBits = C->Is64 ? 64 : 32;
 
   const json::Array *Points = Root->getArray("points");

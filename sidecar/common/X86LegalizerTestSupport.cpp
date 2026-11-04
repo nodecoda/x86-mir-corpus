@@ -8,7 +8,6 @@
 
 #include "X86LegalizerTestSupport.h"
 
-#include "X86Subtarget.h"
 #include "llvm/ADT/StringRef.h"
 #include "llvm/ADT/StringSwitch.h"
 #include "llvm/CodeGen/TargetOpcodes.h"
@@ -40,10 +39,36 @@ static const Config FullConfigs[4] = {
      true},
 };
 
+// AArch64 configurations.  A0 is the NEON+FP baseline; A2 matches the
+// corpus' witness config and enables every feature the legalizer reads.
+static const Config AArch64Configs[4] = {
+    {"A0", "aarch64", "+neon,+fp-armv8", true, false, false, false, false},
+    {"A1", "aarch64", "+neon,+fp-armv8,+fullfp16", true, false, false, false,
+     false},
+    {"A2", "aarch64",
+     "+neon,+fp-armv8,+fullfp16,+sve,+cssc,+rcpc3,+bf16,+lse,+mops", true,
+     false, false, false, false},
+    {"A3", "aarch64",
+     "+neon,+fp-armv8,+fullfp16,+sve,+cssc,+rcpc3,+bf16,+lse,+mops,"
+     "+outline-atomics",
+     true, false, false, false, false},
+};
+
 const Config *findFullConfig(StringRef ID) {
   for (const Config &C : FullConfigs)
     if (ID == C.ID)
       return &C;
+  return nullptr;
+}
+
+const Config *findFullConfig(StringRef Target, StringRef ID) {
+  if (Target == "x86")
+    return findFullConfig(ID);
+  if (Target == "aarch64") {
+    for (const Config &C : AArch64Configs)
+      if (ID == C.ID)
+        return &C;
+  }
   return nullptr;
 }
 
@@ -63,37 +88,78 @@ Sigma makeSigma(const Config &C) {
   if (!M.getFunction("f"))
     Function::Create(FunctionType::get(Type::getVoidTy(Ctx), false),
                      Function::ExternalLinkage, "f", M);
-  S.STI = static_cast<const X86Subtarget *>(
-      S.TM->getSubtargetImpl(*M.getFunction("f")));
+  S.STI = S.TM->getSubtargetImpl(*M.getFunction("f"));
+  S.PointerBits = S.TM->createDataLayout().getPointerSizeInBits(0);
   return S;
 }
 
 static std::optional<LLT> parseJSONLLT(StringRef S, unsigned PointerBits) {
-  if (S.consume_front("p")) {
-    unsigned AddressSpace = 0;
-    if (S.getAsInteger(10, AddressSpace))
-      return std::nullopt;
-    return LLT::pointer(AddressSpace, PointerBits);
+  auto parseElement = [&](StringRef E) -> std::optional<LLT> {
+    if (E.consume_front("p")) {
+      unsigned AddressSpace = 0;
+      if (E.getAsInteger(10, AddressSpace))
+        return std::nullopt;
+      return LLT::pointer(AddressSpace, PointerBits);
+    }
+    if (E.consume_front("s")) {
+      unsigned Bits = 0;
+      if (E.getAsInteger(10, Bits))
+        return std::nullopt;
+      return LLT::scalar(Bits);
+    }
+    if (E.consume_front("i")) {
+      unsigned Bits = 0;
+      if (E.getAsInteger(10, Bits))
+        return std::nullopt;
+      // Folds to LLT::scalar when the target has not enabled extended LLT.
+      return LLT::integer(Bits);
+    }
+    if (E == "bf16")
+      return LLT::bfloat16();
+    if (E == "ppcf128")
+      return LLT::ppcf128();
+    if (E.consume_front("f")) {
+      unsigned Bits = 0;
+      if (E.getAsInteger(10, Bits))
+        return std::nullopt;
+      switch (Bits) {
+      case 16:
+        return LLT::float16();
+      case 32:
+        return LLT::float32();
+      case 64:
+        return LLT::float64();
+      case 80:
+        return LLT::x86fp80();
+      case 128:
+        return LLT::float128();
+      default:
+        return std::nullopt;
+      }
+    }
+    return std::nullopt;
+  };
+
+  bool Scalable = false;
+  if (S.consume_front("nxv"))
+    Scalable = true;
+  else if (S.consume_front("v")) {
+  } else {
+    return parseElement(S);
   }
-  if (S.consume_front("v")) {
-    const size_t Sep = S.find_first_of("ps");
-    if (Sep == StringRef::npos)
-      return std::nullopt;
-    unsigned Lanes = 0, Elem = 0;
-    if (S.take_front(Sep).getAsInteger(10, Lanes) ||
-        S.drop_front(Sep + 1).getAsInteger(10, Elem))
-      return std::nullopt;
-    if (S[Sep] == 'p')
-      return LLT::fixed_vector(Lanes, LLT::pointer(Elem, PointerBits));
-    return LLT::fixed_vector(Lanes, Elem);
-  }
-  if (S.consume_front("s")) {
-    unsigned Bits = 0;
-    if (S.getAsInteger(10, Bits))
-      return std::nullopt;
-    return LLT::scalar(Bits);
-  }
-  return std::nullopt;
+  // ``v<lanes><element>``: the element token starts after the decimal lanes.
+  size_t LaneEnd = 0;
+  while (LaneEnd != S.size() && S[LaneEnd] >= '0' && S[LaneEnd] <= '9')
+    ++LaneEnd;
+  unsigned Lanes = 0;
+  if (LaneEnd == 0 || S.take_front(LaneEnd).getAsInteger(10, Lanes))
+    return std::nullopt;
+  std::optional<LLT> Elem = parseElement(S.drop_front(LaneEnd));
+  if (!Elem)
+    return std::nullopt;
+  if (Scalable)
+    return LLT::scalable_vector(Lanes, *Elem);
+  return LLT::fixed_vector(Lanes, *Elem);
 }
 
 /// Corpus type names carry the pointer width ("p0:64", "v2p0:64"), while the

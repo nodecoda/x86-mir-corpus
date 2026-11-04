@@ -4,7 +4,7 @@ import tempfile
 import unittest
 
 import testlib
-from x86_mir_corpus import domain, emit, parse
+from x86_mir_corpus import domain, emit, parse, targets
 from x86_mir_corpus import expr as E
 from x86_mir_corpus.target import CONFIGS
 
@@ -62,7 +62,7 @@ class DomainTest(unittest.TestCase):
         points, _, _, panel, pruned, _ = domain.build_points(result, "witness")
         self.assertEqual(pruned, 0)
         self.assertEqual(len(points), 75)
-        self.assertEqual(panel, domain.BOUNDARY_PANEL)
+        self.assertEqual(panel, targets.get("x86").boundary_panel)
         for p in points:
             self.assertNotIn("expected", p)
             self.assertTrue(p["id"].startswith("cpp/"))

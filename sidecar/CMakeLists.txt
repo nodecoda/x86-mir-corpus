@@ -46,6 +46,7 @@ configure_file(
 set(X86_MIR_INCLUDES
     ${LLVM_INCLUDE_DIRS}
     "${LLVM_BINARY_DIR}/lib/Target/X86"
+    "${LLVM_BINARY_DIR}/lib/Target/AArch64"
     "${X86_SOURCE_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/common"
     "${CMAKE_CURRENT_SOURCE_DIR}/reference")
@@ -67,8 +68,9 @@ foreach(target IN ITEMS x86mir_common x86mir_reference)
 endforeach()
 
 llvm_map_components_to_libnames(X86_MIR_LLVM_LIBS
-  X86CodeGen X86Desc X86Info GlobalISel CodeGen CodeGenTypes MC MIRParser
-  Support TargetParser Analysis Core)
+  X86CodeGen X86Desc X86Info AArch64CodeGen AArch64Desc AArch64Info
+  GlobalISel CodeGen CodeGenTypes MC MIRParser Support TargetParser Analysis
+  Core)
 
 add_executable(x86-mir-oracle oracle/CorpusOracle.cpp)
 target_link_libraries(x86-mir-oracle PRIVATE

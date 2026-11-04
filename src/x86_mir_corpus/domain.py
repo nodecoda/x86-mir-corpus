@@ -9,9 +9,9 @@ import json
 import os
 
 from . import expr as E
+from . import targets as target_profiles
 from .lexer import matching
 from .parse import eval_int, parse_args
-from .target import BOUNDARY_PANEL, DEEP_PANEL, SKIP_WITNESS_SLOT1_AS, feature_env
 
 KIND_RANK = {"p": 0, "s": 1, "i": 2, "f": 3, "v": 4, "nxv": 5}
 
@@ -117,6 +117,29 @@ def class_pair(builder, classes, mem_classes, aligns):
                     pruned += 1
                     continue
                 out.append(point(builder.name, opcode, "classpair", [ty]))
+        elif builder.num_slots >= 3:
+            # A 3-slot query has no affordable full cube.  Vary one slot and
+            # then each slot pair against the representative; rule probes fill
+            # the remaining slots.
+            base = [rep] * builder.num_slots
+            for i in range(builder.num_slots):
+                for ty in classes:
+                    row = list(base)
+                    row[i] = ty
+                    if pointer_unsafe(row, unsafe):
+                        pruned += 1
+                        continue
+                    out.append(point(builder.name, opcode, "classpair", row))
+            for i in range(builder.num_slots):
+                for j in range(i + 1, builder.num_slots):
+                    for ty in classes:
+                        row = list(base)
+                        row[i] = row[j] = ty
+                        if pointer_unsafe(row, unsafe):
+                            pruned += 1
+                            continue
+                        out.append(point(builder.name, opcode, "classpair",
+                                         row))
         else:
             for left in classes:
                 for right in classes:
@@ -146,6 +169,10 @@ def boundary(builder, classes, panel, mode):
                                          [rep, E.ptr(0)], b, align))
                 elif builder.num_slots == 1:
                     out.append(point(builder.name, opcode, "boundary", [b]))
+                elif builder.num_slots >= 3:
+                    row = [rep] * builder.num_slots
+                    row[index % builder.num_slots] = b
+                    out.append(point(builder.name, opcode, "boundary", row))
                 elif index % 2 == 0:
                     out.append(point(builder.name, opcode, "boundary", [b, rep]))
                 else:
@@ -166,6 +193,14 @@ def boundary(builder, classes, panel, mode):
         elif builder.num_slots == 1:
             for b in panel:
                 out.append(point(builder.name, opcode, "boundary", [b]))
+        elif builder.num_slots >= 3:
+            for i in range(builder.num_slots):
+                for c in classes:
+                    for b in panel:
+                        row = [rep] * builder.num_slots
+                        row[i] = c
+                        row[(i + 1) % builder.num_slots] = b
+                        out.append(point(builder.name, opcode, "boundary", row))
         else:
             for c in classes:
                 for b in panel:
@@ -180,14 +215,14 @@ def boundary(builder, classes, panel, mode):
     return out, pruned
 
 
-def address_space(builder, classes):
+def address_space(builder, classes, skip_slot1_as=frozenset()):
     out = []
     p0, p1, p2 = E.ptr(0), E.ptr(1), E.ptr(2)
     align = align_classes(builder.aligns)[1] if builder.aligns else 1
 
     def emit(opcode, types, mem=None, al=0):
         name = builder.name
-        if (name in SKIP_WITNESS_SLOT1_AS and len(types) == 2
+        if (name in skip_slot1_as and len(types) == 2
                 and types[0] == p0 and types[1] in (p1, p2)
                 and (mem is None or mem == p0)):
             return
@@ -208,6 +243,10 @@ def address_space(builder, classes):
         elif builder.num_slots == 1:
             emit(opcode, [p1])
             emit(opcode, [p2])
+        elif builder.num_slots >= 3:
+            base = [rep_class(classes)] * builder.num_slots
+            emit(opcode, [p1, *base[1:]])
+            emit(opcode, [p2, *base[1:]])
         else:
             emit(opcode, [p1, p0])
             emit(opcode, [p2, p0])
@@ -229,7 +268,8 @@ def opcode_probes(builder, classes, mem_classes):
         elif builder.num_slots == 1:
             out.append(point(builder.name, opcode, "opcode", [rep]))
         else:
-            out.append(point(builder.name, opcode, "opcode", [rep, rep]))
+            out.append(point(builder.name, opcode, "opcode",
+                             [rep] * builder.num_slots))
     return out
 
 # --- rule predicates and candidate probes ---------------------------------
@@ -276,13 +316,15 @@ def first_list(values):
     return None
 
 
-def probe_env(classes, features=None):
+def probe_env(classes, features=None, llt_extended=None):
     env = {E.llt_name(t): t for t in classes}
     if features:
         env["__features__"] = features
         env.update(features)
         env["__pointer_bits__"] = 64 if features.get("is64Bit") else 32
-        env["__llt_extended__"] = bool(features.get("lltExtended", True))
+        if llt_extended is None:
+            llt_extended = features.get("lltExtended", True)
+        env["__llt_extended__"] = bool(llt_extended)
     return env
 
 
@@ -361,6 +403,8 @@ def _query_value(node, types, mem, env):
             if idx is not None and 0 <= idx < len(types):
                 return types[idx]
             return None
+        if node.name.endswith(".__index__.MemoryTy"):
+            return mem
         if node.name.endswith(".getSizeInBits"):
             inner = _query_value(E.Ident(node.name[:-len(".getSizeInBits")]),
                                  types, mem, env)
@@ -623,7 +667,13 @@ def _pred_match(node, types, mem, align, env):
             return None
         if name == "always":
             return True
-        return None
+        # Lambda locals hold LLT values; ``SrcTy.isVector()`` and friends are
+        # LLT methods, not DSL predicates.
+        try:
+            value = E.eval_expr(node, env)
+        except E.ExprError:
+            return None
+        return value if isinstance(value, bool) else None
     if isinstance(node, E.Binary):
         if node.op in ("==", "!="):
             left = _query_value(node.left, types, mem, env)
@@ -816,7 +866,7 @@ def rule_matches(rule, types, mem, align, env, opcode=None):
         if expr is None:
             return None
         local = dict(env)
-        local.update(lambda_local_env(lam, opcode))
+        local.update(lambda_local_env(lam, opcode, types, mem, env))
         return _pred_match(expr, types, mem, align, local)
     if method == "scalarizeIf":
         return None
@@ -879,19 +929,24 @@ def pred_witness(node, classes, env=None):
     return None
 
 
-def lambda_local_env(lam, opcode):
+def lambda_local_env(lam, opcode, types=None, mem=None, base_env=None):
     """Evaluate simple local assignments in a lambda body.
 
     X86_EXTRACT/G_INSERT compute SubIdx/FullIdx from Query.Opcode; resolving
-    those locals is what makes a per-opcode legalIf witness possible.
+    those locals is what makes a per-opcode legalIf witness possible.  When
+    *types* is given, ``Query.Types[i]`` assignments also resolve, which is
+    what lets an AArch64 ``customIf`` lambda be evaluated instead of staying
+    opaque.
     """
     if lam is None:
         return {}
-    env = {
+    env = dict(base_env or {})
+    env.update({
         "Query.Opcode": E.Opcode(opcode) if opcode else None,
         "G_EXTRACT": E.Opcode("G_EXTRACT"),
         "G_INSERT": E.Opcode("G_INSERT"),
-    }
+        "Query.Types": None,
+    })
     body = lam.body
     i = 0
     while i + 2 < len(body):
@@ -908,9 +963,17 @@ def lambda_local_env(lam, opcode):
                     break
                 j += 1
             try:
-                value = E.eval_expr(E.Parser(body, i + 2, j).parse_expr(), env)
+                node = E.Parser(body, i + 2, j).parse_expr()
             except E.ExprError:
-                value = None
+                node = None
+            value = None
+            if node is not None and types is not None:
+                value = _query_value(node, types, mem, env)
+            if value is None and node is not None:
+                try:
+                    value = E.eval_expr(node, env)
+                except E.ExprError:
+                    value = None
             if value is not None:
                 env[body[i].text] = value
             i = j + 1
@@ -1351,22 +1414,24 @@ def coverage_report(result, points, issues, inactive, exceptions):
 
 # --- top level -------------------------------------------------------------
 
-def build_points(result, tier, exceptions=None):
+def build_points(result, tier, exceptions=None, profile=None):
+    profile = profile or target_profiles.get("x86")
     classes = sorted_llts(result.classes)
     mem_classes = sorted_llts(result.mem_classes)
     if tier == "witness":
-        panel = BOUNDARY_PANEL
+        panel = profile.boundary_panel
         mode = "witness"
     elif tier == "deep":
-        panel = DEEP_PANEL
+        panel = profile.deep_panel
         mode = "full"
     elif tier == "full":
-        panel = BOUNDARY_PANEL
+        panel = profile.boundary_panel
         mode = "full"
     else:
         raise ValueError(f"unknown tier {tier}")
 
-    env = probe_env(classes, feature_env(result.features))
+    env = probe_env(classes, profile.feature_env(result.features),
+                    profile.llt_extended)
     points = []
     issues = []
     inactive = []
@@ -1384,7 +1449,8 @@ def build_points(result, tier, exceptions=None):
         built, skipped = boundary(builder, classes, panel, mode)
         points.extend(built)
         pruned += skipped
-        points.extend(address_space(builder, classes))
+        points.extend(address_space(builder, classes,
+                                   profile.skip_witness_slot1_as))
         points.extend(opcode_probes(builder, classes, mem_classes))
         built, rule_issues = rule_probes(builder, classes, mem_classes, env)
         points.extend(built)

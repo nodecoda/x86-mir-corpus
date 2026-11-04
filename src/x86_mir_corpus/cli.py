@@ -54,13 +54,36 @@ def resolve_revision(repo, revision):
     return proc.stdout.strip()
 
 
+def profile_for(args):
+    """The target profile selected by ``--target`` (X86 by default)."""
+    return target.get(getattr(args, "target", None))
+
+
+def resolve_source_args(args):
+    """Fill per-target defaults before reading the C++ constructor."""
+    profile = profile_for(args)
+    if not args.source_path:
+        args.source_path = profile.source_path
+    if not args.config:
+        args.config = profile.default_config
+    if args.config not in profile.configs:
+        raise SystemExit(
+            f"unknown config {args.config!r} for {profile.name}; "
+            f"choose from {', '.join(sorted(profile.configs))}")
+    if not args.source_rev:
+        args.source_rev = (pin.revision(target=profile.name)
+                           or target.DEFAULT_SOURCE_REV)
+    return profile
+
+
 def load_source(args):
+    resolve_source_args(args)
     if args.input:
         with open(args.input, encoding="utf-8") as handle:
             text = handle.read()
         return text, _source_info(text, None, None,
                                   os.path.abspath(args.input))
-    revision = args.source_rev or target.DEFAULT_SOURCE_REV
+    revision = args.source_rev
     spec = f"{revision}:{args.source_path}"
     proc = subprocess.run(
         ["git", "-C", args.repo, "show", spec],
@@ -84,8 +107,10 @@ def read_revision(repo, revision, path):
 
 def parse_input(args):
     text, source = load_source(args)
-    features = target.CONFIGS[args.config]
-    result = parse.parse_source(text, source, args.config, features)
+    profile = profile_for(args)
+    features = profile.configs[args.config]
+    result = parse.parse_source(text, source, args.config, features,
+                                profile.rule_set_prefix, profile.llt_extended)
     if (result.unknown_methods or result.unknown_predicates) and not args.allow_opaque:
         for method, line in result.unknown_methods:
             print(f"unknown chain method {method} at line {line}", file=sys.stderr)
@@ -132,13 +157,14 @@ def cmd_parse(args):
 def cmd_points(args):
     result, source = parse_input(args)
     exceptions = domain.load_coverage_exceptions(args.coverage_exceptions)
+    profile = profile_for(args)
     points, classes, mem_classes, panel, pruned, coverage = domain.build_points(
-        result, args.tier, exceptions)
+        result, args.tier, exceptions, profile)
     coverage_gate(coverage, args.allow_coverage_gaps)
     doc = emit.points_document(
         result, source, args.tier, points, classes, mem_classes, panel, pruned,
         coverage=coverage, oracle=oracle.oracle_doc("none"),
-        config_descriptor=target.config_descriptor(args.config))
+        config_descriptor=profile.config_descriptor(args.config))
     emit.write_json(args.out, doc)
     print(json.dumps({"out": args.out, "tier": args.tier,
                       "points": len(points), "pruned": doc["pruned"],
@@ -195,8 +221,10 @@ def _cross_revision_delta(args, result, oracle_revision, source):
     info = _source_info(text, oracle_revision,
                         resolve_revision(args.repo, oracle_revision),
                         args.source_path)
+    profile = profile_for(args)
     oracle_result = parse.parse_source(
-        text, info, args.config, target.CONFIGS[args.config])
+        text, info, args.config, profile.configs[args.config],
+        profile.rule_set_prefix, profile.llt_extended)
     delta = oracle.rule_delta(result, oracle_result)
     return delta
 
@@ -234,8 +262,9 @@ def _corpus_atom(point, pointer_bits=64):
 
 
 def _shapes_corpus(args, source, doc, coverage, oracle_doc, points):
-    config = target.config_descriptor(args.config)
-    pointer_bits = 64 if target.CONFIGS[args.config]["is64Bit"] else 32
+    profile = profile_for(args)
+    config = profile.config_descriptor(args.config)
+    pointer_bits = profile.pointer_bits(args.config)
     atoms = []
     for point in points:
         atom = _corpus_atom(point, pointer_bits)
@@ -246,6 +275,7 @@ def _shapes_corpus(args, source, doc, coverage, oracle_doc, points):
         "version": CORPUS_VERSION,
         "source": source,
         "oracle": oracle_doc,
+        "config": config["id"],
         "config_descriptor": config,
         "coverage": coverage,
         "counts": doc["counts"],
@@ -259,7 +289,7 @@ def cmd_corpus(args):
     result, source = parse_input(args)
     exceptions = domain.load_coverage_exceptions(args.coverage_exceptions)
     points, classes, mem_classes, panel, pruned, coverage = domain.build_points(
-        result, args.tier, exceptions)
+        result, args.tier, exceptions, profile_for(args))
     coverage_gate(coverage, args.allow_coverage_gaps)
 
     kind = args.oracle
@@ -302,7 +332,7 @@ def cmd_corpus(args):
     doc = emit.points_document(
         result, source, args.tier, points, classes, mem_classes, panel, pruned,
         coverage=coverage, oracle=oracle_doc,
-        config_descriptor=target.config_descriptor(args.config))
+        config_descriptor=profile_for(args).config_descriptor(args.config))
     emit.write_json(points_path, doc)
 
     if kind is None:
@@ -631,14 +661,17 @@ def build_parser():
 
     def common(sp):
         sp.add_argument("--input", help="read this C++ file instead of a revision")
-        sp.add_argument("--source-rev", default=target.DEFAULT_SOURCE_REV,
-                        help="git revision to read (default: the pinned commit; "
-                             "see `pin show`)")
-        sp.add_argument("--source-path", default=target.DEFAULT_SOURCE_PATH)
+        sp.add_argument("--target", default="x86", choices=target.names(),
+                        help="legalizer target (default: x86)")
+        sp.add_argument("--source-rev", default=None,
+                        help="git revision to read (default: the target's "
+                             "pinned commit; see `pin show`)")
+        sp.add_argument("--source-path", default=None,
+                        help="constructor source path (default: the target's)")
         sp.add_argument("--repo",
                         default=os.environ.get("X86_MIR_LLVM_SRC", "."))
-        sp.add_argument("--config", default=target.DEFAULT_CONFIG,
-                        choices=sorted(target.CONFIGS))
+        sp.add_argument("--config", default=None,
+                        help="target config id (default: the target's)")
         sp.add_argument("--allow-opaque", action="store_true",
                         help="do not fail on an unknown chain method")
 
