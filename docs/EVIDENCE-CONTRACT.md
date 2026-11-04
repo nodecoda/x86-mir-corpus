@@ -24,6 +24,12 @@ explicit `outcome`:
 
 `failed` carries `failed_on_opcode` (the opcode reported by the legalizer) and
 `detail_code` (`unable_to_legalize` or `libcall_lowering_disabled`).
+`construction_mismatch` carries `detail_code` `type_readback` (the atom asked
+for more/other types than the descriptor has), `verifier` (the built MIR failed
+`MachineFunction::verify`), or `type_contract` (a type slot violates the
+generic opcode contract, e.g. a pointer carry or a non-i1 `icmp` result).  A
+`type_contract` outcome is decided before the instruction is built: `steps` is
+0 and the legalizer never runs.
 `unbuildable` always carries a non-empty reason.  `not_run` is never folded
 into success; a missing result is reported as `not_run` with
 `missing_result`.

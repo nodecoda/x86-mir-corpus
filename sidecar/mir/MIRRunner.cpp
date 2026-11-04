@@ -219,6 +219,184 @@ public:
   void changedInstr(MachineInstr &) override {}
 };
 
+//===----------------------------------------------------------------------===//
+// Generic opcode type contracts.
+//
+// A corpus atom assigns a type to every descriptor generic-type index
+// independently, so it can describe an instruction that no IR producer can
+// create: a pointer carry, a non-i1 icmp result, a pointer shift operand.
+// Building one of those reaches a legalizer helper whose assertions document
+// the invariant, the driver aborts, and the shard has to be resumed.  Check
+// the invariant up front and report a construction problem instead, so every
+// atom still gets exactly one explicit outcome.
+
+enum class SlotCheck {
+  /// Every type slot: scalar or vector integer, never a pointer.
+  AllInt,
+  /// This slot: scalar or vector integer, never a pointer.
+  Int,
+  /// i1 scalar, or <N x i1> with slot 0's lane count.
+  CarryOf0,
+  /// Same scalar-ness and lane count as slot 0.
+  ShapeOf0,
+  /// i1 scalar when slot 1 is scalar, else <N x i1> with slot 1's lanes.
+  ICmpResult,
+  /// i1 or <N x i1>; a vector condition must match slot 0's lane count.
+  SelectCond,
+};
+
+struct SlotRule {
+  unsigned Index;
+  SlotCheck Check;
+  const char *Role;
+};
+
+struct OpcodeContract {
+  StringLiteral Name;
+  ArrayRef<SlotRule> Rules;
+};
+
+bool isIntLike(const LLT &Ty) {
+  return !Ty.isPointer() && !Ty.isPointerVector();
+}
+
+bool isI1Like(const LLT &Ty) {
+  return isIntLike(Ty) && Ty.getScalarSizeInBits() == 1;
+}
+
+bool sameShape(const LLT &A, const LLT &B) {
+  if (A.isVector() != B.isVector())
+    return false;
+  return !A.isVector() || A.getNumElements() == B.getNumElements();
+}
+
+std::string describeType(const LLT &Ty) {
+  std::string Text;
+  raw_string_ostream OS(Text);
+  Ty.print(OS);
+  return OS.str();
+}
+
+std::optional<std::string> contractFailure(unsigned Index, const char *Role,
+                                           const char *Expected,
+                                           const LLT &Actual) {
+  return "type contract: slot " + std::to_string(Index) + " (" + Role +
+         ") must be " + Expected + "; got " + describeType(Actual);
+}
+
+const SlotRule CarryRules[] = {{0, SlotCheck::Int, "result"},
+                               {1, SlotCheck::CarryOf0, "carry"}};
+const SlotRule UnaryIntRules[] = {{0, SlotCheck::Int, "result"},
+                                  {1, SlotCheck::ShapeOf0, "source"}};
+const SlotRule CompareRules[] = {{0, SlotCheck::ICmpResult, "result"}};
+const SlotRule SelectRules[] = {{1, SlotCheck::SelectCond, "condition"}};
+const SlotRule SextInRegRules[] = {{0, SlotCheck::Int, "operand"}};
+const SlotRule IntegerOnlyRules[] = {{0, SlotCheck::AllInt, "operands"}};
+
+const OpcodeContract Contracts[] = {
+    {"G_UADDE", CarryRules},      {"G_UADDO", CarryRules},
+    {"G_USUBE", CarryRules},      {"G_USUBO", CarryRules},
+    {"G_SADDE", CarryRules},      {"G_SADDO", CarryRules},
+    {"G_SSUBE", CarryRules},      {"G_SSUBO", CarryRules},
+    {"G_CTLZ", UnaryIntRules},    {"G_CTLZ_ZERO_POISON", UnaryIntRules},
+    {"G_CTTZ", UnaryIntRules},    {"G_CTTZ_ZERO_POISON", UnaryIntRules},
+    {"G_CTPOP", UnaryIntRules},   {"G_ICMP", CompareRules},
+    {"G_FCMP", CompareRules},     {"G_SELECT", SelectRules},
+    {"G_SEXT_INREG", SextInRegRules},
+    {"G_ADD", IntegerOnlyRules},  {"G_SUB", IntegerOnlyRules},
+    {"G_MUL", IntegerOnlyRules},  {"G_SDIV", IntegerOnlyRules},
+    {"G_UDIV", IntegerOnlyRules}, {"G_SREM", IntegerOnlyRules},
+    {"G_UREM", IntegerOnlyRules}, {"G_AND", IntegerOnlyRules},
+    {"G_OR", IntegerOnlyRules},   {"G_XOR", IntegerOnlyRules},
+    {"G_SHL", IntegerOnlyRules},  {"G_LSHR", IntegerOnlyRules},
+    {"G_ASHR", IntegerOnlyRules}, {"G_ABS", IntegerOnlyRules},
+    {"G_SADDSAT", IntegerOnlyRules}, {"G_UADDSAT", IntegerOnlyRules},
+    {"G_SSUBSAT", IntegerOnlyRules}, {"G_USUBSAT", IntegerOnlyRules},
+    {"G_SSHLSAT", IntegerOnlyRules}, {"G_USHLSAT", IntegerOnlyRules},
+};
+
+/// Returns a stable reason when the atom's types violate the opcode contract.
+std::optional<std::string> checkTypeContract(StringRef Opcode,
+                                             ArrayRef<LLT> Types) {
+  for (const OpcodeContract &Contract : Contracts) {
+    if (Contract.Name != Opcode)
+      continue;
+    for (const SlotRule &Rule : Contract.Rules) {
+      if (Rule.Check == SlotCheck::AllInt) {
+        for (unsigned I = 0; I != Types.size(); ++I)
+          if (!isIntLike(Types[I]))
+            return contractFailure(I, Rule.Role,
+                                   "an integer or integer vector, not a "
+                                   "pointer",
+                                   Types[I]);
+        continue;
+      }
+      if (Rule.Index >= Types.size())
+        return "type contract: missing type slot " +
+               std::to_string(Rule.Index) + " (" + Rule.Role + ")";
+      const LLT &Ty = Types[Rule.Index];
+      switch (Rule.Check) {
+      case SlotCheck::AllInt:
+        continue;
+      case SlotCheck::Int:
+        if (!isIntLike(Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "an integer or integer vector, not a pointer",
+                                 Ty);
+        break;
+      case SlotCheck::CarryOf0: {
+        const LLT &Res = Types[0];
+        if (Res.isVector()) {
+          if (!Ty.isVector() || !isI1Like(Ty) ||
+              Ty.getNumElements() != Res.getNumElements())
+            return contractFailure(
+                Rule.Index, Rule.Role,
+                "<N x i1> with the result's lane count", Ty);
+        } else if (Ty.isVector() || !isI1Like(Ty)) {
+          return contractFailure(Rule.Index, Rule.Role, "i1", Ty);
+        }
+        break;
+      }
+      case SlotCheck::ShapeOf0: {
+        const LLT &Dst = Types[0];
+        if (!sameShape(Dst, Ty))
+          return contractFailure(
+              Rule.Index, Rule.Role,
+              "the same scalar/vector shape as slot 0", Ty);
+        break;
+      }
+      case SlotCheck::ICmpResult: {
+        if (Rule.Index + 1 >= Types.size())
+          return "type contract: compare atom has no operand type slot";
+        const LLT &Op = Types[Rule.Index + 1];
+        if (Op.isVector()) {
+          if (!Ty.isVector() || !isI1Like(Ty) ||
+              Ty.getNumElements() != Op.getNumElements())
+            return contractFailure(Rule.Index, Rule.Role,
+                                   "<N x i1> with the operand lane count", Ty);
+        } else if (Ty.isVector() || !isI1Like(Ty)) {
+          return contractFailure(Rule.Index, Rule.Role, "i1", Ty);
+        }
+        break;
+      }
+      case SlotCheck::SelectCond: {
+        if (!isI1Like(Ty))
+          return contractFailure(Rule.Index, Rule.Role, "i1 or <N x i1>", Ty);
+        const LLT &Values = Types[0];
+        if (Ty.isVector() &&
+            (!Values.isVector() ||
+             Values.getNumElements() != Ty.getNumElements()))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a vector with the values' lane count", Ty);
+        break;
+      }
+      }
+    }
+    return std::nullopt;
+  }
+  return std::nullopt;
+}
+
 struct MemSpec {
   LLT Type;
   uint64_t Align;
@@ -566,6 +744,13 @@ int main(int argc, char **argv) {
     SmallVector<LLT, 4> Types;
     for (const std::optional<LLT> &Ty : TypeVec)
       Types.push_back(*Ty);
+
+    if (std::optional<std::string> Reason =
+            checkTypeContract(A.OpcodeName, Types)) {
+      emit(A, Index,
+           Outcome{"construction_mismatch", 0, "type_contract", *Reason});
+      continue;
+    }
 
     // Variadic shape guards (PRD 4.3).
     unsigned NumVariadicUses = 0;

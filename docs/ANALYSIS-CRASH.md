@@ -268,10 +268,31 @@ assert((Res.isScalar() || Res.isVector()) && "invalid operand type");
    从崩溃点的下一个 atom 重放剩余尾部；crash 按 opcode 连续聚集，重放接近平方级。
    这是全量跑从"几十分钟"变成"数小时"的主要原因，也是 16 并发 OOM 的诱因
    （每个 driver 峰值 RSS 约 4.3GB）。
-2. **建议（工具侧，P0）**：在 `MIRRunner` 合法化前加一层 per-opcode 类型契约检查，
-   把这些 atom 直接标成 `construction_mismatch`（或新增 `invalid_query`），
-   不再让进程 abort。实现成本低（一张 opcode→槽位约束表 + 现有 verifier 之后调用），
-   收益是 3,265 次 crash 归零、全量跑显著加速、OOM 风险消失。
+2. **已实现（工具侧，P0）**：`MIRRunner` 在 `assignTypes` 之后、构造指令之前
+   做 per-opcode 槽位契约检查（`checkTypeContract`，表驱动），违规 atom 直接
+   `construction_mismatch` + `detail_code: type_contract`，不再让进程 abort。
+   回归测试：`tests/fixtures/type-contract.json`（12 个家族代表 + 23 个合法对照）
+   + `tests/test_type_contract.py`。
+
+   全量复跑（208,851 atom，8 并发，shard 300）：
+
+   | outcome | 旧 driver | 契约检查后 |
+   |---|---|---|
+   | crash | 3,265 | **0** |
+   | construction_mismatch | 97,605 | 106,849 |
+   | failed | 18,116 | 12,375 |
+   | legalized | 3,109 | 2,871 |
+   | unbuildable | 86,756 | 86,756 |
+   | budget | 0 | 0 |
+
+   新增的 `construction_mismatch` 不止 3,265 个 crash：另有 5,737 个原本
+   `failed`、238 个原本 `legalized`、4 个原本 `budget` 的 atom 同样是槽位非法
+   （例如 `fcmp` 结果给 i256、`select` 条件给 i32、`uadde` carry 给 i8 向量）。
+   这些 atom 的旧 outcome 本身没有意义——legalizer 只是没有走到会断言的 helper。
+   契约检查按 IR 类型规则统一拒绝它们。另有 2,674 个原本已由 verifier 拒绝的
+   atom 现在在更早的契约检查处得到更具体的 `type_contract` 原因（outcome 不变）。
+   耗时从数小时降到约 10 分钟，峰值内存 ~27G（8 并发），不再需要为 crash
+   重启降并发。
 3. **建议（上游）**：不建议按 crash 提 issue——都是畸形 MIR 触发 assert，真实 IR
    不可达；但家族 5、8 暴露的 `extractParts`/`Xors` 假设可以合并成一个小的
    "legalizer 应 graceful fail" 补丁，等有真实复现再提。

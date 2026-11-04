@@ -20,6 +20,15 @@ All notable changes to this project are documented here.  The format follows
   reference), and `pin verify --repo` re-extracts the blob from a checkout
   to prove the snapshot still matches.
 - `x86-mir-corpus --version`.
+- `x86-mir-run` checks each atom's type slots against per-opcode contracts
+  before building it.  Atoms that no IR producer can create (pointer carry,
+  non-i1 `icmp` result, pointer shift operand, vector/scalar mismatch) are now
+  `construction_mismatch` with `detail_code: type_contract` instead of
+  aborting the driver and forcing the shard to restart.  The check follows IR
+  type rules, so it also reclassifies atoms the legalizer happened to tolerate
+  (e.g. an `fcmp` with an i256 result); on the 208,851-atom C2 corpus this
+  turns 3,265 crashes into 0 and drops the full run from hours to ~10 minutes
+  at 8 jobs.
 
 ### Changed
 

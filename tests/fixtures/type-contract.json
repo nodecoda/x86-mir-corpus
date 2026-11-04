@@ -1,0 +1,392 @@
+{
+ "schema": "llvm-x86-legalizer-cpp-corpus",
+ "version": 1,
+ "config": "C2",
+ "comment": "Regression fixture for the generic-opcode type contract check in x86-mir-run.  The first twelve atoms are the representatives of the twelve assertion families found in the 208,851-atom C2 baseline: the driver must report construction_mismatch/type_contract instead of aborting.  The remaining atoms are contract-valid controls (including i100 and vector carry) and must not be rejected.",
+ "expectations": {
+  "cpp/X86_UADDE/G_UADDE/boundary/312": "type_contract",
+  "cpp/X86_CTLZ/G_CTLZ/boundary/301": "type_contract",
+  "cpp/X86_UADDE/G_UADDE/classpair/275": "type_contract",
+  "cpp/X86_SEXT_INREG/G_SEXT_INREG/as/0": "type_contract",
+  "cpp/X86_ICMP/G_ICMP/boundary/0": "type_contract",
+  "cpp/X86_UADDE/G_UADDE/boundary/21": "type_contract",
+  "cpp/X86_ICMP/G_ICMP/boundary/24": "type_contract",
+  "cpp/X86_UADDE/G_UADDE/boundary/26": "type_contract",
+  "cpp/X86_SHL/G_ASHR/boundary/24": "type_contract",
+  "cpp/X86_ICMP/G_ICMP/boundary/25": "type_contract",
+  "cpp/X86_SELECT/G_SELECT/boundary/24": "type_contract",
+  "cpp/X86_UADDE/G_USUBE/boundary/1182": "type_contract",
+  "ADD_s100_valid": "legal",
+  "ADD_s1_valid": "legal",
+  "ASHR_v4s32_v4s32_valid": "legal",
+  "CTLZ_s100_s100_valid": "legal",
+  "CTLZ_s1_s1": "legal",
+  "CTLZ_v4s32_v4s32_valid": "legal",
+  "CTPOP_v4s32_v4s32_valid": "legal",
+  "ICMP_s1_p0_valid": "legal",
+  "ICMP_s1_s100_valid": "legal",
+  "ICMP_s1_s1_valid": "legal",
+  "ICMP_s1_s8_valid": "legal",
+  "ICMP_v4s1_v4s32_valid": "legal",
+  "SELECT_s32_s1_valid": "legal",
+  "SELECT_v4s32_v4s1_valid": "legal",
+  "SEXTINREG_s32_valid": "legal",
+  "SHL_s32_s8_valid": "legal",
+  "UADDE_s100_s1_valid": "legal",
+  "UADDE_s1_s1": "legal",
+  "UADDE_s32_s1_valid": "legal",
+  "UADDE_v4s32_v4s1_valid": "legal",
+  "UADDO_v4s32_v4s1_valid": "legal",
+  "USUBE_v4s32_v4s1_valid": "legal",
+  "USUBO_v4s32_v4s1_valid": "legal"
+ },
+ "atom_count": 35,
+ "atoms": [
+  {
+   "id": "cpp/X86_UADDE/G_UADDE/boundary/312",
+   "opcode": "G_UADDE",
+   "query": {
+    "types": [
+     "v16s16",
+     "p0:64"
+    ]
+   }
+  },
+  {
+   "id": "cpp/X86_CTLZ/G_CTLZ/boundary/301",
+   "opcode": "G_CTLZ",
+   "query": {
+    "types": [
+     "v16s16",
+     "s1"
+    ]
+   }
+  },
+  {
+   "id": "cpp/X86_UADDE/G_UADDE/classpair/275",
+   "opcode": "G_UADDE",
+   "query": {
+    "types": [
+     "v2p0:64",
+     "v2p0:64"
+    ]
+   }
+  },
+  {
+   "id": "cpp/X86_SEXT_INREG/G_SEXT_INREG/as/0",
+   "opcode": "G_SEXT_INREG",
+   "query": {
+    "types": [
+     "p1:64"
+    ]
+   }
+  },
+  {
+   "id": "cpp/X86_ICMP/G_ICMP/boundary/0",
+   "opcode": "G_ICMP",
+   "query": {
+    "types": [
+     "p0:64",
+     "s100"
+    ]
+   }
+  },
+  {
+   "id": "cpp/X86_UADDE/G_UADDE/boundary/21",
+   "opcode": "G_UADDE",
+   "query": {
+    "types": [
+     "s1",
+     "v16s16"
+    ]
+   }
+  },
+  {
+   "id": "cpp/X86_ICMP/G_ICMP/boundary/24",
+   "opcode": "G_ICMP",
+   "query": {
+    "types": [
+     "s100",
+     "p0:64"
+    ]
+   }
+  },
+  {
+   "id": "cpp/X86_UADDE/G_UADDE/boundary/26",
+   "opcode": "G_UADDE",
+   "query": {
+    "types": [
+     "s100",
+     "s128"
+    ]
+   }
+  },
+  {
+   "id": "cpp/X86_SHL/G_ASHR/boundary/24",
+   "opcode": "G_ASHR",
+   "query": {
+    "types": [
+     "s100",
+     "p0:64"
+    ]
+   }
+  },
+  {
+   "id": "cpp/X86_ICMP/G_ICMP/boundary/25",
+   "opcode": "G_ICMP",
+   "query": {
+    "types": [
+     "s100",
+     "s1"
+    ]
+   }
+  },
+  {
+   "id": "cpp/X86_SELECT/G_SELECT/boundary/24",
+   "opcode": "G_SELECT",
+   "query": {
+    "types": [
+     "s100",
+     "p0:64"
+    ]
+   }
+  },
+  {
+   "id": "cpp/X86_UADDE/G_USUBE/boundary/1182",
+   "opcode": "G_USUBE",
+   "query": {
+    "types": [
+     "s100",
+     "s8"
+    ]
+   }
+  },
+  {
+   "id": "ADD_s100_valid",
+   "opcode": "G_ADD",
+   "query": {
+    "types": [
+     "s100"
+    ]
+   }
+  },
+  {
+   "id": "ADD_s1_valid",
+   "opcode": "G_ADD",
+   "query": {
+    "types": [
+     "s1"
+    ]
+   }
+  },
+  {
+   "id": "ASHR_v4s32_v4s32_valid",
+   "opcode": "G_ASHR",
+   "query": {
+    "types": [
+     "v4s32",
+     "v4s32"
+    ]
+   }
+  },
+  {
+   "id": "CTLZ_s100_s100_valid",
+   "opcode": "G_CTLZ",
+   "query": {
+    "types": [
+     "s100",
+     "s100"
+    ]
+   }
+  },
+  {
+   "id": "CTLZ_s1_s1",
+   "opcode": "G_CTLZ",
+   "query": {
+    "types": [
+     "s1",
+     "s1"
+    ]
+   }
+  },
+  {
+   "id": "CTLZ_v4s32_v4s32_valid",
+   "opcode": "G_CTLZ",
+   "query": {
+    "types": [
+     "v4s32",
+     "v4s32"
+    ]
+   }
+  },
+  {
+   "id": "CTPOP_v4s32_v4s32_valid",
+   "opcode": "G_CTPOP",
+   "query": {
+    "types": [
+     "v4s32",
+     "v4s32"
+    ]
+   }
+  },
+  {
+   "id": "ICMP_s1_p0_valid",
+   "opcode": "G_ICMP",
+   "query": {
+    "types": [
+     "s1",
+     "p0:64"
+    ]
+   }
+  },
+  {
+   "id": "ICMP_s1_s100_valid",
+   "opcode": "G_ICMP",
+   "query": {
+    "types": [
+     "s1",
+     "s100"
+    ]
+   }
+  },
+  {
+   "id": "ICMP_s1_s1_valid",
+   "opcode": "G_ICMP",
+   "query": {
+    "types": [
+     "s1",
+     "s1"
+    ]
+   }
+  },
+  {
+   "id": "ICMP_s1_s8_valid",
+   "opcode": "G_ICMP",
+   "query": {
+    "types": [
+     "s1",
+     "s8"
+    ]
+   }
+  },
+  {
+   "id": "ICMP_v4s1_v4s32_valid",
+   "opcode": "G_ICMP",
+   "query": {
+    "types": [
+     "v4s1",
+     "v4s32"
+    ]
+   }
+  },
+  {
+   "id": "SELECT_s32_s1_valid",
+   "opcode": "G_SELECT",
+   "query": {
+    "types": [
+     "s32",
+     "s1"
+    ]
+   }
+  },
+  {
+   "id": "SELECT_v4s32_v4s1_valid",
+   "opcode": "G_SELECT",
+   "query": {
+    "types": [
+     "v4s32",
+     "v4s1"
+    ]
+   }
+  },
+  {
+   "id": "SEXTINREG_s32_valid",
+   "opcode": "G_SEXT_INREG",
+   "query": {
+    "types": [
+     "s32"
+    ]
+   }
+  },
+  {
+   "id": "SHL_s32_s8_valid",
+   "opcode": "G_SHL",
+   "query": {
+    "types": [
+     "s32",
+     "s8"
+    ]
+   }
+  },
+  {
+   "id": "UADDE_s100_s1_valid",
+   "opcode": "G_UADDE",
+   "query": {
+    "types": [
+     "s100",
+     "s1"
+    ]
+   }
+  },
+  {
+   "id": "UADDE_s1_s1",
+   "opcode": "G_UADDE",
+   "query": {
+    "types": [
+     "s1",
+     "s1"
+    ]
+   }
+  },
+  {
+   "id": "UADDE_s32_s1_valid",
+   "opcode": "G_UADDE",
+   "query": {
+    "types": [
+     "s32",
+     "s1"
+    ]
+   }
+  },
+  {
+   "id": "UADDE_v4s32_v4s1_valid",
+   "opcode": "G_UADDE",
+   "query": {
+    "types": [
+     "v4s32",
+     "v4s1"
+    ]
+   }
+  },
+  {
+   "id": "UADDO_v4s32_v4s1_valid",
+   "opcode": "G_UADDO",
+   "query": {
+    "types": [
+     "v4s32",
+     "v4s1"
+    ]
+   }
+  },
+  {
+   "id": "USUBE_v4s32_v4s1_valid",
+   "opcode": "G_USUBE",
+   "query": {
+    "types": [
+     "v4s32",
+     "v4s1"
+    ]
+   }
+  },
+  {
+   "id": "USUBO_v4s32_v4s1_valid",
+   "opcode": "G_USUBO",
+   "query": {
+    "types": [
+     "v4s32",
+     "v4s1"
+    ]
+   }
+  }
+ ]
+}

@@ -177,3 +177,7 @@ builds/pr-lane  → Assertion `mutationIsSane(...)` failed
 状态迁移只有一种：`budget -> failed` × 225；其余 208,626 个 atom 完全不变。
 这验证了 `6706952f`（table-driven port）的声明：修复只把不可终止变成
 "不支持 + fallback"，没有顺带改变其它合法化结果。
+
+> 加入 opcode 槽位契约检查后（见 `ANALYSIS-CRASH.md`），这 225 个里
+> 221 个仍是 `budget -> failed`，另外 4 个 carry 类型非法的 `v4s8` atom
+> 被归为 `construction_mismatch`。死循环修复本身的结论不变。
