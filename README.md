@@ -53,6 +53,26 @@ The pinned-baseline parity test only runs with `X86_MIR_PARITY=1` against the
 LLVM revision its witness was recorded on; see
 [docs/PRODUCTIZATION.md](docs/PRODUCTIZATION.md) for the refresh procedure.
 
+## DSL surface
+
+The parser vocabulary is one generated table
+(`src/x86_mir_corpus/assets/dsl_symbols.json`), not a list of names in code.
+`dsl audit` classifies the whole target source by region and fails on an
+unregistered constructor/lambda symbol:
+
+```bash
+x86-mir-corpus dsl verify --repo "$X86_MIR_LLVM_SRC" \
+  --revision "$(x86-mir-corpus pin show --json | python3 -c \
+  'import json,sys; print(json.load(sys.stdin)["revision"])')"
+x86-mir-corpus dsl audit --target aarch64 --repo "$X86_MIR_LLVM_SRC" --strict
+x86-mir-corpus dsl audit --target x86 \
+  --input src/x86_mir_corpus/assets/source-snapshots/fed20e0e-X86LegalizerInfo.cpp \
+  --strict
+```
+
+See [docs/DSL-SURFACE.md](docs/DSL-SURFACE.md) for the section map, the
+three-way consistency rule, the region model, and the pin-bump flow.
+
 ## Quick start
 
 ```bash

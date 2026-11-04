@@ -28,6 +28,11 @@ jobs:
           python-version: ${{ matrix.python }}
       - run: pip install -e ".[dev]"
       - run: python -m unittest discover -s tests -q
+      - run: |
+          python -m x86_mir_corpus dsl audit --target x86 \
+            --input src/x86_mir_corpus/assets/source-snapshots/fed20e0e-X86LegalizerInfo.cpp --strict
+          python -m x86_mir_corpus dsl audit --target aarch64 \
+            --input src/x86_mir_corpus/assets/source-snapshots/fed20e0e-AArch64LegalizerInfo.cpp --strict
 
   package:
     runs-on: ubuntu-latest
