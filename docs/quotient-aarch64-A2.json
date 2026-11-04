@@ -2916,6 +2916,166 @@
   "AArch64_VECREDUCE_SMIN",
   "AArch64_ZEXT"
  ],
+ "panel": {
+  "boundary": [
+   "s8",
+   "s16",
+   "s32",
+   "s64",
+   "s128",
+   "i8",
+   "i16",
+   "i32",
+   "i64",
+   "i128",
+   "p0",
+   "f16",
+   "f32",
+   "f64",
+   "f128",
+   "bf16",
+   "v2s8",
+   "v2i8",
+   "v4s8",
+   "v4i8",
+   "v8s8",
+   "v8i8",
+   "v16s8",
+   "v16i8",
+   "v2s16",
+   "v2i16",
+   "v4s16",
+   "v4i16",
+   "v8s16",
+   "v8i16",
+   "v2s32",
+   "v2i32",
+   "v4s32",
+   "v4i32",
+   "v2s64",
+   "v2i64",
+   "v2p0",
+   "v4f16",
+   "v8f16",
+   "v4bf16",
+   "v8bf16",
+   "v2f32",
+   "v4f32",
+   "v2f64",
+   "nxv16s8",
+   "nxv16i8",
+   "nxv8s16",
+   "nxv8i16",
+   "nxv4s32",
+   "nxv4i32",
+   "nxv2s64",
+   "nxv2i64"
+  ],
+  "derived": [
+   "bf16",
+   "f128",
+   "f16",
+   "f32",
+   "i128",
+   "i16",
+   "i32",
+   "i8",
+   "nxv2i64",
+   "nxv2s64",
+   "p0",
+   "s128",
+   "s16",
+   "s32",
+   "s64",
+   "s8",
+   "v2f32",
+   "v2i32",
+   "v2p0",
+   "v2s16",
+   "v2s8",
+   "v4s8"
+  ],
+  "missing": [],
+  "note": "derived is the union of single-slot representatives; missing lists classes the boundary panel lacks.  mem and cross-slot classes stay in axes[*].unrepresented_detail.",
+  "sources": {
+   "bf16": [
+    "slot0",
+    "slot1"
+   ],
+   "f128": [
+    "slot0"
+   ],
+   "f16": [
+    "slot0"
+   ],
+   "f32": [
+    "slot0"
+   ],
+   "i128": [
+    "slot0"
+   ],
+   "i16": [
+    "slot0"
+   ],
+   "i32": [
+    "slot0",
+    "slot1"
+   ],
+   "i8": [
+    "slot0"
+   ],
+   "nxv2i64": [
+    "slot0",
+    "slot1"
+   ],
+   "nxv2s64": [
+    "slot0"
+   ],
+   "p0": [
+    "slot0",
+    "slot1"
+   ],
+   "s128": [
+    "slot0",
+    "slot1"
+   ],
+   "s16": [
+    "slot0"
+   ],
+   "s32": [
+    "slot0",
+    "slot1"
+   ],
+   "s64": [
+    "slot0"
+   ],
+   "s8": [
+    "slot0",
+    "slot1"
+   ],
+   "v2f32": [
+    "slot0"
+   ],
+   "v2i32": [
+    "slot0"
+   ],
+   "v2p0": [
+    "slot0",
+    "slot1"
+   ],
+   "v2s16": [
+    "slot0",
+    "slot1"
+   ],
+   "v2s8": [
+    "slot0",
+    "slot1"
+   ],
+   "v4s8": [
+    "slot0"
+   ]
+  }
+ },
  "per_builder": {
   "AArch64_ABDS": {
    "config": {

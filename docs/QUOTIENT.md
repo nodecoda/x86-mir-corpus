@@ -28,6 +28,14 @@ touches, and `unrepresented_detail` lists one example per class with a reason:
 
 It is a panel-coverage diagnostic, not a pass/fail gate.
 
+The report also carries `panel`: the target boundary list, the union of
+single-slot representatives (`derived`), and the classes the boundary lacks
+(`missing`).  AArch64 has `missing = []` for all 22 single-slot classes, so its
+flat panel is complete for that axis; the remaining gaps are memory
+descriptors and cross-slot classes, which a flat panel cannot express and
+which stay in `unrepresented_detail`.  The frozen X86 panel lacks 9 of its 9+
+derived classes; it is deliberately not changed (208,851-point gate).
+
 ## Run
 
 ```bash

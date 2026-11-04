@@ -1798,6 +1798,74 @@
   "X86_UITOFP",
   "X86_UNMERGE_VALUES"
  ],
+ "panel": {
+  "boundary": [
+   "s3",
+   "s7",
+   "s24",
+   "s33",
+   "s65",
+   "s100",
+   "s129",
+   "s200",
+   "s256",
+   "v3s32",
+   "v16s16",
+   "v64s8"
+  ],
+  "derived": [
+   "p0",
+   "s128",
+   "s80",
+   "v2p0",
+   "v2s32",
+   "v2s64",
+   "v4s64",
+   "v4s8",
+   "v8s64"
+  ],
+  "missing": [
+   "p0",
+   "s128",
+   "s80",
+   "v2p0",
+   "v2s32",
+   "v2s64",
+   "v4s64",
+   "v4s8",
+   "v8s64"
+  ],
+  "note": "derived is the union of single-slot representatives; missing lists classes the boundary panel lacks.  mem and cross-slot classes stay in axes[*].unrepresented_detail.",
+  "sources": {
+   "p0": [
+    "slot0"
+   ],
+   "s128": [
+    "slot0"
+   ],
+   "s80": [
+    "slot0"
+   ],
+   "v2p0": [
+    "slot0"
+   ],
+   "v2s32": [
+    "slot0"
+   ],
+   "v2s64": [
+    "slot0"
+   ],
+   "v4s64": [
+    "slot0"
+   ],
+   "v4s8": [
+    "slot0"
+   ],
+   "v8s64": [
+    "slot0"
+   ]
+  }
+ },
  "per_builder": {
   "X86_ADD": {
    "config": {

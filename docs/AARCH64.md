@@ -58,6 +58,11 @@ rules, 364 reached by a class tuple, and 32 opaque builders.  Uncovered
 quotient classes are enumerated with an example and a reason: 144
 `panel_gap` and 11 `opaque_predicate`.
 
+The quotient report's `panel` section shows the flat boundary panel covers
+all 22 single-slot representatives (`panel.missing = []`), so the remaining
+`unrepresented` classes are memory descriptors and cross-slot pairs/triples
+that one flat entry cannot express.
+
 The boundary panel deliberately includes both `iN` and `sN` spellings (AArch64
 enables extended LLT kinds), fixed and scalable vectors, `bf16`, and `f128`.
 Rule witnesses add predicate-driven shapes for opaque builders, so the

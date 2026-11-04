@@ -113,6 +113,18 @@ class ReportTest(unittest.TestCase):
             for rep in axis["representatives"]:
                 self.assertTrue(all(isinstance(item, str) for item in rep))
 
+    def test_panel_compares_single_slot_representatives(self):
+        _, report = analyze(THREE_PREDICATES)
+        panel = report["panel"]
+        self.assertTrue(panel["boundary"])
+        self.assertTrue(panel["derived"])
+        self.assertEqual(sorted(panel["derived"]),
+                         sorted(set(panel["derived"])))
+        self.assertEqual(panel["missing"],
+                         sorted(set(panel["derived"])
+                                - set(panel["boundary"])))
+        self.assertIn("s32", panel["derived"])
+
     def test_opaque_lambda_is_reported_not_guessed(self):
         source = """\
 X86LegalizerInfo::X86LegalizerInfo(const X86Subtarget &STI) : Subtarget(STI) {

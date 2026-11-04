@@ -406,6 +406,36 @@ def _rule_coverage(builder, classes, mem_classes, aligns, env):
     return len(active & matched), len(active - matched)
 
 
+def _panel_summary(profile, axes):
+    """Compare the flat target panel with the quotient representatives.
+
+    The corpus panel is a flat list of single-slot types, so only single-slot
+    axes can be projected onto it.  Memory descriptors and cross-slot classes
+    live in ``axes[*].unrepresented_detail``; they cannot be expressed as one
+    flat panel entry.
+    """
+    boundary = [E.llt_name(t) for t in profile.boundary_panel]
+    known = set(boundary)
+    derived = {}
+    for name, axis in axes.items():
+        if name in ("config", "opcode") or "mem" in name:
+            continue
+        for rep in axis["representatives"]:
+            if len(rep) == 1 and isinstance(rep[0], str):
+                derived.setdefault(rep[0], []).append(name)
+    missing = sorted(set(derived) - known)
+    return {
+        "boundary": boundary,
+        "derived": sorted(derived),
+        "missing": missing,
+        "sources": {name: sorted(axes_names)
+                    for name, axes_names in sorted(derived.items())},
+        "note": ("derived is the union of single-slot representatives; "
+                 "missing lists classes the boundary panel lacks.  mem and "
+                 "cross-slot classes stay in axes[*].unrepresented_detail."),
+    }
+
+
 def analyze(result, profile, config):
     """Return the finite-quotient report for one parsed legalizer."""
     classes = domain.sorted_llts(result.classes)
@@ -471,6 +501,7 @@ def analyze(result, profile, config):
     total_rules = sum(len(builder.rules) for builder in result.builders)
     return {
         "schema": "llvm-legalizer-quotient-report",
+        "panel": _panel_summary(profile, axes),
         "version": 1,
         "target": profile.name,
         "config": config,
