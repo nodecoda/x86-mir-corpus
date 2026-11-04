@@ -43,11 +43,397 @@
   ],
   "counts": {
     "actions": 10,
+    "element_count": 20,
+    "enums": 2,
+    "helper_entrypoints": 8,
+    "ignore": 11,
+    "legalizer_info_api": 12,
     "llt": 17,
+    "llt_queries": 53,
     "methods": 66,
     "mutations": 8,
-    "predicates": 34
+    "namespaces": 6,
+    "predicates": 34,
+    "query_api": 8,
+    "target_functions": 34,
+    "target_queries": 5
   },
+  "element_count": [
+    {
+      "arity": 0,
+      "inherited": true,
+      "kind": "ec",
+      "name": "coefficientNextPowerOf2",
+      "resolution": "exact",
+      "source": "TypeSize.h:257"
+    },
+    {
+      "arity": 0,
+      "inherited": true,
+      "kind": "ec",
+      "name": "divideCoefficientBy",
+      "resolution": "exact",
+      "source": "TypeSize.h:253"
+    },
+    {
+      "arity": 2,
+      "inherited": false,
+      "kind": "constructor",
+      "name": "get",
+      "resolution": "exact",
+      "source": "TypeSize.h:312"
+    },
+    {
+      "arity": 1,
+      "inherited": false,
+      "kind": "constructor",
+      "name": "getFixed",
+      "resolution": "exact",
+      "source": "TypeSize.h:306"
+    },
+    {
+      "arity": 0,
+      "inherited": true,
+      "kind": "int",
+      "name": "getFixedValue",
+      "resolution": "exact",
+      "source": "TypeSize.h:201"
+    },
+    {
+      "arity": 0,
+      "inherited": true,
+      "kind": "int",
+      "name": "getKnownMinValue",
+      "resolution": "exact",
+      "source": "TypeSize.h:166"
+    },
+    {
+      "arity": 0,
+      "inherited": true,
+      "kind": "int",
+      "name": "getKnownScalarFactor",
+      "resolution": "exact",
+      "source": "TypeSize.h:274"
+    },
+    {
+      "arity": 1,
+      "inherited": false,
+      "kind": "constructor",
+      "name": "getScalable",
+      "resolution": "exact",
+      "source": "TypeSize.h:309"
+    },
+    {
+      "arity": 0,
+      "inherited": true,
+      "kind": "bool",
+      "name": "hasKnownScalarFactor",
+      "resolution": "exact",
+      "source": "TypeSize.h:266"
+    },
+    {
+      "arity": 0,
+      "inherited": true,
+      "kind": "bool",
+      "name": "isFixed",
+      "resolution": "exact",
+      "source": "TypeSize.h:172"
+    },
+    {
+      "arity": 0,
+      "inherited": true,
+      "kind": "bool",
+      "name": "isKnownEven",
+      "resolution": "exact",
+      "source": "TypeSize.h:177"
+    },
+    {
+      "arity": 0,
+      "inherited": true,
+      "kind": "bool",
+      "name": "isKnownMultipleOf",
+      "resolution": "exact",
+      "source": "TypeSize.h:181"
+    },
+    {
+      "arity": 0,
+      "inherited": true,
+      "kind": "bool",
+      "name": "isNonZero",
+      "resolution": "exact",
+      "source": "TypeSize.h:156"
+    },
+    {
+      "arity": 0,
+      "inherited": false,
+      "kind": "bool",
+      "name": "isPowerOf2",
+      "resolution": "exact",
+      "source": "TypeSize.h:324"
+    },
+    {
+      "arity": 1,
+      "inherited": false,
+      "kind": "other",
+      "name": "isPowerOf2_32",
+      "resolution": "ignore",
+      "source": "TypeSize.h:326"
+    },
+    {
+      "arity": 0,
+      "inherited": true,
+      "kind": "bool",
+      "name": "isScalable",
+      "resolution": "exact",
+      "source": "TypeSize.h:169"
+    },
+    {
+      "arity": 0,
+      "inherited": false,
+      "kind": "bool",
+      "name": "isScalar",
+      "resolution": "exact",
+      "source": "TypeSize.h:317"
+    },
+    {
+      "arity": 0,
+      "inherited": false,
+      "kind": "bool",
+      "name": "isVector",
+      "resolution": "exact",
+      "source": "TypeSize.h:321"
+    },
+    {
+      "arity": 0,
+      "inherited": true,
+      "kind": "bool",
+      "name": "isZero",
+      "resolution": "exact",
+      "source": "TypeSize.h:103"
+    },
+    {
+      "arity": 2,
+      "inherited": false,
+      "kind": "other",
+      "name": "t",
+      "resolution": "ignore",
+      "source": "TypeSize.h:296"
+    }
+  ],
+  "enums": [
+    {
+      "name": "CodeModel",
+      "values": [
+        "Tiny",
+        "Small",
+        "Kernel",
+        "Medium",
+        "Large"
+      ]
+    },
+    {
+      "name": "LegalizeResult",
+      "values": [
+        "AlreadyLegal",
+        "Legalized",
+        "UnableToLegalize"
+      ]
+    }
+  ],
+  "helper_entrypoints": [
+    {
+      "action": "Bitcast",
+      "arity": 3,
+      "name": "bitcast",
+      "source": "LegalizerHelper.h:121"
+    },
+    {
+      "action": "FewerElements",
+      "arity": 3,
+      "name": "fewerElementsVector",
+      "source": "LegalizerHelper.h:129"
+    },
+    {
+      "action": "dispatch",
+      "arity": 2,
+      "name": "legalizeInstrStep",
+      "source": "LegalizerHelper.h:102"
+    },
+    {
+      "action": "Libcall",
+      "arity": 2,
+      "name": "libcall",
+      "source": "LegalizerHelper.h:106"
+    },
+    {
+      "action": "Lower",
+      "arity": 3,
+      "name": "lower",
+      "source": "LegalizerHelper.h:125"
+    },
+    {
+      "action": "MoreElements",
+      "arity": 3,
+      "name": "moreElementsVector",
+      "source": "LegalizerHelper.h:134"
+    },
+    {
+      "action": "NarrowScalar",
+      "arity": 3,
+      "name": "narrowScalar",
+      "source": "LegalizerHelper.h:111"
+    },
+    {
+      "action": "WidenScalar",
+      "arity": 3,
+      "name": "widenScalar",
+      "source": "LegalizerHelper.h:117"
+    }
+  ],
+  "ignore": [
+    {
+      "name": "static_cast",
+      "reason": "cxx_cast"
+    },
+    {
+      "name": "std",
+      "reason": "cxx_namespace"
+    },
+    {
+      "name": "LLT",
+      "reason": "cxx_type"
+    },
+    {
+      "name": "LegalityQuery",
+      "reason": "cxx_type"
+    },
+    {
+      "name": "LegalityPredicate",
+      "reason": "functional_cast"
+    },
+    {
+      "name": "LegalizeMutation",
+      "reason": "functional_cast"
+    },
+    {
+      "name": "unsigned",
+      "reason": "cxx_type"
+    },
+    {
+      "name": "int",
+      "reason": "cxx_type"
+    },
+    {
+      "name": "bool",
+      "reason": "cxx_type"
+    },
+    {
+      "name": "auto",
+      "reason": "cxx_type"
+    },
+    {
+      "name": "const",
+      "reason": "cxx_qualifier"
+    }
+  ],
+  "legalizer_info_api": [
+    {
+      "arity": 2,
+      "name": "aliasActionDefinitions",
+      "resolution": "exact",
+      "returns": "void",
+      "scope": "constructor",
+      "source": "LegalizerInfo.h:1371"
+    },
+    {
+      "arity": 2,
+      "name": "getAction",
+      "resolution": "exact",
+      "returns": "action_step",
+      "scope": "runtime_query",
+      "source": "LegalizerInfo.h:1377"
+    },
+    {
+      "arity": 1,
+      "name": "getActionDefinitions",
+      "resolution": "exact",
+      "returns": "ruleset",
+      "scope": "runtime_query",
+      "source": "LegalizerInfo.h:1347"
+    },
+    {
+      "arity": 1,
+      "name": "getActionDefinitionsBuilder",
+      "resolution": "exact",
+      "returns": "ruleset",
+      "scope": "constructor",
+      "source": "LegalizerInfo.h:1354"
+    },
+    {
+      "arity": 1,
+      "name": "getActionDefinitionsIdx",
+      "resolution": "exact",
+      "returns": "int",
+      "scope": "constructor",
+      "source": "LegalizerInfo.h:1339"
+    },
+    {
+      "arity": 1,
+      "name": "getExtOpcodeForWideningConstant",
+      "resolution": "opaque",
+      "returns": "int",
+      "scope": "runtime_query",
+      "source": "LegalizerInfo.h:1418"
+    },
+    {
+      "arity": 1,
+      "name": "getOpcodeIdxForOpcode",
+      "resolution": "exact",
+      "returns": "int",
+      "scope": "constructor",
+      "source": "LegalizerInfo.h:1338"
+    },
+    {
+      "arity": 2,
+      "name": "isLegal",
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "runtime_query",
+      "source": "LegalizerInfo.h:1386"
+    },
+    {
+      "arity": 2,
+      "name": "isLegalOrCustom",
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "runtime_query",
+      "source": "LegalizerInfo.h:1390"
+    },
+    {
+      "arity": 3,
+      "name": "legalizeCustom",
+      "resolution": "ignore",
+      "returns": "bool",
+      "scope": "lowering",
+      "source": "LegalizerInfo.h:1400"
+    },
+    {
+      "arity": 2,
+      "name": "legalizeIntrinsic",
+      "resolution": "ignore",
+      "returns": "bool",
+      "scope": "lowering",
+      "source": "LegalizerInfo.h:1409"
+    },
+    {
+      "arity": 1,
+      "name": "verify",
+      "resolution": "ignore",
+      "returns": "void",
+      "scope": "constructor_end",
+      "source": "LegalizerInfo.h:1343"
+    }
+  ],
   "llt_constructors": [
     {
       "corpus_spelling": "bf16",
@@ -167,6 +553,1008 @@
       "name": "x86fp80",
       "source": "LowLevelType.h:185",
       "syntax": true
+    }
+  ],
+  "llt_queries": [
+    {
+      "arity": 1,
+      "name": "changeElementCount",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "LLT changeElementCount(ElementCount EC)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "size"
+          ],
+          "signature": "LLT changeElementCount(unsigned NumElements)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "return changeElementCount(ElementCount::getFixed(NumElements))"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "llt",
+      "scope": "lambda",
+      "source": "LowLevelType.h:454"
+    },
+    {
+      "arity": 1,
+      "name": "changeElementSize",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "size"
+          ],
+          "signature": "LLT changeElementSize(unsigned NewEltSize)"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "llt",
+      "scope": "lambda",
+      "source": "LowLevelType.h:428"
+    },
+    {
+      "arity": 1,
+      "name": "changeElementType",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "llt"
+          ],
+          "signature": "constexpr LLT changeElementType(LLT NewEltTy)"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "llt",
+      "scope": "lambda",
+      "source": "LowLevelType.h:421"
+    },
+    {
+      "arity": 0,
+      "name": "changeToInteger",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "LLT changeToInteger()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "llt",
+      "scope": "lambda",
+      "source": "LowLevelType.h:524"
+    },
+    {
+      "arity": 1,
+      "name": "changeVectorElementCount",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "LLT changeVectorElementCount(ElementCount EC)"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "llt",
+      "scope": "lambda",
+      "source": "LowLevelType.h:446"
+    },
+    {
+      "arity": 1,
+      "name": "changeVectorElementType",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "llt"
+          ],
+          "signature": "constexpr LLT changeVectorElementType(LLT NewEltTy)"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "llt",
+      "scope": "lambda",
+      "source": "LowLevelType.h:415"
+    },
+    {
+      "arity": 1,
+      "name": "divide",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "LLT divide(int Factor)"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "llt",
+      "scope": "lambda",
+      "source": "LowLevelType.h:465"
+    },
+    {
+      "arity": 0,
+      "name": "dump",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "LLVM_DUMP_METHOD void dump()"
+        }
+      ],
+      "resolution": "ignore",
+      "returns": "void",
+      "scope": "lambda",
+      "source": "LowLevelType.h:537"
+    },
+    {
+      "arity": 0,
+      "name": "getAddressSpace",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr unsigned getAddressSpace()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "int",
+      "scope": "lambda",
+      "source": "LowLevelType.h:503"
+    },
+    {
+      "arity": 0,
+      "name": "getElementCount",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "return getElementCount()"
+        },
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr ElementCount getElementCount()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "ec",
+      "scope": "lambda",
+      "source": "LowLevelType.h:357"
+    },
+    {
+      "arity": 0,
+      "name": "getElementType",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "LLT getElementType()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "llt",
+      "scope": "lambda",
+      "source": "LowLevelType.h:510"
+    },
+    {
+      "arity": 1,
+      "name": "getFieldValue",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "return getFieldValue(VectorScalableFieldInfo)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "return getFieldValue(ScalarSizeFieldInfo)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "return getFieldValue(PointerAddressSpaceFieldInfo)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "constexpr uint64_t getFieldValue(const BitFieldInfo FieldInfo)"
+        }
+      ],
+      "resolution": "ignore",
+      "returns": "int",
+      "scope": "lambda",
+      "source": "LowLevelType.h:364"
+    },
+    {
+      "arity": 0,
+      "name": "getFpSemantics",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr FpSemantics getFpSemantics()"
+        }
+      ],
+      "resolution": "opaque",
+      "returns": "semantics",
+      "scope": "lambda",
+      "source": "LowLevelType.h:405"
+    },
+    {
+      "arity": 0,
+      "name": "getKind",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr Kind getKind()"
+        }
+      ],
+      "resolution": "opaque",
+      "returns": "kind",
+      "scope": "lambda",
+      "source": "LowLevelType.h:411"
+    },
+    {
+      "arity": 1,
+      "name": "getMask",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "static constexpr uint64_t getMask(const BitFieldInfo FieldInfo)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "return getMask(FieldInfo)"
+        }
+      ],
+      "resolution": "ignore",
+      "returns": "int",
+      "scope": "lambda",
+      "source": "LowLevelType.h:637"
+    },
+    {
+      "arity": 0,
+      "name": "getNumElements",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr uint16_t getNumElements()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "int",
+      "scope": "lambda",
+      "source": "LowLevelType.h:351"
+    },
+    {
+      "arity": 0,
+      "name": "getScalarSizeInBits",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr unsigned getScalarSizeInBits()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "int",
+      "scope": "lambda",
+      "source": "LowLevelType.h:497"
+    },
+    {
+      "arity": 0,
+      "name": "getScalarType",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "LLT getScalarType()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "llt",
+      "scope": "lambda",
+      "source": "LowLevelType.h:403"
+    },
+    {
+      "arity": 0,
+      "name": "getSizeInBits",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr TypeSize getSizeInBits()"
+        },
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "return getSizeInBits()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "typesize",
+      "scope": "lambda",
+      "source": "LowLevelType.h:388"
+    },
+    {
+      "arity": 0,
+      "name": "getSizeInBytes",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr TypeSize getSizeInBytes()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "typesize",
+      "scope": "lambda",
+      "source": "LowLevelType.h:398"
+    },
+    {
+      "arity": 0,
+      "name": "getUniqueRAWLLTData",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr uint64_t getUniqueRAWLLTData()"
+        }
+      ],
+      "resolution": "ignore",
+      "returns": "int",
+      "scope": "lambda",
+      "source": "LowLevelType.h:706"
+    },
+    {
+      "arity": 0,
+      "name": "getUseExtended",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "static bool getUseExtended()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:710"
+    },
+    {
+      "arity": 0,
+      "name": "isAnyScalar",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isAnyScalar()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:264"
+    },
+    {
+      "arity": 0,
+      "name": "isAnyVector",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isAnyVector()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:268"
+    },
+    {
+      "arity": 0,
+      "name": "isBFloat16",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "bool isBFloat16()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:333"
+    },
+    {
+      "arity": 0,
+      "name": "isByteSized",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isByteSized()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:493"
+    },
+    {
+      "arity": 2,
+      "name": "isFixedVector",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isFixedVector()"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "size",
+            "size"
+          ],
+          "signature": "constexpr bool isFixedVector(unsigned NumElements, unsigned ScalarSize)"
+        },
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "return isFixedVector()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:369"
+    },
+    {
+      "arity": 1,
+      "name": "isFloat",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isFloat()"
+        },
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "return isFloat()"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "size"
+          ],
+          "signature": "constexpr bool isFloat(unsigned Size)"
+        },
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "return isFloat()"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "constexpr bool isFloat(FpSemantics Sem)"
+        },
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "return isFloat()"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "return isFloat(APFloatBase::S_IEEEhalf)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "return isFloat(APFloatBase::S_IEEEhalf)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "return isFloat(APFloatBase::S_IEEEsingle)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "return isFloat(APFloatBase::S_IEEEdouble)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "return isFloat(APFloatBase::S_IEEEquad)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "return isFloat(FpSemantics::S_BFloat)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "return isFloat(FpSemantics::S_x87DoubleExtended)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "return isFloat(FpSemantics::S_PPCDoubleDouble)"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:266"
+    },
+    {
+      "arity": 0,
+      "name": "isFloat128",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "bool isFloat128()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:328"
+    },
+    {
+      "arity": 0,
+      "name": "isFloat16",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "bool isFloat16()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:313"
+    },
+    {
+      "arity": 0,
+      "name": "isFloat32",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "bool isFloat32()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:318"
+    },
+    {
+      "arity": 0,
+      "name": "isFloat64",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "bool isFloat64()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:323"
+    },
+    {
+      "arity": 0,
+      "name": "isFloatIEEE",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isFloatIEEE()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:306"
+    },
+    {
+      "arity": 0,
+      "name": "isFloatOrFloatVector",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isFloatOrFloatVector()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:279"
+    },
+    {
+      "arity": 0,
+      "name": "isFloatVector",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isFloatVector()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:272"
+    },
+    {
+      "arity": 1,
+      "name": "isInteger",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isInteger()"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "size"
+          ],
+          "signature": "constexpr bool isInteger(unsigned Size)"
+        },
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "return isInteger()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:265"
+    },
+    {
+      "arity": 0,
+      "name": "isIntegerVector",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isIntegerVector()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:269"
+    },
+    {
+      "arity": 0,
+      "name": "isPPCF128",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "bool isPPCF128()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:343"
+    },
+    {
+      "arity": 0,
+      "name": "isPointer",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isPointer()"
+        },
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "return isPointer()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:267"
+    },
+    {
+      "arity": 0,
+      "name": "isPointerOrPointerVector",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isPointerOrPointerVector()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:276"
+    },
+    {
+      "arity": 0,
+      "name": "isPointerVector",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isPointerVector()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:273"
+    },
+    {
+      "arity": 0,
+      "name": "isScalable",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isScalable()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:362"
+    },
+    {
+      "arity": 0,
+      "name": "isScalableVector",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isScalableVector()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:379"
+    },
+    {
+      "arity": 1,
+      "name": "isScalar",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isScalar()"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "size"
+          ],
+          "signature": "constexpr bool isScalar(unsigned Size)"
+        },
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "return isScalar()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:283"
+    },
+    {
+      "arity": 0,
+      "name": "isToken",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isToken()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:260"
+    },
+    {
+      "arity": 0,
+      "name": "isValid",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isValid()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:263"
+    },
+    {
+      "arity": 0,
+      "name": "isVector",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "constexpr bool isVector()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:290"
+    },
+    {
+      "arity": 0,
+      "name": "isX86FP80",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "bool isX86FP80()"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "bool",
+      "scope": "lambda",
+      "source": "LowLevelType.h:338"
+    },
+    {
+      "arity": 1,
+      "name": "multiplyElements",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "LLT multiplyElements(int Factor)"
+        }
+      ],
+      "resolution": "exact",
+      "returns": "llt",
+      "scope": "lambda",
+      "source": "LowLevelType.h:485"
+    },
+    {
+      "arity": 1,
+      "name": "print",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "LLVM_ABI void print(raw_ostream &OS)"
+        }
+      ],
+      "resolution": "ignore",
+      "returns": "void",
+      "scope": "lambda",
+      "source": "LowLevelType.h:534"
+    },
+    {
+      "arity": 1,
+      "name": "setUseExtended",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "static void setUseExtended(bool Enable)"
+        }
+      ],
+      "resolution": "ignore",
+      "returns": "void",
+      "scope": "lambda",
+      "source": "LowLevelType.h:713"
+    },
+    {
+      "arity": 1,
+      "name": "toScalar",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "constexpr static Kind toScalar(Kind Ty)"
+        }
+      ],
+      "resolution": "ignore",
+      "returns": "other",
+      "scope": "lambda",
+      "source": "LowLevelType.h:75"
+    },
+    {
+      "arity": 1,
+      "name": "toVector",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "other"
+          ],
+          "signature": "constexpr static Kind toVector(Kind Ty)"
+        }
+      ],
+      "resolution": "ignore",
+      "returns": "other",
+      "scope": "lambda",
+      "source": "LowLevelType.h:62"
     }
   ],
   "methods": [
@@ -1895,6 +3283,55 @@
       "source": "LegalizerInfo.h:376"
     }
   ],
+  "namespaces": [
+    {
+      "files": [
+        "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+        "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp"
+      ],
+      "line": 32,
+      "name": "LegalityPredicates"
+    },
+    {
+      "files": [
+        "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+        "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp"
+      ],
+      "line": 31,
+      "name": "LegalizeActions"
+    },
+    {
+      "files": [
+        "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp"
+      ],
+      "line": 38,
+      "name": "LegalizeMutations"
+    },
+    {
+      "files": [
+        "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+        "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp"
+      ],
+      "line": 29,
+      "name": "MIPatternMatch"
+    },
+    {
+      "files": [
+        "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+        "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp"
+      ],
+      "line": 30,
+      "name": "TargetOpcode"
+    },
+    {
+      "files": [
+        "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+        "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp"
+      ],
+      "line": 28,
+      "name": "llvm"
+    }
+  ],
   "predicates": [
     {
       "arity": 1,
@@ -2599,11 +4036,326 @@
       "source": "LegalizerInfo.h:280"
     }
   ],
+  "query_api": [
+    {
+      "binding": "imm_slot",
+      "kind": "imm_list",
+      "name": "Immediates",
+      "resolution": "exact",
+      "source": "LegalizerInfo.h:126",
+      "struct": "LegalityQuery"
+    },
+    {
+      "binding": "mem_slot",
+      "kind": "memdesc_list",
+      "name": "MMODescrs",
+      "resolution": "exact",
+      "source": "LegalizerInfo.h:124",
+      "struct": "LegalityQuery"
+    },
+    {
+      "binding": "types_slot",
+      "kind": "opcode",
+      "name": "Opcode",
+      "resolution": "exact",
+      "source": "LegalizerInfo.h:103",
+      "struct": "LegalityQuery"
+    },
+    {
+      "binding": "types_slot",
+      "kind": "types",
+      "name": "Types",
+      "resolution": "exact",
+      "source": "LegalizerInfo.h:104",
+      "struct": "LegalityQuery"
+    },
+    {
+      "binding": "mem_slot",
+      "kind": "int",
+      "name": "MemDesc.AlignInBits",
+      "resolution": "exact",
+      "source": "LegalizerInfo.h:108",
+      "struct": "MemDesc"
+    },
+    {
+      "binding": "mem_slot",
+      "kind": "atomic_ordering",
+      "name": "MemDesc.FailureOrdering",
+      "resolution": "exact",
+      "source": "LegalizerInfo.h:110",
+      "struct": "MemDesc"
+    },
+    {
+      "binding": "mem_slot",
+      "kind": "llt",
+      "name": "MemDesc.MemoryTy",
+      "resolution": "exact",
+      "source": "LegalizerInfo.h:107",
+      "struct": "MemDesc"
+    },
+    {
+      "binding": "mem_slot",
+      "kind": "atomic_ordering",
+      "name": "MemDesc.Ordering",
+      "resolution": "exact",
+      "source": "LegalizerInfo.h:109",
+      "struct": "MemDesc"
+    }
+  ],
   "revision": "fed20e0e68323be32cb0fe8af679b8cb34e72112",
   "schema": "mir-corpus-dsl-symbols",
   "source_files": {
+    "llvm/include/llvm/CodeGen/GlobalISel/LegalizerHelper.h": "609572aa24aa94faa3acd96ffb15a7899e29074eb608e6087d5c5676224ed324",
     "llvm/include/llvm/CodeGen/GlobalISel/LegalizerInfo.h": "288aefbbaff0a054f05754cbea948b54004f2d631bfca27a5c20b43443354522",
-    "llvm/include/llvm/CodeGenTypes/LowLevelType.h": "370de9f9f67761cb5045418807f13afe7fec036672eae743e8e80ee8c79398d3"
+    "llvm/include/llvm/CodeGenTypes/LowLevelType.h": "370de9f9f67761cb5045418807f13afe7fec036672eae743e8e80ee8c79398d3",
+    "llvm/include/llvm/Support/CodeGen.h": "c869294f93ec3efbca57a7c514a9845eeaa1db76958c8bd93f567deba7a4f786",
+    "llvm/include/llvm/Support/TypeSize.h": "1b9a41326d321678319b82a8ae2b1a72e87d7935909fac6628eba84212a78868",
+    "llvm/lib/CodeGen/GlobalISel/LegalizerInfo.cpp": "27cf91e365bc90e523a3de7fdeb44f054db673f4b816f4fa780d2616b0a6b4db",
+    "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp": "2b5377c3eedddf82f17758e7cab763d99ce362e4c5422bb8e24bc4b7c8945d55",
+    "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp": "79f2376096c3271910840a42c6270932011078df9fff343bfd96c226523336cd"
   },
-  "version": 1
+  "target_functions": [
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 1591,
+      "name": "AArch64LegalizerInfo::legalizeCustom"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 1659,
+      "name": "AArch64LegalizerInfo::legalizeBitcast"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 1674,
+      "name": "AArch64LegalizerInfo::legalizeFunnelShift"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 1727,
+      "name": "AArch64LegalizerInfo::legalizeICMP"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 1757,
+      "name": "AArch64LegalizerInfo::legalizeRotate"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 1774,
+      "name": "AArch64LegalizerInfo::legalizeSmallCMGlobalValue"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 1833,
+      "name": "AArch64LegalizerInfo::legalizeIntrinsic"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2184,
+      "name": "AArch64LegalizerInfo::legalizeShlAshrLshr"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "free",
+      "line": 2209,
+      "name": "matchLDPSTPAddrMode"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2225,
+      "name": "AArch64LegalizerInfo::legalizeLoadStore"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2317,
+      "name": "AArch64LegalizerInfo::legalizeVaArg"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2365,
+      "name": "AArch64LegalizerInfo::legalizeBitfieldExtract"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2373,
+      "name": "AArch64LegalizerInfo::legalizeCTPOP"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2512,
+      "name": "AArch64LegalizerInfo::legalizeAtomicCmpxchg128"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2609,
+      "name": "AArch64LegalizerInfo::legalizeCTTZ"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2620,
+      "name": "AArch64LegalizerInfo::legalizeMemOps"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2639,
+      "name": "AArch64LegalizerInfo::legalizeExtractVectorElt"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2653,
+      "name": "AArch64LegalizerInfo::legalizeDynStackAlloc"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2692,
+      "name": "AArch64LegalizerInfo::legalizePrefetch"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2717,
+      "name": "AArch64LegalizerInfo::legalizeConcatVectors"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2745,
+      "name": "AArch64LegalizerInfo::legalizeFptrunc"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2838,
+      "name": "AArch64LegalizerInfo::legalizeGetRounding"
+    },
+    {
+      "file": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 2868,
+      "name": "AArch64LegalizerInfo::legalizeSetRounding"
+    },
+    {
+      "file": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 633,
+      "name": "X86LegalizerInfo::legalizeCustom"
+    },
+    {
+      "file": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 663,
+      "name": "X86LegalizerInfo::legalizeSITOFP"
+    },
+    {
+      "file": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 695,
+      "name": "X86LegalizerInfo::legalizeFPTOSI"
+    },
+    {
+      "file": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 719,
+      "name": "X86LegalizerInfo::legalizeBuildVector"
+    },
+    {
+      "file": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 770,
+      "name": "X86LegalizerInfo::legalizeFPTOUI"
+    },
+    {
+      "file": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 790,
+      "name": "X86LegalizerInfo::legalizeUITOFP"
+    },
+    {
+      "file": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 809,
+      "name": "X86LegalizerInfo::legalizeNarrowingStore"
+    },
+    {
+      "file": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 825,
+      "name": "X86LegalizerInfo::legalizeGETROUNDING"
+    },
+    {
+      "file": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 901,
+      "name": "X86LegalizerInfo::legalizeSETROUNDING"
+    },
+    {
+      "file": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 1029,
+      "name": "X86LegalizerInfo::legalizeGLOBAL_VALUE"
+    },
+    {
+      "file": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+      "kind": "member",
+      "line": 1056,
+      "name": "X86LegalizerInfo::legalizeIntrinsic"
+    }
+  ],
+  "target_queries": [
+    {
+      "binding": "target.features",
+      "kind": "subtarget_predicate",
+      "name": "ST.<predicate>",
+      "resolution": "exact",
+      "scope": "constructor"
+    },
+    {
+      "kind": "subtarget_query",
+      "name": "ST.getTargetLowering",
+      "resolution": "exact",
+      "returns": "TargetLowering",
+      "scope": "constructor"
+    },
+    {
+      "kind": "subtarget_query",
+      "name": "ST.getInstrInfo",
+      "resolution": "ignore",
+      "returns": "MCInstrInfo",
+      "scope": "constructor_end"
+    },
+    {
+      "kind": "target_lowering_query",
+      "name": "TargetLowering.getTargetMachine",
+      "resolution": "exact",
+      "returns": "TargetMachine",
+      "scope": "constructor"
+    },
+    {
+      "enum": "CodeModel",
+      "kind": "enum_query",
+      "name": "TM.getCodeModel",
+      "resolution": "exact",
+      "scope": "constructor"
+    }
+  ],
+  "version": 2
 }

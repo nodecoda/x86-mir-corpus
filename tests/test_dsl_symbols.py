@@ -16,11 +16,61 @@ class SymbolTableTest(unittest.TestCase):
         cls.table = dsl.load()
 
     def test_counts(self):
+        self.assertEqual(self.table["version"], 2)
         self.assertEqual(self.table["counts"]["methods"], 66)
         self.assertEqual(self.table["counts"]["predicates"], 34)
         self.assertEqual(self.table["counts"]["mutations"], 8)
         self.assertEqual(self.table["counts"]["actions"], 10)
         self.assertEqual(self.table["counts"]["llt"], 17)
+
+    def test_v2_sections_are_populated(self):
+        counts = self.table["counts"]
+        self.assertEqual(counts["llt_queries"], 53)
+        self.assertEqual(counts["element_count"], 20)
+        self.assertEqual(counts["query_api"], 8)
+        self.assertEqual(counts["legalizer_info_api"], 12)
+        self.assertEqual(counts["helper_entrypoints"], 8)
+        self.assertEqual(counts["enums"], 2)
+        self.assertEqual(counts["namespaces"], 6)
+        self.assertEqual(counts["target_functions"], 34)
+        self.assertEqual(counts["target_queries"], 5)
+        self.assertEqual(counts["ignore"], 11)
+
+    def test_llt_queries_cover_the_aarch64_lambda_surface(self):
+        for name in ("getScalarType", "isFloat16", "isBFloat16", "divide",
+                     "multiplyElements", "getNumElements", "getElementCount",
+                     "changeElementSize", "changeVectorElementType"):
+            entry = dsl.llt_query_entry(name, self.table)
+            self.assertIsNotNone(entry, name)
+            self.assertEqual(entry["resolution"], "exact", name)
+        self.assertEqual(
+            dsl.llt_query_entry("isFloat16", self.table)["returns"], "bool")
+        self.assertEqual(
+            dsl.llt_query_entry("getSizeInBits", self.table)["returns"],
+            "typesize")
+
+    def test_query_fields_and_enum_values(self):
+        names = dsl.query_api_names(self.table)
+        for name in ("Types", "MMODescrs", "Immediates", "MemDesc.MemoryTy"):
+            self.assertIn(name, names)
+        self.assertEqual(dsl.enum_values("CodeModel", self.table),
+                         ["Tiny", "Small", "Kernel", "Medium", "Large"])
+        self.assertEqual(dsl.enum_values("LegalizeResult", self.table),
+                         ["AlreadyLegal", "Legalized", "UnableToLegalize"])
+
+    def test_helper_entrypoints_map_actions(self):
+        entries = {entry["name"]: entry["action"]
+                   for entry in self.table["helper_entrypoints"]}
+        self.assertEqual(entries["lower"], "Lower")
+        self.assertEqual(entries["fewerElementsVector"], "FewerElements")
+        self.assertEqual(entries["legalizeInstrStep"], "dispatch")
+
+    def test_target_source_vocabulary(self):
+        self.assertIn("LegalizeMutations",
+                      dsl.namespace_names(self.table))
+        functions = dsl.target_function_names(self.table)
+        self.assertIn("AArch64LegalizerInfo::legalizeCustom", functions)
+        self.assertIn("matchLDPSTPAddrMode", functions)
 
     def test_every_chain_method_is_classified(self):
         for entry in self.table["methods"]:
@@ -78,6 +128,23 @@ class DriftTest(unittest.TestCase):
         report = dsl.verify(repo=self.repo,
                             revision=dsl.load()["revision"])
         self.assertTrue(report["ok"], report["reasons"])
+
+    def test_a_missing_mutation_is_reported(self):
+        table = json.loads(json.dumps(dsl.load()))
+        table["mutations"] = [m for m in table["mutations"]
+                              if m["name"] != "changeElementSizeTo"]
+        report = dsl.verify(repo=self.repo,
+                            revision=table["revision"], table=table)
+        self.assertFalse(report["ok"])
+        self.assertIn("mutations-names", report["reasons"])
+
+    def test_a_v1_table_is_rejected(self):
+        table = json.loads(json.dumps(dsl.load()))
+        table["version"] = 1
+        report = dsl.verify(repo=self.repo,
+                            revision=table["revision"], table=table)
+        self.assertFalse(report["ok"])
+        self.assertIn("table-version", report["reasons"])
 
     def test_a_missing_method_is_reported(self):
         table = json.loads(json.dumps(dsl.load()))
