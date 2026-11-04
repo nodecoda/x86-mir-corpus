@@ -8,7 +8,7 @@ All notable changes to this project are documented here.  The format follows
 
 ### Added
 
-- AArch64 target profile: quotient-derived boundary panel (fixed and scalable
+- AArch64 target profile: quotient-reviewed boundary panel (fixed and scalable
   vectors, `iN`/`sN`, `bf16`/`f128`), A0–A3 feature configs, and the same
   schema-stable corpus/report surface as X86.
 - Rule-witness probing for opaque builders (predicate-driven shapes), lifting

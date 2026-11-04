@@ -100,7 +100,7 @@ x86-mir-corpus mir-run --corpus /tmp/up-C2.json \
 ## AArch64
 
 The AArch64 profile parses the pinned `AArch64LegalizerInfo.cpp`, uses a
-quotient-derived boundary panel (fixed and scalable vectors, the `iN`/`sN`
+quotient-reviewed boundary panel (fixed and scalable vectors, the `iN`/`sN`
 split, `bf16`/`f128`), and drives the same production legalizer:
 
 ```bash
@@ -112,6 +112,10 @@ x86-mir-corpus mir-run --corpus /tmp/a64-witness.json \
   --jobs 8 --shard-size 300 --timeout 30 --max-steps 10000 \
   --out /tmp/a64-witness.report.json
 x86-mir-corpus doctor --target aarch64 --json
+
+# finite-quotient diagnostic (read-only; see docs/QUOTIENT.md)
+PYTHONPATH=src python3 scripts/quotient_report.py --target aarch64 --config A2 \
+  --repo "$X86_MIR_LLVM_SRC" --out /tmp/quotient-a64-A2.json
 ```
 
 The committed A2 witness is `corpora/aarch64/witness-A2.points.json`

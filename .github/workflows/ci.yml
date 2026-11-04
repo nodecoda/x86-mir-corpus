@@ -79,6 +79,7 @@ jobs:
           python - <<'PY'
           import json
           report = json.load(open("/tmp/aarch64-smoke.report.json"))
+          assert report["target"] == "aarch64", report
           assert report["corpus"]["target"] == "aarch64", report["corpus"]
           assert sum(report["counts"].values()) == report["atoms"]
           print(report["counts"])
