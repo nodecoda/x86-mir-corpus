@@ -14,8 +14,107 @@ from .lexer import lex, matching
 
 _TABLE = _dsl.load()
 
-# Methods that read a type slot as their first argument.
-SLOT0_METHODS = _dsl.slot0_methods(_TABLE)
+# Positional argument roles drive slot/mutation extraction; no method is
+# special-cased by name.
+_PREDICATES = {entry["name"]: entry for entry in _TABLE["predicates"]}
+_MUTATIONS = {entry["name"]: entry for entry in _TABLE["mutations"]}
+
+
+def _value_kind(value):
+    if E.is_llt(value):
+        return "llt"
+    if isinstance(value, bool):
+        return "predicate"
+    if isinstance(value, int):
+        return "slot"
+    if isinstance(value, tuple) and len(value) == 3 and value[0] == "ec":
+        return "element_count"
+    if isinstance(value, list):
+        return "list"
+    return None
+
+
+_ROLE_KINDS = {
+    "slot": {"slot"},
+    "size": {"slot"},
+    "llt": {"llt"},
+    "predicate": {"predicate"},
+    "mutation": {"mutation", "lambda"},
+    "action": {"action"},
+}
+
+
+def _arg_kinds(args, env):
+    kinds = []
+    for arg in args:
+        if isinstance(arg, E.Lambda):
+            kinds.append("lambda")
+        elif isinstance(arg, E.Unknown):
+            kinds.append(None)
+        else:
+            try:
+                kinds.append(_value_kind(E.eval_expr(arg, env)))
+            except E.ExprError:
+                kinds.append(None)
+    return kinds
+
+
+def _pick_overload(entry, args, env=None):
+    """The overload whose arity/roles best describe ``args``.
+
+    C++ default arguments mean an arity-1 call can still target an arity-2
+    overload, so an exact arity match is preferred but not required.
+    """
+    overloads = entry.get("overloads") or []
+    exact = [o for o in overloads if o["arity"] == len(args)]
+    candidates = exact or [o for o in overloads if o["arity"] >= len(args)]
+    if not candidates:
+        return None
+    if len(candidates) == 1:
+        return candidates[0]
+    kinds = _arg_kinds(args, env or {})
+    best, score = None, -1
+    for overload in candidates:
+        hit = 0
+        for role, kind in zip(overload["roles"], kinds, strict=False):
+            if kind is None:
+                continue
+            if kind in _ROLE_KINDS.get(role, set()):
+                hit += 1
+        if hit > score:
+            best, score = overload, hit
+    return best or candidates[0]
+
+
+def _slot_args(entry, args, env):
+    """Type slot indices named by ``slot`` roles in the chosen overload."""
+    overload = _pick_overload(entry, args, env)
+    if overload is None:
+        return set()
+    slots = set()
+    for i, role in enumerate(overload["roles"]):
+        if role != "slot" or i >= len(args):
+            continue
+        idx = eval_int(args[i], env)
+        if idx is not None:
+            slots.add(idx)
+    return slots
+
+
+def predicate_slot_roles(name, nargs):
+    """Positions of ``slot`` roles for a predicate call, from the table."""
+    entry = _PREDICATES.get(name.rsplit("::", 1)[-1])
+    if entry is None:
+        return ()
+    overload = None
+    for cand in entry.get("overloads") or []:
+        if cand["arity"] == nargs:
+            overload = cand
+            break
+    if overload is None:
+        return ()
+    return tuple(i for i, role in enumerate(overload["roles"])
+                 if role == "slot")
 
 # Methods whose arguments include one or more legal type lists.
 TYPE_LIST_METHODS = _dsl.type_list_methods(_TABLE)
@@ -46,6 +145,7 @@ class Rule:
     arg_text: list
     guard: list = field(default_factory=list)   # [(text, active)], active: bool|None
     evaluated_args: list = field(default_factory=list)
+    mutation: dict | None = None
 
     @property
     def active(self):
@@ -475,6 +575,7 @@ class BodyParser:
             arg_text=[" ".join(t.text for t in self.toks[open_i + 1:close])],
             guard=list(guards),
             evaluated_args=evaluated,
+            mutation=extract_mutation(method, args, env),
         )
         builder.rules.append(rule)
         if method not in KNOWN_METHODS:
@@ -494,21 +595,14 @@ class BodyParser:
     def record_shape(self, builder, method, args, env):
         slots = set()
         self._env = env
+        mutation = extract_mutation(method, args, env)
+        if mutation and mutation.get("type_idx") is not None:
+            slots.add(mutation["type_idx"])
         for a in args:
             self._collect_slots(a, slots)
-        if method in SLOT0_METHODS and args:
-            idx = eval_int(args[0], env)
-            if idx is not None:
-                slots.add(idx)
-        if method == "scalarizeIf" and len(args) >= 2:
-            idx = eval_int(args[1], env)
-            if idx is not None:
-                slots.add(idx)
-        if method == "scalarSameSizeAs":
-            for a in args:
-                idx = eval_int(a, env)
-                if idx is not None:
-                    slots.add(idx)
+        entry = _dsl.method_entry(method, _TABLE)
+        if entry is not None:
+            slots.update(_slot_args(entry, args, env))
         if method in CARTESIAN_METHODS:
             slot_lists = [a for a in args if eval_list(a, env) is not None]
             slots.update(range(len(slot_lists)))
@@ -548,15 +642,10 @@ class BodyParser:
         if not hasattr(self, "_env"):
             self._env = {}
         if isinstance(node, E.Call):
-            if node.name in E._PRED_SLOT1 and node.args:
-                idx = eval_int(node.args[0], self._env)
+            for i in predicate_slot_roles(node.name, len(node.args)):
+                idx = eval_int(node.args[i], self._env)
                 if idx is not None:
                     out.add(idx)
-            if node.name in E._PRED_SLOT2 and len(node.args) >= 2:
-                for a in node.args[:2]:
-                    idx = eval_int(a, self._env)
-                    if idx is not None:
-                        out.add(idx)
             for a in node.args:
                 self._collect_slots(a, out)
         elif isinstance(node, E.Lambda):
@@ -572,36 +661,26 @@ class BodyParser:
                             self._env.get(v.text), int):
                         out.add(self._env[v.text])
                     k += 2
-                elif t.text in E._PRED_SLOT1 and k + 2 < len(body) and body[k + 1].text == "(":
-                    # ``X.isVector()`` is an LLT method, not the DSL predicate.
-                    if k and body[k - 1].text in (".", "->"):
+                elif t.kind == "id" and k + 2 < len(body) and body[k + 1].text == "(":
+                    close = matching(body, k + 1)
+                    if close <= k + 2:
                         k += 1
                         continue
-                    close = matching(body, k + 1)
-                    if close > k + 2:
-                        try:
-                            arg = E.Parser(body, k + 2, close).parse_expr()
-                        except E.ExprError:
-                            arg = None
-                        idx = eval_int(arg, self._env) if arg is not None else None
+                    try:
+                        args = parse_args(body, k + 1, close, self._env)
+                    except E.ExprError:
+                        args = []
+                    positions = predicate_slot_roles(t.text, len(args))
+                    if not positions:
+                        k += 1
+                        continue
+                    for i in positions:
+                        idx = eval_int(args[i], self._env)
                         # A lambda-local index (SubIdx/FullIdx) is not in env;
-                        # the predicate still reads a slot, so keep 0 and 1.
+                        # the predicate still reads a slot, so keep all
+                        # plausible slots.
                         out.update((idx,) if idx is not None else (0, 1))
-                        k = close
-                elif t.text in E._PRED_SLOT2 and k + 2 < len(body) and body[k + 1].text == "(":
-                    if k and body[k - 1].text in (".", "->"):
-                        k += 1
-                        continue
-                    close = matching(body, k + 1)
-                    if close > k + 2:
-                        try:
-                            args = parse_args(body, k + 1, close, self._env)
-                        except E.ExprError:
-                            args = []
-                        for a in args[:2]:
-                            idx = eval_int(a, self._env)
-                            out.update((idx,) if idx is not None else (0, 1))
-                        k = close
+                    k = close
                 k += 1
         elif isinstance(node, E.ListLit):
             for x in node.items:
@@ -648,6 +727,83 @@ class BodyParser:
             self.state.unknown_refs.append((name, self.toks[i].line, str(err)))
         env[name] = value
         return j + 1
+
+
+def _mutation_target(role, value):
+    """Structured meaning of a mutation's second argument."""
+    if value is None:
+        return None
+    if role == "llt" and E.is_llt(value):
+        return {"kind": "llt", "llt": E.llt_name(value)}
+    if role == "slot" and isinstance(value, int) and not isinstance(value, bool):
+        return {"kind": "slot", "type_idx": value}
+    if role == "size" and isinstance(value, int) and not isinstance(value, bool):
+        return {"kind": "size", "bits": value}
+    if role == "other":
+        if E.is_llt(value):
+            return {"kind": "llt", "llt": E.llt_name(value)}
+        if isinstance(value, tuple) and len(value) == 3 and value[0] == "ec":
+            return {"kind": "element_count", "scalable": value[1] == "scalable",
+                    "count": value[2]}
+    return None
+
+
+def _mutation_call(node, env):
+    name = node.name.rsplit("::", 1)[-1]
+    entry = _MUTATIONS.get(name)
+    if entry is None:
+        return {"kind": "unknown", "name": name, "type_idx": None,
+                "target": None}
+    values = []
+    for arg in node.args:
+        try:
+            values.append(E.eval_expr(arg, env))
+        except E.ExprError:
+            values.append(None)
+    overload = _pick_overload(entry, node.args, env)
+    type_idx = values[0] if values and isinstance(values[0], int) \
+        and not isinstance(values[0], bool) else None
+    target = None
+    if overload and len(overload["roles"]) > 1 and len(values) > 1:
+        target = _mutation_target(overload["roles"][1], values[1])
+    out = {"kind": "call", "name": name, "type_idx": type_idx,
+           "target": target}
+    if "::" in node.name:
+        out["qualified"] = True
+    return out
+
+
+def extract_mutation(method, args, env):
+    """The LegalizeMutation argument of a rule, if the method takes one.
+
+    The position and the mutation's own argument roles come from the symbol
+    table.  ``LegalizeMutation`` is ``std::function`` in the pinned revision,
+    so a ``0``/``nullptr`` argument is a null mutation (no type change), not
+    type index 0.  Lambdas stay opaque but are recorded, so "mutation present
+    but unparsed" is measurable.
+    """
+    entry = _dsl.method_entry(method, _TABLE)
+    if not entry:
+        return None
+    overload = _pick_overload(entry, args, env)
+    if not overload or "mutation" not in overload["roles"]:
+        return None
+    index = overload["roles"].index("mutation")
+    if index >= len(args):
+        return None
+    node = args[index]
+    if isinstance(node, E.Lambda):
+        return {"kind": "lambda", "name": None, "type_idx": None,
+                "target": None}
+    if isinstance(node, E.Call):
+        return _mutation_call(node, env)
+    if isinstance(node, E.Num) and node.value == 0:
+        return {"kind": "none", "name": None, "type_idx": None,
+                "target": None}
+    if isinstance(node, E.Ident) and node.name in ("nullptr", "NULL"):
+        return {"kind": "none", "name": None, "type_idx": None,
+                "target": None}
+    return {"kind": "unknown", "name": None, "type_idx": None, "target": None}
 
 
 def parse_args(toks, open_i, close, env):

@@ -5,7 +5,6 @@ their guards use.  It deliberately does not try to be a C++ interpreter: an
 unknown construct raises and the caller records it.
 """
 
-import contextlib
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -1335,52 +1334,6 @@ def collect_lambda_types(lam, env, out):
         if body[i].kind == "id" and is_llt(env.get(body[i].text)):
             out.add(env[body[i].text])
         i += 1
-
-
-_PRED_SLOT1 = {
-    "typeIs", "typeIsNot", "typeInSet", "scalarOrEltWiderThan",
-    "scalarNarrowerThan", "scalarOrEltNarrowerThan", "scalarWiderThan",
-    "sizeNotPow2", "isScalar", "isPointer", "isVector",
-}
-_PRED_SLOT2 = {"typePairInSet", "typePairIs"}
-
-
-def collect_slots(node, env, out):
-    if isinstance(node, Call):
-        if node.name in _PRED_SLOT1 and node.args:
-            with contextlib.suppress(EvalError, TypeError, ValueError):
-                out.add(int(eval_expr(node.args[0], env)))
-        if node.name in _PRED_SLOT2 and len(node.args) >= 2:
-            for a in node.args[:2]:
-                with contextlib.suppress(EvalError, TypeError, ValueError):
-                    out.add(int(eval_expr(a, env)))
-        for a in node.args:
-            collect_slots(a, env, out)
-    elif isinstance(node, ListLit):
-        for x in node.items:
-            collect_slots(x, env, out)
-    elif isinstance(node, Unary):
-        collect_slots(node.x, env, out)
-    elif isinstance(node, Binary):
-        collect_slots(node.left, env, out)
-        collect_slots(node.right, env, out)
-    elif isinstance(node, Ternary):
-        collect_slots(node.cond, env, out)
-        collect_slots(node.then, env, out)
-        collect_slots(node.other, env, out)
-    elif isinstance(node, Lambda):
-        body = node.body
-        i = 0
-        while i < len(body):
-            if body[i].text == "Types" and i + 1 < len(body) and body[i + 1].text == "[":
-                j = i + 2
-                if body[j].kind == "num":
-                    with contextlib.suppress(ValueError):
-                        out.add(int(body[j].text))
-                elif body[j].kind == "id" and isinstance(env.get(body[j].text), int):
-                    out.add(env[body[j].text])
-                i = j
-            i += 1
 
 
 def lambda_param_name(lam):

@@ -43,6 +43,7 @@ def ast_document(result, source):
                 "active": r.active,
                 "arg": r.arg_text[0] if r.arg_text else "",
                 "arg_values": [render_value(v) for v in r.evaluated_args],
+                "mutation": r.mutation,
                 "slots": sorted(b.slots),
             })
         builders.append({
