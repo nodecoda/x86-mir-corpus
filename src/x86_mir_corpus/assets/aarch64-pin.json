@@ -1,0 +1,11 @@
+{
+  "recorded": "2026-11-04",
+  "reference_revision": null,
+  "revision": "fed20e0e68323be32cb0fe8af679b8cb34e72112",
+  "schema": "x86-mir-corpus-llvm-pin",
+  "snapshot": "assets/source-snapshots/fed20e0e-AArch64LegalizerInfo.cpp",
+  "snapshot_sha256": "2b5377c3eedddf82f17758e7cab763d99ce362e4c5422bb8e24bc4b7c8945d55",
+  "source_path": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+  "target": "aarch64",
+  "version": 1
+}

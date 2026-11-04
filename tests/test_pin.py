@@ -106,3 +106,24 @@ class UpdateTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AArch64PinTest(unittest.TestCase):
+    def test_bundled_aarch64_pin_verifies_locally(self):
+        report = pin.verify(target="aarch64")
+        self.assertTrue(report["ok"], report["reasons"])
+        self.assertEqual(report["target"], "aarch64")
+
+    def test_aarch64_source_path_and_snapshot(self):
+        doc = pin.load(target="aarch64")
+        self.assertEqual(
+            doc["source_path"],
+            "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp")
+        self.assertIn("AArch64LegalizerInfo.cpp", doc["snapshot"])
+        self.assertIsNone(doc.get("reference_revision"))
+
+    def test_cli_show_prints_the_aarch64_pin(self):
+        proc = testlib.run_cli("pin", "show", "--target", "aarch64", "--json")
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        doc = json.loads(proc.stdout)
+        self.assertEqual(doc["target"], "aarch64")

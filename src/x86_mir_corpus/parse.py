@@ -1,49 +1,40 @@
-"""Parse the hand-written X86 legalizer constructor into a rule ledger."""
+"""Parse a hand-written target legalizer constructor into a rule ledger.
+
+The chain-method vocabulary, slot roles, and predicate names come from the
+generated :mod:`x86_mir_corpus.dsl` symbol table, not from a hand-maintained
+list here.  A method that is not in the table is a hard parse error unless the
+caller opts into opaque mode.
+"""
 
 from dataclasses import dataclass, field
 
+from . import dsl as _dsl
 from . import expr as E
 from .lexer import lex, matching
 
-# Methods that read a type slot as their first argument.
-SLOT0_METHODS = {
-    "clampScalar", "widenScalarToNextPow2", "clampNumElements", "scalarize",
-    "clampMaxNumElements", "clampMinNumElements", "minScalar", "maxScalar",
-    "moreElementsToNextPow2", "widenScalarOrEltToNextPow2", "clampScalarOrElt",
-}
+_TABLE = _dsl.load()
 
-# Methods whose first list argument is a set of legal type tuples.
-TYPE_LIST_METHODS = {
-    "legalFor", "customFor", "lowerFor", "libcallFor", "alwaysLegal",
-}
+# Methods that read a type slot as their first argument.
+SLOT0_METHODS = _dsl.slot0_methods(_TABLE)
+
+# Methods whose arguments include one or more legal type lists.
+TYPE_LIST_METHODS = _dsl.type_list_methods(_TABLE)
 
 # Each argument (after an optional predicate) is the class list for one type
 # slot; the Cartesian product is the query shape.
-CARTESIAN_METHODS = {"legalForCartesianProduct", "customForCartesianProduct"}
+CARTESIAN_METHODS = _dsl.cartesian_methods(_TABLE)
 
-# Every chain method the X86 source uses.  An unlisted method is reported and
-# makes the run fail unless the caller opts into opaque mode.
-KNOWN_METHODS = {
-    "legalFor", "legalForTypesWithMemDesc", "legalForCartesianProduct",
-    "clampScalar", "widenScalarToNextPow2", "clampNumElements", "scalarize",
-    "clampMaxNumElements", "clampMinNumElements", "lower", "libcall",
-    "scalarSameSizeAs", "customIf", "alwaysLegal", "minScalar", "lowerFor",
-    "moreElementsToNextPow2", "lowerIf", "legalIf",
-    "customForCartesianProduct", "customFor", "widenScalarOrEltToNextPow2",
-    "widenScalarIf", "scalarizeIf", "maxScalar", "libcallFor",
-    "clampScalarOrElt",
-}
+# Every chain method the DSL exposes.
+KNOWN_METHODS = _dsl.method_names(_TABLE)
 
-OPAQUE_METHODS = {"legalIf", "customIf", "lowerIf", "widenScalarIf"}
+# Methods that can carry a predicate lambda; used only for the opaque counter.
+OPAQUE_METHODS = {entry["name"] for entry in _TABLE["methods"]
+                  if entry["predicate_gated"]}
 
 # Methods whose first argument may be a feature predicate.  When it evaluates
 # to false the C++ builder adds no rule at all; keeping the rule visible but
 # inactive is what makes a per-config coverage report honest.
-PRED_GATED_METHODS = {
-    "legalFor", "legalForTypesWithMemDesc", "customFor", "lowerFor",
-    "libcallFor", "customForCartesianProduct", "clampScalar", "minScalar",
-    "maxScalar",
-}
+PRED_GATED_METHODS = OPAQUE_METHODS
 
 
 @dataclass
@@ -109,6 +100,7 @@ class ParseResult:
     aligns: set
     call_sites: int
     unknown_methods: list
+    unknown_predicates: list
     unknown_refs: list
     opaque_lambdas: int
 
@@ -132,18 +124,42 @@ class ParserState:
         self.builders = []
         self.call_sites = 0
         self.unknown_methods = []
+        self.unknown_predicates = []
         self.unknown_refs = []
         self.opaque_lambdas = 0
         self.mem_classes = set()
         self.aligns = set()
 
 
-def parse_source(src, source, config="C2", features=None):
+_PREDICATE_IGNORE = frozenset({
+    "static_cast", "std", "LLT", "LegalityQuery",
+    # Functional casts from a lambda to the predicate/mutation typedef.
+    "LegalityPredicate", "LegalizeMutation",
+})
+_DSL_CALLS = (_dsl.vocabulary_names(_TABLE) | {"all", "any", "predNot"}
+              | _PREDICATE_IGNORE)
+
+
+def _predicate_names(args):
+    names = set()
+    for arg in args:
+        if isinstance(arg, (E.Lambda, E.Unknown)):
+            continue
+        for name in E.call_names(arg):
+            if name.startswith(("LLT::", "std::")) or "." in name:
+                continue
+            names.add(name.rsplit("::", 1)[-1])
+    return names
+
+
+def parse_source(src, source, config="C2", features=None,
+                 rule_set_prefix="X86_"):
     toks = lex(src)
     state = ParserState(features or {})
+    state.rule_set_prefix = rule_set_prefix
     body = find_constructor(toks)
     if body is None:
-        raise E.ExprError("cannot find the X86LegalizerInfo constructor body")
+        raise E.ExprError("cannot find the legalizer constructor body")
     start, end = body
     env = {"__features__": state.features}
     env.update(state.features)
@@ -165,6 +181,7 @@ def parse_source(src, source, config="C2", features=None):
         aligns=state.aligns,
         call_sites=count_calls(toks, start + 1, end),
         unknown_methods=state.unknown_methods,
+        unknown_predicates=state.unknown_predicates,
         unknown_refs=state.unknown_refs,
         opaque_lambdas=state.opaque_lambdas,
     )
@@ -375,7 +392,7 @@ class BodyParser:
         if not opcodes:
             raise E.ExprError(f"empty opcode set at line {self.toks[i].line}")
         builder = Builder(
-            name="X86_" + opcodes[0][2:],
+            name=self.state.rule_set_prefix + opcodes[0][2:],
             opcodes=opcodes,
             line=self.toks[i].line,
         )
@@ -432,6 +449,10 @@ class BodyParser:
         builder.rules.append(rule)
         if method not in KNOWN_METHODS:
             self.state.unknown_methods.append((method, line))
+        for name in _predicate_names(args):
+            if name in _DSL_CALLS:
+                continue
+            self.state.unknown_predicates.append((name, line))
         if method in OPAQUE_METHODS:
             self.state.opaque_lambdas += sum(1 for a in args if isinstance(a, E.Lambda))
         try:

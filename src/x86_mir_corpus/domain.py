@@ -13,14 +13,12 @@ from .lexer import matching
 from .parse import eval_int, parse_args
 from .target import BOUNDARY_PANEL, DEEP_PANEL, SKIP_WITNESS_SLOT1_AS, feature_env
 
+KIND_RANK = {"p": 0, "s": 1, "i": 2, "f": 3, "v": 4, "nxv": 5}
+
 
 def sorted_llts(values):
     def key(t):
-        if t[0] == "p":
-            return (0, 0, 0, t)
-        if t[0] == "s":
-            return (1, t[1], 0, t)
-        return (2, E.llt_scalar_bits(t), t[1], t)
+        return (KIND_RANK.get(t[0], 9), E.llt_bits(t), E.llt_lanes(t), t)
     return sorted(set(values), key=key)
 
 
@@ -51,7 +49,7 @@ def rep_class(classes):
         if t == E.scalar(32):
             return t
     for t in classes:
-        if t[0] == "s":
+        if t[0] in ("s", "i"):
             return t
     return classes[0]
 
@@ -72,7 +70,7 @@ ELEMENT_SIZE_SLOT0 = {
 
 
 def is_pointer_like(t):
-    return t[0] == "p" or (t[0] == "v" and t[2][0] == "p")
+    return t[0] == "p" or (E.is_vec(t) and t[2][0] == "p")
 
 
 def element_size_slots(builder):
@@ -254,7 +252,7 @@ def next_pow2_at_least(bits):
 
 def choose_vec(classes, elem, accepted):
     for t in classes:
-        if t[0] == "v" and t[2] == elem and accepted(t[1]):
+        if E.is_vec(t) and t[2] == elem and accepted(t[1]):
             return t
     return None
 
@@ -284,16 +282,17 @@ def probe_env(classes, features=None):
         env["__features__"] = features
         env.update(features)
         env["__pointer_bits__"] = 64 if features.get("is64Bit") else 32
+        env["__llt_extended__"] = bool(features.get("lltExtended", True))
     return env
 
 
 def scalar_bits(ty, env):
     """LLT getScalarSizeInBits; pointers have the config's pointer size."""
-    if ty[0] == "p":
-        return env.get("__pointer_bits__", 0)
-    if ty[0] == "v" and ty[2][0] == "p":
-        return env.get("__pointer_bits__", 0)
-    return E.llt_scalar_bits(ty)
+    return E.llt_scalar_bits(ty, env.get("__pointer_bits__", 0))
+
+
+def size_bits(ty, env):
+    return E.llt_bits(ty, env.get("__pointer_bits__", 0))
 
 
 def safe_eval(node, env):
@@ -365,7 +364,7 @@ def _query_value(node, types, mem, env):
         if node.name.endswith(".getSizeInBits"):
             inner = _query_value(E.Ident(node.name[:-len(".getSizeInBits")]),
                                  types, mem, env)
-            return E.llt_bits(inner) if E.is_llt(inner) else None
+            return size_bits(inner, env) if E.is_llt(inner) else None
         if node.name.endswith(".getNumElements"):
             inner = _query_value(E.Ident(node.name[:-len(".getNumElements")]),
                                  types, mem, env)
@@ -383,33 +382,80 @@ def _query_value(node, types, mem, env):
     return None
 
 
+def _slot_at(types, idx):
+    if idx is None or not (0 <= idx < len(types)):
+        return None
+    return types[idx]
+
+
+def _size_or_none(ty, env):
+    """getSizeInBits() as an int, or None when TypeSize cannot convert.
+
+    ``LLT::getSizeInBits()`` is a TypeSize; the implicit conversion to a fixed
+    integer aborts for scalable vectors.  A predicate that compares a scalable
+    size is therefore not a query we can answer honestly.
+    """
+    if E.is_scalable(ty):
+        return None
+    return size_bits(ty, env)
+
+
+def _mem_size_or_none(mem, env):
+    if mem is None:
+        return None
+    return _size_or_none(mem, env)
+
+
 def _pred_match(node, types, mem, align, env):
-    """True/False/None for the predicates the X86 source uses.
+    """True/False/None for the LLVM legality predicates.
 
     None means "the Python side does not model this predicate", which is how a
     first-match verdict stays honest instead of guessing.
     """
     if isinstance(node, E.Call):
         name = node.name
+        # ``::any(...)`` parses with the namespace prefix attached.
+        name = name.rsplit("::", 1)[-1]
         args = node.args
-        def slot_ty():
-            idx = _arg_int(args, 0, env)
-            ty = _arg_llt(args, 1, env)
-            if idx is None or ty is None or not (0 <= idx < len(types)):
+
+        def slot_ty(index=0):
+            idx = _arg_int(args, index, env)
+            return idx, _slot_at(types, idx)
+
+        if name == "all":
+            out = True
+            for arg in args:
+                value = _pred_match(arg, types, mem, align, env)
+                if value is None:
+                    return None
+                out = out and value
+            return out
+        if name == "any":
+            out = False
+            for arg in args:
+                value = _pred_match(arg, types, mem, align, env)
+                if value is None:
+                    return None
+                out = out or value
+            return out
+        if name == "predNot":
+            if len(args) != 1:
                 return None
-            return idx, ty
+            value = _pred_match(args[0], types, mem, align, env)
+            return None if value is None else not value
         if name == "typeIs":
             got = slot_ty()
-            return None if got is None else types[got[0]] == got[1]
+            return None if got[1] is None else got[1] == _arg_llt(args, 1, env)
         if name == "typeIsNot":
             got = slot_ty()
-            return None if got is None else types[got[0]] != got[1]
+            return None if got[1] is None else got[1] != _arg_llt(args, 1, env)
         if name == "typeInSet":
             idx = _arg_int(args, 0, env)
             values = _arg_list(args, 1, env)
-            if idx is None or values is None or not (0 <= idx < len(types)):
+            if idx is None or values is None:
                 return None
-            return types[idx] in values
+            ty = _slot_at(types, idx)
+            return None if ty is None else ty in values
         if name in ("typePairInSet", "typePairIs"):
             idx0 = _arg_int(args, 0, env)
             idx1 = _arg_int(args, 1, env)
@@ -429,51 +475,166 @@ def _pred_match(node, types, mem, align, env):
             return any(isinstance(pair, list) and len(pair) >= 2
                        and types[idx0] == pair[0] and types[idx1] == pair[1]
                        for pair in values)
-        if name in ("scalarNarrowerThan", "scalarOrEltNarrowerThan"):
+        if name == "typeTupleInSet":
+            idx0 = _arg_int(args, 0, env)
+            idx1 = _arg_int(args, 1, env)
+            idx2 = _arg_int(args, 2, env)
+            values = _arg_list(args, 3, env)
+            if None in (idx0, idx1, idx2) or values is None:
+                return None
+            if not all(0 <= i < len(types) for i in (idx0, idx1, idx2)):
+                return None
+            return any(isinstance(tup, list) and len(tup) >= 3
+                       and types[idx0] == tup[0] and types[idx1] == tup[1]
+                       and types[idx2] == tup[2] for tup in values)
+        if name == "typePairAndMemDescInSet":
+            idx0 = _arg_int(args, 0, env)
+            idx1 = _arg_int(args, 1, env)
+            values = _arg_list(args, 3, env)
+            if idx0 is None or idx1 is None or values is None or mem is None:
+                return None
+            if not (0 <= idx0 < len(types) and 0 <= idx1 < len(types)):
+                return None
+            for entry in values:
+                if not (isinstance(entry, list) and len(entry) >= 4):
+                    continue
+                ty0, ty1, mem_ty, mem_align = entry[:4]
+                if (types[idx0] == ty0 and types[idx1] == ty1
+                        and E.llt_bits(mem) == E.llt_bits(mem_ty)
+                        and align >= int(mem_align)):
+                    return True
+            return False
+        if name in ("scalarNarrowerThan", "scalarWiderThan"):
             idx = _arg_int(args, 0, env)
             bits = _arg_int(args, 1, env)
-            if idx is None or bits is None or not (0 <= idx < len(types)):
+            ty = _slot_at(types, idx)
+            if ty is None or bits is None:
                 return None
-            if name == "scalarNarrowerThan" and types[idx][0] != "s":
+            size = _size_or_none(ty, env)
+            if size is None:
+                return None
+            if not E.is_scalar(ty):
                 return False
-            return scalar_bits(types[idx], env) < bits
-        if name in ("scalarWiderThan", "scalarOrEltWiderThan"):
+            return size < bits if name == "scalarNarrowerThan" else size > bits
+        if name in ("scalarOrEltNarrowerThan", "scalarOrEltWiderThan"):
             idx = _arg_int(args, 0, env)
             bits = _arg_int(args, 1, env)
-            if idx is None or bits is None or not (0 <= idx < len(types)):
+            ty = _slot_at(types, idx)
+            if ty is None or bits is None:
                 return None
-            if name == "scalarWiderThan" and types[idx][0] != "s":
-                return False
-            return scalar_bits(types[idx], env) > bits
-        if name == "sizeNotPow2":
-            idx = _arg_int(args, 0, env)
-            if idx is None or not (0 <= idx < len(types)):
-                return None
-            return types[idx][0] == "s" and not pow2(types[idx][1])
+            size = scalar_bits(ty, env)
+            return size < bits if name == "scalarOrEltNarrowerThan" else size > bits
         if name == "scalarOrEltSizeNotPow2":
             idx = _arg_int(args, 0, env)
-            if idx is None or not (0 <= idx < len(types)):
+            ty = _slot_at(types, idx)
+            return None if ty is None else not pow2(scalar_bits(ty, env))
+        if name == "sizeNotPow2":
+            idx = _arg_int(args, 0, env)
+            ty = _slot_at(types, idx)
+            if ty is None:
                 return None
-            return not pow2(scalar_bits(types[idx], env))
+            size = _size_or_none(ty, env)
+            return None if size is None else E.is_scalar(ty) and not pow2(size)
+        if name == "sizeNotMultipleOf":
+            idx = _arg_int(args, 0, env)
+            size_arg = _arg_int(args, 1, env)
+            ty = _slot_at(types, idx)
+            if ty is None or size_arg is None:
+                return None
+            size = _size_or_none(ty, env)
+            if size is None:
+                return None
+            return E.is_scalar(ty) and size % size_arg != 0
+        if name == "sizeIs":
+            idx = _arg_int(args, 0, env)
+            size_arg = _arg_int(args, 1, env)
+            ty = _slot_at(types, idx)
+            if ty is None or size_arg is None:
+                return None
+            size = _size_or_none(ty, env)
+            return None if size is None else size == size_arg
+        if name in ("sameSize", "smallerThan", "largerThan"):
+            idx0 = _arg_int(args, 0, env)
+            idx1 = _arg_int(args, 1, env)
+            ty0 = _slot_at(types, idx0)
+            ty1 = _slot_at(types, idx1)
+            if ty0 is None or ty1 is None:
+                return None
+            left = _size_or_none(ty0, env)
+            right = _size_or_none(ty1, env)
+            if left is None or right is None:
+                return None
+            if name == "sameSize":
+                return left == right
+            return left < right if name == "smallerThan" else left > right
         if name == "isScalar":
-            idx = _arg_int(args, 0, env)
-            return None if idx is None or not (0 <= idx < len(types)) else types[idx][0] == "s"
+            ty = _slot_at(types, _arg_int(args, 0, env))
+            return None if ty is None else E.is_scalar(ty)
         if name == "isVector":
-            idx = _arg_int(args, 0, env)
-            return None if idx is None or not (0 <= idx < len(types)) else types[idx][0] == "v"
+            ty = _slot_at(types, _arg_int(args, 0, env))
+            return None if ty is None else E.is_vec(ty)
         if name == "isPointer":
             idx = _arg_int(args, 0, env)
-            return None if idx is None or not (0 <= idx < len(types)) else types[idx][0] == "p"
+            ty = _slot_at(types, idx)
+            if ty is None:
+                return None
+            if not E.is_ptr(ty):
+                return False
+            if len(args) >= 2:
+                addr_space = _arg_int(args, 1, env)
+                return None if addr_space is None else ty[1] == addr_space
+            return True
+        if name == "isPointerVector":
+            ty = _slot_at(types, _arg_int(args, 0, env))
+            return None if ty is None else E.is_vec(ty) and E.is_ptr(ty[2])
+        if name == "elementTypeIs":
+            idx = _arg_int(args, 0, env)
+            elt = _arg_llt(args, 1, env)
+            ty = _slot_at(types, idx)
+            if ty is None or elt is None:
+                return None
+            return E.is_vec(ty) and ty[2] == elt
+        if name == "numElementsNotPow2":
+            ty = _slot_at(types, _arg_int(args, 0, env))
+            if ty is None:
+                return None
+            return E.is_vec(ty) and not E.is_scalable(ty) and not pow2(ty[1])
+        if name in ("vectorElementCountIsGreaterThan",
+                    "vectorElementCountIsLessThanOrEqualTo"):
+            idx = _arg_int(args, 0, env)
+            bound = _arg_int(args, 1, env)
+            ty = _slot_at(types, idx)
+            if ty is None or bound is None:
+                return None
+            if not E.is_vec(ty) or E.is_scalable(ty):
+                return False
+            return ty[1] > bound if name.endswith("GreaterThan") else ty[1] <= bound
+        if name in ("memSizeInBytesNotPow2", "memSizeNotByteSizePow2"):
+            size = _mem_size_or_none(mem, env)
+            if size is None:
+                return None
+            if name == "memSizeNotByteSizePow2" and size % 8 != 0:
+                return True
+            return size == 0 or not pow2(size // 8)
+        if name in ("immIs", "immIsNot", "immInSet"):
+            # Query points do not carry immediates yet; stay undecided.
+            return None
+        if name == "atomicOrderingAtLeastOrStrongerThan":
+            return None
         if name == "always":
             return True
         return None
     if isinstance(node, E.Binary):
-        if node.op in ("==", "!=", "<", ">", "<=", ">="):
+        if node.op in ("==", "!="):
             left = _query_value(node.left, types, mem, env)
             right = _query_value(node.right, types, mem, env)
             if left is not None and right is not None:
+                return (left == right) if node.op == "==" else (left != right)
+        if node.op in ("<", ">", "<=", ">="):
+            left = _query_value(node.left, types, mem, env)
+            right = _query_value(node.right, types, mem, env)
+            if (isinstance(left, int) and isinstance(right, int)):
                 return {
-                    "==": left == right, "!=": left != right,
                     "<": left < right, ">": left > right,
                     "<=": left <= right, ">=": left >= right,
                 }[node.op]
@@ -587,7 +748,7 @@ def rule_matches(rule, types, mem, align, env, opcode=None):
         if slot is None or lo is None or hi is None or not (0 <= slot < len(types)):
             return None
         ty = types[slot]
-        if method == "clampScalar" and ty[0] != "s":
+        if method == "clampScalar" and not E.is_scalar(ty):
             return False
         return (scalar_bits(ty, env) < scalar_bits(lo, env)
                 or scalar_bits(ty, env) > scalar_bits(hi, env))
@@ -596,44 +757,48 @@ def rule_matches(rule, types, mem, align, env, opcode=None):
         if slot is None or bound is None or not (0 <= slot < len(types)):
             return None
         ty = types[slot]
-        if ty[0] != "s":
+        if not E.is_scalar(ty):
             return False
+        size = _size_or_none(ty, env)
+        if size is None:
+            return None
         if method == "minScalar":
-            return ty[1] < bound[1]
-        return ty[1] > bound[1]
+            return size < E.llt_bits(bound, env.get("__pointer_bits__", 0))
+        return size > E.llt_bits(bound, env.get("__pointer_bits__", 0))
     if method in ("widenScalarToNextPow2", "widenScalarOrEltToNextPow2"):
         slot = int_arg(a, 0)
         if slot is None or not (0 <= slot < len(types)):
             return None
         ty = types[slot]
         if method == "widenScalarToNextPow2":
-            return ty[0] == "s" and not pow2(ty[1])
+            size = _size_or_none(ty, env)
+            return None if size is None else E.is_scalar(ty) and not pow2(size)
         return not pow2(scalar_bits(ty, env))
     if method == "clampNumElements":
         slot, lo, hi = int_arg(a, 0), llt_arg(a, 1), llt_arg(a, 2)
         if slot is None or lo is None or hi is None or not (0 <= slot < len(types)):
             return None
         ty = types[slot]
-        return (ty[0] == "v" and ty[2] == lo[2]
+        return (E.is_vec(ty) and ty[2] == lo[2]
                 and (ty[1] < lo[1] or ty[1] > hi[1]))
     if method in ("clampMinNumElements", "clampMaxNumElements"):
         slot, elem, count = int_arg(a, 0), llt_arg(a, 1), int_arg(a, 2)
         if slot is None or elem is None or count is None or not (0 <= slot < len(types)):
             return None
         ty = types[slot]
-        if ty[0] != "v" or ty[2] != elem:
+        if not E.is_vec(ty) or ty[2] != elem:
             return False
         return ty[1] < count if method == "clampMinNumElements" else ty[1] > count
     if method == "moreElementsToNextPow2":
         slot = int_arg(a, 0)
         if slot is None or not (0 <= slot < len(types)):
             return None
-        return types[slot][0] == "v" and not pow2(types[slot][1])
+        return E.is_vec(types[slot]) and not pow2(types[slot][1])
     if method == "scalarize":
         slot = int_arg(a, 0)
         if slot is None or not (0 <= slot < len(types)):
             return None
-        return types[slot][0] == "v"
+        return E.is_vec(types[slot])
     if method == "scalarSameSizeAs":
         idx0, idx1 = int_arg(a, 0), int_arg(a, 1)
         if idx0 is None or idx1 is None:
@@ -797,13 +962,13 @@ def scalar_candidates(classes, kind="s"):
 
 
 def vector_candidates(classes, elem):
-    lanes = {t[1] for t in classes if t[0] == "v" and t[2] == elem}
+    lanes = {t[1] for t in classes if E.is_vec(t) and t[2] == elem}
     extra = {2, 3, 4, 5, 8, 16, 32, 64, 65, 128}
     return [E.vec(n, elem) for n in sorted(lanes | extra)]
 
 
 def all_vector_candidates(classes):
-    elems = {t[2] for t in classes if t[0] == "v"}
+    elems = {t[2] for t in classes if E.is_vec(t)}
     elems.update({E.scalar(1), E.scalar(8), E.scalar(16), E.scalar(32),
                   E.scalar(64), E.ptr(0)})
     out = []
@@ -910,10 +1075,10 @@ def probe_candidates(builder, rule, classes, rep, mem, opcode=None):
         if ty is None:
             return []
         out = []
-        base = ty if ty[0] == "v" else E.vec(2, ty)
+        base = ty if E.is_vec(ty) else E.vec(2, ty)
         out.append(({slot: base}, memdesc, align, "decided"))
         for lanes in (2, 3, 4, 8, 16, 32, 64, 128):
-            if base[0] == "v":
+            if E.is_vec(base):
                 out.append(({slot: E.vec(lanes, base[2])}, memdesc, align,
                             "decided"))
         return out
@@ -965,7 +1130,7 @@ def rule_issue(builder, rule, reason, first=None, kind=None):
 def filler_pool(builder, classes, slot):
     if builder.has_mem and slot == 1:
         pool = [E.ptr(0), E.ptr(1), E.ptr(2)]
-        pool += [t for t in classes if t[0] == "v" and t[2][0] == "p"]
+        pool += [t for t in classes if E.is_vec(t) and t[2][0] == "p"]
         return sorted_llts(set(pool))
     pool = list(classes)
     pool += [E.scalar(b) for b in (1, 3, 7, 24, 33, 65, 129, 200)]

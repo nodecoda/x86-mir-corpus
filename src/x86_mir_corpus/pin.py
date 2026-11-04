@@ -20,15 +20,41 @@ SOURCE_PATH = "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp"
 CHECK_SCHEMA = "x86-mir-corpus-llvm-pin-check"
 FALLBACK_REVISION = "upstream/main"
 
+# Target-scoped pins.  The X86 entry keeps the historical asset/source path so
+# existing installations and `pin show` output stay stable.
+TARGETS = {
+    "x86": {
+        "asset": "llvm-pin.json",
+        "source_path": "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp",
+        "snapshot_prefix": "X86LegalizerInfo",
+        "has_reference": True,
+    },
+    "aarch64": {
+        "asset": "aarch64-pin.json",
+        "source_path": "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp",
+        "snapshot_prefix": "AArch64LegalizerInfo",
+        "has_reference": False,
+    },
+}
+
+
+def target_spec(target):
+    """The pin configuration for *target* (``x86`` by default)."""
+    try:
+        return TARGETS[target]
+    except KeyError:
+        raise ValueError(f"unknown pin target {target!r}; "
+                         f"choose from {', '.join(sorted(TARGETS))}") from None
+
 
 def package_dir():
     """Directory of the installed ``x86_mir_corpus`` package."""
     return os.path.dirname(os.path.abspath(__file__))
 
 
-def asset_path():
+def asset_path(target="x86"):
     """Absolute path of the pin file shipped inside the package."""
-    return os.path.join(package_dir(), "assets", ASSET)
+    return os.path.join(package_dir(), "assets", target_spec(target)["asset"])
 
 
 def repo_root():
@@ -37,9 +63,9 @@ def repo_root():
         os.path.abspath(__file__))))
 
 
-def load(path=None):
+def load(path=None, target="x86"):
     """Return the pin document, or None when it is missing or malformed."""
-    path = path or asset_path()
+    path = path or asset_path(target)
     try:
         with open(path, encoding="utf-8") as handle:
             doc = json.load(handle)
@@ -50,16 +76,16 @@ def load(path=None):
     return doc
 
 
-def revision(path=None):
+def revision(path=None, target="x86"):
     """The pinned LLVM revision, or None when no usable pin is present."""
-    doc = load(path)
+    doc = load(path, target)
     value = (doc or {}).get("revision")
     return value if isinstance(value, str) and value else None
 
 
-def default_source_rev(path=None):
+def default_source_rev(path=None, target="x86"):
     """Revision to use when the caller does not pass ``--source-rev``."""
-    return revision(path) or FALLBACK_REVISION
+    return revision(path, target) or FALLBACK_REVISION
 
 
 def _sha256_bytes(data):
@@ -107,14 +133,16 @@ def _read_text(path):
         return None
 
 
-def verify(repo=None, path=None):
+def verify(repo=None, path=None, target="x86"):
     """Check the pin against the bundled snapshot and the repo metadata."""
-    doc = load(path)
+    spec = target_spec(target)
+    doc = load(path, target)
     report = {
         "schema": CHECK_SCHEMA,
         "version": VERSION,
         "ok": False,
-        "pin": path or asset_path(),
+        "pin": path or asset_path(target),
+        "target": target,
         "revision": None,
         "snapshot": None,
         "checks": [],
@@ -150,7 +178,8 @@ def verify(repo=None, path=None):
         prefix = os.path.basename(snap_path).split("-")[0]
         check("snapshot-name", bool(rev) and rev.startswith(prefix), prefix)
 
-    source_commit = _read_text(os.path.join(root, "SOURCE-COMMIT"))
+    source_commit = (_read_text(os.path.join(root, "SOURCE-COMMIT"))
+                     if spec["has_reference"] else None)
     if source_commit is not None:
         recorded = ""
         for line in source_commit.splitlines():
@@ -160,7 +189,7 @@ def verify(repo=None, path=None):
         check("source-commit-file", bool(rev) and rev.startswith(recorded),
               recorded)
 
-    provenance = load_provenance()
+    provenance = load_provenance() if spec["has_reference"] else None
     if provenance is not None:
         frozen = provenance.get("source_commit") or ""
         pinned_ref = doc.get("reference_revision") or ""
@@ -182,11 +211,11 @@ def verify(repo=None, path=None):
             except (RuntimeError, TypeError):
                 check("llvm-revision", False, rev)
             try:
-                blob = _git(repo, "show", f"{rev}:{SOURCE_PATH}")
+                blob = _git(repo, "show", f"{rev}:{spec['source_path']}")
                 check("llvm-blob", _sha256_bytes(blob.encode("utf-8"))
                       == doc.get("snapshot_sha256"))
             except (RuntimeError, TypeError):
-                check("llvm-blob", False, SOURCE_PATH)
+                check("llvm-blob", False, spec["source_path"])
 
     report["ok"] = bool(report["checks"]) and all(
         entry["ok"] for entry in report["checks"])
@@ -211,49 +240,54 @@ def load_provenance(path=None):
     return doc if isinstance(doc, dict) else None
 
 
-def update(repo, revision_ref=None, path=None, dry_run=False):
+def update(repo, revision_ref=None, path=None, dry_run=False, target="x86"):
     """Re-pin to *revision_ref* from an LLVM checkout.
 
-    Writes the extracted snapshot, the pin file, and the root ``SOURCE-COMMIT``
-    metadata.  With ``dry_run`` nothing is written and the planned changes are
-    returned for review.
+    Writes the extracted snapshot, the pin file, and (for X86) the root
+    ``SOURCE-COMMIT`` metadata.  With ``dry_run`` nothing is written and the
+    planned changes are returned for review.
     """
     if not repo:
         raise RuntimeError("an LLVM checkout is required (--repo)")
+    spec = target_spec(target)
+    source_path = spec["source_path"]
     root = repo_root()
-    pin_path = path or asset_path()
+    pin_path = path or asset_path(target)
     rev = _git(repo, "rev-parse", "--verify",
                f"{revision_ref or 'upstream/main'}^{{commit}}").strip()
-    text = _git(repo, "show", f"{rev}:{SOURCE_PATH}")
+    text = _git(repo, "show", f"{rev}:{source_path}")
     data = text.encode("utf-8")
     digest = _sha256_bytes(data)
 
     snapshot_dir = os.path.join(root, "src", "x86_mir_corpus", "assets",
                                 "source-snapshots")
-    snapshot_name = f"{rev[:8]}-X86LegalizerInfo.cpp"
+    snapshot_name = f"{rev[:8]}-{spec['snapshot_prefix']}.cpp"
     snapshot_path = os.path.join(snapshot_dir, snapshot_name)
     snapshot_rel = os.path.relpath(snapshot_path, root).replace(os.sep, "/")
     snapshot_pkg = f"assets/source-snapshots/{snapshot_name}"
 
-    doc = load(pin_path) or {
+    doc = load(pin_path, target) or {
         "schema": SCHEMA,
         "version": VERSION,
-        "source_path": SOURCE_PATH,
-        "reference_revision": (load_provenance() or {}).get("source_commit"),
+        "source_path": source_path,
+        "target": target,
+        "reference_revision": ((load_provenance() or {}).get("source_commit")
+                               if spec["has_reference"] else None),
     }
     previous = doc.get("revision")
     doc.update({
         "schema": SCHEMA,
         "version": VERSION,
         "revision": rev,
-        "source_path": SOURCE_PATH,
+        "source_path": source_path,
         "snapshot": snapshot_pkg,
         "snapshot_sha256": digest,
         "recorded": date.today().isoformat(),
     })
 
     source_commit_path = os.path.join(root, "SOURCE-COMMIT")
-    source_commit_text = _read_text(source_commit_path)
+    source_commit_text = (_read_text(source_commit_path)
+                          if spec["has_reference"] else None)
     new_source_commit = None
     if source_commit_text is not None:
         lines = []
@@ -271,6 +305,7 @@ def update(repo, revision_ref=None, path=None, dry_run=False):
         "snapshot": snapshot_pkg,
         "snapshot_sha256": digest,
         "pin": pin_path if path else os.path.relpath(pin_path, root),
+        "target": target,
         "source_commit_updated": new_source_commit is not None,
         "default_source_revision": rev[:8],
         "default_source_snapshot": snapshot_rel,

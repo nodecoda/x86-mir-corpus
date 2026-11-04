@@ -16,17 +16,28 @@ import sys
 from . import schemas
 
 ASSERT_RE = re.compile(r"(\S+\.(?:cpp|h)):(\d+):\s*(.*?):\s*Assertion `([^']*)")
-TYPE_RE = re.compile(r"v(\d+)(p\d+)?:(s|f|p)(\d+)$")
+_VEC_RE = re.compile(r"^(nxv|v)(\d+)(.+)$")
+_ELEM_RE = re.compile(r"^(p|s|i|f)(\d+)$|^(bf16|ppcf128)$")
 
 
 def norm_type(text):
-    match = TYPE_RE.match(text)
-    if not match:
-        return text
-    lanes, _ptr, kind, bits = match.groups()
-    if kind == "p":
-        return f"v{lanes}p{bits}"
-    return f"v{lanes}{kind}{bits}"
+    """Canonical corpus type name: fixed/scalable vector, any scalar kind.
+
+    The pointer-width suffix is dropped here; ``parseCorpusLLT`` re-attaches it
+    from the target data layout.
+    """
+    core, sep, suffix = text.rpartition(":")
+    if not sep or not suffix.isdigit():
+        core = text
+    match = _VEC_RE.match(core)
+    if match:
+        return f"{match.group(1)}{int(match.group(2))}{norm_type(match.group(3))}"
+    match = _ELEM_RE.match(core)
+    if match:
+        if match.group(1):
+            return f"{match.group(1)}{int(match.group(2))}"
+        return match.group(3)
+    return text
 
 
 def type_shape(atom):

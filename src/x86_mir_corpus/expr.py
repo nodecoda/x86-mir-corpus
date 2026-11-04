@@ -84,56 +84,146 @@ class Unknown:
 
 
 # --- LLT helpers -----------------------------------------------------------
+#
+# The tuples mirror LLT's kinds, not just its printed spelling:
+#
+#   ("p", as)             pointer (size is target data layout, not here)
+#   ("s", bits)           Kind::ANY_SCALAR  (LLT::scalar)
+#   ("i", bits)           Kind::INTEGER     (LLT::integer, extended LLT)
+#   ("f", bits, semantics) Kind::FLOAT      (IEEE / bfloat / x87 / ppc)
+#   ("v", lanes, elem)    fixed vector
+#   ("nxv", lanes, elem)  scalable vector
+#
+# ``LLT::scalar(32)`` and ``LLT::integer(32)`` compare unequal when a target
+# enables extended LLT (AArch64 does: LLT::setUseExtended(true)), so the two
+# are separate kinds here as well.
+
+LLT_KINDS = ("p", "s", "i", "f", "v", "nxv")
 
 def ptr(as_=0):
-    return ("p", as_)
+    return ("p", int(as_))
 
 
 def scalar(bits):
-    return ("s", bits)
+    return ("s", int(bits))
+
+
+def integer(bits):
+    return ("i", int(bits))
+
+
+def float_(bits, semantics="ieee"):
+    return ("f", int(bits), semantics)
 
 
 def vec(lanes, elem):
-    return ("v", lanes, elem)
+    if isinstance(elem, int):
+        elem = scalar(elem)
+    return ("v", int(lanes), elem)
+
+
+def scalable_vec(lanes, elem):
+    if isinstance(elem, int):
+        elem = scalar(elem)
+    return ("nxv", int(lanes), elem)
+
+
+def element_count(kind, lanes):
+    return ("ec", kind, int(lanes))
 
 
 def is_llt(v):
-    return isinstance(v, tuple) and len(v) >= 2 and v[0] in ("p", "s", "v")
+    if not isinstance(v, tuple) or len(v) < 2 or v[0] not in LLT_KINDS:
+        return False
+    if v[0] in ("v", "nxv"):
+        return len(v) == 3 and is_llt(v[2])
+    if v[0] == "f":
+        return len(v) == 3
+    return len(v) == 2
+
+
+def is_ptr(t):
+    return t[0] == "p"
+
+
+def is_vec(t):
+    return t[0] in ("v", "nxv")
+
+
+def is_scalable(t):
+    return t[0] == "nxv"
+
+
+def is_float(t):
+    return t[0] == "f"
+
+
+def is_int(t):
+    """Integer-like scalar or vector element (ANY_SCALAR or INTEGER)."""
+    return t[0] in ("s", "i")
+
+
+def is_scalar(t):
+    """LLT::isScalar(): any-scalar, integer, or float -- never a pointer."""
+    return t[0] in ("s", "i", "f")
+
+
+def elem_type(t):
+    return t[2] if is_vec(t) else t
 
 
 def llt_name(t):
-    if t[0] == "p":
+    kind = t[0]
+    if kind == "p":
         return f"p{t[1]}"
-    if t[0] == "s":
+    if kind == "s":
         return f"s{t[1]}"
-    if t[0] == "v":
-        elem = t[2]
-        if elem[0] == "s":
-            return f"v{t[1]}s{elem[1]}"
-        return f"v{t[1]}p{elem[1]}"
+    if kind == "i":
+        return f"i{t[1]}"
+    if kind == "f":
+        bits, sem = t[1], t[2]
+        if sem == "bfloat":
+            return "bf16"
+        if sem == "x86":
+            return f"f{bits}"
+        if sem == "ppc":
+            return "ppcf128"
+        return f"f{bits}"
+    if kind in ("v", "nxv"):
+        return f"{kind}{t[1]}{llt_name(t[2])}"
     raise ExprError(f"bad LLT {t!r}")
 
 
-def llt_bits(t):
-    if t[0] == "s":
+def llt_bits(t, ptr_bits=0):
+    """LLT::getSizeInBits() as a plain integer (known-minimum for scalable)."""
+    if t[0] == "p":
+        return ptr_bits
+    if t[0] in ("s", "i", "f"):
         return t[1]
-    if t[0] == "v":
-        return t[1] * llt_bits(t[2])
-    return 0
+    if t[0] in ("v", "nxv"):
+        return t[1] * llt_bits(t[2], ptr_bits)
+    raise ExprError(f"bad LLT {t!r}")
 
 
 def llt_lanes(t):
-    return t[1] if t[0] == "v" else 1
+    return t[1] if is_vec(t) else 1
 
 
-def llt_scalar_bits(t):
-    if t[0] == "v":
-        return llt_bits(t[2])
+def llt_scalar_bits(t, ptr_bits=0):
+    """LLT::getScalarSizeInBits(); pointers resolve through the data layout."""
+    if t[0] == "p":
+        return ptr_bits
+    if is_vec(t):
+        return llt_scalar_bits(t[2], ptr_bits)
     return t[1]
 
 
 def llt_kind(t):
     return t[0]
+
+
+def llt_is_fixed_vector(t):
+    return t[0] == "v"
 
 
 # --- parser ----------------------------------------------------------------
@@ -452,38 +542,158 @@ def apply_binary(op, lhs, rhs):
     raise EvalError(f"unsupported operator {op}")
 
 
+def _llt_extended(env):
+    return bool(env.get("__llt_extended__", True))
+
+
+def _llt_vector(name, args):
+    lanes = int(args[0])
+    elem = args[1]
+    if not is_llt(elem):
+        elem = scalar(int(elem))
+    return scalable_vec(lanes, elem) if name == "LLT::scalable_vector" else vec(lanes, elem)
+
+
+def _float_like(bits, semantics, env):
+    """LLT float constructors honour LLT::getUseExtended() except bfloat/ppc/x87."""
+    if not _llt_extended(env) and semantics == "ieee":
+        return scalar(bits)
+    return float_(bits, semantics)
+
+
 def eval_call(node, env):
     name = node.name
-    if name in ("LLT::scalar", "LLT::pointer", "LLT::fixed_vector",
-                "LLT::scalable_vector"):
+    if name in ("LLT::scalar", "LLT::integer", "LLT::pointer",
+                "LLT::fixed_vector", "LLT::scalable_vector", "LLT::vector",
+                "LLT::scalarOrVector"):
         args = [eval_expr(a, env) for a in node.args]
         if name == "LLT::scalar":
             return scalar(int(args[0]))
+        if name == "LLT::integer":
+            return integer(int(args[0])) if _llt_extended(env) else scalar(int(args[0]))
         if name == "LLT::pointer":
             return ptr(int(args[0]))
-        lanes = int(args[0])
-        elem = args[1]
-        if is_llt(elem):
-            return vec(lanes, elem)
-        return vec(lanes, scalar(int(elem)))
+        if name == "LLT::scalarOrVector":
+            count, elem = args[0], args[1]
+            if isinstance(count, tuple) and len(count) == 3 and count[0] == "ec":
+                if count[1] == "fixed" and count[2] == 1:
+                    return elem if is_llt(elem) else scalar(int(elem))
+                if not is_llt(elem):
+                    elem = scalar(int(elem))
+                factory = scalable_vec if count[1] == "scalable" else vec
+                return factory(count[2], elem)
+            raise EvalError("scalarOrVector needs an ElementCount")
+        if name == "LLT::vector":
+            count, elem = args[0], args[1]
+            if isinstance(count, tuple) and len(count) == 3 and count[0] == "ec":
+                if not is_llt(elem):
+                    elem = scalar(int(elem))
+                factory = scalable_vec if count[1] == "scalable" else vec
+                return factory(count[2], elem)
+            return _llt_vector(name, args)
+        return _llt_vector(name, args)
+    if name in ("ElementCount::getFixed", "ElementCount::getScalable"):
+        args = [eval_expr(a, env) for a in node.args]
+        return element_count(name.rsplit("::", 1)[1].replace("get", "").lower(),
+                             int(args[0]))
+    if name in ("LLT::float16", "LLT::float32", "LLT::float64", "LLT::float128",
+                "LLT::bfloat16", "LLT::x86fp80", "LLT::ppcf128", "LLT::floatIEEE"):
+        bits = {"LLT::float16": 16, "LLT::float32": 32, "LLT::float64": 64,
+                "LLT::float128": 128, "LLT::bfloat16": 16, "LLT::x86fp80": 80,
+                "LLT::ppcf128": 128}[name]
+        if name == "LLT::floatIEEE":
+            bits = int(eval_expr(node.args[0], env))
+        elif name in ("LLT::bfloat16",):
+            return float_(16, "bfloat")
+        elif name == "LLT::x86fp80":
+            return float_(80, "x86")
+        elif name == "LLT::ppcf128":
+            return float_(128, "ppc")
+        return _float_like(bits, "ieee", env)
+    if name == "LLT::token":
+        return scalar(0)
     if name.startswith("Subtarget."):
         method = name.split(".", 1)[1]
         feats = env.get("__features__", {})
         if method in feats:
             return feats[method]
         raise EvalError(f"unknown Subtarget predicate {method}")
+    if name in ("Query.Types.__index__",):
+        raise EvalError("Query.Types.__index__ is not a value")
     if name.endswith(".getNumElements"):
         obj = env.get(name[:-len(".getNumElements")])
         if not is_llt(obj):
             raise EvalError(f"getNumElements on non-LLT {name}")
         return llt_lanes(obj)
+    if name.endswith(".getScalarSizeInBits"):
+        obj = env.get(name[:-len(".getScalarSizeInBits")])
+        if not is_llt(obj):
+            raise EvalError(f"getScalarSizeInBits on non-LLT {name}")
+        return llt_scalar_bits(obj, env.get("__pointer_bits__", 0))
     if name.endswith(".getSizeInBits"):
         obj = env.get(name[:-len(".getSizeInBits")])
         if not is_llt(obj):
             raise EvalError(f"getSizeInBits on non-LLT {name}")
-        return llt_bits(obj)
+        return llt_bits(obj, env.get("__pointer_bits__", 0))
+    if name.endswith(".getSizeInBytes"):
+        obj = env.get(name[:-len(".getSizeInBytes")])
+        if not is_llt(obj):
+            raise EvalError(f"getSizeInBytes on non-LLT {name}")
+        return llt_bits(obj, env.get("__pointer_bits__", 0)) // 8
+    if name.endswith(".getElementType"):
+        obj = env.get(name[:-len(".getElementType")])
+        if not is_llt(obj):
+            raise EvalError(f"getElementType on non-LLT {name}")
+        return elem_type(obj)
+    if name.endswith(".getElementCount"):
+        obj = env.get(name[:-len(".getElementCount")])
+        if not is_llt(obj):
+            raise EvalError(f"getElementCount on non-LLT {name}")
+        return element_count("scalable" if is_scalable(obj) else "fixed",
+                             llt_lanes(obj))
+    if name.endswith(".isScalar"):
+        obj = env.get(name[:-len(".isScalar")])
+        return is_llt(obj) and is_scalar(obj)
+    if name.endswith(".isVector"):
+        obj = env.get(name[:-len(".isVector")])
+        return is_llt(obj) and is_vec(obj)
+    if name.endswith(".isFixedVector"):
+        obj = env.get(name[:-len(".isFixedVector")])
+        return is_llt(obj) and llt_is_fixed_vector(obj)
+    if name.endswith(".isScalableVector"):
+        obj = env.get(name[:-len(".isScalableVector")])
+        return is_llt(obj) and is_scalable(obj)
+    if name.endswith(".isPointer"):
+        obj = env.get(name[:-len(".isPointer")])
+        return is_llt(obj) and is_ptr(obj)
     # A literal predicate call such as typeIs(0, s8) is not a value.
     raise EvalError(f"unsupported call {name}")
+
+
+def call_names(node):
+    """Every bare call name in *node* (lambda bodies stay opaque)."""
+    out = set()
+
+    def walk(value):
+        if isinstance(value, Call):
+            out.add(value.name)
+            for arg in value.args:
+                walk(arg)
+        elif isinstance(value, ListLit):
+            for item in value.items:
+                walk(item)
+        elif isinstance(value, Unary):
+            walk(value.x)
+        elif isinstance(value, Binary):
+            walk(value.left)
+            walk(value.right)
+        elif isinstance(value, Ternary):
+            walk(value.cond)
+            walk(value.then)
+            walk(value.other)
+
+    walk(node)
+    return out
 
 
 def truthy(v):

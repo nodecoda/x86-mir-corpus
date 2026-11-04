@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -12,6 +13,7 @@ from . import (
     baseline,
     corpusdiff,
     domain,
+    dsl,
     emit,
     llvm,
     mirrun,
@@ -84,9 +86,12 @@ def parse_input(args):
     text, source = load_source(args)
     features = target.CONFIGS[args.config]
     result = parse.parse_source(text, source, args.config, features)
-    if result.unknown_methods and not args.allow_opaque:
+    if (result.unknown_methods or result.unknown_predicates) and not args.allow_opaque:
         for method, line in result.unknown_methods:
             print(f"unknown chain method {method} at line {line}", file=sys.stderr)
+        for predicate, line in result.unknown_predicates:
+            print(f"unknown predicate {predicate} at line {line}",
+                  file=sys.stderr)
         raise SystemExit(2)
     return result, source
 
@@ -196,11 +201,16 @@ def _cross_revision_delta(args, result, oracle_revision, source):
     return delta
 
 
+_VEC_HEAD = re.compile(r"^(?:nxv|v)\d+")
+
+
 def _canonical_llt(name, pointer_bits):
     """Match the C++ witnessLLTName spelling: pointers carry their width."""
-    if name.startswith("p"):
-        return f"{name}:{pointer_bits}"
-    if name.startswith("v") and name.find("p") > 0:
+    core = name
+    head = _VEC_HEAD.match(name)
+    if head:
+        core = name[head.end():]
+    if re.fullmatch(r"p\d+", core):
         return f"{name}:{pointer_bits}"
     return name
 
@@ -523,13 +533,14 @@ def cmd_triage_verify(args):
 
 
 def cmd_pin_show(args):
-    doc = pin.load()
+    doc = pin.load(target=args.target)
     if doc is None:
         print("pin: missing or unreadable", file=sys.stderr)
         raise SystemExit(1)
     if args.json:
         print(json.dumps(doc, sort_keys=True))
         return
+    print(f"target:    {args.target}")
     print(f"revision:  {doc.get('revision')}")
     print(f"snapshot:  {doc.get('snapshot')}")
     print(f"sha256:    {doc.get('snapshot_sha256')}")
@@ -538,7 +549,7 @@ def cmd_pin_show(args):
 
 
 def cmd_pin_verify(args):
-    report = pin.verify(repo=args.repo)
+    report = pin.verify(repo=args.repo, target=args.target)
     if args.json:
         print(json.dumps(report, sort_keys=True))
     else:
@@ -552,11 +563,52 @@ def cmd_pin_verify(args):
 
 def cmd_pin_update(args):
     try:
-        changes = pin.update(args.repo, args.revision, dry_run=args.dry_run)
+        changes = pin.update(args.repo, args.revision, dry_run=args.dry_run,
+                             target=args.target)
     except RuntimeError as err:
         print(f"pin update failed: {err}", file=sys.stderr)
         raise SystemExit(2) from None
     print(json.dumps(changes, sort_keys=True))
+
+
+def cmd_dsl_verify(args):
+    report = dsl.verify(
+        llvm_src=args.llvm_src, repo=args.repo, revision=args.revision,
+        strict_source=args.strict_source)
+    if args.json:
+        print(json.dumps(report, sort_keys=True))
+    else:
+        for entry in report["checks"]:
+            status = "ok" if entry["ok"] else "FAIL"
+            print(f"{status:4s}  {entry['check']}")
+        counts = report.get("counts") or {}
+        if counts:
+            print("counts: " + ", ".join(
+                f"{key}={value}" for key, value in sorted(counts.items())))
+        print(f"dsl symbols: {'ok' if report['ok'] else 'not ok'}")
+    if not report["ok"]:
+        raise SystemExit(1)
+
+
+def cmd_dsl_report(args):
+    doc = dsl.load(args.table)
+    if args.json:
+        print(json.dumps(doc, sort_keys=True))
+        return
+    print("counts: " + ", ".join(
+        f"{key}={value}" for key, value in sorted(doc["counts"].items())))
+    print(f"revision: {doc.get('revision')}")
+    if args.methods:
+        print("methods:")
+        for entry in doc["methods"]:
+            slots = ",".join(entry["slot_args"]) or "-"
+            print(f"  {entry['name']:42s} {entry['kind']:15s} "
+                  f"{entry['domain']:8s} {entry['parser']:7s} {slots}")
+    if args.predicates:
+        print("predicates:")
+        for entry in doc["predicates"]:
+            print(f"  {entry['name']:42s} {entry['domain']:8s} "
+                  f"arity={entry['arity']}")
 
 
 def cmd_llvm_build(args):
@@ -596,6 +648,25 @@ def build_parser():
         sp.add_argument("--allow-coverage-gaps", action="store_true",
                         help="emit points despite unregistered coverage gaps "
                              "(inspection only)")
+
+    sp = sub.add_parser("dsl",
+                        help="inspect or verify the legalizer DSL symbol table")
+    dsl_sub = sp.add_subparsers(dest="dsl_cmd", required=True)
+    dp = dsl_sub.add_parser("verify", help="check the table against the headers")
+    dp.add_argument("--repo", default=os.environ.get("X86_MIR_LLVM_SRC"))
+    dp.add_argument("--llvm-src")
+    dp.add_argument("--revision", default=pin.default_source_rev(),
+                    help="git revision to read (default: the pinned commit)")
+    dp.add_argument("--strict-source", action="store_true",
+                    help="fail when the header hashes differ from the table")
+    dp.add_argument("--json", action="store_true")
+    dp.set_defaults(func=cmd_dsl_verify)
+    dp = dsl_sub.add_parser("report", help="print the symbol table")
+    dp.add_argument("--table", help="symbol table JSON (default: bundled)")
+    dp.add_argument("--methods", action="store_true")
+    dp.add_argument("--predicates", action="store_true")
+    dp.add_argument("--json", action="store_true")
+    dp.set_defaults(func=cmd_dsl_report)
 
     sp = sub.add_parser("baseline")
     baseline_sub = sp.add_subparsers(dest="baseline_cmd", required=True)
@@ -640,16 +711,19 @@ def build_parser():
     pin_sub = sp.add_subparsers(dest="pin_cmd", required=True)
 
     pp = pin_sub.add_parser("show", help="print the pinned revision")
+    pp.add_argument("--target", default="x86", choices=sorted(pin.TARGETS))
     pp.add_argument("--json", action="store_true")
     pp.set_defaults(func=cmd_pin_show)
 
     pp = pin_sub.add_parser("verify",
                             help="check the pin against snapshots and a checkout")
+    pp.add_argument("--target", default="x86", choices=sorted(pin.TARGETS))
     pp.add_argument("--repo", default=os.environ.get("X86_MIR_LLVM_SRC"))
     pp.add_argument("--json", action="store_true")
     pp.set_defaults(func=cmd_pin_verify)
 
     pp = pin_sub.add_parser("update", help="re-pin from an LLVM checkout")
+    pp.add_argument("--target", default="x86", choices=sorted(pin.TARGETS))
     pp.add_argument("--repo", default=os.environ.get("X86_MIR_LLVM_SRC"))
     pp.add_argument("--revision", default="upstream/main",
                     help="commit-ish to pin (default: upstream/main)")

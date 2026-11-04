@@ -1,0 +1,2609 @@
+{
+  "actions": [
+    {
+      "carries_type": false,
+      "name": "Legal"
+    },
+    {
+      "carries_type": true,
+      "name": "NarrowScalar"
+    },
+    {
+      "carries_type": true,
+      "name": "WidenScalar"
+    },
+    {
+      "carries_type": true,
+      "name": "FewerElements"
+    },
+    {
+      "carries_type": true,
+      "name": "MoreElements"
+    },
+    {
+      "carries_type": true,
+      "name": "Bitcast"
+    },
+    {
+      "carries_type": false,
+      "name": "Lower"
+    },
+    {
+      "carries_type": false,
+      "name": "Libcall"
+    },
+    {
+      "carries_type": false,
+      "name": "Custom"
+    },
+    {
+      "carries_type": false,
+      "name": "Unsupported"
+    }
+  ],
+  "counts": {
+    "actions": 10,
+    "llt": 17,
+    "methods": 66,
+    "mutations": 8,
+    "predicates": 34
+  },
+  "llt_constructors": [
+    {
+      "corpus_spelling": "bf16",
+      "kind": "bfloat",
+      "name": "bfloat16",
+      "source": "LowLevelType.h:164",
+      "syntax": true
+    },
+    {
+      "corpus_spelling": "v<lanes><elem>",
+      "kind": "vector",
+      "name": "fixed_vector",
+      "source": "LowLevelType.h:204",
+      "syntax": true
+    },
+    {
+      "corpus_spelling": "f128",
+      "kind": "float",
+      "name": "float128",
+      "source": "LowLevelType.h:191",
+      "syntax": true
+    },
+    {
+      "corpus_spelling": "f16",
+      "kind": "float",
+      "name": "float16",
+      "source": "LowLevelType.h:169",
+      "syntax": true
+    },
+    {
+      "corpus_spelling": "f32",
+      "kind": "float",
+      "name": "float32",
+      "source": "LowLevelType.h:174",
+      "syntax": true
+    },
+    {
+      "corpus_spelling": "f64",
+      "kind": "float",
+      "name": "float64",
+      "source": "LowLevelType.h:179",
+      "syntax": true
+    },
+    {
+      "corpus_spelling": null,
+      "kind": "float",
+      "name": "floatIEEE",
+      "source": "LowLevelType.h:145",
+      "syntax": false
+    },
+    {
+      "corpus_spelling": null,
+      "kind": "float",
+      "name": "floatingPoint",
+      "source": "LowLevelType.h:100",
+      "syntax": false
+    },
+    {
+      "corpus_spelling": "s<bits>",
+      "kind": "integer",
+      "name": "integer",
+      "source": "LowLevelType.h:93",
+      "syntax": true
+    },
+    {
+      "corpus_spelling": "p<as>:<bits>",
+      "kind": "pointer",
+      "name": "pointer",
+      "source": "LowLevelType.h:116",
+      "syntax": true
+    },
+    {
+      "corpus_spelling": "ppcf128",
+      "kind": "float",
+      "name": "ppcf128",
+      "source": "LowLevelType.h:197",
+      "syntax": true
+    },
+    {
+      "corpus_spelling": "nxv<lanes><elem>",
+      "kind": "scalable_vector",
+      "name": "scalable_vector",
+      "source": "LowLevelType.h:218",
+      "syntax": true
+    },
+    {
+      "corpus_spelling": "s<bits>",
+      "kind": "integer",
+      "name": "scalar",
+      "source": "LowLevelType.h:89",
+      "syntax": true
+    },
+    {
+      "corpus_spelling": "s|v<lanes><elem>",
+      "kind": "union",
+      "name": "scalarOrVector",
+      "source": "LowLevelType.h:230",
+      "syntax": true
+    },
+    {
+      "corpus_spelling": null,
+      "kind": "token",
+      "name": "token",
+      "source": "LowLevelType.h:110",
+      "syntax": false
+    },
+    {
+      "corpus_spelling": "v<lanes><elem>",
+      "kind": "vector",
+      "name": "vector",
+      "source": "LowLevelType.h:123",
+      "syntax": true
+    },
+    {
+      "corpus_spelling": "f80",
+      "kind": "float",
+      "name": "x86fp80",
+      "source": "LowLevelType.h:185",
+      "syntax": true
+    }
+  ],
+  "methods": [
+    {
+      "domain": "exact",
+      "kind": "action",
+      "name": "actionFor",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "action",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &actionFor(LegalizeAction Action, std::initializer_list<LLT> Types)"
+        },
+        {
+          "arity": 3,
+          "roles": [
+            "action",
+            "type_list",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet &actionFor(LegalizeAction Action, std::initializer_list<LLT> Types, LegalizeMutation Mutation)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "action",
+            "type_pair_list"
+          ],
+          "signature": "LegalizeRuleSet &actionFor(LegalizeAction Action, std::initializer_list<std::pair<LLT, LLT>> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "action",
+            "type_tuple_list"
+          ],
+          "signature": "LegalizeRuleSet & actionFor(LegalizeAction Action, std::initializer_list<std::tuple<LLT, LLT, LLT>> Types)"
+        },
+        {
+          "arity": 3,
+          "roles": [
+            "action",
+            "type_pair_list",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet &actionFor(LegalizeAction Action, std::initializer_list<std::pair<LLT, LLT>> Types, LegalizeMutation Mutation)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:483"
+    },
+    {
+      "domain": "exact",
+      "kind": "action",
+      "name": "actionForCartesianProduct",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "action",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &actionForCartesianProduct(LegalizeAction Action, std::initializer_list<LLT> Types)"
+        },
+        {
+          "arity": 3,
+          "roles": [
+            "action",
+            "type_list",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet & actionForCartesianProduct(LegalizeAction Action, std::initializer_list<LLT> Types0, std::initializer_list<LLT> Types1)"
+        },
+        {
+          "arity": 4,
+          "roles": [
+            "action",
+            "type_list",
+            "type_list",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &actionForCartesianProduct( LegalizeAction Action, std::initializer_list<LLT> Types0, std::initializer_list<LLT> Types1, std::initializer_list<LLT> Types2)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:543"
+    },
+    {
+      "domain": "exact",
+      "kind": "action",
+      "name": "actionForTypeWithAnyImm",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "action",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &actionForTypeWithAnyImm(LegalizeAction Action, std::initializer_list<LLT> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "action",
+            "type_pair_list"
+          ],
+          "signature": "LegalizeRuleSet &actionForTypeWithAnyImm( LegalizeAction Action, std::initializer_list<std::pair<LLT, LLT>> Types)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:526"
+    },
+    {
+      "domain": "exact",
+      "kind": "action",
+      "name": "actionIf",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "action",
+            "predicate"
+          ],
+          "signature": "LegalizeRuleSet &actionIf(LegalizeAction Action, LegalityPredicate Predicate)"
+        },
+        {
+          "arity": 3,
+          "roles": [
+            "action",
+            "predicate",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet &actionIf(LegalizeAction Action, LegalityPredicate Predicate, LegalizeMutation Mutation)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:469"
+    },
+    {
+      "domain": "exact",
+      "kind": "element_rule",
+      "name": "alignNumElementsTo",
+      "overloads": [
+        {
+          "arity": 3,
+          "roles": [
+            "slot",
+            "llt",
+            "size"
+          ],
+          "signature": "LegalizeRuleSet &alignNumElementsTo(unsigned TypeIdx, const LLT EltTy, unsigned NumElts)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1252"
+    },
+    {
+      "domain": "exact",
+      "kind": "legal",
+      "name": "alwaysLegal",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "LegalizeRuleSet &alwaysLegal()"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:681"
+    },
+    {
+      "domain": "opaque",
+      "kind": "mutation_rule",
+      "name": "bitcastIf",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet &bitcastIf(LegalityPredicate Predicate, LegalizeMutation Mutation)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:688"
+    },
+    {
+      "domain": "exact",
+      "kind": "element_rule",
+      "name": "clampMaxNumElements",
+      "overloads": [
+        {
+          "arity": 3,
+          "roles": [
+            "slot",
+            "llt",
+            "size"
+          ],
+          "signature": "LegalizeRuleSet &clampMaxNumElements(unsigned TypeIdx, const LLT EltTy, unsigned MaxElements)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1271"
+    },
+    {
+      "domain": "exact",
+      "kind": "element_rule",
+      "name": "clampMaxNumElementsStrict",
+      "overloads": [
+        {
+          "arity": 3,
+          "roles": [
+            "slot",
+            "llt",
+            "size"
+          ],
+          "signature": "LegalizeRuleSet &clampMaxNumElementsStrict(unsigned TypeIdx, const LLT EltTy, unsigned NumElts)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1315"
+    },
+    {
+      "domain": "exact",
+      "kind": "element_rule",
+      "name": "clampMinNumElements",
+      "overloads": [
+        {
+          "arity": 3,
+          "roles": [
+            "slot",
+            "llt",
+            "size"
+          ],
+          "signature": "LegalizeRuleSet &clampMinNumElements(unsigned TypeIdx, const LLT EltTy, unsigned MinElements)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1233"
+    },
+    {
+      "domain": "exact",
+      "kind": "element_rule",
+      "name": "clampNumElements",
+      "overloads": [
+        {
+          "arity": 3,
+          "roles": [
+            "slot",
+            "llt",
+            "llt"
+          ],
+          "signature": "LegalizeRuleSet &clampNumElements(unsigned TypeIdx, const LLT MinTy, const LLT MaxTy)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1295"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "clampScalar",
+      "overloads": [
+        {
+          "arity": 3,
+          "roles": [
+            "slot",
+            "llt",
+            "llt"
+          ],
+          "signature": "LegalizeRuleSet &clampScalar(unsigned TypeIdx, const LLT MinTy, const LLT MaxTy)"
+        },
+        {
+          "arity": 4,
+          "roles": [
+            "predicate",
+            "slot",
+            "llt",
+            "llt"
+          ],
+          "signature": "LegalizeRuleSet &clampScalar(bool Pred, unsigned TypeIdx, const LLT MinTy, const LLT MaxTy)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1138"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "clampScalarOrElt",
+      "overloads": [
+        {
+          "arity": 3,
+          "roles": [
+            "slot",
+            "llt",
+            "llt"
+          ],
+          "signature": "LegalizeRuleSet &clampScalarOrElt(unsigned TypeIdx, const LLT MinTy, const LLT MaxTy)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1152"
+    },
+    {
+      "domain": "exact",
+      "kind": "custom",
+      "name": "custom",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "LegalizeRuleSet &custom()"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:963"
+    },
+    {
+      "domain": "exact",
+      "kind": "custom",
+      "name": "customFor",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &customFor(std::initializer_list<LLT> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &customFor(bool Pred, std::initializer_list<LLT> Types)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "type_pair_list"
+          ],
+          "signature": "LegalizeRuleSet &customFor(std::initializer_list<std::pair<LLT, LLT>> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "type_pair_list"
+          ],
+          "signature": "LegalizeRuleSet &customFor(bool Pred, std::initializer_list<std::pair<LLT, LLT>> Types)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:911"
+    },
+    {
+      "domain": "exact",
+      "kind": "custom",
+      "name": "customForCartesianProduct",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &customForCartesianProduct(std::initializer_list<LLT> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "type_list",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet & customForCartesianProduct(std::initializer_list<LLT> Types0, std::initializer_list<LLT> Types1)"
+        },
+        {
+          "arity": 3,
+          "roles": [
+            "type_list",
+            "type_list",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet & customForCartesianProduct(std::initializer_list<LLT> Types0, std::initializer_list<LLT> Types1, std::initializer_list<LLT> Types2)"
+        },
+        {
+          "arity": 3,
+          "roles": [
+            "predicate",
+            "type_list",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet & customForCartesianProduct(bool Pred, std::initializer_list<LLT> Types0, std::initializer_list<LLT> Types1)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:932"
+    },
+    {
+      "domain": "exact",
+      "kind": "custom",
+      "name": "customIf",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "predicate"
+          ],
+          "signature": "LegalizeRuleSet &customIf(LegalityPredicate Predicate)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:905"
+    },
+    {
+      "domain": "opaque",
+      "kind": "mutation_rule",
+      "name": "fewerElementsIf",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet &fewerElementsIf(LegalityPredicate Predicate, LegalizeMutation Mutation)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:863"
+    },
+    {
+      "domain": "exact",
+      "kind": "helper",
+      "name": "getAlias",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "unsigned getAlias()"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:585"
+    },
+    {
+      "domain": "exact",
+      "kind": "helper",
+      "name": "immIdx",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "imm"
+          ],
+          "signature": "unsigned immIdx(unsigned ImmIdx)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:587"
+    },
+    {
+      "domain": "exact",
+      "kind": "legal",
+      "name": "legalFor",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &legalFor(std::initializer_list<LLT> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &legalFor(bool Pred, std::initializer_list<LLT> Types)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "type_pair_list"
+          ],
+          "signature": "LegalizeRuleSet &legalFor(std::initializer_list<std::pair<LLT, LLT>> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "type_pair_list"
+          ],
+          "signature": "LegalizeRuleSet &legalFor(bool Pred, std::initializer_list<std::pair<LLT, LLT>> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "type_tuple_list"
+          ],
+          "signature": "LegalizeRuleSet & legalFor(bool Pred, std::initializer_list<std::tuple<LLT, LLT, LLT>> Types)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:605"
+    },
+    {
+      "domain": "exact",
+      "kind": "legal",
+      "name": "legalForCartesianProduct",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &legalForCartesianProduct(std::initializer_list<LLT> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "type_list",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &legalForCartesianProduct(std::initializer_list<LLT> Types0, std::initializer_list<LLT> Types1)"
+        },
+        {
+          "arity": 3,
+          "roles": [
+            "type_list",
+            "type_list",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &legalForCartesianProduct(std::initializer_list<LLT> Types0, std::initializer_list<LLT> Types1, std::initializer_list<LLT> Types2)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:663"
+    },
+    {
+      "domain": "exact",
+      "kind": "legal",
+      "name": "legalForTypeWithAnyImm",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &legalForTypeWithAnyImm(std::initializer_list<LLT> Types)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "type_pair_list"
+          ],
+          "signature": "LegalizeRuleSet &legalForTypeWithAnyImm( std::initializer_list<std::pair<LLT, LLT>> Types)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:632"
+    },
+    {
+      "domain": "exact",
+      "kind": "legal",
+      "name": "legalForTypesWithMemDesc",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "predicate"
+          ],
+          "signature": "LegalizeRuleSet &legalForTypesWithMemDesc( std::initializer_list<LegalityPredicates::TypePairAndMemDesc> TypesAndMemDesc)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "predicate"
+          ],
+          "signature": "LegalizeRuleSet &legalForTypesWithMemDesc( bool Pred, std::initializer_list<LegalityPredicates::TypePairAndMemDesc> TypesAndMemDesc)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:645"
+    },
+    {
+      "domain": "exact",
+      "kind": "legal",
+      "name": "legalIf",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "predicate"
+          ],
+          "signature": "LegalizeRuleSet &legalIf(LegalityPredicate Predicate)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:598"
+    },
+    {
+      "domain": "exact",
+      "kind": "libcall",
+      "name": "libcall",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "LegalizeRuleSet &libcall()"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:769"
+    },
+    {
+      "domain": "exact",
+      "kind": "libcall",
+      "name": "libcallFor",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &libcallFor(std::initializer_list<LLT> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &libcallFor(bool Pred, std::initializer_list<LLT> Types)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "type_pair_list"
+          ],
+          "signature": "LegalizeRuleSet & libcallFor(std::initializer_list<std::pair<LLT, LLT>> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "type_pair_list"
+          ],
+          "signature": "LegalizeRuleSet & libcallFor(bool Pred, std::initializer_list<std::pair<LLT, LLT>> Types)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:784"
+    },
+    {
+      "domain": "exact",
+      "kind": "libcall",
+      "name": "libcallForCartesianProduct",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet & libcallForCartesianProduct(std::initializer_list<LLT> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "type_list",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet & libcallForCartesianProduct(std::initializer_list<LLT> Types0, std::initializer_list<LLT> Types1)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:802"
+    },
+    {
+      "domain": "exact",
+      "kind": "libcall",
+      "name": "libcallIf",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "predicate"
+          ],
+          "signature": "LegalizeRuleSet &libcallIf(LegalityPredicate Predicate)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:778"
+    },
+    {
+      "domain": "exact",
+      "kind": "lower",
+      "name": "lower",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "LegalizeRuleSet &lower()"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:697"
+    },
+    {
+      "domain": "exact",
+      "kind": "lower",
+      "name": "lowerFor",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &lowerFor(std::initializer_list<LLT> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "type_list",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet &lowerFor(std::initializer_list<LLT> Types, LegalizeMutation Mutation)"
+        },
+        {
+          "arity": 1,
+          "roles": [
+            "type_pair_list"
+          ],
+          "signature": "LegalizeRuleSet &lowerFor(std::initializer_list<std::pair<LLT, LLT>> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "type_pair_list"
+          ],
+          "signature": "LegalizeRuleSet &lowerFor(bool Pred, std::initializer_list<std::pair<LLT, LLT>> Types)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "type_pair_list",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet &lowerFor(std::initializer_list<std::pair<LLT, LLT>> Types, LegalizeMutation Mutation)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:723"
+    },
+    {
+      "domain": "exact",
+      "kind": "lower",
+      "name": "lowerForCartesianProduct",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "type_list",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &lowerForCartesianProduct(std::initializer_list<LLT> Types0, std::initializer_list<LLT> Types1)"
+        },
+        {
+          "arity": 3,
+          "roles": [
+            "type_list",
+            "type_list",
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &lowerForCartesianProduct(std::initializer_list<LLT> Types0, std::initializer_list<LLT> Types1, std::initializer_list<LLT> Types2)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:753"
+    },
+    {
+      "domain": "exact",
+      "kind": "lower",
+      "name": "lowerIf",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "predicate"
+          ],
+          "signature": "LegalizeRuleSet &lowerIf(LegalityPredicate Predicate)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet &lowerIf(LegalityPredicate Predicate, LegalizeMutation Mutation)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:706"
+    },
+    {
+      "domain": "exact",
+      "kind": "mem_rule",
+      "name": "lowerIfMemSizeNotByteSizePow2",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "LegalizeRuleSet &lowerIfMemSizeNotByteSizePow2()"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:900"
+    },
+    {
+      "domain": "exact",
+      "kind": "mem_rule",
+      "name": "lowerIfMemSizeNotPow2",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "LegalizeRuleSet &lowerIfMemSizeNotPow2()"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:892"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "maxScalar",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "llt"
+          ],
+          "signature": "LegalizeRuleSet &maxScalar(unsigned TypeIdx, const LLT Ty)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1111"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "maxScalarEltSameAsIf",
+      "overloads": [
+        {
+          "arity": 3,
+          "roles": [
+            "predicate",
+            "slot",
+            "slot"
+          ],
+          "signature": "LegalizeRuleSet &maxScalarEltSameAsIf(LegalityPredicate Predicate, unsigned TypeIdx, unsigned SmallTypeIdx)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [
+        "SmallTypeIdx",
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1206"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "maxScalarIf",
+      "overloads": [
+        {
+          "arity": 3,
+          "roles": [
+            "predicate",
+            "slot",
+            "llt"
+          ],
+          "signature": "LegalizeRuleSet &maxScalarIf(LegalityPredicate Predicate, unsigned TypeIdx, const LLT Ty)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1122"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "maxScalarOrElt",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "llt"
+          ],
+          "signature": "LegalizeRuleSet &maxScalarOrElt(unsigned TypeIdx, const LLT Ty)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1102"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "maxScalarSameAs",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "slot"
+          ],
+          "signature": "LegalizeRuleSet &maxScalarSameAs(unsigned TypeIdx, unsigned NarrowTypeIdx)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "NarrowTypeIdx",
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1170"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "minScalar",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "llt"
+          ],
+          "signature": "LegalizeRuleSet &minScalar(unsigned TypeIdx, const LLT Ty)"
+        },
+        {
+          "arity": 3,
+          "roles": [
+            "predicate",
+            "slot",
+            "llt"
+          ],
+          "signature": "LegalizeRuleSet &minScalar(bool Pred, unsigned TypeIdx, const LLT Ty)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1072"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "minScalarEltSameAsIf",
+      "overloads": [
+        {
+          "arity": 3,
+          "roles": [
+            "predicate",
+            "slot",
+            "slot"
+          ],
+          "signature": "LegalizeRuleSet &minScalarEltSameAsIf(LegalityPredicate Predicate, unsigned TypeIdx, unsigned LargeTypeIdx)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [
+        "LargeTypeIdx",
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1189"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "minScalarIf",
+      "overloads": [
+        {
+          "arity": 3,
+          "roles": [
+            "predicate",
+            "slot",
+            "llt"
+          ],
+          "signature": "LegalizeRuleSet &minScalarIf(LegalityPredicate Predicate, unsigned TypeIdx, const LLT Ty)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1086"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "minScalarOrElt",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "llt"
+          ],
+          "signature": "LegalizeRuleSet &minScalarOrElt(unsigned TypeIdx, const LLT Ty)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1030"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "minScalarOrEltIf",
+      "overloads": [
+        {
+          "arity": 3,
+          "roles": [
+            "predicate",
+            "slot",
+            "llt"
+          ],
+          "signature": "LegalizeRuleSet &minScalarOrEltIf(LegalityPredicate Predicate, unsigned TypeIdx, const LLT Ty)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1039"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "minScalarSameAs",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "slot"
+          ],
+          "signature": "LegalizeRuleSet &minScalarSameAs(unsigned TypeIdx, unsigned LargeTypeIdx)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "LargeTypeIdx",
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1158"
+    },
+    {
+      "domain": "opaque",
+      "kind": "mutation_rule",
+      "name": "moreElementsIf",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet &moreElementsIf(LegalityPredicate Predicate, LegalizeMutation Mutation)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:854"
+    },
+    {
+      "domain": "exact",
+      "kind": "element_rule",
+      "name": "moreElementsToNextPow2",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "slot"
+          ],
+          "signature": "LegalizeRuleSet &moreElementsToNextPow2(unsigned TypeIdx)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1225"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "narrowScalar",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet &narrowScalar(unsigned TypeIdx, LegalizeMutation Mutation)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1010"
+    },
+    {
+      "domain": "opaque",
+      "kind": "mutation_rule",
+      "name": "narrowScalarFor",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "type_pair_list",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet & narrowScalarFor(std::initializer_list<std::pair<LLT, LLT>> Types, LegalizeMutation Mutation)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:846"
+    },
+    {
+      "domain": "opaque",
+      "kind": "mutation_rule",
+      "name": "narrowScalarIf",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet &narrowScalarIf(LegalityPredicate Predicate, LegalizeMutation Mutation)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:837"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "scalarSameSizeAs",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "slot"
+          ],
+          "signature": "LegalizeRuleSet &scalarSameSizeAs(unsigned TypeIdx, unsigned SameSizeIdx)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "SameSizeIdx",
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1183"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "scalarize",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "slot"
+          ],
+          "signature": "LegalizeRuleSet &scalarize(unsigned TypeIdx)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1016"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "scalarizeIf",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "slot"
+          ],
+          "signature": "LegalizeRuleSet &scalarizeIf(LegalityPredicate Predicate, unsigned TypeIdx)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1022"
+    },
+    {
+      "domain": "exact",
+      "kind": "helper",
+      "name": "typeIdx",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "slot"
+          ],
+          "signature": "unsigned typeIdx(unsigned TypeIdx)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:442"
+    },
+    {
+      "domain": "exact",
+      "kind": "unsupported",
+      "name": "unsupported",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "LegalizeRuleSet &unsupported()"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:872"
+    },
+    {
+      "domain": "exact",
+      "kind": "unsupported",
+      "name": "unsupportedFor",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "type_list"
+          ],
+          "signature": "LegalizeRuleSet &unsupportedFor(std::initializer_list<LLT> Types)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:880"
+    },
+    {
+      "domain": "exact",
+      "kind": "unsupported",
+      "name": "unsupportedIf",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "predicate"
+          ],
+          "signature": "LegalizeRuleSet &unsupportedIf(LegalityPredicate Predicate)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:876"
+    },
+    {
+      "domain": "exact",
+      "kind": "unsupported",
+      "name": "unsupportedIfMemSizeNotPow2",
+      "overloads": [
+        {
+          "arity": 0,
+          "roles": [],
+          "signature": "LegalizeRuleSet &unsupportedIfMemSizeNotPow2()"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:884"
+    },
+    {
+      "domain": "opaque",
+      "kind": "mutation_rule",
+      "name": "widenScalarFor",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "type_list",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet &widenScalarFor(std::initializer_list<LLT> Types, LegalizeMutation Mutation)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "type_pair_list",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet & widenScalarFor(std::initializer_list<std::pair<LLT, LLT>> Types, LegalizeMutation Mutation)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:823"
+    },
+    {
+      "domain": "opaque",
+      "kind": "mutation_rule",
+      "name": "widenScalarIf",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "predicate",
+            "mutation"
+          ],
+          "signature": "LegalizeRuleSet &widenScalarIf(LegalityPredicate Predicate, LegalizeMutation Mutation)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": true,
+      "slot_args": [],
+      "source": "LegalizerInfo.h:814"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "widenScalarOrEltToNextPow2",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LegalizeRuleSet &widenScalarOrEltToNextPow2(unsigned TypeIdx, unsigned MinSize = 0)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:990"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "widenScalarOrEltToNextPow2OrMinSize",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LegalizeRuleSet &widenScalarOrEltToNextPow2OrMinSize(unsigned TypeIdx, unsigned MinSize = 0)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1000"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "widenScalarToNextMultipleOf",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LegalizeRuleSet &widenScalarToNextMultipleOf(unsigned TypeIdx, unsigned Size)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:980"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "widenScalarToNextPow2",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LegalizeRuleSet &widenScalarToNextPow2(unsigned TypeIdx, unsigned MinSize = 0)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:970"
+    },
+    {
+      "domain": "exact",
+      "kind": "scalar_rule",
+      "name": "widenVectorEltsToVectorMinSize",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LegalizeRuleSet &widenVectorEltsToVectorMinSize(unsigned TypeIdx, unsigned VectorSize)"
+        }
+      ],
+      "parser": "full",
+      "predicate_gated": false,
+      "slot_args": [
+        "TypeIdx"
+      ],
+      "source": "LegalizerInfo.h:1051"
+    }
+  ],
+  "mutations": [
+    {
+      "arity": 2,
+      "name": "changeElementCountTo",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalizeMutation changeElementCountTo(unsigned TypeIdx, unsigned FromTypeIdx)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "other"
+          ],
+          "signature": "LLVM_ABI LegalizeMutation changeElementCountTo(unsigned TypeIdx, ElementCount EC)"
+        }
+      ],
+      "source": "LegalizerInfo.h:355"
+    },
+    {
+      "arity": 2,
+      "name": "changeElementSizeTo",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalizeMutation changeElementSizeTo(unsigned TypeIdx, unsigned FromTypeIdx)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "llt"
+          ],
+          "signature": "LLVM_ABI LegalizeMutation changeElementSizeTo(unsigned TypeIdx, LLT NewTy)"
+        }
+      ],
+      "source": "LegalizerInfo.h:366"
+    },
+    {
+      "arity": 2,
+      "name": "changeElementTo",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalizeMutation changeElementTo(unsigned TypeIdx, unsigned FromTypeIdx)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "llt"
+          ],
+          "signature": "LLVM_ABI LegalizeMutation changeElementTo(unsigned TypeIdx, LLT Ty)"
+        }
+      ],
+      "source": "LegalizerInfo.h:347"
+    },
+    {
+      "arity": 2,
+      "name": "changeTo",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "llt"
+          ],
+          "signature": "LLVM_ABI LegalizeMutation changeTo(unsigned TypeIdx, LLT Ty)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalizeMutation changeTo(unsigned TypeIdx, unsigned FromTypeIdx)"
+        }
+      ],
+      "source": "LegalizerInfo.h:341"
+    },
+    {
+      "arity": 2,
+      "name": "moreElementsToNextPow2",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LLVM_ABI LegalizeMutation moreElementsToNextPow2(unsigned TypeIdx, unsigned Min = 0)"
+        }
+      ],
+      "source": "LegalizerInfo.h:386"
+    },
+    {
+      "arity": 1,
+      "name": "scalarize",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalizeMutation scalarize(unsigned TypeIdx)"
+        }
+      ],
+      "source": "LegalizerInfo.h:389"
+    },
+    {
+      "arity": 2,
+      "name": "widenScalarOrEltToNextMultipleOf",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LLVM_ABI LegalizeMutation widenScalarOrEltToNextMultipleOf(unsigned TypeIdx, unsigned Size)"
+        }
+      ],
+      "source": "LegalizerInfo.h:381"
+    },
+    {
+      "arity": 2,
+      "name": "widenScalarOrEltToNextPow2",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LLVM_ABI LegalizeMutation widenScalarOrEltToNextPow2(unsigned TypeIdx, unsigned Min = 0)"
+        }
+      ],
+      "source": "LegalizerInfo.h:376"
+    }
+  ],
+  "predicates": [
+    {
+      "arity": 1,
+      "domain": "exact",
+      "kind": "combinator",
+      "name": "all",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "predicate"
+          ],
+          "signature": "all"
+        }
+      ],
+      "roles": [
+        "predicate"
+      ],
+      "source": "LegalizerInfo.h:192"
+    },
+    {
+      "arity": 1,
+      "domain": "exact",
+      "kind": "combinator",
+      "name": "any",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "predicate"
+          ],
+          "signature": "any"
+        }
+      ],
+      "roles": [
+        "predicate"
+      ],
+      "source": "LegalizerInfo.h:205"
+    },
+    {
+      "arity": 2,
+      "domain": "opaque",
+      "kind": "predicate",
+      "name": "atomicOrderingAtLeastOrStrongerThan",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "mem",
+            "other"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate atomicOrderingAtLeastOrStrongerThan(unsigned MMOIdx, AtomicOrdering Ordering)"
+        }
+      ],
+      "roles": [
+        "mem",
+        "other"
+      ],
+      "source": "LegalizerInfo.h:327"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "elementTypeIs",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "llt"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate elementTypeIs(unsigned TypeIdx, LLT EltTy)"
+        }
+      ],
+      "roles": [
+        "llt",
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:258"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "immInSet",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "imm",
+            "size"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate immInSet(unsigned ImmIdx, std::initializer_list<int64_t> ImmsInit)"
+        }
+      ],
+      "roles": [
+        "imm",
+        "size"
+      ],
+      "source": "LegalizerInfo.h:333"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "immIs",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "imm",
+            "size"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate immIs(unsigned ImmIdx, int64_t Imm)"
+        }
+      ],
+      "roles": [
+        "imm",
+        "size"
+      ],
+      "source": "LegalizerInfo.h:331"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "immIsNot",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "imm",
+            "size"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate immIsNot(unsigned ImmIdx, int64_t Imm)"
+        }
+      ],
+      "roles": [
+        "imm",
+        "size"
+      ],
+      "source": "LegalizerInfo.h:336"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "isPointer",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate isPointer(unsigned TypeIdx)"
+        },
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "addr_space"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate isPointer(unsigned TypeIdx, unsigned AddrSpace)"
+        }
+      ],
+      "roles": [
+        "addr_space",
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:249"
+    },
+    {
+      "arity": 1,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "isPointerVector",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate isPointerVector(unsigned TypeIdx)"
+        }
+      ],
+      "roles": [
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:255"
+    },
+    {
+      "arity": 1,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "isScalar",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate isScalar(unsigned TypeIdx)"
+        }
+      ],
+      "roles": [
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:245"
+    },
+    {
+      "arity": 1,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "isVector",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate isVector(unsigned TypeIdx)"
+        }
+      ],
+      "roles": [
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:247"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "largerThan",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate largerThan(unsigned TypeIdx0, unsigned TypeIdx1)"
+        }
+      ],
+      "roles": [
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:308"
+    },
+    {
+      "arity": 1,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "memSizeInBytesNotPow2",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "mem"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate memSizeInBytesNotPow2(unsigned MMOIdx)"
+        }
+      ],
+      "roles": [
+        "mem"
+      ],
+      "source": "LegalizerInfo.h:316"
+    },
+    {
+      "arity": 1,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "memSizeNotByteSizePow2",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "mem"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate memSizeNotByteSizePow2(unsigned MMOIdx)"
+        }
+      ],
+      "roles": [
+        "mem"
+      ],
+      "source": "LegalizerInfo.h:320"
+    },
+    {
+      "arity": 1,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "numElementsNotPow2",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate numElementsNotPow2(unsigned TypeIdx)"
+        }
+      ],
+      "roles": [
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:324"
+    },
+    {
+      "arity": 1,
+      "domain": "exact",
+      "kind": "combinator",
+      "name": "predNot",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "predicate"
+          ],
+          "signature": "predNot"
+        }
+      ],
+      "roles": [
+        "predicate"
+      ],
+      "source": "LegalizerInfo.h:186"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "sameSize",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate sameSize(unsigned TypeIdx0, unsigned TypeIdx1)"
+        }
+      ],
+      "roles": [
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:304"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "scalarNarrowerThan",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate scalarNarrowerThan(unsigned TypeIdx, unsigned Size)"
+        }
+      ],
+      "roles": [
+        "size",
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:262"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "scalarOrEltNarrowerThan",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate scalarOrEltNarrowerThan(unsigned TypeIdx, unsigned Size)"
+        }
+      ],
+      "roles": [
+        "size",
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:270"
+    },
+    {
+      "arity": 1,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "scalarOrEltSizeNotPow2",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate scalarOrEltSizeNotPow2(unsigned TypeIdx)"
+        }
+      ],
+      "roles": [
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:298"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "scalarOrEltWiderThan",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate scalarOrEltWiderThan(unsigned TypeIdx, unsigned Size)"
+        }
+      ],
+      "roles": [
+        "size",
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:285"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "scalarWiderThan",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate scalarWiderThan(unsigned TypeIdx, unsigned Size)"
+        }
+      ],
+      "roles": [
+        "size",
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:266"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "sizeIs",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate sizeIs(unsigned TypeIdx, unsigned Size)"
+        }
+      ],
+      "roles": [
+        "size",
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:301"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "sizeNotMultipleOf",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate sizeNotMultipleOf(unsigned TypeIdx, unsigned Size)"
+        }
+      ],
+      "roles": [
+        "size",
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:290"
+    },
+    {
+      "arity": 1,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "sizeNotPow2",
+      "overloads": [
+        {
+          "arity": 1,
+          "roles": [
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate sizeNotPow2(unsigned TypeIdx)"
+        }
+      ],
+      "roles": [
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:294"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "smallerThan",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "slot"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate smallerThan(unsigned TypeIdx0, unsigned TypeIdx1)"
+        }
+      ],
+      "roles": [
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:312"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "typeInSet",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "type_list"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate typeInSet(unsigned TypeIdx, std::initializer_list<LLT> TypesInit)"
+        }
+      ],
+      "roles": [
+        "slot",
+        "type_list"
+      ],
+      "source": "LegalizerInfo.h:219"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "typeIs",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "llt"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate typeIs(unsigned TypeIdx, LLT TypesInit)"
+        }
+      ],
+      "roles": [
+        "llt",
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:217"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "typeIsNot",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "llt"
+          ],
+          "signature": "inline LegalityPredicate typeIsNot(unsigned TypeIdx, LLT Type)"
+        }
+      ],
+      "roles": [
+        "llt",
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:223"
+    },
+    {
+      "arity": 4,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "typePairAndMemDescInSet",
+      "overloads": [
+        {
+          "arity": 4,
+          "roles": [
+            "slot",
+            "slot",
+            "mem",
+            "mem_desc_list"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate typePairAndMemDescInSet( unsigned TypeIdx0, unsigned TypeIdx1, unsigned MMOIdx, std::initializer_list<TypePairAndMemDesc> TypesAndMemDescInit)"
+        }
+      ],
+      "roles": [
+        "mem",
+        "mem_desc_list",
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:241"
+    },
+    {
+      "arity": 3,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "typePairInSet",
+      "overloads": [
+        {
+          "arity": 3,
+          "roles": [
+            "slot",
+            "slot",
+            "type_pair_list"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate typePairInSet(unsigned TypeIdx0, unsigned TypeIdx1, std::initializer_list<std::pair<LLT, LLT>> TypesInit)"
+        }
+      ],
+      "roles": [
+        "slot",
+        "type_pair_list"
+      ],
+      "source": "LegalizerInfo.h:231"
+    },
+    {
+      "arity": 4,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "typeTupleInSet",
+      "overloads": [
+        {
+          "arity": 4,
+          "roles": [
+            "slot",
+            "slot",
+            "slot",
+            "type_tuple_list"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate typeTupleInSet(unsigned TypeIdx0, unsigned TypeIdx1, unsigned Type2, std::initializer_list<std::tuple<LLT, LLT, LLT>> TypesInit)"
+        }
+      ],
+      "roles": [
+        "slot",
+        "type_tuple_list"
+      ],
+      "source": "LegalizerInfo.h:236"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "vectorElementCountIsGreaterThan",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate vectorElementCountIsGreaterThan(unsigned TypeIdx, unsigned Size)"
+        }
+      ],
+      "roles": [
+        "size",
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:275"
+    },
+    {
+      "arity": 2,
+      "domain": "exact",
+      "kind": "predicate",
+      "name": "vectorElementCountIsLessThanOrEqualTo",
+      "overloads": [
+        {
+          "arity": 2,
+          "roles": [
+            "slot",
+            "size"
+          ],
+          "signature": "LLVM_ABI LegalityPredicate vectorElementCountIsLessThanOrEqualTo(unsigned TypeIdx, unsigned Size)"
+        }
+      ],
+      "roles": [
+        "size",
+        "slot"
+      ],
+      "source": "LegalizerInfo.h:280"
+    }
+  ],
+  "revision": "fed20e0e68323be32cb0fe8af679b8cb34e72112",
+  "schema": "mir-corpus-dsl-symbols",
+  "source_files": {
+    "llvm/include/llvm/CodeGen/GlobalISel/LegalizerInfo.h": "288aefbbaff0a054f05754cbea948b54004f2d631bfca27a5c20b43443354522",
+    "llvm/include/llvm/CodeGenTypes/LowLevelType.h": "370de9f9f67761cb5045418807f13afe7fec036672eae743e8e80ee8c79398d3"
+  },
+  "version": 1
+}

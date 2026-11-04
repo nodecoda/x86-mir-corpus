@@ -67,6 +67,8 @@ def ast_document(result, source):
         "aligns": sorted(result.aligns),
         "unknown_methods": [{"method": m, "line": line}
                             for m, line in result.unknown_methods],
+        "unknown_predicates": [{"predicate": p, "line": line}
+                               for p, line in result.unknown_predicates],
         "unknown_refs": [{"name": n, "line": line, "error": err}
                          for n, line, err in result.unknown_refs],
         "opaque_lambdas": result.opaque_lambdas,
