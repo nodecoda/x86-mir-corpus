@@ -511,7 +511,8 @@ def cmd_mir_run(args):
 def cmd_doctor(args):
     report = llvm.doctor(args.llvm_src, args.llvm_build,
                          args.sidecar_build,
-                         allow_unpinned=args.allow_unpinned)
+                         allow_unpinned=args.allow_unpinned,
+                         target=args.target)
     if args.json:
         print(json.dumps(report, sort_keys=True))
     else:
@@ -789,6 +790,9 @@ def build_parser():
     sp.add_argument("--sidecar-build")
     sp.add_argument("--json", action="store_true")
     sp.add_argument("--allow-unpinned", action="store_true")
+    sp.add_argument("--target", default="x86",
+                    choices=sorted(llvm.TARGET_NAMES),
+                    help="target whose LLVM backend must be available")
     sp.set_defaults(func=cmd_doctor)
 
     sp = sub.add_parser("pin",
@@ -825,6 +829,9 @@ def build_parser():
     dp.add_argument("--sidecar-build")
     dp.add_argument("--json", action="store_true")
     dp.add_argument("--allow-unpinned", action="store_true")
+    dp.add_argument("--target", default="x86",
+                    choices=sorted(llvm.TARGET_NAMES),
+                    help="target whose LLVM backend must be available")
     dp.set_defaults(func=cmd_doctor)
 
     bp = llvm_sub.add_parser("build")

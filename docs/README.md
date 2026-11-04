@@ -14,7 +14,8 @@
 | [PRODUCTIZATION.md](PRODUCTIZATION.md) | Quality bar, test determinism, baseline refresh |
 | [ANALYSIS-FAILED.md](ANALYSIS-FAILED.md) | Full-corpus `failed` analysis (2026-11-04) |
 | [ANALYSIS-CRASH.md](ANALYSIS-CRASH.md) | Full-corpus `crash` analysis: 12 assertion families (2026-11-04) |
-| [ANALYSIS-AARCH64-CRASH.md](ANALYSIS-AARCH64-CRASH.md) | AArch64 A2 crash triage and role-aware type contracts (2026-11-05) |
+| [AARCH64.md](AARCH64.md) | AArch64 scope, configs, evidence levels, witness/full results, known gaps |
+| [ANALYSIS-AARCH64-CRASH.md](ANALYSIS-AARCH64-CRASH.md) | AArch64 A2 crash triage, type contracts, type-arity fills, full-run findings (2026-11-05) |
 | [UPSTREAM-README.md](UPSTREAM-README.md) | Upstream-facing description of the tool |
 
 Start with `USAGE.md`; the evidence contract is the reference for anything

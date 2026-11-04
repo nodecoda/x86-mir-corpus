@@ -232,12 +232,17 @@ def check_provenance(llvm_src, provenance=None):
     return result
 
 
+TARGET_NAMES = {"x86": "X86", "aarch64": "AArch64"}
+
+
 def doctor(llvm_src=None, llvm_build=None, sidecar_build=None,
-           allow_unpinned=False):
+           allow_unpinned=False, target="x86"):
     src, build, sidecar = find_paths(llvm_src, llvm_build, sidecar_build)
     reasons = []
+    needed_target = TARGET_NAMES.get(target, target)
     report = {
         "schema": DOCTOR_SCHEMA,
+        "target": target,
         "version": DOCTOR_VERSION,
         "package_version": __version__,
         "python": {
@@ -266,7 +271,7 @@ def doctor(llvm_src=None, llvm_build=None, sidecar_build=None,
                 + ", ".join(item[:12] for item in supported)
                 + " (pass --allow-unpinned for an experimental build)")
 
-    pin_report = pin.verify(repo=src)
+    pin_report = pin.verify(repo=src, target=target)
     report["pin"] = pin_report
     if not pin_report["ok"]:
         reasons.append("pinned source snapshot is inconsistent: "
@@ -285,8 +290,9 @@ def doctor(llvm_src=None, llvm_build=None, sidecar_build=None,
         })
         if not info["assertions"]:
             reasons.append("LLVM build has assertions disabled")
-        if "X86" not in info["targets"]:
-            reasons.append("LLVM build does not include the X86 target")
+        if needed_target not in info["targets"]:
+            reasons.append(
+                f"LLVM build does not include the {needed_target} target")
 
     binaries = sidecar_binaries(sidecar)
     build_info = sidecar_build_info(sidecar)
@@ -313,9 +319,19 @@ def doctor(llvm_src=None, llvm_build=None, sidecar_build=None,
                 and _real(build_info["llvm_source_dir"]) != llvm_source_dir(src)):
             reasons.append("sidecar was built from a different LLVM source")
 
-    report["provenance"] = check_provenance(src)
-    if not report["provenance"]["ok"]:
-        reasons.extend(report["provenance"]["reasons"])
+    if target == "x86":
+        report["provenance"] = check_provenance(src)
+        if not report["provenance"]["ok"]:
+            reasons.extend(report["provenance"]["reasons"])
+    else:
+        # Only x86 has a frozen reference builder list; other targets are
+        # evidence-checked against the real legalizer in the driver.
+        report["provenance"] = {
+            "applicable": False,
+            "ok": True,
+            "reason": ("no frozen reference for this target; the driver runs "
+                       "the real legalizer"),
+        }
 
     report["schemas"] = {
         "corpus": f"{schemas.CORPUS_SCHEMA} v{schemas.CORPUS_VERSION}",
@@ -360,7 +376,7 @@ def build_sidecar(llvm_build, out, llvm_src=None, generator="Ninja",
     if proc.returncode != 0:
         raise SystemExit(proc.returncode)
     proc = subprocess.run(
-        [cmake, "--build", out, "--target", "x86-mir-oracle", "x86-mir-run"])
+        [cmake, "--build", out, "--target", "x86-mir-oracle", "mir-run"])
     if proc.returncode != 0:
         raise SystemExit(proc.returncode)
     return sidecar_binaries(out)

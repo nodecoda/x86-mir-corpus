@@ -69,3 +69,48 @@ jobs:
       - run: python -m unittest discover -s tests -p 'test_type_contract.py' -v
         env:
           X86_MIR_SIDECAR_BUILD: ${{ github.workspace }}/.build
+      - run: |
+          x86-mir-corpus mir-run \
+            --corpus tests/fixtures/aarch64-smoke.json \
+            --driver .build/x86-mir-run \
+            --rules production --jobs 2 --shard-size 10 \
+            --timeout 30 --max-steps 10000 \
+            --out /tmp/aarch64-smoke.report.json || test $? -eq 1
+          python - <<'PY'
+          import json
+          report = json.load(open("/tmp/aarch64-smoke.report.json"))
+          assert report["corpus"]["target"] == "aarch64", report["corpus"]
+          assert sum(report["counts"].values()) == report["atoms"]
+          print(report["counts"])
+          PY
+
+  aarch64-witness:
+    # Optional large job: regenerate and run the AArch64 A2 witness.  Enable by
+    # setting the X86_MIR_RUN_AARCH64_WITNESS repository variable.
+    if: ${{ vars.X86_MIR_RUN_AARCH64_WITNESS != '' }}
+    runs-on: [self-hosted, llvm]
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install .
+      - run: |
+          x86-mir-corpus llvm build \
+            --llvm-src "$X86_MIR_LLVM_SRC" \
+            --llvm-build "$X86_MIR_LLVM_BUILD" --out .build
+      - run: |
+          x86-mir-corpus corpus --target aarch64 --config A2 --tier witness \
+            --repo "$X86_MIR_LLVM_SRC" --allow-coverage-gaps --oracle=none \
+            --out /tmp/a64-witness.json
+          x86-mir-corpus mir-run --corpus /tmp/a64-witness.json \
+            --driver .build/x86-mir-run --rules production \
+            --jobs 8 --shard-size 300 --timeout 30 --max-steps 10000 \
+            --out /tmp/a64-witness.report.json
+          python - <<'PY'
+          import json
+          report = json.load(open("/tmp/a64-witness.report.json"))
+          counts = report["counts"]
+          assert report["a3"]["met"], report["a3"]
+          assert sum(counts.values()) == report["atoms"]
+          assert not any(counts[k] for k in ("crash", "hang", "budget", "not_run"))
+          print(counts)
+          PY

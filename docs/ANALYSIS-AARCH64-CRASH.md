@@ -189,9 +189,96 @@ All are construction contracts; none is a legalizer decision.
 - `fixedBits` and the contract pre-pass now guard `TypeSize` with
   `isVector() && isScalable()` before `getFixedValue()`.
 
-### Final A2 witness
+### A2 witness after the arity work
 
-13,854 atoms. `legalized 2,250` (up from 1,986: carry/mask shapes now
-construct), `failed 2,986`, `construction_mismatch 5,977`,
-`unbuildable 2,641`; `crash/budget/hang/not_run 0`; A3 `met`. Coverage is
-unchanged at 582/611 active rules verified, 37 exception rows, 0 unprobed.
+13,854 atoms. `legalized 2,250`, `failed 2,986`,
+`construction_mismatch 5,977`, `unbuildable 2,641`;
+`crash/budget/hang/not_run 0`; A3 `met`. Coverage is unchanged at 582/611
+active rules verified, 37 exception rows, 0 unprobed.  Round 4 tightened the
+contracts again; the final witnessed counts are there.
+
+## Round 4: A2 full and IR-shape contracts (P5, 2026-11-05)
+
+The A2 full corpus crosses every class-pair and the whole boundary panel per
+rule: **1,677,533 atoms** (classpair 1,074,619; boundary 600,916; rule 1,207;
+as 678; opcode 113).  The witness did not exercise these combinations, so the
+first full run surfaced 5,609 crashes.  None was a legalizer decision: every
+one was a shape no IR producer can form, plus scalable shapes the driver
+cannot construct.
+
+### Runner: pre-split shards
+
+Each driver invocation used to re-parse the whole corpus.  For 1.68M atoms the
+LLVM JSON DOM costs ~19 GB per process, so 8 jobs exceeded the machine.  The
+supervisor now writes a compact per-shard corpus (300 atoms) and passes
+`X86_LEGALIZER_MIR_INDEX_BASE` so markers keep their global index.  Peak
+supervisor RSS is 7.4 GB (from ~19 GB per driver), and the run takes 1:31 at
+8 jobs / shard 300.
+
+### Contracts added
+
+| Shape family | Contract |
+|---|---|
+| `G_SHL`/`G_LSHR`/`G_ASHR` | both operands the same integer type |
+| `G_CONCAT_VECTORS` | source and result share the element type; result has twice the lanes |
+| `G_INSERT_VECTOR_ELT` | `(dst:type0, src:type0, elt:type1, idx:type2)`; element is slot 0's element, index is a scalar integer |
+| `G_EXTRACT_VECTOR_ELT` | result is the vector's element, index is a scalar integer |
+| `G_BITCAST` | equal total bit width; no scalable/fixed mix |
+| `G_SHUFFLE_VECTOR` | result and source are the same vector type |
+| `G_FPTRUNC` | both float, result strictly narrower |
+| `G_VECREDUCE_SEQ_FADD`/`FMUL` | float result, same accumulator, vector of that element |
+| `G_CTLS` | integer lanes no wider than 64 bits |
+
+The whole table above is enforced only when the corpus declares target
+`aarch64` (`aarch64OnlyContract` in the driver); the x86 corpus keeps its
+pre-existing classifications, and the scalable list likewise has a frozen
+shared base plus an AArch64-only addition.
+
+Scalable construction stays unsupported for the opcodes whose lowering uses
+fixed-width geometry: `G_CONCAT_VECTORS`, `G_BITCAST`, `G_SHUFFLE_VECTOR`,
+`G_CTLZ`, `G_CTPOP`, `G_CTTZ`, `G_ROTR`, `G_CTLS`, `G_VECREDUCE_SEQ_*`, and the
+shifts.  These are `construction_mismatch` with the existing "scalable
+construction is not supported yet" reason, never crashes.
+`G_INSERT_VECTOR_ELT`/`G_EXTRACT_VECTOR_ELT` are no longer excluded: once the
+type contracts above fix the element/index types, scalable forms build and
+legalize or fail explicitly (8 atoms moved from `construction_mismatch` to
+`failed` in the full run, still zero crashes).
+
+### Real upstream finding (not constructor-fixable)
+
+`llvm.aarch64.neon.cls` requires a vector type at the IR level, so scalar
+`i128` G_CTLS is not IR-reachable (classified as `type_contract`).  The
+**vector** form is reachable and crashes the AArch64 GlobalISel legalizer on
+the pinned revision:
+
+```llvm
+define <2 x i128> @f(<2 x i128> %x) {
+  %r = call <2 x i128> @llvm.aarch64.neon.cls.v2i128(<2 x i128> %x)
+  ret <2 x i128> %r
+}
+```
+
+```text
+llc -global-isel -O0 -mtriple=aarch64
+# assertion/stack dump, exit 134
+```
+
+The corpus records scalar i128 as `type_contract`; the vector form is written
+up here for an upstream report rather than hidden in the corpus.
+
+### Final A2 full
+
+`legalized 20,737`, `failed 99,639` (unable-to-legalize 97,636 + libcall
+lowering disabled 2,003), `construction_mismatch 959,640` (`type_contract`
+633,983, `verifier` 318,421, `type_readback` 7,236), `unbuildable 597,517`;
+`crash/budget/hang/not_run 0`; A3 `met`.  Coverage is the same 582/611 active
+rules.  The digest is `corpora/aarch64/A2-full.report.json`; the 502 MB corpus
+and 432 MB points stay out of git.
+
+### Final A2 witness (re-measured)
+
+13,854 atoms: `legalized 2,205`, `failed 2,961`,
+`construction_mismatch 6,136` (`type_contract 4,857`, `verifier 1,047`,
+`type_readback 232`), `unbuildable 2,552`; `crash/budget/hang/not_run 0`; A3
+`met`.  The 159 atoms that moved out of `legalized`/`failed`/`unbuildable` are
+the IR-shape violations above, now classified before construction.

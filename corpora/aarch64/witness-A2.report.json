@@ -17,13 +17,13 @@
  },
  "counts": {
   "budget": 0,
-  "construction_mismatch": 5977,
+  "construction_mismatch": 6136,
   "crash": 0,
-  "failed": 2986,
+  "failed": 2961,
   "hang": 0,
-  "legalized": 2250,
+  "legalized": 2205,
   "not_run": 0,
-  "unbuildable": 2641
+  "unbuildable": 2552
  },
  "coverage": {
   "exceptions_config": "A2",
@@ -73,23 +73,23 @@
  },
  "detail_codes": {
   "construction_mismatch": {
-   "type_contract": 4296,
+   "type_contract": 4857,
    "type_readback": 232,
-   "verifier": 1449
+   "verifier": 1047
   },
   "failed": {
-   "unable_to_legalize": 2246,
+   "unable_to_legalize": 2221,
    "libcall_lowering_disabled": 740
   },
   "unbuildable": {
    "unbuildable_policy": 1440,
    "type_assignment_failed": 341,
    "immediate_rule": 676,
-   "shape_guard": 180,
+   "shape_guard": 91,
    "invalid_mem_operand": 4
   },
   "legalized": {
-   "ok": 2250
+   "ok": 2205
   }
  },
  "driver": {

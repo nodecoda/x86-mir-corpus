@@ -1,8 +1,9 @@
 # x86-mir-corpus
 
-Tooling for the X86 GlobalISel legalizer corpus: read the hand-written
-`X86LegalizerInfo.cpp`, emit a legality-point corpus, and drive real
-`MachineFunction` legalization through an external LLVM build.
+Tooling for the X86 and AArch64 GlobalISel legalizer corpus: read the
+hand-written `X86LegalizerInfo.cpp` / `AArch64LegalizerInfo.cpp`, emit a
+legality-point corpus, and drive real `MachineFunction` legalization through
+an external LLVM build.
 
 **This is not part of LLVM.**  It does not patch or fork llvm-project.  The
 Python package needs no third-party dependencies; the C++ sidecar links a
@@ -15,7 +16,8 @@ pinned LLVM build.
 - **Emit** witness/full/deep legality points and a schema-stable corpus.
 - **Fill expected actions** from the frozen `X86LegalizerInfoReference`
   (`x86-mir-oracle`) or from the legacy in-tree `X86Tests`.
-- **Run** every corpus atom through the real legalizer (`x86-mir-run`) and
+- **Run** every corpus atom through the real legalizer (`x86-mir-run`, shared
+  by both targets) and
   report one explicit outcome per atom: `legalized`, `failed`, `budget`,
   `crash`, `hang`, `construction_mismatch`, `unbuildable`, or `not_run`.
 - **Triage** crashes by assertion site and budgets by operand shape.
@@ -95,11 +97,37 @@ x86-mir-corpus mir-run --corpus /tmp/up-C2.json \
   --driver .build/x86-mir-run --out /tmp/report.json
 ```
 
+## AArch64
+
+The AArch64 profile parses the pinned `AArch64LegalizerInfo.cpp`, uses a
+quotient-derived boundary panel (fixed and scalable vectors, the `iN`/`sN`
+split, `bf16`/`f128`), and drives the same production legalizer:
+
+```bash
+x86-mir-corpus corpus --target aarch64 --config A2 --tier witness \
+  --repo "$X86_MIR_LLVM_SRC" --allow-coverage-gaps --oracle=none \
+  --out /tmp/a64-witness.json
+x86-mir-corpus mir-run --corpus /tmp/a64-witness.json \
+  --driver .build/x86-mir-run --rules production \
+  --jobs 8 --shard-size 300 --timeout 30 --max-steps 10000 \
+  --out /tmp/a64-witness.report.json
+x86-mir-corpus doctor --target aarch64 --json
+```
+
+The committed A2 witness is `corpora/aarch64/witness-A2.points.json`
+(13,854 atoms, A3 met).  See [docs/AARCH64.md](docs/AARCH64.md) for the
+evidence levels, coverage, type-arity fills, known gaps, and the full-run
+baseline.  AArch64 has no frozen reference oracle; it is a production-rule
+termination/constructibility corpus.
+
 ## Provenance
 
 - Pinned source snapshot: llvm-project `fed20e0e6832`, sha256 `79f23760...`
   (`src/x86_mir_corpus/assets/llvm-pin.json`; check with
   `x86-mir-corpus pin verify`).  The pin is a fixed commit, not a branch.
+- AArch64 pin: the same commit, snapshot
+  `fed20e0e-AArch64LegalizerInfo.cpp`
+  (`src/x86_mir_corpus/assets/aarch64-pin.json`).
 - Extract commit for the upstream corpus utilities: `8bc4cd96f4bb`
   (`SOURCE-COMMIT`).
 - Default C++ input: `fed20e0e-X86LegalizerInfo.cpp` (bundled with the wheel).

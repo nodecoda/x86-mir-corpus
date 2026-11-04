@@ -35,6 +35,7 @@ def main():
     rules = os.environ.get("X86_LEGALIZER_MIR_RULES", "production")
     max_steps = int(os.environ.get("X86_LEGALIZER_MIR_MAX_STEPS", "10000"))
     start_index = int(os.environ.get("X86_LEGALIZER_MIR_START_INDEX", "0"))
+    index_base = int(os.environ.get("X86_LEGALIZER_MIR_INDEX_BASE", "0"))
 
     with open(in_path, "r", encoding="utf-8") as handle:
         corpus = json.load(handle)
@@ -54,6 +55,7 @@ def main():
                 "rules": rules,
                 "max_steps": max_steps,
                 "start_index": start_index,
+                "base": index_base,
                 "args": sys.argv[1:],
             }, sort_keys=True) + "\n")
 
@@ -85,7 +87,7 @@ def main():
             sys.stderr.write("Assertion failed: before start\n")
             sys.stderr.flush()
             os.kill(os.getpid(), signal.SIGABRT)
-        emit({"event": "start", "id": atom_id, "index": pos})
+        emit({"event": "start", "id": atom_id, "index": index_base + pos})
         if action in ("normal", "budget", "budget_abort", "segv", "abort",
                       "exit_nonzero", "slow_legalize"):
             emit({"event": "constructed"})
@@ -101,7 +103,7 @@ def main():
             event = {
                 "event": "outcome",
                 "id": atom_id,
-                "index": pos,
+                "index": index_base + pos,
                 "opcode": atom.get("opcode"),
                 "outcome": plan.get("outcome", "legalized"),
                 "steps": plan.get("steps", 1),
@@ -311,11 +313,14 @@ class MirRunTest(unittest.TestCase):
         self.assertTrue(all(atom["outcome"] == "legalized"
                             for atom in report["atoms"]))
         trace = self.read_trace()
+        # Pre-split shards are self-contained corpus files, so each driver
+        # invocation sees shard 0/1; the supervisor owns the partitioning.
         self.assertEqual([entry["shard"] for entry in trace],
-                         ["0/3", "1/3", "2/3"])
+                         ["0/1", "0/1", "0/1"])
         self.assertEqual([entry["ids"] for entry in trace],
-                         [["atom/0", "atom/3"], ["atom/1", "atom/4"],
-                          ["atom/2"]])
+                         [["atom/0", "atom/1"], ["atom/2", "atom/3"],
+                          ["atom/4"]])
+        self.assertEqual([entry["base"] for entry in trace], [0, 2, 4])
         expected_args = ["--gtest_also_run_disabled_tests",
                          "--gtest_filter=*RunCorpusThroughLegalizer"]
         self.assertTrue(all(entry["args"] == expected_args
@@ -443,7 +448,10 @@ class MirRunTest(unittest.TestCase):
             expected=1)
         trace = self.read_trace()
         self.assertEqual(len(trace), 2)
-        self.assertEqual([entry["start_index"] for entry in trace], [0, 2])
+        # Each invocation reads a fresh shard file; the global position is
+        # carried by INDEX_BASE, not by a skip offset.
+        self.assertEqual([entry["start_index"] for entry in trace], [0, 0])
+        self.assertEqual([entry["base"] for entry in trace], [0, 2])
         self.assertEqual(trace[1]["ids"], ["atom/2", "atom/3", "atom/4"])
         self.assertEqual(
             [(atom["id"], atom["outcome"]) for atom in report["atoms"]],
@@ -459,7 +467,7 @@ class MirRunTest(unittest.TestCase):
             expected=1)
         trace = self.read_trace()
         self.assertEqual(len(trace), 2)
-        self.assertEqual([entry["start_index"] for entry in trace], [0, 2])
+        self.assertEqual([entry["base"] for entry in trace], [0, 2])
         self.assertEqual(self.report_atom(report, "atom/1")["outcome"],
                          "crash")
         self.assertEqual(self.report_atom(report, "atom/1")["detail_code"],

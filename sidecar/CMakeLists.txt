@@ -92,3 +92,7 @@ target_link_libraries(x86-mir-smoke PRIVATE
 target_compile_definitions(x86-mir-smoke PRIVATE ${LLVM_DEFINITIONS})
 target_compile_options(x86-mir-smoke PRIVATE
   ${X86_MIR_ASSERT_FLAGS} -fno-rtti -Wall -Wextra)
+
+# Product name for the corpus driver.  The historical x86-mir-* targets stay
+# available; use ``--target mir-run`` in new scripts.
+add_custom_target(mir-run DEPENDS x86-mir-run)

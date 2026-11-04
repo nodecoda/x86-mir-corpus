@@ -1,5 +1,5 @@
 {
- "atom_count": 22,
+ "atom_count": 39,
  "atoms": [
   {
    "config": "A2",
@@ -311,6 +311,250 @@
    },
    "rule_index": null,
    "rule_set": "contract"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/22/G_SHL",
+   "opcode": "G_SHL",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "v16i8",
+     "v2i64"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_SHL"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/23/G_SHL",
+   "opcode": "G_SHL",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "v16i8",
+     "v16i8"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_SHL"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/24/G_CONCAT_VECTORS",
+   "opcode": "G_CONCAT_VECTORS",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "v16i8",
+     "v2f32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_CONCAT_VECTORS"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/25/G_CONCAT_VECTORS",
+   "opcode": "G_CONCAT_VECTORS",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "v16i8",
+     "v8i8"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_CONCAT_VECTORS"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/26/G_INSERT_VECTOR_ELT",
+   "opcode": "G_INSERT_VECTOR_ELT",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "v16i8",
+     "s8",
+     "v16i8"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_INSERT_VECTOR_ELT"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/27/G_INSERT_VECTOR_ELT",
+   "opcode": "G_INSERT_VECTOR_ELT",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "v16i8",
+     "i8",
+     "s64"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_INSERT_VECTOR_ELT"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/28/G_EXTRACT_VECTOR_ELT",
+   "opcode": "G_EXTRACT_VECTOR_ELT",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "s8",
+     "v16i8",
+     "v16i8"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_EXTRACT_VECTOR_ELT"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/29/G_EXTRACT_VECTOR_ELT",
+   "opcode": "G_EXTRACT_VECTOR_ELT",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "i8",
+     "v16i8",
+     "s64"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_EXTRACT_VECTOR_ELT"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/30/G_BITCAST",
+   "opcode": "G_BITCAST",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "v16i8",
+     "v8i8"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_BITCAST"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/31/G_BITCAST",
+   "opcode": "G_BITCAST",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "v16i8",
+     "v8i16"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_BITCAST"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/32/G_SHUFFLE_VECTOR",
+   "opcode": "G_SHUFFLE_VECTOR",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "v16i8",
+     "v8i8"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_SHUFFLE_VECTOR"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/34/G_FPTRUNC",
+   "opcode": "G_FPTRUNC",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "bf16",
+     "i64"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_FPTRUNC"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/35/G_FPTRUNC",
+   "opcode": "G_FPTRUNC",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "f32",
+     "f64"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_FPTRUNC"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/36/G_VECREDUCE_SEQ_FADD",
+   "opcode": "G_VECREDUCE_SEQ_FADD",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "f32",
+     "s32",
+     "v4f32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_VECREDUCE_SEQ_FADD"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/37/G_VECREDUCE_SEQ_FADD",
+   "opcode": "G_VECREDUCE_SEQ_FADD",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "f32",
+     "f32",
+     "v4f32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_VECREDUCE_SEQ_FADD"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/38/G_CTLS",
+   "opcode": "G_CTLS",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "i128",
+     "i128"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_CTLS"
+  },
+  {
+   "config": "A2",
+   "id": "a64-contract/39/G_CTLS",
+   "opcode": "G_CTLS",
+   "origin": "contract",
+   "query": {
+    "types": [
+     "i32",
+     "i32"
+    ]
+   },
+   "rule_index": null,
+   "rule_set": "AArch64_CTLS"
   }
  ],
  "config": "A2",
@@ -341,7 +585,24 @@
   "a64-contract/18/G_ATOMIC_CMPXCHG_WITH_SUCCESS": "type_contract",
   "a64-contract/19/G_BUILD_VECTOR_TRUNC": "type_contract",
   "a64-contract/20/G_VECTOR_COMPRESS": "type_contract",
-  "a64-contract/21/G_FCOPYSIGN": "type_contract"
+  "a64-contract/21/G_FCOPYSIGN": "type_contract",
+  "a64-contract/22/G_SHL": "type_contract",
+  "a64-contract/23/G_SHL": "legal",
+  "a64-contract/24/G_CONCAT_VECTORS": "type_contract",
+  "a64-contract/25/G_CONCAT_VECTORS": "legal",
+  "a64-contract/26/G_INSERT_VECTOR_ELT": "type_contract",
+  "a64-contract/27/G_INSERT_VECTOR_ELT": "legal",
+  "a64-contract/28/G_EXTRACT_VECTOR_ELT": "type_contract",
+  "a64-contract/29/G_EXTRACT_VECTOR_ELT": "legal",
+  "a64-contract/30/G_BITCAST": "type_contract",
+  "a64-contract/31/G_BITCAST": "legal",
+  "a64-contract/32/G_SHUFFLE_VECTOR": "type_contract",
+  "a64-contract/34/G_FPTRUNC": "type_contract",
+  "a64-contract/35/G_FPTRUNC": "legal",
+  "a64-contract/36/G_VECREDUCE_SEQ_FADD": "type_contract",
+  "a64-contract/37/G_VECREDUCE_SEQ_FADD": "legal",
+  "a64-contract/38/G_CTLS": "type_contract",
+  "a64-contract/39/G_CTLS": "legal"
  },
  "schema": "llvm-x86-legalizer-cpp-corpus",
  "version": 2

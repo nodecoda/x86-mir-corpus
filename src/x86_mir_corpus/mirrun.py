@@ -261,6 +261,22 @@ def resolve_driver(build=None, driver=None):
         "MIR driver not found (tried: " + ", ".join(candidates) + ")")
 
 
+def _write_shard_corpus(path, doc, remaining):
+    """Write a compact corpus containing only ``remaining`` atoms.
+
+    The wrapper (config, features, coverage) is copied so the driver's
+    validation sees the same corpus identity; only ``atoms``/``atom_count``
+    change.  Compact JSON keeps a 300-atom shard well under a megabyte.
+    """
+    shard_doc = dict(doc)
+    shard_doc["atoms"] = [atom for _, atom in remaining]
+    shard_doc["atom_count"] = len(remaining)
+    with open(path, "w", encoding="utf-8") as handle:
+        json.dump(shard_doc, handle, separators=(",", ":"),
+                  ensure_ascii=False)
+        handle.write("\n")
+
+
 def _write_json(path, obj):
     directory = os.path.dirname(os.path.abspath(path))
     if directory:
@@ -607,12 +623,38 @@ def _pointer_bits(config, target=targets.DEFAULT):
     return CONFIG_POINTER_BITS.get(config)
 
 
-def is_known_family(atom, config=None, target=targets.DEFAULT):
-    """True for the BUILD_VECTOR MoreElements family tracked by A3.
+_AARCH64_FAMILIES = None
 
-    Only X86 has a known A3 family today; other targets report every anomaly
-    as a new finding until their own family list is reviewed.
+
+def aarch64_known_families():
+    """Reviewed A3 families for AArch64, loaded once from the baseline asset.
+
+    The first review (2026-11-05) found no livelock or crash family: the A2
+    witness has ``crash/budget/hang/not_run = 0``.  The asset is the seam for
+    adding one; every anomaly is a new finding while it stays empty.
     """
+    global _AARCH64_FAMILIES
+    if _AARCH64_FAMILIES is None:
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                            "assets", "aarch64-baseline-witness.json")
+        try:
+            with open(path, encoding="utf-8") as handle:
+                doc = json.load(handle)
+            _AARCH64_FAMILIES = frozenset(doc.get("known_families") or ())
+        except (OSError, ValueError, AttributeError):
+            _AARCH64_FAMILIES = frozenset()
+    return _AARCH64_FAMILIES
+
+
+def is_known_family(atom, config=None, target=targets.DEFAULT):
+    """True for a rule set the target's A3 baseline already accounts for.
+
+    X86 has the reviewed BUILD_VECTOR MoreElements family.  AArch64 reads its
+    reviewed list from ``assets/aarch64-baseline-witness.json``; while that
+    list is empty every anomaly is reported as a new finding.
+    """
+    if target == "aarch64":
+        return atom.get("rule_set") in aarch64_known_families()
     if target != "x86":
         return False
     if atom.get("rule_set") != "X86_BUILD_VECTOR":
@@ -862,17 +904,21 @@ def exit_code(report, only_atom=None):
 def partition_shards(atoms, shard_count):
     """Assign global atom positions to shards in one pass.
 
-    Bucket ``n`` holds the ``(position, atom)`` pairs whose global position is
-    congruent to ``n`` modulo ``shard_count``.  Empty buckets are retained so
-    callers can derive shard indices by enumeration rather than rescanning the
-    corpus once per shard.
+    Bucket ``n`` holds a contiguous ``(position, atom)`` slice.  Contiguous
+    slices let the supervisor hand each driver a small corpus file instead of
+    every driver re-parsing the whole corpus (a 1.7M-atom A2 full corpus costs
+    ~19 GB of JSON DOM per process).  Empty buckets are retained so callers
+    can derive shard indices by enumeration.
     """
     if shard_count < 1:
         raise ValueError("shard_count must be positive")
-    buckets = [[] for _ in range(shard_count)]
-    for pos, atom in enumerate(atoms):
-        buckets[pos % shard_count].append((pos, atom))
-    return buckets
+    indexed = list(enumerate(atoms))
+    size = max(1, math.ceil(len(indexed) / shard_count))
+    buckets = [indexed[start:start + size]
+               for start in range(0, len(indexed), size)]
+    while len(buckets) < shard_count:
+        buckets.append([])
+    return buckets[:shard_count]
 
 
 def _discard_placeholders_after_anomaly(results):
@@ -905,15 +951,16 @@ def _merge_invocation_results(merged, results):
         merged[index] = result
 
 
-def run_shard_with_resume(binary, corpus_path, out_path, rules, max_steps,
+def run_shard_with_resume(binary, doc, tmp, out_path, rules, max_steps,
                           shard_index, shard_count, timeout, shard_atoms):
     """Run one shard, restarting after each anomaly while atoms remain.
 
-    The driver skips global indices below ``X86_LEGALIZER_MIR_START_INDEX``.
-    After an invocation, results beyond the last non-``not_run`` atom are
-    retried from that point.  Restarts are capped at ``len(shard_atoms) + 1``;
-    if no atom advances, the remaining atoms stay ``not_run`` for an honest
-    report instead of looping.
+    Each invocation gets a corpus file holding only the atoms still to run,
+    plus ``X86_LEGALIZER_MIR_INDEX_BASE`` so the driver's markers keep the
+    original global index.  After an invocation, results beyond the last
+    non-``not_run`` atom are retried from that point.  Restarts are capped at
+    ``len(shard_atoms) + 1``; if no atom advances, the remaining atoms stay
+    ``not_run`` for an honest report instead of looping.
     """
     merged = {}
     warnings = []
@@ -928,10 +975,13 @@ def run_shard_with_resume(binary, corpus_path, out_path, rules, max_steps,
                      if pos >= start_index]
         if not remaining:
             break
+        shard_corpus = os.path.join(
+            tmp, f"shard-{shard_index}-{restarts}.json")
+        _write_shard_corpus(shard_corpus, doc, remaining)
         shard = _run_shard(
-            binary, corpus_path, out_path, rules, max_steps, shard_index,
-            shard_count, timeout * 6 if grace_timeout else timeout, remaining,
-            start_index=start_index)
+            binary, shard_corpus, out_path, rules, max_steps, 0,
+            1, timeout * 6 if grace_timeout else timeout, remaining,
+            start_index=0, index_base=remaining[0][0])
         warnings.extend(shard["warnings"])
         if shard["summary"] is not None:
             summaries.append(shard["summary"])
@@ -977,7 +1027,8 @@ def run_shard_with_resume(binary, corpus_path, out_path, rules, max_steps,
 
 
 def _run_shard(binary, corpus_path, out_path, rules, max_steps, shard_index,
-               shard_count, timeout, shard_atoms, start_index=0):
+               shard_count, timeout, shard_atoms, start_index=0,
+               index_base=0):
     env = os.environ.copy()
     env.update({
         "X86_LEGALIZER_MIR_CORPUS_IN": os.path.abspath(corpus_path),
@@ -986,6 +1037,7 @@ def _run_shard(binary, corpus_path, out_path, rules, max_steps, shard_index,
         "X86_LEGALIZER_MIR_SHARD": f"{shard_index}/{shard_count}",
         "X86_LEGALIZER_MIR_RULES": rules,
         "X86_LEGALIZER_MIR_START_INDEX": str(start_index),
+        "X86_LEGALIZER_MIR_INDEX_BASE": str(index_base),
     })
     stderr_path = out_path + ".stderr"
     for path in (out_path, stderr_path):
@@ -1107,7 +1159,7 @@ def run(corpus_path, out_path, build=None, driver=None, rules="production",
             def run_spec(spec):
                 shard_index, shard_atoms, shard_out = spec
                 return run_shard_with_resume(
-                    binary, corpus_path, shard_out, rules, max_steps,
+                    binary, doc, tmp, shard_out, rules, max_steps,
                     shard_index, shard_count, timeout, shard_atoms)
 
             if jobs == 1 or len(specs) <= 1:

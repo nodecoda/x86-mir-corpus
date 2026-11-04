@@ -2,7 +2,7 @@
  "schema": "llvm-x86-legalizer-cpp-corpus",
  "version": 1,
  "config": "C2",
- "comment": "Regression fixture for the generic-opcode type contract check in x86-mir-run.  The first twelve atoms are the representatives of the twelve assertion families found in the 208,851-atom C2 baseline: the driver must report construction_mismatch/type_contract instead of aborting.  The remaining atoms are contract-valid controls (including i100 and vector carry) and must not be rejected.",
+ "comment": "Regression fixture for the generic-opcode type contract check in x86-mir-run.  The first twelve atoms are the representatives of the twelve assertion families found in the 208,851-atom C2 baseline: the driver must report construction_mismatch/type_contract instead of aborting.  The last four atoms pin the AArch64-only IR-shape contracts off for x86 (G_FPTRUNC/G_CONCAT_VECTORS with integer types keep their pre-existing classifications).  The remaining atoms are contract-valid controls (including i100 and vector carry) and must not be rejected.",
  "expectations": {
   "cpp/X86_UADDE/G_UADDE/boundary/312": "type_contract",
   "cpp/X86_CTLZ/G_CTLZ/boundary/301": "type_contract",
@@ -38,9 +38,13 @@
   "UADDE_v4s32_v4s1_valid": "legal",
   "UADDO_v4s32_v4s1_valid": "legal",
   "USUBE_v4s32_v4s1_valid": "legal",
-  "USUBO_v4s32_v4s1_valid": "legal"
+  "USUBO_v4s32_v4s1_valid": "legal",
+  "x86_G_CONCAT_VECTORS_v64s8_v16s8_legal": "legal",
+  "x86_G_CONCAT_VECTORS_s129_s32_legal": "legal",
+  "x86_G_FPTRUNC_s32_s64_legal": "legal",
+  "x86_G_FPTRUNC_s24_s32_legal": "legal"
  },
- "atom_count": 35,
+ "atom_count": 39,
  "atoms": [
   {
    "id": "cpp/X86_UADDE/G_UADDE/boundary/312",
@@ -385,6 +389,46 @@
     "types": [
      "v4s32",
      "v4s1"
+    ]
+   }
+  },
+  {
+   "id": "x86_G_CONCAT_VECTORS_v64s8_v16s8_legal",
+   "opcode": "G_CONCAT_VECTORS",
+   "query": {
+    "types": [
+     "v64s8",
+     "v16s8"
+    ]
+   }
+  },
+  {
+   "id": "x86_G_CONCAT_VECTORS_s129_s32_legal",
+   "opcode": "G_CONCAT_VECTORS",
+   "query": {
+    "types": [
+     "s129",
+     "s32"
+    ]
+   }
+  },
+  {
+   "id": "x86_G_FPTRUNC_s32_s64_legal",
+   "opcode": "G_FPTRUNC",
+   "query": {
+    "types": [
+     "s32",
+     "s64"
+    ]
+   }
+  },
+  {
+   "id": "x86_G_FPTRUNC_s24_s32_legal",
+   "opcode": "G_FPTRUNC",
+   "query": {
+    "types": [
+     "s24",
+     "s32"
     ]
    }
   }

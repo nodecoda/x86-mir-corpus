@@ -1,0 +1,116 @@
+{
+ "a3": {
+  "coverage_gaps": 0,
+  "exempt": false,
+  "known_anomalies": 0,
+  "known_atoms": 0,
+  "met": true,
+  "new_findings": 0,
+  "status": "met"
+ },
+ "atoms": 1677533,
+ "config": "A2",
+ "corpus": {
+  "committed": false,
+  "path": "corpora/aarch64/A2-full.json",
+  "points_path": "corpora/aarch64/A2-full.points.json",
+  "sha256": "d1f0e8f8e71817c01412816799307ca75217c4e6edaa73a3ae7f6abd20473ccc",
+  "points_sha256": "d1ef3af4debe44f210ef8888e9fcce74b4843880cb06c90be3659778998d5217",
+  "note": "502 MB shapes+atoms; not committed. Regenerate with the corpus command in docs/AARCH64.md; the report is reproducible with mir-run."
+ },
+ "counts": {
+  "budget": 0,
+  "construction_mismatch": 959640,
+  "crash": 0,
+  "failed": 99639,
+  "hang": 0,
+  "legalized": 20737,
+  "not_run": 0,
+  "unbuildable": 597517
+ },
+ "coverage": {
+  "exceptions_config": "A2",
+  "rules_active": 611,
+  "rules_excepted": 37,
+  "rules_inactive": [
+   {
+    "arg": "! HasCSSC , { { s32 , s32 } , { s64 , s64 } }",
+    "first_match": null,
+    "kind": "unknown",
+    "method": "customFor",
+    "reason": "feature predicate false",
+    "rule_index": 2,
+    "rule_set": "AArch64_CTPOP"
+   },
+   {
+    "arg": "! HasCSSC , { s32 , s64 }",
+    "first_match": null,
+    "kind": "unknown",
+    "method": "customFor",
+    "reason": "feature predicate false",
+    "rule_index": 5,
+    "rule_set": "AArch64_CTTZ"
+   },
+   {
+    "arg": "UseOutlineAtomics , { { s8 , p0 } , { s16 , p0 } , { s32 , p0 } , { s64 , p0 } , { s128 , p0 } }",
+    "first_match": null,
+    "kind": "unknown",
+    "method": "libcallFor",
+    "reason": "feature predicate false",
+    "rule_index": 2,
+    "rule_set": "AArch64_ATOMIC_CMPXCHG"
+   },
+   {
+    "arg": "UseOutlineAtomics , { { s8 , p0 } , { s16 , p0 } , { s32 , p0 } , { s64 , p0 } }",
+    "first_match": null,
+    "kind": "unknown",
+    "method": "libcallFor",
+    "reason": "feature predicate false",
+    "rule_index": 1,
+    "rule_set": "AArch64_ATOMICRMW_XCHG"
+   }
+  ],
+  "rules_source_total": 616,
+  "rules_unprobed": 0,
+  "rules_verified": 582
+ },
+ "detail_codes": {
+  "construction_mismatch": {
+   "type_contract": 633983,
+   "type_readback": 7236,
+   "verifier": 318421
+  },
+  "failed": {
+   "unable_to_legalize": 97636,
+   "libcall_lowering_disabled": 2003
+  },
+  "unbuildable": {
+   "unbuildable_policy": 48358,
+   "type_assignment_failed": 157472,
+   "immediate_rule": 29694,
+   "invalid_mem_operand": 233022,
+   "shape_guard": 128971
+  },
+  "legalized": {
+   "ok": 20737
+  }
+ },
+ "driver": {
+  "jobs": 8,
+  "max_steps": 10000,
+  "rules": "production",
+  "shard_size": 300,
+  "timeout_s": 30,
+  "note": "crash/hang/budget/not_run all zero. Each driver invocation reads a pre-split 300-atom corpus file; the supervisor carries the global index via X86_LEGALIZER_MIR_INDEX_BASE."
+ },
+ "measurements": {
+  "wall_seconds": 90.9,
+  "supervisor_peak_rss_mb": 7391,
+  "atoms": 1677533,
+  "note": "8 jobs, shard 300, assertions build; supervisor peak RSS includes the full in-memory report."
+ },
+ "schema": "llvm-legalizer-mir-run-summary",
+ "target": "aarch64",
+ "tier": "full",
+ "version": 1
+}

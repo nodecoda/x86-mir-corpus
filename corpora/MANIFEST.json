@@ -4,15 +4,15 @@
   "config": "A2",
   "counts": {
    "budget": 0,
-   "construction_mismatch": 5977,
+   "construction_mismatch": 6136,
    "crash": 0,
-   "failed": 2986,
+   "failed": 2961,
    "hang": 0,
-   "legalized": 2250,
+   "legalized": 2205,
    "not_run": 0,
-   "unbuildable": 2641
+   "unbuildable": 2552
   },
-  "note": "13,854 atoms; crash/hang/budget/not_run all zero. 582/611 active rules verified, 37 pipeline_unreachable coverage rows excepted, 0 unprobed. Opcode type-arity fills close shape_arity (16 -> 0); the 7 remaining declared-but-unreachable rules are reported as shape_arity_unreachable. Points file is committed; the report is reproducible with mir-run.",
+  "note": "13,854 atoms; crash/hang/budget/not_run all zero. 582/611 active rules verified, 37 pipeline_unreachable coverage rows excepted, 0 unprobed. Opcode type-arity fills close shape_arity (16 -> 0); 7 declared-but-unreachable rules are reported as shape_arity_unreachable. The report is reproducible with mir-run; the full A2 run lives in aarch64_full_a2.",
   "points_path": "corpora/aarch64/witness-A2.points.json",
   "points_sha256": "cdc84aa47e7b53e2997230947fbe24f2bf333c58c9f27d3d3eef05afc44e6bfa",
   "report_path": "corpora/aarch64/witness-A2.report.json",
@@ -248,5 +248,28 @@
    "points_sha256": "5b6fd865694da565f795d09a4bfd4882de263eb96359026854c7a85c30f5499f",
    "source_rev": "fed20e0e68323be32cb0fe8af679b8cb34e72112"
   }
+ },
+ "aarch64_full_a2": {
+  "atoms": 1677533,
+  "committed": false,
+  "config": "A2",
+  "counts": {
+   "budget": 0,
+   "construction_mismatch": 959640,
+   "crash": 0,
+   "failed": 99639,
+   "hang": 0,
+   "legalized": 20737,
+   "not_run": 0,
+   "unbuildable": 597517
+  },
+  "note": "A2 full: 1,677,533 atoms over the same 582/611 verified rules; crash/hang/budget/not_run all zero, A3 met. 502 MB corpus / 432 MB points are gitignored; regenerate with docs/AARCH64.md and compare against the committed report digest. 1:31 wall at 8 jobs / shard 300; supervisor peak RSS 7.4 GB.",
+  "path": "corpora/aarch64/A2-full.json",
+  "points_path": "corpora/aarch64/A2-full.points.json",
+  "points_sha256": "d1ef3af4debe44f210ef8888e9fcce74b4843880cb06c90be3659778998d5217",
+  "report_path": "corpora/aarch64/A2-full.report.json",
+  "sha256": "d1f0e8f8e71817c01412816799307ca75217c4e6edaa73a3ae7f6abd20473ccc",
+  "target": "aarch64",
+  "tier": "full"
  }
 }

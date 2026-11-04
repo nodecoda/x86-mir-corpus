@@ -136,6 +136,18 @@ class KnownFamilyTest(unittest.TestCase):
     def test_aarch64_has_no_known_family_yet(self):
         self.assertFalse(mirrun.is_known_family(
             self.build_vector_atom(), "A2", "aarch64"))
+        self.assertEqual(mirrun.aarch64_known_families(), frozenset())
+
+    def test_aarch64_reviewed_family_asset_is_the_seam(self):
+        atom = dict(self.build_vector_atom(), rule_set="AArch64_ADD")
+        saved = mirrun._AARCH64_FAMILIES
+        try:
+            mirrun._AARCH64_FAMILIES = frozenset({"AArch64_ADD"})
+            self.assertTrue(mirrun.is_known_family(atom, "A2", "aarch64"))
+            self.assertFalse(mirrun.is_known_family(
+                self.build_vector_atom(), "A2", "aarch64"))
+        finally:
+            mirrun._AARCH64_FAMILIES = saved
 
 
 class ReportTargetTest(unittest.TestCase):

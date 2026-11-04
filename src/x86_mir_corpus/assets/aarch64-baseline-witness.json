@@ -1,0 +1,9 @@
+{
+  "schema": "llvm-legalizer-a3-families",
+  "version": 1,
+  "target": "aarch64",
+  "reviewed": "2026-11-05",
+  "revision": "fed20e0e68323be32cb0fe8af679b8cb34e72112",
+  "known_families": [],
+  "note": "First A3 review for AArch64. The A2 witness (13,854 atoms) runs with crash/budget/hang/not_run = 0, so no livelock or crash family is known. While known_families is empty, mirrun reports every anomaly as a new finding. Add a rule_set only after root-causing the anomaly and pinning an atom-level predicate in is_known_family."
+}

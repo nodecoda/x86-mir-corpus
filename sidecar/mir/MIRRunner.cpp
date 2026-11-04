@@ -101,6 +101,19 @@ unsigned long parseMaxSteps() {
   return Steps;
 }
 
+/// First global atom index emitted by this invocation.  The supervisor
+/// pre-splits large corpora into per-shard files; the base restores the
+/// original index in markers and outcomes.
+unsigned parseIndexBase() {
+  const char *Value = std::getenv("X86_LEGALIZER_MIR_INDEX_BASE");
+  if (!Value || !*Value)
+    return 0;
+  unsigned Index = 0;
+  if (StringRef(Value).getAsInteger(10, Index))
+    infraError(Twine("invalid X86_LEGALIZER_MIR_INDEX_BASE: ") + Value);
+  return Index;
+}
+
 unsigned long parseStartIndex() {
   const char *Value = std::getenv("X86_LEGALIZER_MIR_START_INDEX");
   if (!Value || !*Value)
@@ -269,6 +282,24 @@ enum class SlotCheck {
   BuildVectorTrunc,
   /// Every slot a vector of the same shape (G_VECTOR_COMPRESS).
   AllVectorsSameShape,
+  /// Slots 0 and 1 are the same integer type (G_SHL/G_LSHR/G_ASHR).
+  SameTypeBinary,
+  /// G_CONCAT_VECTORS: slot 0 doubles slot 1's shape with the same element.
+  ConcatVectors,
+  /// G_INSERT_VECTOR_ELT: slot 0 vector, slot 1 scalar index, slot 2 element.
+  InsertVectorElt,
+  /// G_EXTRACT_VECTOR_ELT: slot 0 element, slot 1 vector, slot 2 index.
+  ExtractVectorElt,
+  /// G_BITCAST: equal total bit width; no scalable/fixed mix.
+  Bitcast,
+  /// G_SHUFFLE_VECTOR: slots 0 and 1 are the same vector type.
+  ShuffleVector,
+  /// G_FPTRUNC: both float, slot 0 strictly narrower than slot 1.
+  FloatTrunc,
+  /// G_VECREDUCE_SEQ_FADD/FMUL: float result, same accumulator, vector input.
+  VecReduceSeq,
+  /// G_CTLS: int result/source up to 64 bits per lane.
+  CtlS,
 };
 
 struct SlotRule {
@@ -380,6 +411,28 @@ const SlotRule FcopysignRules[] = {{0, SlotCheck::Float, "result"},
                                    {1, SlotCheck::ShapeOf0, "source"}};
 const SlotRule VectorCompressRules[] = {
     {0, SlotCheck::AllVectorsSameShape, "result and operands"}};
+const SlotRule SameTypeBinaryRules[] = {
+    {0, SlotCheck::SameTypeBinary, "operands"}};
+const SlotRule ConcatVectorsRules[] = {{0, SlotCheck::ConcatVectors,
+                                        "result and sources"}};
+const SlotRule InsertVectorEltRules[] = {
+    {0, SlotCheck::InsertVectorElt, "vector, index, element"}};
+const SlotRule ExtractVectorEltRules[] = {
+    {0, SlotCheck::ExtractVectorElt, "element, vector, index"}};
+const SlotRule BitcastRules[] = {{0, SlotCheck::Bitcast, "result and source"}};
+const SlotRule ShuffleVectorRules[] = {{0, SlotCheck::ShuffleVector,
+                                        "result and sources"}};
+const SlotRule FloatTruncRules[] = {{0, SlotCheck::FloatTrunc,
+                                     "result and source"}};
+const SlotRule VecReduceSeqRules[] = {{0, SlotCheck::VecReduceSeq,
+                                       "result, accumulator, input"}};
+const SlotRule CtlSRules[] = {{0, SlotCheck::CtlS, "result and source"}};
+
+/// Set from the corpus target before the first atom.  AArch64 full runs
+/// generate cross-slot shapes that the x86 corpus historically treated as
+/// legal, so IR-shape tightening must stay target-scoped to keep the frozen
+/// X86 behaviour unchanged.
+static StringRef ContractTarget = "x86";
 
 const OpcodeContract Contracts[] = {
     {"G_UADDE", CarryRules},      {"G_UADDO", CarryRules},
@@ -396,8 +449,16 @@ const OpcodeContract Contracts[] = {
     {"G_UDIV", IntegerOnlyRules}, {"G_SREM", IntegerOnlyRules},
     {"G_UREM", IntegerOnlyRules}, {"G_AND", IntegerOnlyRules},
     {"G_OR", IntegerOnlyRules},   {"G_XOR", IntegerOnlyRules},
-    {"G_SHL", IntegerOnlyRules},  {"G_LSHR", IntegerOnlyRules},
-    {"G_ASHR", IntegerOnlyRules}, {"G_ABS", IntegerOnlyRules},
+    {"G_SHL", SameTypeBinaryRules}, {"G_LSHR", SameTypeBinaryRules},
+    {"G_ASHR", SameTypeBinaryRules}, {"G_ABS", IntegerOnlyRules},
+    {"G_CONCAT_VECTORS", ConcatVectorsRules},
+    {"G_INSERT_VECTOR_ELT", InsertVectorEltRules},
+    {"G_EXTRACT_VECTOR_ELT", ExtractVectorEltRules},
+    {"G_BITCAST", BitcastRules},
+    {"G_SHUFFLE_VECTOR", ShuffleVectorRules},
+    {"G_FPTRUNC", FloatTruncRules},
+    {"G_VECREDUCE_SEQ_FADD", VecReduceSeqRules},
+    {"G_VECREDUCE_SEQ_FMUL", VecReduceSeqRules},
     {"G_SADDSAT", IntegerOnlyRules}, {"G_UADDSAT", IntegerOnlyRules},
     {"G_SSUBSAT", IntegerOnlyRules}, {"G_USUBSAT", IntegerOnlyRules},
     {"G_SSHLSAT", IntegerOnlyRules}, {"G_USHLSAT", IntegerOnlyRules},
@@ -405,7 +466,7 @@ const OpcodeContract Contracts[] = {
     {"G_SCMP", IntegerOnlyRules},  {"G_UCMP", IntegerOnlyRules},
     {"G_ABDS", AbdsRules},         {"G_ABDU", AbdsRules},
     {"G_BITREVERSE", UnaryIntRules}, {"G_UMULH", UnaryIntRules},
-    {"G_SMULH", UnaryIntRules},    {"G_CTLS", UnaryIntRules},
+    {"G_SMULH", UnaryIntRules},    {"G_CTLS", CtlSRules},
     {"G_ROTL", FunnelShiftRules},  {"G_ROTR", FunnelShiftRules},
     {"G_FSHL", FunnelShiftRules},
     {"G_FSHR", FunnelShiftRules},  {"G_FLDEXP", FloatExponentRules},
@@ -441,6 +502,8 @@ const OpcodeContract Contracts[] = {
 /// Scalable vectors whose legalizer path uses fixed-width geometry today.
 /// Every name here was observed aborting in the A2 witness triage; remove a
 /// name only after the corresponding path survives a re-run, not before.
+/// The base list is shared with x86 and frozen; AArch64 additions are
+/// target-scoped so x86 classifications stay byte-identical.
 bool scalableConstructible(StringRef Opcode) {
   static const StringLiteral Unsupported[] = {
       "G_ABDS", "G_ABDU", "G_ABS", "G_BITREVERSE", "G_BUILD_VECTOR",
@@ -463,9 +526,20 @@ bool scalableConstructible(StringRef Opcode) {
       "G_VECREDUCE_SMIN", "G_VECREDUCE_UMAX", "G_VECREDUCE_UMIN",
       "G_VECREDUCE_XOR",
   };
+  /// Added while triaging the AArch64 witness.  Not applied to x86: the x86
+  /// corpus (and its frozen report) predates these exclusions.
+  static const StringLiteral Aarch64Unsupported[] = {
+      "G_BITCAST", "G_CONCAT_VECTORS", "G_CTLZ", "G_CTPOP", "G_CTTZ",
+      "G_ROTR", "G_SHL", "G_ASHR", "G_LSHR", "G_VECREDUCE_SEQ_FADD",
+      "G_VECREDUCE_SEQ_FMUL", "G_SHUFFLE_VECTOR",
+  };
   for (StringRef Name : Unsupported)
     if (Name == Opcode)
       return false;
+  if (ContractTarget == "aarch64")
+    for (StringRef Name : Aarch64Unsupported)
+      if (Name == Opcode)
+        return false;
   return true;
 }
 
@@ -481,6 +555,21 @@ bool opcodeAllowsPointer(StringRef Name) {
          Name == "G_FREEZE" || Name == "G_BITCAST" ||
          Name == "G_PHI" || Name == "G_VAARG" || Name == "G_VASTART" ||
          Name == "G_DYN_STACKALLOC" || Name == "G_ALLOCA";
+}
+
+/// Contracts added for the AArch64 IR-shape work.  The x86 corpus was built
+/// against an older table and its frozen report must not move, so these are
+/// only enforced when the corpus declares target aarch64.
+bool aarch64OnlyContract(StringRef Opcode) {
+  static const StringLiteral Names[] = {
+      "G_CONCAT_VECTORS", "G_INSERT_VECTOR_ELT", "G_EXTRACT_VECTOR_ELT",
+      "G_BITCAST",         "G_SHUFFLE_VECTOR",     "G_FPTRUNC",
+      "G_VECREDUCE_SEQ_FADD", "G_VECREDUCE_SEQ_FMUL", "G_CTLS",
+  };
+  for (StringRef Name : Names)
+    if (Name == Opcode)
+      return true;
+  return false;
 }
 
 /// Returns a stable reason when the atom's types violate the opcode contract.
@@ -503,6 +592,8 @@ std::optional<std::string> checkTypeContract(
   }
   for (const OpcodeContract &Contract : Contracts) {
     if (Contract.Name != Opcode)
+      continue;
+    if (ContractTarget != "aarch64" && aarch64OnlyContract(Contract.Name))
       continue;
     for (const SlotRule &Rule : Contract.Rules) {
       if (Rule.Check == SlotCheck::AllInt) {
@@ -760,6 +851,157 @@ std::optional<std::string> checkTypeContract(
                                  "a vector with slot 0's shape", Ty);
         break;
       }
+      case SlotCheck::SameTypeBinary: {
+        if (!isIntLike(Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "an integer or integer vector", Ty);
+        if (Rule.Index + 1 >= Types.size())
+          return "type contract: binary op has no second operand";
+        if (ContractTarget != "aarch64")
+          break;
+        if (!sameType(Types[Rule.Index + 1], Ty))
+          return contractFailure(Rule.Index + 1, "operand",
+                                 "the same type as slot 0",
+                                 Types[Rule.Index + 1]);
+        break;
+      }
+      case SlotCheck::ConcatVectors: {
+        if (!Ty.isVector())
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a vector result", Ty);
+        if (Rule.Index + 1 >= Types.size())
+          return "type contract: concat needs a source vector";
+        const LLT &Src = Types[Rule.Index + 1];
+        if (!Src.isVector() || !sameElementType(Ty, Src))
+          return contractFailure(Rule.Index + 1, "source",
+                                 "a vector of the result's element type",
+                                 Src);
+        if (Ty.isScalable() != Src.isScalable())
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a result with the source's scalable-ness",
+                                 Ty);
+        if (!Ty.isScalable() &&
+            Ty.getNumElements() != 2 * Src.getNumElements())
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a result with twice the source's lanes", Ty);
+        break;
+      }
+      case SlotCheck::InsertVectorElt: {
+        if (!Ty.isVector())
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a vector result", Ty);
+        if (Rule.Index + 2 >= Types.size())
+          return "type contract: vector insert needs element and index";
+        // Operand order is (dst:type0, src:type0, elt:type1, idx:type2).
+        const LLT &Elt = Types[Rule.Index + 1];
+        if (Elt.isVector() || !sameElementType(Elt, Ty))
+          return contractFailure(Rule.Index + 1, "element",
+                                 "a scalar of the vector's element type",
+                                 Elt);
+        const LLT &IndexTy = Types[Rule.Index + 2];
+        if (!isIntLike(IndexTy) || IndexTy.isVector())
+          return contractFailure(Rule.Index + 2, "index",
+                                 "a scalar integer index", IndexTy);
+        break;
+      }
+      case SlotCheck::ExtractVectorElt: {
+        if (Ty.isVector() || !isIntLike(Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a scalar integer element", Ty);
+        if (Rule.Index + 2 >= Types.size())
+          return "type contract: vector extract needs vector and index";
+        const LLT &Vec = Types[Rule.Index + 1];
+        if (!Vec.isVector() || !sameElementType(Ty, Vec))
+          return contractFailure(Rule.Index + 1, "vector",
+                                 "a vector of the result's element type",
+                                 Vec);
+        const LLT &IndexTy = Types[Rule.Index + 2];
+        if (!isIntLike(IndexTy) || IndexTy.isVector())
+          return contractFailure(Rule.Index + 2, "index",
+                                 "a scalar integer index", IndexTy);
+        break;
+      }
+      case SlotCheck::Bitcast: {
+        if (Rule.Index + 1 >= Types.size())
+          return "type contract: bitcast has no source";
+        const LLT &Src = Types[Rule.Index + 1];
+        const bool DstScalable = Ty.isVector() && Ty.isScalable();
+        const bool SrcScalable = Src.isVector() && Src.isScalable();
+        if (DstScalable != SrcScalable)
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a source with the result's scalable-ness",
+                                 Ty);
+        std::optional<uint64_t> DstBits = fixedBits(Ty);
+        std::optional<uint64_t> SrcBits = fixedBits(Src);
+        if (!DstBits || !SrcBits || *DstBits != *SrcBits)
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a source of the same total bit width", Ty);
+        break;
+      }
+      case SlotCheck::ShuffleVector: {
+        if (!Ty.isVector())
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a vector result", Ty);
+        if (Rule.Index + 1 >= Types.size())
+          return "type contract: shuffle needs a source vector";
+        if (!sameType(Types[Rule.Index + 1], Ty))
+          return contractFailure(Rule.Index + 1, "source",
+                                 "the same type as slot 0",
+                                 Types[Rule.Index + 1]);
+        break;
+      }
+      case SlotCheck::FloatTrunc: {
+        if (!isFloatLike(Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a scalar or vector float", Ty);
+        if (Rule.Index + 1 >= Types.size())
+          return "type contract: fptrunc has no source";
+        const LLT &Src = Types[Rule.Index + 1];
+        if (!isFloatLike(Src) || !sameShape(Ty, Src))
+          return contractFailure(Rule.Index + 1, "source",
+                                 "a float with the result's shape", Src);
+        if (Ty.getScalarSizeInBits() >= Src.getScalarSizeInBits())
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a strictly narrower float", Ty);
+        break;
+      }
+      case SlotCheck::CtlS: {
+        if (!isIntLike(Ty))
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "an integer or integer vector", Ty);
+        // llvm.aarch64.neon.cls requires a vector type at the IR level, so a
+        // >64-bit lane (notably scalar i128) is not IR-reachable.  The
+        // vector <2 x i128> form is a separate, real legalizer crash and is
+        // recorded in docs/ANALYSIS-AARCH64-CRASH.md.
+        if (Ty.getScalarSizeInBits() > 64)
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "an integer with lanes no wider than 64 bits",
+                                 Ty);
+        if (Rule.Index + 1 < Types.size() &&
+            !sameType(Types[Rule.Index + 1], Ty))
+          return contractFailure(Rule.Index + 1, "source",
+                                 "the same type as slot 0",
+                                 Types[Rule.Index + 1]);
+        break;
+      }
+      case SlotCheck::VecReduceSeq: {
+        if (!isFloatLike(Ty) || Ty.isVector())
+          return contractFailure(Rule.Index, Rule.Role,
+                                 "a scalar float result", Ty);
+        if (Rule.Index + 2 >= Types.size())
+          return "type contract: sequential reduce needs accumulator and "
+                 "input";
+        if (!sameType(Types[Rule.Index + 1], Ty))
+          return contractFailure(Rule.Index + 1, "accumulator",
+                                 "the same type as slot 0",
+                                 Types[Rule.Index + 1]);
+        const LLT &Input = Types[Rule.Index + 2];
+        if (!Input.isVector() || !sameElementType(Input, Ty))
+          return contractFailure(Rule.Index + 2, "input",
+                                 "a vector of the result's element type",
+                                 Input);
+        break;
+      }
       }
     }
     return std::nullopt;
@@ -969,6 +1211,7 @@ int main(int argc, char **argv) {
   const std::string OutPath = requireEnv("X86_LEGALIZER_MIR_OUT");
   const unsigned long MaxSteps = parseMaxSteps();
   const unsigned long StartIndex = parseStartIndex();
+  const unsigned IndexBase = parseIndexBase();
   const Shard Sharding = parseShard();
   const RulesKind Rules = parseRules();
 
@@ -1001,6 +1244,7 @@ int main(int argc, char **argv) {
   if (const json::Object *Desc = Root->getObject("config_descriptor"))
     if (std::optional<StringRef> T = Desc->getString("target"))
       TargetName = *T;
+  ContractTarget = TargetName;
   const Config *C = findFullConfig(TargetName, *ConfigText);
   if (!C)
     infraError(Twine("corpus config is not known for target ") + TargetName +
@@ -1131,10 +1375,11 @@ int main(int argc, char **argv) {
     ++AtomCount;
 
     const Atom &A = Atoms[Index];
-    emitMarker(OS, "start", A, Index);
+    const unsigned GlobalIndex = IndexBase + Index;
+    emitMarker(OS, "start", A, GlobalIndex);
 
     if (A.UnbuildableReason) {
-      emit(A, Index,
+      emit(A, GlobalIndex,
            Outcome{"unbuildable", 0, "invalid_mem_operand",
                    *A.UnbuildableReason});
       continue;
@@ -1142,7 +1387,7 @@ int main(int argc, char **argv) {
 
     std::optional<unsigned> Opcode = opcodeForName(A.OpcodeName);
     if (!Opcode) {
-      emit(A, Index,
+      emit(A, GlobalIndex,
            Outcome{"unbuildable", 0, "unknown_opcode",
                    "opcode name is not in the generic opcode set"});
       continue;
@@ -1159,7 +1404,7 @@ int main(int argc, char **argv) {
     bool TypeMismatch = false;
     if (std::optional<std::string> Reason =
             assignTypes(A, Desc, TypeVec, TypeMismatch)) {
-      emit(A, Index,
+      emit(A, GlobalIndex,
            Outcome{TypeMismatch ? "construction_mismatch" : "unbuildable", 0,
                    TypeMismatch ? "type_readback" : "type_assignment_failed",
                    *Reason});
@@ -1173,7 +1418,7 @@ int main(int argc, char **argv) {
             checkTypeContract(A.OpcodeName, Types,
                               A.Mem ? std::optional<LLT>(A.Mem->Type)
                                     : std::nullopt)) {
-      emit(A, Index,
+      emit(A, GlobalIndex,
            Outcome{"construction_mismatch", 0, "type_contract", *Reason});
       continue;
     }
@@ -1236,7 +1481,7 @@ int main(int argc, char **argv) {
     // Immediate-table validity.
     if (A.OpcodeName == "G_CONSTANT" &&
         (!Types[0].isScalar() || Types[0].isFloat())) {
-      emit(A, Index,
+      emit(A, GlobalIndex,
            Outcome{"unbuildable", 0, "immediate_rule",
                    "G_CONSTANT type is not a scalar integer"});
       continue;
@@ -1244,7 +1489,7 @@ int main(int argc, char **argv) {
     if (A.OpcodeName == "G_FCONSTANT") {
       LLVMContext ProbeCtx;
       if (!fpTypeForLLT(ProbeCtx, Types[0])) {
-        emit(A, Index,
+        emit(A, GlobalIndex,
              Outcome{"unbuildable", 0, "immediate_rule",
                      "G_FCONSTANT width has no exact zero encoding"});
         continue;
@@ -1258,7 +1503,7 @@ int main(int argc, char **argv) {
         if (!Desc.operands()[OpIdx].isGenericType())
           HasUnreviewedImmediate = true;
     if (HasUnreviewedImmediate) {
-      emit(A, Index,
+      emit(A, GlobalIndex,
            Outcome{"unbuildable", 0, "immediate_rule",
                    "no reviewed immediate rule for " + A.OpcodeName});
       continue;
@@ -1266,7 +1511,7 @@ int main(int argc, char **argv) {
 
     if (A.OpcodeName == "G_SHUFFLE_VECTOR" &&
         (!Types[0].isVector() || Types[0].isScalableVector())) {
-      emit(A, Index,
+      emit(A, GlobalIndex,
            Outcome{"unbuildable", 0, "shape_guard",
                    "shuffle vector destination is not a vector"});
       continue;
@@ -1274,7 +1519,7 @@ int main(int argc, char **argv) {
 
     // Memory operands are required by the load/store family.
     if (isLoadStoreOpcode(A.OpcodeName) && !A.Mem) {
-      emit(A, Index,
+      emit(A, GlobalIndex,
            Outcome{"unbuildable", 0, "missing_mem_operand",
                    "load/store atom has no query.mem"});
       continue;
@@ -1371,7 +1616,7 @@ int main(int argc, char **argv) {
     // the LLT, and load/store flags from the descriptor.
     if (A.Mem) {
       if (!isLoadStoreOpcode(A.OpcodeName)) {
-        emit(A, Index,
+        emit(A, GlobalIndex,
              Outcome{"construction_mismatch", 0, "shape_guard",
                      "non-load/store atom carries query.mem"});
         continue;
@@ -1383,7 +1628,7 @@ int main(int argc, char **argv) {
         Flags |= MachineMemOperand::MOStore;
       std::optional<uint64_t> MemBits = fixedBits(A.Mem->Type);
       if (!MemBits) {
-        emit(A, Index,
+        emit(A, GlobalIndex,
              Outcome{"unbuildable", 0, "shape_guard",
                      "scalable memory type has no fixed size"});
         continue;
@@ -1441,7 +1686,7 @@ int main(int argc, char **argv) {
     if (!MF.verify(nullptr, "constructed MIR", &VerifierOS,
                    /*AbortOnError=*/false)) {
       VerifierOS.flush();
-      emit(A, Index,
+      emit(A, GlobalIndex,
            Outcome{"construction_mismatch", 0, "verifier",
                    firstLine(VerifierText)});
       continue;
@@ -1457,7 +1702,7 @@ int main(int argc, char **argv) {
         MF, LI, {&Budget}, LocObserver, MIRB, /*Libcalls=*/nullptr, &VT);
 
     if (!Result.FailedOn) {
-      emit(A, Index,
+      emit(A, GlobalIndex,
            Outcome{"legalized", Budget.getSteps(), "ok",
                    "legalizer terminated"});
       continue;

@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from unittest import mock
 
-from x86_mir_corpus import llvm, schemas
+from x86_mir_corpus import llvm, pin, schemas
 
 
 class BuildInfoTest(unittest.TestCase):
@@ -71,6 +71,17 @@ class DoctorTest(unittest.TestCase):
         self.assertIn("sidecar binaries missing", joined)
         self.assertEqual(report["schema"], llvm.DOCTOR_SCHEMA)
         self.assertIn(schemas.CORPUS_SCHEMA, report["schemas"]["corpus"])
+
+    def test_aarch64_doctor_uses_the_aarch64_pin(self):
+        report = llvm.doctor("/nonexistent/src", "/nonexistent/build",
+                             "/nonexistent/sidecar", target="aarch64")
+        self.assertEqual(report["target"], "aarch64")
+        self.assertEqual(report["pin"]["target"], "aarch64")
+        self.assertTrue(pin.verify(repo=None, target="aarch64")["ok"])
+        self.assertFalse(report["provenance"]["applicable"])
+        self.assertTrue(report["provenance"]["ok"])
+        self.assertNotIn("reference provenance",
+                         " ".join(report["reasons"]))
 
     def test_bundled_provenance_is_well_formed(self):
         provenance = llvm.read_provenance()
