@@ -44,6 +44,7 @@ def ast_document(result, source):
                 "arg": r.arg_text[0] if r.arg_text else "",
                 "arg_values": [render_value(v) for v in r.evaluated_args],
                 "mutation": r.mutation,
+                "imm_idx": r.imm_idx,
                 "slots": sorted(b.slots),
             })
         builders.append({

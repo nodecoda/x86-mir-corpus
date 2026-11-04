@@ -33,6 +33,7 @@ LOWLEVELTYPE_HEADER = "llvm/include/llvm/CodeGenTypes/LowLevelType.h"
 TYPESIZE_HEADER = "llvm/include/llvm/Support/TypeSize.h"
 LEGALIZER_HELPER_HEADER = "llvm/include/llvm/CodeGen/GlobalISel/LegalizerHelper.h"
 CODEGEN_HEADER = "llvm/include/llvm/Support/CodeGen.h"
+GENERIC_OPCODES = "llvm/include/llvm/Target/GenericOpcodes.td"
 X86_SOURCE = "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp"
 AARCH64_SOURCE = "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp"
 ASSET = "dsl_symbols.json"
@@ -43,7 +44,8 @@ CHECK_SCHEMA = "mir-corpus-dsl-symbols-check"
 # used for semantics, hashes, and region classification.
 _SOURCE_FILES = (
     LEGALIZER_HEADER, LEGALIZER_SOURCE, LOWLEVELTYPE_HEADER, TYPESIZE_HEADER,
-    LEGALIZER_HELPER_HEADER, CODEGEN_HEADER, X86_SOURCE, AARCH64_SOURCE,
+    LEGALIZER_HELPER_HEADER, CODEGEN_HEADER, GENERIC_OPCODES, X86_SOURCE,
+    AARCH64_SOURCE,
 )
 _HEADER_NAMES = _SOURCE_FILES
 TARGET_SOURCES = (X86_SOURCE, AARCH64_SOURCE)
@@ -527,6 +529,34 @@ _METHOD_RE = re.compile(
     r"([A-Za-z_][A-Za-z0-9_]*)\s*\(")
 
 
+_OPCODE_DEF = re.compile(r"^def (G_\w+)\s*:[^{]*\{(.*?)^\}", re.M | re.S)
+_OPCODE_OPERAND = re.compile(r"\b(?:p?type|untyped_imm_)(\d+)\b")
+
+
+def _extract_opcodes(text):
+    """Generic opcodes with their dense type/imm index counts.
+
+    ``LegalizerInfo::verify`` derives ``NumTypeIdxs``/``NumImmIdxs`` from the
+    MCInstrDesc operand list; for generic opcodes the same information is
+    visible in ``GenericOpcodes.td``: every operand names ``typeN``,
+    ``ptypeN`` or ``untyped_imm_N``.  The count is the highest index plus one.
+    """
+    opcodes = {}
+    for name, body in _OPCODE_DEF.findall(text):
+        num_types = 0
+        num_imms = 0
+        for match in _OPCODE_OPERAND.finditer(body):
+            index = int(match.group(1)) + 1
+            if match.group(0).startswith("untyped_imm_"):
+                num_imms = max(num_imms, index)
+            else:
+                num_types = max(num_types, index)
+        line = text.count("\n", 0, text.find(f"def {name}")) + 1
+        opcodes[name] = {"num_types": num_types, "num_imms": num_imms,
+                         "line": line}
+    return opcodes
+
+
 def _extract_methods(text):
     start, end = _class_body(text, "LegalizeRuleSet")
     body = text[start:end]
@@ -859,6 +889,7 @@ def extract(llvm_src=None, repo=None, revision=None):
     typesize = texts[TYPESIZE_HEADER]
     helper = texts[LEGALIZER_HELPER_HEADER]
     codegen = texts[CODEGEN_HEADER]
+    opcodes = texts[GENERIC_OPCODES]
     return {
         # rule-chain DSL
         "methods": _extract_methods(legalizer),
@@ -873,6 +904,7 @@ def extract(llvm_src=None, repo=None, revision=None):
         # entry points and triage surface
         "legalizer_info_api": _extract_legalizer_info_api(legalizer),
         "helper_entrypoints": _extract_helper_entrypoints(helper),
+        "opcodes": _extract_opcodes(opcodes),
         "enums": {
             "CodeModel": _extract_code_model(codegen),
             "LegalizeResult": _extract_enum_values(helper, "LegalizeResult"),
@@ -1062,6 +1094,13 @@ def build_table(extracted, revision=None):
         "values": extracted["enums"].get(name, []),
     } for name in ENUM_NAMES]
 
+    opcode_entries = [{
+        "name": name,
+        "num_types": extracted["opcodes"][name]["num_types"],
+        "num_imms": extracted["opcodes"][name]["num_imms"],
+        "source": f"GenericOpcodes.td:{extracted['opcodes'][name]['line']}",
+    } for name in sorted(extracted["opcodes"])]
+
     namespaces = [extracted["namespaces"][name]
                   for name in sorted(extracted["namespaces"])]
 
@@ -1093,6 +1132,7 @@ def build_table(extracted, revision=None):
             "target_functions": len(target_functions),
             "ignore": len(IGNORE_IDENTS),
             "target_queries": len(TARGET_QUERIES),
+            "opcodes": len(opcode_entries),
         },
         "methods": methods,
         "predicates": predicates,
@@ -1109,6 +1149,7 @@ def build_table(extracted, revision=None):
         "target_functions": target_functions,
         "ignore": [dict(entry) for entry in IGNORE_IDENTS],
         "target_queries": [dict(entry) for entry in TARGET_QUERIES],
+        "opcodes": opcode_entries,
     }
 
 
@@ -1125,6 +1166,12 @@ def load(path=None):
     if doc.get("schema") != SCHEMA:
         raise ValueError(f"{path or default_path()} is not a {SCHEMA} document")
     return doc
+
+
+def opcode_arity(table=None):
+    """name -> (num_types, num_imms) for every generic opcode."""
+    return {entry["name"]: (entry["num_types"], entry["num_imms"])
+            for entry in (table or load())["opcodes"]}
 
 
 def method_names(table=None):
@@ -1280,7 +1327,7 @@ def verify(llvm_src=None, repo=None, revision=None, table=None,
                 "llt_constructors", "llt_queries", "element_count",
                 "query_api", "legalizer_info_api", "helper_entrypoints",
                 "enums", "namespaces", "target_functions", "ignore",
-                "target_queries")
+                "target_queries", "opcodes")
     missing_sections = [key for key in required if key not in doc]
     check("table-sections", not missing_sections, missing_sections)
     check("table-version", int(doc.get("version") or 0) >= 2,
@@ -1298,6 +1345,7 @@ def verify(llvm_src=None, repo=None, revision=None, table=None,
         ("legalizer_info_api", "legalizer_info_api"),
         ("target_functions", "target_functions"),
         ("namespaces", "namespaces"),
+        ("opcodes", "opcodes"),
     )
     for table_key, extracted_key in sections:
         expected = {entry["name"] for entry in doc[table_key]}
@@ -1346,6 +1394,20 @@ def verify(llvm_src=None, repo=None, revision=None, table=None,
     check("llt-names", expected_llt == actual_llt,
           {"missing": sorted(expected_llt - actual_llt),
            "extra": sorted(actual_llt - expected_llt)})
+
+    opcode_drift = []
+    for entry in doc["opcodes"]:
+        source = extracted["opcodes"].get(entry["name"])
+        if source is None:
+            opcode_drift.append({"name": entry["name"], "issue": "missing"})
+        elif (entry["num_types"] != source["num_types"]
+              or entry["num_imms"] != source["num_imms"]):
+            opcode_drift.append({
+                "name": entry["name"],
+                "recorded": [entry["num_types"], entry["num_imms"]],
+                "current": [source["num_types"], source["num_imms"]],
+            })
+    check("opcode-arity", not opcode_drift, opcode_drift)
 
     unknown = [entry["name"] for entry in doc["methods"]
                if entry["kind"] == "unknown"]

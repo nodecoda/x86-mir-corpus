@@ -373,11 +373,17 @@ def load_manifest(target):
         return None
 
 
+MANIFEST_KEYS = ("schema", "version", "target", "revision", "source",
+                 "class", "scopes", "surface_sha256", "symbols")
+
+
 def write_manifest(report):
+    """Write the compact gate manifest (no per-occurrence detail)."""
     path = manifest_path(report["target"])
     os.makedirs(os.path.dirname(path), exist_ok=True)
+    doc = {key: report.get(key) for key in MANIFEST_KEYS}
     with open(path, "w", encoding="utf-8") as handle:
-        json.dump(report, handle, indent=1, sort_keys=True)
+        json.dump(doc, handle, indent=1, sort_keys=True)
         handle.write("\n")
     return path
 

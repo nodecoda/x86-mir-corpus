@@ -53,6 +53,7 @@
     "methods": 66,
     "mutations": 8,
     "namespaces": 6,
+    "opcodes": 234,
     "predicates": 34,
     "query_api": 8,
     "target_functions": 34,
@@ -3365,6 +3366,1412 @@
       "name": "llvm"
     }
   ],
+  "opcodes": [
+    {
+      "name": "G_ABDS",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:425"
+    },
+    {
+      "name": "G_ABDU",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:433"
+    },
+    {
+      "name": "G_ABS",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:581"
+    },
+    {
+      "name": "G_ADD",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:248"
+    },
+    {
+      "name": "G_ADDRSPACE_CAST",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:248"
+    },
+    {
+      "name": "G_AND",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:380"
+    },
+    {
+      "name": "G_ANYEXT",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:44"
+    },
+    {
+      "name": "G_ASHR",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:418"
+    },
+    {
+      "name": "G_ASSERT_ALIGN",
+      "num_imms": 1,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1962"
+    },
+    {
+      "name": "G_ASSERT_SEXT",
+      "num_imms": 1,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1955"
+    },
+    {
+      "name": "G_ASSERT_ZEXT",
+      "num_imms": 1,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1947"
+    },
+    {
+      "name": "G_ATOMICRMW_FADD",
+      "num_imms": 0,
+      "num_types": 0,
+      "source": "GenericOpcodes.td:1509"
+    },
+    {
+      "name": "G_ATOMICRMW_XCHG",
+      "num_imms": 0,
+      "num_types": 0,
+      "source": "GenericOpcodes.td:1488"
+    },
+    {
+      "name": "G_ATOMIC_CMPXCHG",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1457"
+    },
+    {
+      "name": "G_ATOMIC_CMPXCHG_WITH_SUCCESS",
+      "num_imms": 0,
+      "num_types": 3,
+      "source": "GenericOpcodes.td:1457"
+    },
+    {
+      "name": "G_BITCAST",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:161"
+    },
+    {
+      "name": "G_BITREVERSE",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:242"
+    },
+    {
+      "name": "G_BLOCK_ADDR",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:254"
+    },
+    {
+      "name": "G_BR",
+      "num_imms": 0,
+      "num_types": 0,
+      "source": "GenericOpcodes.td:1655"
+    },
+    {
+      "name": "G_BRCOND",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1665"
+    },
+    {
+      "name": "G_BRINDIRECT",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1674"
+    },
+    {
+      "name": "G_BRJT",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1685"
+    },
+    {
+      "name": "G_BSWAP",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:235"
+    },
+    {
+      "name": "G_BUILD_VECTOR",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1592"
+    },
+    {
+      "name": "G_BUILD_VECTOR_TRUNC",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1602"
+    },
+    {
+      "name": "G_BZERO",
+      "num_imms": 1,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1885"
+    },
+    {
+      "name": "G_CLMUL",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:588"
+    },
+    {
+      "name": "G_CLMULH",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:596"
+    },
+    {
+      "name": "G_CLMULR",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:606"
+    },
+    {
+      "name": "G_CONCAT_VECTORS",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1609"
+    },
+    {
+      "name": "G_CONSTANT",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:143"
+    },
+    {
+      "name": "G_CONSTANT_FOLD_BARRIER",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1969"
+    },
+    {
+      "name": "G_CONSTANT_POOL",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:143"
+    },
+    {
+      "name": "G_CTLS",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:223"
+    },
+    {
+      "name": "G_CTLZ",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:199"
+    },
+    {
+      "name": "G_CTLZ_ZERO_POISON",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:205"
+    },
+    {
+      "name": "G_CTPOP",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:229"
+    },
+    {
+      "name": "G_CTTZ",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:211"
+    },
+    {
+      "name": "G_CTTZ_ZERO_POISON",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:217"
+    },
+    {
+      "name": "G_DEBUGTRAP",
+      "num_imms": 0,
+      "num_types": 0,
+      "source": "GenericOpcodes.td:1909"
+    },
+    {
+      "name": "G_DYN_STACKALLOC",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:266"
+    },
+    {
+      "name": "G_EXTRACT",
+      "num_imms": 1,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1540"
+    },
+    {
+      "name": "G_EXTRACT_SUBVECTOR",
+      "num_imms": 1,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1737"
+    },
+    {
+      "name": "G_EXTRACT_VECTOR_ELT",
+      "num_imms": 0,
+      "num_types": 3,
+      "source": "GenericOpcodes.td:1753"
+    },
+    {
+      "name": "G_FABS",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:890"
+    },
+    {
+      "name": "G_FACOS",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1166"
+    },
+    {
+      "name": "G_FADD",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:998"
+    },
+    {
+      "name": "G_FASIN",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1173"
+    },
+    {
+      "name": "G_FATAN",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1180"
+    },
+    {
+      "name": "G_FATAN2",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1187"
+    },
+    {
+      "name": "G_FCANONICALIZE",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:902"
+    },
+    {
+      "name": "G_FCEIL",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1131"
+    },
+    {
+      "name": "G_FCMP",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:506"
+    },
+    {
+      "name": "G_FCONSTANT",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:177"
+    },
+    {
+      "name": "G_FCOPYSIGN",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:896"
+    },
+    {
+      "name": "G_FCOS",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1138"
+    },
+    {
+      "name": "G_FCOSH",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1194"
+    },
+    {
+      "name": "G_FDIV",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1040"
+    },
+    {
+      "name": "G_FEXP",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1075"
+    },
+    {
+      "name": "G_FEXP10",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1089"
+    },
+    {
+      "name": "G_FEXP2",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1082"
+    },
+    {
+      "name": "G_FFLOOR",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1225"
+    },
+    {
+      "name": "G_FFREXP",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1124"
+    },
+    {
+      "name": "G_FLDEXP",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1117"
+    },
+    {
+      "name": "G_FLOG",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1096"
+    },
+    {
+      "name": "G_FLOG10",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1110"
+    },
+    {
+      "name": "G_FLOG2",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1103"
+    },
+    {
+      "name": "G_FMA",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:929"
+    },
+    {
+      "name": "G_FMAD",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1032"
+    },
+    {
+      "name": "G_FMAXIMUM",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:971"
+    },
+    {
+      "name": "G_FMAXIMUMNUM",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:986"
+    },
+    {
+      "name": "G_FMAXNUM",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:929"
+    },
+    {
+      "name": "G_FMAXNUM_IEEE",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:954"
+    },
+    {
+      "name": "G_FMINIMUM",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:964"
+    },
+    {
+      "name": "G_FMINIMUMNUM",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:979"
+    },
+    {
+      "name": "G_FMINNUM",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:922"
+    },
+    {
+      "name": "G_FMINNUM_IEEE",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:947"
+    },
+    {
+      "name": "G_FMODF",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1054"
+    },
+    {
+      "name": "G_FMUL",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1014"
+    },
+    {
+      "name": "G_FNEARBYINT",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1239"
+    },
+    {
+      "name": "G_FNEG",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:836"
+    },
+    {
+      "name": "G_FPEXT",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:842"
+    },
+    {
+      "name": "G_FPEXTLOAD",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1393"
+    },
+    {
+      "name": "G_FPOW",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1061"
+    },
+    {
+      "name": "G_FPOWI",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1068"
+    },
+    {
+      "name": "G_FPTOSI",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:854"
+    },
+    {
+      "name": "G_FPTOSI_SAT",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:878"
+    },
+    {
+      "name": "G_FPTOUI",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:860"
+    },
+    {
+      "name": "G_FPTOUI_SAT",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:884"
+    },
+    {
+      "name": "G_FPTRUNC",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:848"
+    },
+    {
+      "name": "G_FPTRUNCSTORE",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1438"
+    },
+    {
+      "name": "G_FRAME_INDEX",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:125"
+    },
+    {
+      "name": "G_FREEZE",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:284"
+    },
+    {
+      "name": "G_FREM",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1047"
+    },
+    {
+      "name": "G_FRINT",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1232"
+    },
+    {
+      "name": "G_FSHL",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:470"
+    },
+    {
+      "name": "G_FSHR",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:478"
+    },
+    {
+      "name": "G_FSIN",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1145"
+    },
+    {
+      "name": "G_FSINCOS",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1152"
+    },
+    {
+      "name": "G_FSINH",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1201"
+    },
+    {
+      "name": "G_FSQRT",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1218"
+    },
+    {
+      "name": "G_FSUB",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1006"
+    },
+    {
+      "name": "G_FTAN",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1159"
+    },
+    {
+      "name": "G_FTANH",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1208"
+    },
+    {
+      "name": "G_GET_FPENV",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1254"
+    },
+    {
+      "name": "G_GET_FPMODE",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1275"
+    },
+    {
+      "name": "G_GET_ROUNDING",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1346"
+    },
+    {
+      "name": "G_GLOBAL_VALUE",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:131"
+    },
+    {
+      "name": "G_ICMP",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:499"
+    },
+    {
+      "name": "G_IMPLICIT_DEF",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:111"
+    },
+    {
+      "name": "G_INDEXED_LOAD",
+      "num_imms": 0,
+      "num_types": 3,
+      "source": "GenericOpcodes.td:1403"
+    },
+    {
+      "name": "G_INDEXED_SEXTLOAD",
+      "num_imms": 0,
+      "num_types": 3,
+      "source": "GenericOpcodes.td:1412"
+    },
+    {
+      "name": "G_INDEXED_STORE",
+      "num_imms": 0,
+      "num_types": 3,
+      "source": "GenericOpcodes.td:1446"
+    },
+    {
+      "name": "G_INDEXED_ZEXTLOAD",
+      "num_imms": 0,
+      "num_types": 3,
+      "source": "GenericOpcodes.td:1420"
+    },
+    {
+      "name": "G_INSERT",
+      "num_imms": 1,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1562"
+    },
+    {
+      "name": "G_INSERT_SUBVECTOR",
+      "num_imms": 1,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1729"
+    },
+    {
+      "name": "G_INSERT_VECTOR_ELT",
+      "num_imms": 0,
+      "num_types": 3,
+      "source": "GenericOpcodes.td:1745"
+    },
+    {
+      "name": "G_INTRINSIC",
+      "num_imms": 0,
+      "num_types": 0,
+      "source": "GenericOpcodes.td:1298"
+    },
+    {
+      "name": "G_INTRINSIC_CONVERGENT",
+      "num_imms": 0,
+      "num_types": 0,
+      "source": "GenericOpcodes.td:1633"
+    },
+    {
+      "name": "G_INTRINSIC_CONVERGENT_W_SIDE_EFFECTS",
+      "num_imms": 0,
+      "num_types": 0,
+      "source": "GenericOpcodes.td:1641"
+    },
+    {
+      "name": "G_INTRINSIC_FPTRUNC_ROUND",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1298"
+    },
+    {
+      "name": "G_INTRINSIC_LLRINT",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1322"
+    },
+    {
+      "name": "G_INTRINSIC_LRINT",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1316"
+    },
+    {
+      "name": "G_INTRINSIC_ROUND",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1310"
+    },
+    {
+      "name": "G_INTRINSIC_ROUNDEVEN",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1328"
+    },
+    {
+      "name": "G_INTRINSIC_TRUNC",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1304"
+    },
+    {
+      "name": "G_INTRINSIC_W_SIDE_EFFECTS",
+      "num_imms": 0,
+      "num_types": 0,
+      "source": "GenericOpcodes.td:1624"
+    },
+    {
+      "name": "G_INTTOPTR",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:149"
+    },
+    {
+      "name": "G_INVOKE_REGION_START",
+      "num_imms": 0,
+      "num_types": 0,
+      "source": "GenericOpcodes.td:1697"
+    },
+    {
+      "name": "G_IS_FPCLASS",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:909"
+    },
+    {
+      "name": "G_JUMP_TABLE",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:260"
+    },
+    {
+      "name": "G_LLROUND",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:297"
+    },
+    {
+      "name": "G_LOAD",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1367"
+    },
+    {
+      "name": "G_LROUND",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:291"
+    },
+    {
+      "name": "G_LSHR",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:411"
+    },
+    {
+      "name": "G_MEMCPY_INLINE",
+      "num_imms": 0,
+      "num_types": 3,
+      "source": "GenericOpcodes.td:1862"
+    },
+    {
+      "name": "G_MEMMOVE",
+      "num_imms": 1,
+      "num_types": 3,
+      "source": "GenericOpcodes.td:1870"
+    },
+    {
+      "name": "G_MEMSET",
+      "num_imms": 1,
+      "num_types": 3,
+      "source": "GenericOpcodes.td:1878"
+    },
+    {
+      "name": "G_MEMSET_INLINE",
+      "num_imms": 0,
+      "num_types": 3,
+      "source": "GenericOpcodes.td:1892"
+    },
+    {
+      "name": "G_MERGE_VALUES",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1572"
+    },
+    {
+      "name": "G_MUL",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:324"
+    },
+    {
+      "name": "G_OR",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:388"
+    },
+    {
+      "name": "G_PHI",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:118"
+    },
+    {
+      "name": "G_PREFETCH",
+      "num_imms": 3,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1525"
+    },
+    {
+      "name": "G_PTRAUTH_GLOBAL_VALUE",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:137"
+    },
+    {
+      "name": "G_PTRMASK",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:542"
+    },
+    {
+      "name": "G_PTRTOINT",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:155"
+    },
+    {
+      "name": "G_PTR_ADD",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:534"
+    },
+    {
+      "name": "G_READCYCLECOUNTER",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1334"
+    },
+    {
+      "name": "G_READSTEADYCOUNTER",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1340"
+    },
+    {
+      "name": "G_READ_REGISTER",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1704"
+    },
+    {
+      "name": "G_RESET_FPENV",
+      "num_imms": 0,
+      "num_types": 0,
+      "source": "GenericOpcodes.td:1268"
+    },
+    {
+      "name": "G_RESET_FPMODE",
+      "num_imms": 0,
+      "num_types": 0,
+      "source": "GenericOpcodes.td:1289"
+    },
+    {
+      "name": "G_ROTL",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:492"
+    },
+    {
+      "name": "G_ROTR",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:485"
+    },
+    {
+      "name": "G_SADDE",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:642"
+    },
+    {
+      "name": "G_SADDO",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:634"
+    },
+    {
+      "name": "G_SADDSAT",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:722"
+    },
+    {
+      "name": "G_SAVGCEIL",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:462"
+    },
+    {
+      "name": "G_SAVGFLOOR",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:455"
+    },
+    {
+      "name": "G_SBFX",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1927"
+    },
+    {
+      "name": "G_SCMP",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:513"
+    },
+    {
+      "name": "G_SDIV",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:332"
+    },
+    {
+      "name": "G_SDIVFIX",
+      "num_imms": 1,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:801"
+    },
+    {
+      "name": "G_SDIVFIXSAT",
+      "num_imms": 1,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:818"
+    },
+    {
+      "name": "G_SDIVREM",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:364"
+    },
+    {
+      "name": "G_SELECT",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:527"
+    },
+    {
+      "name": "G_SET_FPENV",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1261"
+    },
+    {
+      "name": "G_SET_FPMODE",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1282"
+    },
+    {
+      "name": "G_SET_ROUNDING",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1352"
+    },
+    {
+      "name": "G_SEXT",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:52"
+    },
+    {
+      "name": "G_SEXTLOAD",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1376"
+    },
+    {
+      "name": "G_SEXT_INREG",
+      "num_imms": 1,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:66"
+    },
+    {
+      "name": "G_SHL",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:404"
+    },
+    {
+      "name": "G_SHUFFLE_VECTOR",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1764"
+    },
+    {
+      "name": "G_SITOFP",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:866"
+    },
+    {
+      "name": "G_SMAX",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:557"
+    },
+    {
+      "name": "G_SMIN",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:549"
+    },
+    {
+      "name": "G_SMULFIX",
+      "num_imms": 1,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:766"
+    },
+    {
+      "name": "G_SMULFIXSAT",
+      "num_imms": 1,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:783"
+    },
+    {
+      "name": "G_SMULH",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:702"
+    },
+    {
+      "name": "G_SMULO",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:684"
+    },
+    {
+      "name": "G_SPLAT_VECTOR",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1772"
+    },
+    {
+      "name": "G_SREM",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:348"
+    },
+    {
+      "name": "G_SSHLSAT",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:754"
+    },
+    {
+      "name": "G_SSUBE",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:669"
+    },
+    {
+      "name": "G_SSUBO",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:662"
+    },
+    {
+      "name": "G_SSUBSAT",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:738"
+    },
+    {
+      "name": "G_STACKRESTORE",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:278"
+    },
+    {
+      "name": "G_STACKSAVE",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:272"
+    },
+    {
+      "name": "G_STEP_VECTOR",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1780"
+    },
+    {
+      "name": "G_STORE",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1428"
+    },
+    {
+      "name": "G_SUB",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:316"
+    },
+    {
+      "name": "G_TRAP",
+      "num_imms": 0,
+      "num_types": 0,
+      "source": "GenericOpcodes.td:1902"
+    },
+    {
+      "name": "G_TRUNC",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:83"
+    },
+    {
+      "name": "G_TRUNC_SSAT_S",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:91"
+    },
+    {
+      "name": "G_TRUNC_SSAT_U",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:98"
+    },
+    {
+      "name": "G_TRUNC_USAT_U",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:105"
+    },
+    {
+      "name": "G_UADDE",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:627"
+    },
+    {
+      "name": "G_UADDO",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:619"
+    },
+    {
+      "name": "G_UADDSAT",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:714"
+    },
+    {
+      "name": "G_UAVGCEIL",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:448"
+    },
+    {
+      "name": "G_UAVGFLOOR",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:441"
+    },
+    {
+      "name": "G_UBFX",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1935"
+    },
+    {
+      "name": "G_UBSANTRAP",
+      "num_imms": 0,
+      "num_types": 0,
+      "source": "GenericOpcodes.td:1915"
+    },
+    {
+      "name": "G_UCMP",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:520"
+    },
+    {
+      "name": "G_UDIV",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:340"
+    },
+    {
+      "name": "G_UDIVFIX",
+      "num_imms": 1,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:808"
+    },
+    {
+      "name": "G_UDIVFIXSAT",
+      "num_imms": 1,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:825"
+    },
+    {
+      "name": "G_UDIVREM",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:372"
+    },
+    {
+      "name": "G_UITOFP",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:872"
+    },
+    {
+      "name": "G_UMAX",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:573"
+    },
+    {
+      "name": "G_UMIN",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:565"
+    },
+    {
+      "name": "G_UMULFIX",
+      "num_imms": 1,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:773"
+    },
+    {
+      "name": "G_UMULFIXSAT",
+      "num_imms": 1,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:790"
+    },
+    {
+      "name": "G_UMULH",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:693"
+    },
+    {
+      "name": "G_UMULO",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:676"
+    },
+    {
+      "name": "G_UNMERGE_VALUES",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1553"
+    },
+    {
+      "name": "G_UREM",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:356"
+    },
+    {
+      "name": "G_USHLSAT",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:746"
+    },
+    {
+      "name": "G_USUBE",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:655"
+    },
+    {
+      "name": "G_USUBO",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:649"
+    },
+    {
+      "name": "G_USUBSAT",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:730"
+    },
+    {
+      "name": "G_VAARG",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:191"
+    },
+    {
+      "name": "G_VASTART",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:184"
+    },
+    {
+      "name": "G_VECREDUCE_FADD",
+      "num_imms": 1,
+      "num_types": 3,
+      "source": "GenericOpcodes.td:1815"
+    },
+    {
+      "name": "G_VECREDUCE_SEQ_FADD",
+      "num_imms": 0,
+      "num_types": 3,
+      "source": "GenericOpcodes.td:1803"
+    },
+    {
+      "name": "G_VECREDUCE_SEQ_FMUL",
+      "num_imms": 0,
+      "num_types": 3,
+      "source": "GenericOpcodes.td:1809"
+    },
+    {
+      "name": "G_VECTOR_COMPRESS",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1787"
+    },
+    {
+      "name": "G_VSCALE",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1583"
+    },
+    {
+      "name": "G_WRITE_REGISTER",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:1714"
+    },
+    {
+      "name": "G_XOR",
+      "num_imms": 0,
+      "num_types": 1,
+      "source": "GenericOpcodes.td:396"
+    },
+    {
+      "name": "G_ZEXT",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:74"
+    },
+    {
+      "name": "G_ZEXTLOAD",
+      "num_imms": 0,
+      "num_types": 2,
+      "source": "GenericOpcodes.td:1384"
+    }
+  ],
   "predicates": [
     {
       "arity": 1,
@@ -4143,6 +5550,7 @@
     "llvm/include/llvm/CodeGenTypes/LowLevelType.h": "370de9f9f67761cb5045418807f13afe7fec036672eae743e8e80ee8c79398d3",
     "llvm/include/llvm/Support/CodeGen.h": "c869294f93ec3efbca57a7c514a9845eeaa1db76958c8bd93f567deba7a4f786",
     "llvm/include/llvm/Support/TypeSize.h": "1b9a41326d321678319b82a8ae2b1a72e87d7935909fac6628eba84212a78868",
+    "llvm/include/llvm/Target/GenericOpcodes.td": "d4e8c9220afd181478e1172ed592dd03ee02740b03124c31cf48a514032f9c52",
     "llvm/lib/CodeGen/GlobalISel/LegalizerInfo.cpp": "27cf91e365bc90e523a3de7fdeb44f054db673f4b816f4fa780d2616b0a6b4db",
     "llvm/lib/Target/AArch64/GISel/AArch64LegalizerInfo.cpp": "2b5377c3eedddf82f17758e7cab763d99ce362e4c5422bb8e24bc4b7c8945d55",
     "llvm/lib/Target/X86/GISel/X86LegalizerInfo.cpp": "79f2376096c3271910840a42c6270932011078df9fff343bfd96c226523336cd"

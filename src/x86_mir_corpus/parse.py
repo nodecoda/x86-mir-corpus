@@ -146,6 +146,7 @@ class Rule:
     guard: list = field(default_factory=list)   # [(text, active)], active: bool|None
     evaluated_args: list = field(default_factory=list)
     mutation: dict | None = None
+    imm_idx: int | None = None
 
     @property
     def active(self):
@@ -576,6 +577,7 @@ class BodyParser:
             guard=list(guards),
             evaluated_args=evaluated,
             mutation=extract_mutation(method, args, env),
+            imm_idx=extract_imm_idx(method, args, env),
         )
         builder.rules.append(rule)
         if method not in KNOWN_METHODS:
@@ -771,6 +773,20 @@ def _mutation_call(node, env):
     if "::" in node.name:
         out["qualified"] = True
     return out
+
+
+def extract_imm_idx(method, args, env):
+    """The immediate index of ``immIdx(N)``, from the table's roles."""
+    entry = _dsl.method_entry(method, _TABLE)
+    if not entry:
+        return None
+    overload = _pick_overload(entry, args, env)
+    if not overload or "imm" not in overload["roles"]:
+        return None
+    index = overload["roles"].index("imm")
+    if index >= len(args):
+        return None
+    return eval_int(args[index], env)
 
 
 def extract_mutation(method, args, env):

@@ -8,6 +8,7 @@ import itertools
 import json
 import os
 
+from . import dsl as _dsl
 from . import expr as E
 from . import targets as target_profiles
 from .lexer import matching
@@ -1350,7 +1351,100 @@ def load_coverage_exceptions(path=None):
     return data.get("exceptions", [])
 
 
-def coverage_report(result, points, issues, inactive, exceptions):
+# Chain methods that call ``markAllIdxsAsCovered()`` in LegalizerInfo.h: they
+# discharge the type/imm coverage verifier for the whole rule set.
+COVER_ALL_METHODS = {
+    "legalIf", "legalForTypeWithAnyImm", "alwaysLegal", "bitcastIf", "lower",
+    "lowerIf", "libcall", "libcallIf", "custom", "customIf", "unsupported",
+}
+
+
+def construction_issues(result, table=None):
+    """Static checks mirrored from LegalizerInfo.cpp's verifier.
+
+    These do not change point generation; they make shape gaps and invalid
+    mutation/imm references visible with a stable ``detail_code`` instead of
+    silently shrinking the corpus.
+    """
+    table = table or _dsl.load()
+    arity = _dsl.opcode_arity(table)
+    issues = []
+    for builder in result.builders:
+        known = [arity[op] for op in builder.opcodes if op in arity]
+        expected_types = max((entry[0] for entry in known), default=None)
+        expected_imms = max((entry[1] for entry in known), default=0)
+        covers_all = any(rule.method in COVER_ALL_METHODS
+                         for rule in builder.rules)
+        # The opcode's dense type indices are authoritative; a bad mutation
+        # must not widen the shape it is checked against.
+        shape = expected_types if expected_types is not None \
+            else builder.num_slots
+        if expected_types and expected_types != builder.num_slots:
+            issues.append({
+                "rule_set": builder.name,
+                "rule_index": None,
+                "method": None,
+                "detail_code": "shape_arity",
+                "detail": (f"opcodes need {expected_types} type index(es); "
+                           f"rules describe {builder.num_slots}"),
+            })
+        for rule in builder.rules:
+            mutation = rule.mutation
+            if mutation:
+                type_idx = mutation.get("type_idx")
+                if type_idx is not None and not 0 <= type_idx < shape:
+                    issues.append({
+                        "rule_set": builder.name,
+                        "rule_index": rule.index,
+                        "method": rule.method,
+                        "detail_code": "mutation_type_idx",
+                        "detail": (f"mutation targets type index {type_idx}; "
+                                   f"shape has {shape}"),
+                    })
+                target = mutation.get("target") or {}
+                if (target.get("kind") == "slot"
+                        and not 0 <= target["type_idx"] < shape):
+                    issues.append({
+                        "rule_set": builder.name,
+                        "rule_index": rule.index,
+                        "method": rule.method,
+                        "detail_code": "mutation_source_slot",
+                        "detail": (f"mutation reads slot {target['type_idx']}; "
+                                   f"shape has {shape}"),
+                    })
+            if rule.imm_idx is not None and (
+                    rule.imm_idx < 0 or (expected_imms
+                                         and rule.imm_idx >= expected_imms)):
+                    issues.append({
+                        "rule_set": builder.name,
+                        "rule_index": rule.index,
+                        "method": rule.method,
+                        "detail_code": "imm_idx",
+                        "detail": (f"immIdx({rule.imm_idx}); opcode has "
+                                   f"{expected_imms} immediate index(es)"),
+                    })
+        if expected_imms and not covers_all:
+            covered = {rule.imm_idx for rule in builder.rules
+                       if rule.imm_idx is not None}
+            if any(rule.method in ("legalForTypeWithAnyImm",
+                                   "actionForTypeWithAnyImm")
+                   for rule in builder.rules):
+                covered.add(0)
+            missing = sorted(set(range(expected_imms)) - covered)
+            if missing:
+                issues.append({
+                    "rule_set": builder.name,
+                    "rule_index": None,
+                    "method": None,
+                    "detail_code": "imm_coverage",
+                    "detail": (f"opcode has {expected_imms} immediate "
+                               f"index(es); uncovered: {missing}"),
+                })
+    return issues
+
+
+def coverage_report(result, points, issues, inactive, exceptions,
+                    construction=None):
     active_keys = set()
     for builder in result.builders:
         for rule in builder.rules:
@@ -1417,6 +1511,15 @@ def coverage_report(result, points, issues, inactive, exceptions):
             "excepted": excepted,
             "unprobed": unexplained,
         },
+        "construction": {
+            "issues": construction or [],
+            "detail_codes": {
+                code: sum(1 for issue in (construction or [])
+                          if issue["detail_code"] == code)
+                for code in sorted({issue["detail_code"]
+                                    for issue in (construction or [])})
+            },
+        },
         "opcodes": {
             "total": len(opcodes),
             "multi_opcode_builders": len(multi),
@@ -1474,6 +1577,7 @@ def build_points(result, tier, exceptions=None, profile=None):
         points.extend(built)
         issues.extend(rule_issues)
 
+    construction = construction_issues(result)
     points.sort(key=point_sort_key)
     counters = {}
     for p in points:
@@ -1482,7 +1586,7 @@ def build_points(result, tier, exceptions=None, profile=None):
         p["id"] = (f"cpp/{p['rule_set']}/{p['opcode']}/{p['origin']}/"
                    f"{counters[key] - 1}")
     coverage = coverage_report(result, points, issues, inactive,
-                               exceptions or [])
+                               exceptions or [], construction)
     return points, classes, mem_classes, panel, pruned, coverage
 
 

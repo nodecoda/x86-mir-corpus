@@ -35,6 +35,7 @@ class SymbolTableTest(unittest.TestCase):
         self.assertEqual(counts["target_functions"], 34)
         self.assertEqual(counts["target_queries"], 5)
         self.assertEqual(counts["ignore"], 15)
+        self.assertEqual(counts["opcodes"], 234)
 
     def test_llt_queries_cover_the_aarch64_lambda_surface(self):
         for name in ("getScalarType", "isFloat16", "isBFloat16", "divide",
