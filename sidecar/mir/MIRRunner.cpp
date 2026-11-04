@@ -59,6 +59,7 @@
 #include "llvm/MC/MCInstrDesc.h"
 #include "llvm/MC/MCInstrInfo.h"
 #include "llvm/Support/ErrorHandling.h"
+#include "llvm/Support/CommandLine.h"
 #include "llvm/Support/FileSystem.h"
 #include "llvm/Support/JSON.h"
 #include "llvm/Support/MathExtras.h"
@@ -369,7 +370,8 @@ bool hasReviewedImmediate(StringRef Name) {
 
 } // namespace
 
-int main() {
+int main(int argc, char **argv) {
+  cl::ParseCommandLineOptions(argc, argv, "x86-mir-run\n");
   LLVMInitializeX86TargetInfo();
   LLVMInitializeX86Target();
   LLVMInitializeX86TargetMC();
