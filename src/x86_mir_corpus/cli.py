@@ -490,7 +490,7 @@ def cmd_mir_run(args):
             rules=args.rules, shard_size=args.shard_size,
             timeout=args.timeout, max_steps=args.max_steps,
             only_atom=args.only_atom, a2_probe=args.a2_probe,
-            jobs=args.jobs)
+            jobs=args.jobs, target=args.target)
     except mirrun.MirRunInfraError as err:
         print(f"mir-run infrastructure error: {err}", file=sys.stderr)
         raise SystemExit(2) from None
@@ -904,7 +904,10 @@ def build_parser():
     sp.add_argument("--corpus", required=True,
                     help="filled corpus JSON from the corpus subcommand")
     sp.add_argument("--build", help="LLVM build dir containing X86Tests")
-    sp.add_argument("--driver", help="explicit X86Tests binary")
+    sp.add_argument("--driver", help="explicit mir-run sidecar or legacy "
+                                     "X86Tests binary")
+    sp.add_argument("--target", default=None, choices=target.names(),
+                    help="target profile (default: infer from the corpus)")
     sp.add_argument("--rules", default="production",
                     choices=("production", "reference"))
     sp.add_argument("--shard-size", type=int, default=2000)

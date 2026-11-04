@@ -1,4 +1,8 @@
-"""Supervisor for the X86 legalizer MIR corpus driver.
+"""Supervisor for the legalizer MIR corpus driver.
+
+The supervisor is target-neutral: the corpus ``config_descriptor.target`` (or
+the explicit ``--target``) selects the profile that supplies the pointer width
+and known A3 families.  The historical default is ``x86``.
 
 The C++ driver is one process per shard.  It emits one JSONL stream to
 ``X86_LEGALIZER_MIR_OUT`` (START/CONSTRUCTED/LEGALIZE markers, one OUTCOME per
@@ -21,6 +25,8 @@ import signal
 import subprocess
 import tempfile
 from concurrent.futures import ThreadPoolExecutor
+
+from . import targets
 
 SCHEMA = "llvm-x86-legalizer-mir-run"
 VERSION = 1
@@ -46,7 +52,7 @@ BUDGET_RE = re.compile(
     r"legalizer step budget exceeded:\s*atom=(\S+)\s+steps=(\d+)")
 POINTER_RE = re.compile(r"p\d+(?::(\d+))?")
 
-# C0/C3 are 32-bit targets, C1/C2 are 64-bit (see target.py CONFIGS).
+# Legacy X86 fallback; new corpora resolve their width from the target profile.
 CONFIG_POINTER_BITS = {"C0": 32, "C1": 64, "C2": 64, "C3": 32}
 
 # A3 known family: G_BUILD_VECTOR MoreElements atoms.  Pointers are spelled
@@ -144,6 +150,19 @@ def corpus_config(doc):
     return config
 
 
+def corpus_target(doc):
+    """The target profile name for *doc* (historical default: ``x86``)."""
+    descriptor = doc.get("config_descriptor") or {}
+    return descriptor.get("target") or doc.get("target") or targets.DEFAULT
+
+
+def _profile(target):
+    try:
+        return targets.get(target)
+    except ValueError as err:
+        raise MirRunInfraError(str(err)) from None
+
+
 def _pointer_widths(atom):
     query = atom.get("query") or {}
     types = list(query.get("types") or ())
@@ -170,6 +189,8 @@ def validate_corpus(doc):
             f"corpus atom_count {declared} != {len(atoms)} atoms")
 
     config = corpus_config(doc)
+    target = corpus_target(doc)
+    profile = _profile(target)
     top_level = doc.get("config")
     descriptor = (doc.get("config_descriptor") or {}).get("id")
     if (top_level is not None and descriptor is not None and
@@ -177,9 +198,11 @@ def validate_corpus(doc):
         raise MirRunInfraError(
             f"corpus config {top_level!r} != config_descriptor id "
             f"{descriptor!r}")
-    if config is not None and config not in CONFIG_POINTER_BITS:
-        raise MirRunInfraError(f"unknown corpus config {config!r}")
-    expected_width = CONFIG_POINTER_BITS.get(config)
+    if config is not None and config not in profile.configs:
+        raise MirRunInfraError(
+            f"unknown corpus config {config!r} for target {target!r}")
+    expected_width = (profile.pointer_bits(config)
+                      if config is not None else None)
     if expected_width is not None:
         for atom in atoms:
             atom_config = atom.get("config")
@@ -200,18 +223,19 @@ def driver_command(binary):
 
     Sidecar drivers are plain executables.  The in-tree X86Tests binary is a
     gtest binary whose corpus run is a disabled test, so it needs the legacy
-    filter.  Detection is by basename; an explicit sidecar path is expected to
-    be named ``x86-mir-run``.
+    filter.  Detection is by basename; sidecars are named ``mir-run`` or the
+    historical ``x86-mir-run``.
     """
     name = os.path.basename(binary)
-    if name == "x86-mir-run" or name.startswith("x86-mir-run."):
+    if name in ("mir-run", "x86-mir-run") or \
+            name.startswith(("mir-run.", "x86-mir-run.")):
         return [binary]
     return [binary, "--gtest_also_run_disabled_tests",
             "--gtest_filter=*RunCorpusThroughLegalizer"]
 
 
 def resolve_driver(build=None, driver=None):
-    """Resolve --driver, then build/bin/X86Tests, then the unittest binary."""
+    """Resolve --driver or a sidecar, then the legacy X86Tests binaries."""
     if driver:
         candidates = [driver]
     else:
@@ -219,7 +243,7 @@ def resolve_driver(build=None, driver=None):
         env = os.environ.get("X86_MIR_RUN")
         if env:
             candidates.append(env)
-        found = shutil.which("x86-mir-run")
+        found = shutil.which("mir-run") or shutil.which("x86-mir-run")
         if found:
             candidates.append(found)
         if build:
@@ -574,12 +598,23 @@ def classify_shard(events, shard_atoms, timed_out=False, returncode=None,
 # A3 classification
 
 
-def _pointer_bits(config):
+def _pointer_bits(config, target=targets.DEFAULT):
+    if config is None:
+        return None
+    profile = _profile(target)
+    if config in profile.configs:
+        return profile.pointer_bits(config)
     return CONFIG_POINTER_BITS.get(config)
 
 
-def is_known_family(atom, config=None):
-    """True for the BUILD_VECTOR MoreElements family tracked by A3."""
+def is_known_family(atom, config=None, target=targets.DEFAULT):
+    """True for the BUILD_VECTOR MoreElements family tracked by A3.
+
+    Only X86 has a known A3 family today; other targets report every anomaly
+    as a new finding until their own family list is reviewed.
+    """
+    if target != "x86":
+        return False
     if atom.get("rule_set") != "X86_BUILD_VECTOR":
         return False
     expected = atom.get("expected") or {}
@@ -613,6 +648,7 @@ def classify_a3(corpus_doc, results, a2_probe=False, only_atom=None):
     """
     atoms = corpus_doc.get("atoms") or []
     config = corpus_config(corpus_doc)
+    target = corpus_target(corpus_doc)
     by_id = {result.get("id"): result for result in results}
     known_anomalies = []
     new_findings = []
@@ -628,7 +664,7 @@ def classify_a3(corpus_doc, results, a2_probe=False, only_atom=None):
         if only_atom is not None and atom.get("id") != only_atom:
             continue
         outcome = result.get("outcome")
-        if is_known_family(atom, config):
+        if is_known_family(atom, config, target):
             known_atoms += 1
             detail_code = result.get("detail_code") or ""
             if a2_probe:
@@ -764,6 +800,7 @@ def build_report(corpus_doc, results, corpus_path, corpus_sha256, rules,
         "corpus": {
             "path": os.path.abspath(corpus_path),
             "sha256": corpus_sha256,
+            "target": corpus_target(corpus_doc),
             "config": corpus_config(corpus_doc),
             "atoms": len(atoms),
         },
@@ -999,7 +1036,7 @@ def _run_shard(binary, corpus_path, out_path, rules, max_steps, shard_index,
 
 def run(corpus_path, out_path, build=None, driver=None, rules="production",
         shard_size=2000, timeout=120, max_steps=10000, only_atom=None,
-        a2_probe=False, jobs=1):
+        a2_probe=False, jobs=1, target=None):
     """Run the corpus through the driver, write the report, return it."""
     if rules not in ("production", "reference"):
         raise MirRunInfraError(f"invalid --rules {rules!r}")
@@ -1015,6 +1052,14 @@ def run(corpus_path, out_path, build=None, driver=None, rules="production",
     corpus_path = os.path.abspath(corpus_path)
     doc = load_corpus(corpus_path)
     atoms, _ = validate_corpus(doc)
+    corpus_tgt = corpus_target(doc)
+    if target is not None and target != corpus_tgt:
+        raise MirRunInfraError(
+            f"--target {target!r} != corpus target {corpus_tgt!r}")
+    if rules == "reference" and corpus_tgt != "x86":
+        raise MirRunInfraError(
+            "the frozen reference rules exist only for x86")
+    target = corpus_tgt
     binary = resolve_driver(build=build, driver=driver)
     digest = sha256_file(corpus_path)
 
