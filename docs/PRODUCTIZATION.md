@@ -20,6 +20,10 @@
   默认 skip 并给出可操作提示。原因：该断言绑定 sidecar 的 LLVM 修订，
   任何本地 main 漂移都会红。
 - 其余 parity 测试保持自动（它们比较同一次构建内的两个驱动，不受修订影响）。
+  2026-11-05 补充：sidecar 在 legalizer 前加了 IR-shape 构造契约，因此自动
+  parity 只在 sidecar 真正执行 legalizer 的 atom 上要求逐字段一致；
+  被契约提前拒绝的 atom 豁免，但契约不得把 in-tree 的 crash/budget/hang
+  变成 legalized/failed 证据。
 
 ### P0 工程门禁
 - `pyproject.toml`：`dev` extras（pytest/ruff/build）、`[tool.ruff]`、`[tool.pytest.ini_options]`。

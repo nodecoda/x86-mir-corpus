@@ -77,7 +77,8 @@ answer anyway; they are no longer counted as legalizer evidence.
 
 The same contracts also remove all X86 full-corpus crashes and budgets:
 `crash 3,265 → 0`, `budget 225 → 0` (208,851 atoms). The X86 points gate is
-unchanged: 208,851 points, SHA256 `98ce9d09…`.
+unchanged: corpus `upfull-C2.json` SHA256 `4327c233…` and points
+`upfull-C2.json.points.json` SHA256 `0ff31cb9…`, 208,851 points.
 
 ## Remaining gap
 

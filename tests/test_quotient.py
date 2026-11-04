@@ -125,6 +125,21 @@ X86LegalizerInfo::X86LegalizerInfo(const X86Subtarget &STI) : Subtarget(STI) {
         _, report = analyze(source)
         self.assertEqual(report["opaque_builders"], ["X86_ADD"])
 
+    def test_unrepresented_classes_carry_a_reason(self):
+        _, report = analyze(THREE_PREDICATES)
+        saw_gap = False
+        for name, axis in report["axes"].items():
+            self.assertEqual(axis["unrepresented"],
+                             len(axis["unrepresented_detail"]), name)
+            for entry in axis["unrepresented_detail"]:
+                self.assertIn(entry["reason"],
+                              {"panel_gap", "opaque_predicate"}, name)
+                self.assertTrue(entry["example"], name)
+                self.assertTrue(entry["signature"], name)
+                self.assertEqual(entry["builder"], "X86_ADD")
+                saw_gap = saw_gap or entry["reason"] == "panel_gap"
+        self.assertTrue(saw_gap, "the x86 panel must miss some modelled class")
+
     def test_axis_name_variants(self):
         self.assertEqual(quotient.axis_name((0,)), "slot0")
         self.assertEqual(quotient.axis_name((0, 1)), "pair(0,1)")

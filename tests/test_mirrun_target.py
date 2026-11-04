@@ -156,6 +156,7 @@ class ReportTargetTest(unittest.TestCase):
         report = mirrun.build_report(
             corpus, [result(0), result(1)], "/tmp/corpus.json", "sha",
             "production", 10000, 120, 2000)
+        self.assertEqual(report["target"], "aarch64")
         self.assertEqual(report["corpus"]["target"], "aarch64")
         self.assertEqual(sum(report["counts"].values()), 2)
 
@@ -192,6 +193,7 @@ class SmokeRunTest(unittest.TestCase):
             self.assertNotIn("unknown corpus config", proc.stderr)
             with open(out, encoding="utf-8") as handle:
                 report = json.load(handle)
+            self.assertEqual(report["target"], "aarch64")
             self.assertEqual(report["corpus"]["target"], "aarch64")
             self.assertEqual(sum(report["counts"].values()), 20)
 

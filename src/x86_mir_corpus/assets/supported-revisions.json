@@ -2,7 +2,8 @@
   "schema": "x86-mir-corpus-supported-revisions",
   "version": 1,
   "revisions": [
+    "6706952f4a5a30d6c14057bcd612ae8245a44b5c",
     "8bc4cd96f4bb95506857422a5f1da92c2b430634"
   ],
-  "notes": "Out-of-tree sidecar clients must match the LLVM build's headers and assertions setting. Add a revision only after running tests/test_sidecar_parity.py."
+  "notes": "Out-of-tree sidecar clients must match the LLVM build's headers and assertions setting. Add a revision only after tests/test_sidecar_parity.py passes with cached corpora and an in-tree X86Tests binary; the MIR gate compares every atom the sidecar hands to the legalizer, while contract-rejected atoms (construction_mismatch/unbuildable) are exempt."
 }

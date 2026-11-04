@@ -13,7 +13,8 @@
    "representatives": [
     "C2"
    ],
-   "unrepresented": 0
+   "unrepresented": 0,
+   "unrepresented_detail": []
   },
   "opcode": {
    "candidates": 115,
@@ -138,7 +139,8 @@
     "G_ZEXT",
     "G_ZEXTLOAD"
    ],
-   "unrepresented": 0
+   "unrepresented": 0,
+   "unrepresented_detail": []
   },
   "pair(0,1)": {
    "candidates": 14400,
@@ -264,7 +266,921 @@
      "s32"
     ]
    ],
-   "unrepresented": 81
+   "unrepresented": 81,
+   "unrepresented_detail": [
+    {
+     "builder": "X86_LROUND",
+     "example": [
+      "p0",
+      "s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_MERGE_VALUES",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_MERGE_VALUES",
+     "example": [
+      "p0",
+      "s80"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_MERGE_VALUES",
+     "example": [
+      "s1",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_UNMERGE_VALUES",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_UNMERGE_VALUES",
+     "example": [
+      "p0",
+      "s80"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_UNMERGE_VALUES",
+     "example": [
+      "s1",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_UADDE",
+     "example": [
+      "p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "none@None",
+      "none@None",
+      "none@None",
+      "none@None"
+     ]
+    },
+    {
+     "builder": "X86_UADDE",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4",
+      "match@4",
+      "match@4",
+      "match@4"
+     ]
+    },
+    {
+     "builder": "X86_UADDE",
+     "example": [
+      "s8",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0",
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_UADDE",
+     "example": [
+      "s64",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1",
+      "match@1",
+      "match@1",
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_SHL",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3",
+      "match@3",
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_SHL",
+     "example": [
+      "s8",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_SHL",
+     "example": [
+      "s64",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1",
+      "match@1",
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_ICMP",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_ICMP",
+     "example": [
+      "p0",
+      "s80"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_ICMP",
+     "example": [
+      "s8",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_CTPOP",
+     "example": [
+      "p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "none@None"
+     ]
+    },
+    {
+     "builder": "X86_CTPOP",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_CTPOP",
+     "example": [
+      "p0",
+      "s80"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_CTPOP",
+     "example": [
+      "s16",
+      "s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_CTPOP",
+     "example": [
+      "s64",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_CTLZ",
+     "example": [
+      "p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "none@None"
+     ]
+    },
+    {
+     "builder": "X86_CTLZ",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_CTLZ",
+     "example": [
+      "p0",
+      "s80"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_CTLZ",
+     "example": [
+      "s16",
+      "s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_CTLZ",
+     "example": [
+      "s64",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_CTTZ_ZERO_POISON",
+     "example": [
+      "p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "none@None"
+     ]
+    },
+    {
+     "builder": "X86_CTTZ_ZERO_POISON",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_CTTZ_ZERO_POISON",
+     "example": [
+      "p0",
+      "s80"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_CTTZ_ZERO_POISON",
+     "example": [
+      "s16",
+      "s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_CTTZ_ZERO_POISON",
+     "example": [
+      "s64",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_CTTZ",
+     "example": [
+      "p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "none@None"
+     ]
+    },
+    {
+     "builder": "X86_CTTZ",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_CTTZ",
+     "example": [
+      "p0",
+      "s80"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_CTTZ",
+     "example": [
+      "s16",
+      "s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_CTTZ",
+     "example": [
+      "s64",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_PTRTOINT",
+     "example": [
+      "s1",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_INTTOPTR",
+     "example": [
+      "p0",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_PTR_ADD",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_PTR_ADD",
+     "example": [
+      "p0",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_PTR_ADD",
+     "example": [
+      "p0",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_PTR_ADD",
+     "example": [
+      "p0",
+      "s80"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_STORE",
+     "example": [
+      "p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_STORE",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "none@None"
+     ]
+    },
+    {
+     "builder": "X86_STORE",
+     "example": [
+      "v2p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_STORE",
+     "example": [
+      "v4p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4"
+     ]
+    },
+    {
+     "builder": "X86_TRUNC",
+     "example": [
+      "s1",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_FPEXT",
+     "example": [
+      "s64",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_FPEXT",
+     "example": [
+      "s80",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_FPEXT",
+     "example": [
+      "v4s64",
+      "v4s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_FPEXT",
+     "example": [
+      "v8s64",
+      "v8s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_FPTRUNC",
+     "example": [
+      "s32",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_FPTRUNC",
+     "example": [
+      "s32",
+      "s80"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_FPTRUNC",
+     "example": [
+      "v4s32",
+      "v4s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_FPTRUNC",
+     "example": [
+      "v8s32",
+      "v8s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_SITOFP",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4"
+     ]
+    },
+    {
+     "builder": "X86_SITOFP",
+     "example": [
+      "s32",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_SITOFP",
+     "example": [
+      "s32",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_SITOFP",
+     "example": [
+      "s64",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_SITOFP",
+     "example": [
+      "s64",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_SITOFP",
+     "example": [
+      "s80",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@6"
+     ]
+    },
+    {
+     "builder": "X86_FPTOSI",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@7"
+     ]
+    },
+    {
+     "builder": "X86_FPTOSI",
+     "example": [
+      "s32",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_FPTOSI",
+     "example": [
+      "s32",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_FPTOSI",
+     "example": [
+      "s32",
+      "s80"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@6"
+     ]
+    },
+    {
+     "builder": "X86_FPTOSI",
+     "example": [
+      "s64",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_FPTOSI",
+     "example": [
+      "s64",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_UITOFP",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@5"
+     ]
+    },
+    {
+     "builder": "X86_UITOFP",
+     "example": [
+      "s32",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_FPTOUI",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@5"
+     ]
+    },
+    {
+     "builder": "X86_FPTOUI",
+     "example": [
+      "s32",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_EXTRACT",
+     "example": [
+      "v2s64",
+      "v4s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "none@None"
+     ]
+    },
+    {
+     "builder": "X86_EXTRACT",
+     "example": [
+      "v4s64",
+      "v2s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "none@None",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_CONCAT_VECTORS",
+     "example": [
+      "v4s64",
+      "v2s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_CONCAT_VECTORS",
+     "example": [
+      "v8s64",
+      "v2s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_SELECT",
+     "example": [
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4"
+     ]
+    },
+    {
+     "builder": "X86_SELECT",
+     "example": [
+      "p0",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_SELECT",
+     "example": [
+      "s64",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_SELECT",
+     "example": [
+      "s80",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_IS_FPCLASS",
+     "example": [
+      "s1",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    }
+   ]
   },
   "pair(0,1)+mem": {
    "candidates": 79488,
@@ -364,7 +1280,309 @@
      "s32"
     ]
    ],
-   "unrepresented": 25
+   "unrepresented": 25,
+   "unrepresented_detail": [
+    {
+     "builder": "X86_LOAD",
+     "example": [
+      "p0",
+      "p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_LOAD",
+     "example": [
+      "p0",
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "none@None"
+     ]
+    },
+    {
+     "builder": "X86_LOAD",
+     "example": [
+      "s8",
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@6"
+     ]
+    },
+    {
+     "builder": "X86_LOAD",
+     "example": [
+      "s64",
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@7"
+     ]
+    },
+    {
+     "builder": "X86_LOAD",
+     "example": [
+      "s64",
+      "p0",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_LOAD",
+     "example": [
+      "v2p0",
+      "p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_LOAD",
+     "example": [
+      "v4p0",
+      "p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4"
+     ]
+    },
+    {
+     "builder": "X86_LOAD",
+     "example": [
+      "v4s32",
+      "p0",
+      "v2s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_LOAD",
+     "example": [
+      "v8s64",
+      "p0",
+      "v8s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@5"
+     ]
+    },
+    {
+     "builder": "X86_STORE",
+     "example": [
+      "p0",
+      "p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_STORE",
+     "example": [
+      "p0",
+      "s1",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "none@None"
+     ]
+    },
+    {
+     "builder": "X86_STORE",
+     "example": [
+      "s1",
+      "p0",
+      "s1"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@8"
+     ]
+    },
+    {
+     "builder": "X86_STORE",
+     "example": [
+      "s64",
+      "p0",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_STORE",
+     "example": [
+      "s80",
+      "s1",
+      "s80"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@7"
+     ]
+    },
+    {
+     "builder": "X86_STORE",
+     "example": [
+      "v2p0",
+      "p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_STORE",
+     "example": [
+      "v2p0",
+      "s1",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@9"
+     ]
+    },
+    {
+     "builder": "X86_STORE",
+     "example": [
+      "v4p0",
+      "p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4"
+     ]
+    },
+    {
+     "builder": "X86_STORE",
+     "example": [
+      "v4s32",
+      "p0",
+      "v2s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_STORE",
+     "example": [
+      "v8s64",
+      "p0",
+      "v8s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@5"
+     ]
+    },
+    {
+     "builder": "X86_SEXTLOAD",
+     "example": [
+      "s16",
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_SEXTLOAD",
+     "example": [
+      "s64",
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_ZEXTLOAD",
+     "example": [
+      "s16",
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_ZEXTLOAD",
+     "example": [
+      "s64",
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_FPEXTLOAD",
+     "example": [
+      "s64",
+      "p0",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_FPTRUNCSTORE",
+     "example": [
+      "s64",
+      "p0",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    }
+   ]
   },
   "slot0": {
    "candidates": 48,
@@ -401,7 +1619,110 @@
      "v8s64"
     ]
    ],
-   "unrepresented": 8
+   "unrepresented": 8,
+   "unrepresented_detail": [
+    {
+     "builder": "X86_IMPLICIT_DEF",
+     "example": [
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0",
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "X86_IMPLICIT_DEF",
+     "example": [
+      "s80"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1",
+      "match@1",
+      "match@1",
+      "match@1"
+     ]
+    },
+    {
+     "builder": "X86_IMPLICIT_DEF",
+     "example": [
+      "s128"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2",
+      "match@2",
+      "match@2",
+      "match@2"
+     ]
+    },
+    {
+     "builder": "X86_IMPLICIT_DEF",
+     "example": [
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "none@None",
+      "none@None",
+      "none@None",
+      "none@None"
+     ]
+    },
+    {
+     "builder": "X86_IMPLICIT_DEF",
+     "example": [
+      "v4s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@9",
+      "match@9",
+      "match@9",
+      "match@9"
+     ]
+    },
+    {
+     "builder": "X86_IMPLICIT_DEF",
+     "example": [
+      "v2s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@11",
+      "match@11",
+      "match@11",
+      "match@11"
+     ]
+    },
+    {
+     "builder": "X86_IMPLICIT_DEF",
+     "example": [
+      "v2s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3",
+      "match@3",
+      "match@3",
+      "match@3"
+     ]
+    },
+    {
+     "builder": "X86_BUILD_VECTOR",
+     "example": [
+      "v4s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    }
+   ]
   }
  },
  "classes": [
@@ -465,7 +1786,7 @@
   "A key is the tuple of modelled predicate results (1/0/None) for one dependency component; None is a distinct opaque value.",
   "The candidate universe is the parsed class list, so class counts are exact for modelled predicates, not a panel sample.",
   "Predicate calls inside lambdas are not recovered; rule sets with lambdas are listed in opaque_builders and keep the floor of the modelled quotient.",
-  "unrepresented counts quotient classes the target boundary panel never touches; it is a panel-coverage diagnostic, not a gate."
+  "unrepresented counts quotient classes the target boundary panel never touches; unrepresented_detail gives one example and a reason per class (panel_gap or opaque_predicate).  It is a panel-coverage diagnostic, not a gate."
  ],
  "opaque_builders": [
   "X86_BUILD_VECTOR",
@@ -489,7 +1810,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -501,7 +1823,8 @@
      "G_ADD",
      "G_SUB"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_AND": {
@@ -515,7 +1838,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 3,
@@ -528,7 +1852,8 @@
      "G_OR",
      "G_XOR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_ANYEXT": {
@@ -542,7 +1867,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -553,7 +1879,8 @@
     "representatives": [
      "G_ANYEXT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_BR": {
@@ -567,7 +1894,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -578,7 +1906,8 @@
     "representatives": [
      "G_BR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_BRCOND": {
@@ -592,7 +1921,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -603,7 +1933,8 @@
     "representatives": [
      "G_BRCOND"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_BSWAP": {
@@ -617,7 +1948,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -628,7 +1960,8 @@
     "representatives": [
      "G_BSWAP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_BUILD_VECTOR": {
@@ -642,7 +1975,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -653,7 +1987,8 @@
     "representatives": [
      "G_BUILD_VECTOR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 24,
@@ -675,7 +2010,19 @@
       "v2s64"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_BUILD_VECTOR",
+      "example": [
+       "v4s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     }
+    ]
    }
   },
   "X86_CONCAT_VECTORS": {
@@ -689,7 +2036,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -700,7 +2048,8 @@
     "representatives": [
      "G_CONCAT_VECTORS"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -722,7 +2071,31 @@
       "v2s64"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_CONCAT_VECTORS",
+      "example": [
+       "v4s64",
+       "v2s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_CONCAT_VECTORS",
+      "example": [
+       "v8s64",
+       "v2s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     }
+    ]
    }
   },
   "X86_CONSTANT": {
@@ -736,7 +2109,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -747,7 +2121,8 @@
     "representatives": [
      "G_CONSTANT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_CONSTANT_POOL": {
@@ -761,7 +2136,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -772,7 +2148,8 @@
     "representatives": [
      "G_CONSTANT_POOL"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_CTLZ": {
@@ -786,7 +2163,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -797,7 +2175,8 @@
     "representatives": [
      "G_CTLZ"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -831,7 +2210,64 @@
       "s64"
      ]
     ],
-    "unrepresented": 5
+    "unrepresented": 5,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_CTLZ",
+      "example": [
+       "p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "none@None"
+      ]
+     },
+     {
+      "builder": "X86_CTLZ",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "X86_CTLZ",
+      "example": [
+       "p0",
+       "s80"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "X86_CTLZ",
+      "example": [
+       "s16",
+       "s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_CTLZ",
+      "example": [
+       "s64",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     }
+    ]
    }
   },
   "X86_CTPOP": {
@@ -845,7 +2281,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -856,7 +2293,8 @@
     "representatives": [
      "G_CTPOP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -890,7 +2328,64 @@
       "s64"
      ]
     ],
-    "unrepresented": 5
+    "unrepresented": 5,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_CTPOP",
+      "example": [
+       "p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "none@None"
+      ]
+     },
+     {
+      "builder": "X86_CTPOP",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "X86_CTPOP",
+      "example": [
+       "p0",
+       "s80"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "X86_CTPOP",
+      "example": [
+       "s16",
+       "s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_CTPOP",
+      "example": [
+       "s64",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     }
+    ]
    }
   },
   "X86_CTTZ": {
@@ -904,7 +2399,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -915,7 +2411,8 @@
     "representatives": [
      "G_CTTZ"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -949,7 +2446,64 @@
       "s64"
      ]
     ],
-    "unrepresented": 5
+    "unrepresented": 5,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_CTTZ",
+      "example": [
+       "p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "none@None"
+      ]
+     },
+     {
+      "builder": "X86_CTTZ",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "X86_CTTZ",
+      "example": [
+       "p0",
+       "s80"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "X86_CTTZ",
+      "example": [
+       "s16",
+       "s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_CTTZ",
+      "example": [
+       "s64",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     }
+    ]
    }
   },
   "X86_CTTZ_ZERO_POISON": {
@@ -963,7 +2517,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -974,7 +2529,8 @@
     "representatives": [
      "G_CTTZ_ZERO_POISON"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -1008,7 +2564,64 @@
       "s64"
      ]
     ],
-    "unrepresented": 5
+    "unrepresented": 5,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_CTTZ_ZERO_POISON",
+      "example": [
+       "p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "none@None"
+      ]
+     },
+     {
+      "builder": "X86_CTTZ_ZERO_POISON",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "X86_CTTZ_ZERO_POISON",
+      "example": [
+       "p0",
+       "s80"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "X86_CTTZ_ZERO_POISON",
+      "example": [
+       "s16",
+       "s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_CTTZ_ZERO_POISON",
+      "example": [
+       "s64",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     }
+    ]
    }
   },
   "X86_DYN_STACKALLOC": {
@@ -1022,7 +2635,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 3,
@@ -1035,7 +2649,8 @@
      "G_STACKSAVE",
      "G_STACKRESTORE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_EXTRACT": {
@@ -1049,7 +2664,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -1061,7 +2677,8 @@
      "G_EXTRACT",
      "G_INSERT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -1083,7 +2700,33 @@
       "v2s64"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_EXTRACT",
+      "example": [
+       "v2s64",
+       "v4s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "none@None"
+      ]
+     },
+     {
+      "builder": "X86_EXTRACT",
+      "example": [
+       "v4s64",
+       "v2s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "none@None",
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "X86_FABS": {
@@ -1097,7 +2740,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1108,7 +2752,8 @@
     "representatives": [
      "G_FABS"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_FADD": {
@@ -1122,7 +2767,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 4,
@@ -1136,7 +2782,8 @@
      "G_FMUL",
      "G_FDIV"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_FCMP": {
@@ -1150,7 +2797,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1161,7 +2809,8 @@
     "representatives": [
      "G_FCMP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_FCONSTANT": {
@@ -1175,7 +2824,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1186,7 +2836,8 @@
     "representatives": [
      "G_FCONSTANT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_FCOS": {
@@ -1200,7 +2851,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 21,
@@ -1231,7 +2883,8 @@
      "G_FCEIL",
      "G_FFLOOR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_FNEG": {
@@ -1245,7 +2898,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1256,7 +2910,8 @@
     "representatives": [
      "G_FNEG"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_FPEXT": {
@@ -1270,7 +2925,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1281,7 +2937,8 @@
     "representatives": [
      "G_FPEXT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -1311,7 +2968,53 @@
       "v8s32"
      ]
     ],
-    "unrepresented": 4
+    "unrepresented": 4,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_FPEXT",
+      "example": [
+       "s64",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_FPEXT",
+      "example": [
+       "s80",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "X86_FPEXT",
+      "example": [
+       "v4s64",
+       "v4s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "X86_FPEXT",
+      "example": [
+       "v8s64",
+       "v8s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     }
+    ]
    }
   },
   "X86_FPEXTLOAD": {
@@ -1325,7 +3028,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1336,7 +3040,8 @@
     "representatives": [
      "G_FPEXTLOAD"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)+mem": {
     "candidates": 13248,
@@ -1356,7 +3061,21 @@
       "s32"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_FPEXTLOAD",
+      "example": [
+       "s64",
+       "p0",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "X86_FPTOSI": {
@@ -1370,7 +3089,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1381,7 +3101,8 @@
     "representatives": [
      "G_FPTOSI"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -1423,7 +3144,75 @@
       "s64"
      ]
     ],
-    "unrepresented": 6
+    "unrepresented": 6,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_FPTOSI",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@7"
+      ]
+     },
+     {
+      "builder": "X86_FPTOSI",
+      "example": [
+       "s32",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_FPTOSI",
+      "example": [
+       "s32",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "X86_FPTOSI",
+      "example": [
+       "s32",
+       "s80"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@6"
+      ]
+     },
+     {
+      "builder": "X86_FPTOSI",
+      "example": [
+       "s64",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "X86_FPTOSI",
+      "example": [
+       "s64",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     }
+    ]
    }
   },
   "X86_FPTOUI": {
@@ -1437,7 +3226,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1448,7 +3238,8 @@
     "representatives": [
      "G_FPTOUI"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -1474,7 +3265,31 @@
       "s32"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_FPTOUI",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@5"
+      ]
+     },
+     {
+      "builder": "X86_FPTOUI",
+      "example": [
+       "s32",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "X86_FPTRUNC": {
@@ -1488,7 +3303,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1499,7 +3315,8 @@
     "representatives": [
      "G_FPTRUNC"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -1529,7 +3346,53 @@
       "v8s64"
      ]
     ],
-    "unrepresented": 4
+    "unrepresented": 4,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_FPTRUNC",
+      "example": [
+       "s32",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_FPTRUNC",
+      "example": [
+       "s32",
+       "s80"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "X86_FPTRUNC",
+      "example": [
+       "v4s32",
+       "v4s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "X86_FPTRUNC",
+      "example": [
+       "v8s32",
+       "v8s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     }
+    ]
    }
   },
   "X86_FPTRUNCSTORE": {
@@ -1543,7 +3406,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1554,7 +3418,8 @@
     "representatives": [
      "G_FPTRUNCSTORE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)+mem": {
     "candidates": 13248,
@@ -1574,7 +3439,21 @@
       "s32"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_FPTRUNCSTORE",
+      "example": [
+       "s64",
+       "p0",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "X86_FRAME_INDEX": {
@@ -1588,7 +3467,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1599,7 +3479,8 @@
     "representatives": [
      "G_FRAME_INDEX"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_FSQRT": {
@@ -1613,7 +3494,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1624,7 +3506,8 @@
     "representatives": [
      "G_FSQRT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_GET_ROUNDING": {
@@ -1638,7 +3521,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -1650,7 +3534,8 @@
      "G_GET_ROUNDING",
      "G_SET_ROUNDING"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_GLOBAL_VALUE": {
@@ -1664,7 +3549,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1675,7 +3561,8 @@
     "representatives": [
      "G_GLOBAL_VALUE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_ICMP": {
@@ -1689,7 +3576,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1700,7 +3588,8 @@
     "representatives": [
      "G_ICMP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -1730,7 +3619,42 @@
       "p0"
      ]
     ],
-    "unrepresented": 3
+    "unrepresented": 3,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_ICMP",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "X86_ICMP",
+      "example": [
+       "p0",
+       "s80"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "X86_ICMP",
+      "example": [
+       "s8",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "X86_IMPLICIT_DEF": {
@@ -1744,7 +3668,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 4,
@@ -1758,7 +3683,8 @@
      "G_FREEZE",
      "G_CONSTANT_FOLD_BARRIER"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 24,
@@ -1795,7 +3721,100 @@
       "v8s64"
      ]
     ],
-    "unrepresented": 7
+    "unrepresented": 7,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_IMPLICIT_DEF",
+      "example": [
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0",
+       "match@0",
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_IMPLICIT_DEF",
+      "example": [
+       "s80"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1",
+       "match@1",
+       "match@1",
+       "match@1"
+      ]
+     },
+     {
+      "builder": "X86_IMPLICIT_DEF",
+      "example": [
+       "s128"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2",
+       "match@2",
+       "match@2",
+       "match@2"
+      ]
+     },
+     {
+      "builder": "X86_IMPLICIT_DEF",
+      "example": [
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "none@None",
+       "none@None",
+       "none@None",
+       "none@None"
+      ]
+     },
+     {
+      "builder": "X86_IMPLICIT_DEF",
+      "example": [
+       "v4s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@9",
+       "match@9",
+       "match@9",
+       "match@9"
+      ]
+     },
+     {
+      "builder": "X86_IMPLICIT_DEF",
+      "example": [
+       "v2s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@11",
+       "match@11",
+       "match@11",
+       "match@11"
+      ]
+     },
+     {
+      "builder": "X86_IMPLICIT_DEF",
+      "example": [
+       "v2s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3",
+       "match@3",
+       "match@3",
+       "match@3"
+      ]
+     }
+    ]
    }
   },
   "X86_INTRINSIC": {
@@ -1809,7 +3828,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -1821,7 +3841,8 @@
      "G_INTRINSIC",
      "G_INTRINSIC_W_SIDE_EFFECTS"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_INTRINSIC_ROUNDEVEN": {
@@ -1835,7 +3856,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -1847,7 +3869,8 @@
      "G_INTRINSIC_ROUNDEVEN",
      "G_INTRINSIC_TRUNC"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_INTTOPTR": {
@@ -1861,7 +3884,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1872,7 +3896,8 @@
     "representatives": [
      "G_INTTOPTR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -1890,7 +3915,20 @@
       "s64"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_INTTOPTR",
+      "example": [
+       "p0",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "X86_INVOKE_REGION_START": {
@@ -1904,7 +3942,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1915,7 +3954,8 @@
     "representatives": [
      "G_INVOKE_REGION_START"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_IS_FPCLASS": {
@@ -1929,7 +3969,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1940,7 +3981,8 @@
     "representatives": [
      "G_IS_FPCLASS"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -1958,7 +4000,20 @@
       "s32"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_IS_FPCLASS",
+      "example": [
+       "s1",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "X86_LOAD": {
@@ -1972,7 +4027,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1983,7 +4039,8 @@
     "representatives": [
      "G_LOAD"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)+mem": {
     "candidates": 13248,
@@ -2053,7 +4110,117 @@
       "v8s64"
      ]
     ],
-    "unrepresented": 9
+    "unrepresented": 9,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_LOAD",
+      "example": [
+       "p0",
+       "p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_LOAD",
+      "example": [
+       "p0",
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "none@None"
+      ]
+     },
+     {
+      "builder": "X86_LOAD",
+      "example": [
+       "s8",
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@6"
+      ]
+     },
+     {
+      "builder": "X86_LOAD",
+      "example": [
+       "s64",
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@7"
+      ]
+     },
+     {
+      "builder": "X86_LOAD",
+      "example": [
+       "s64",
+       "p0",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "X86_LOAD",
+      "example": [
+       "v2p0",
+       "p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "X86_LOAD",
+      "example": [
+       "v4p0",
+       "p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4"
+      ]
+     },
+     {
+      "builder": "X86_LOAD",
+      "example": [
+       "v4s32",
+       "p0",
+       "v2s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "X86_LOAD",
+      "example": [
+       "v8s64",
+       "p0",
+       "v8s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@5"
+      ]
+     }
+    ]
    }
   },
   "X86_LROUND": {
@@ -2067,7 +4234,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -2079,7 +4247,8 @@
      "G_LROUND",
      "G_LLROUND"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -2097,7 +4266,21 @@
       "s16"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_LROUND",
+      "example": [
+       "p0",
+       "s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "X86_MEMCPY": {
@@ -2111,7 +4294,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 3,
@@ -2124,7 +4308,8 @@
      "G_MEMMOVE",
      "G_MEMSET"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_MERGE_VALUES": {
@@ -2138,7 +4323,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2149,7 +4335,8 @@
     "representatives": [
      "G_MERGE_VALUES"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -2179,7 +4366,42 @@
       "p0"
      ]
     ],
-    "unrepresented": 3
+    "unrepresented": 3,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_MERGE_VALUES",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "X86_MERGE_VALUES",
+      "example": [
+       "p0",
+       "s80"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_MERGE_VALUES",
+      "example": [
+       "s1",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     }
+    ]
    }
   },
   "X86_MUL": {
@@ -2193,7 +4415,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2204,7 +4427,8 @@
     "representatives": [
      "G_MUL"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_PTRTOINT": {
@@ -2218,7 +4442,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2229,7 +4454,8 @@
     "representatives": [
      "G_PTRTOINT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -2251,7 +4477,20 @@
       "p0"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_PTRTOINT",
+      "example": [
+       "s1",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "X86_PTR_ADD": {
@@ -2265,7 +4504,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2276,7 +4516,8 @@
     "representatives": [
      "G_PTR_ADD"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -2306,7 +4547,53 @@
       "s80"
      ]
     ],
-    "unrepresented": 4
+    "unrepresented": 4,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_PTR_ADD",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "X86_PTR_ADD",
+      "example": [
+       "p0",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_PTR_ADD",
+      "example": [
+       "p0",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "X86_PTR_ADD",
+      "example": [
+       "p0",
+       "s80"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     }
+    ]
    }
   },
   "X86_SDIV": {
@@ -2320,7 +4607,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 4,
@@ -2334,7 +4622,8 @@
      "G_UDIV",
      "G_UREM"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_SELECT": {
@@ -2348,7 +4637,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2359,7 +4649,8 @@
     "representatives": [
      "G_SELECT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -2397,7 +4688,53 @@
       "s32"
      ]
     ],
-    "unrepresented": 4
+    "unrepresented": 4,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_SELECT",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4"
+      ]
+     },
+     {
+      "builder": "X86_SELECT",
+      "example": [
+       "p0",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_SELECT",
+      "example": [
+       "s64",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "X86_SELECT",
+      "example": [
+       "s80",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     }
+    ]
    }
   },
   "X86_SEXT": {
@@ -2411,7 +4748,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -2423,7 +4761,8 @@
      "G_SEXT",
      "G_ZEXT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_SEXTLOAD": {
@@ -2437,7 +4776,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2448,7 +4788,8 @@
     "representatives": [
      "G_SEXTLOAD"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)+mem": {
     "candidates": 13248,
@@ -2473,7 +4814,33 @@
       "s8"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_SEXTLOAD",
+      "example": [
+       "s16",
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_SEXTLOAD",
+      "example": [
+       "s64",
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     }
+    ]
    }
   },
   "X86_SEXT_INREG": {
@@ -2487,7 +4854,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2498,7 +4866,8 @@
     "representatives": [
      "G_SEXT_INREG"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_SHL": {
@@ -2512,7 +4881,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 3,
@@ -2525,7 +4895,8 @@
      "G_LSHR",
      "G_ASHR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -2555,7 +4926,48 @@
       "s8"
      ]
     ],
-    "unrepresented": 3
+    "unrepresented": 3,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_SHL",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3",
+       "match@3",
+       "match@3"
+      ]
+     },
+     {
+      "builder": "X86_SHL",
+      "example": [
+       "s8",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0",
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_SHL",
+      "example": [
+       "s64",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1",
+       "match@1",
+       "match@1"
+      ]
+     }
+    ]
    }
   },
   "X86_SITOFP": {
@@ -2569,7 +4981,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2580,7 +4993,8 @@
     "representatives": [
      "G_SITOFP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -2622,7 +5036,75 @@
       "s32"
      ]
     ],
-    "unrepresented": 6
+    "unrepresented": 6,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_SITOFP",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4"
+      ]
+     },
+     {
+      "builder": "X86_SITOFP",
+      "example": [
+       "s32",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_SITOFP",
+      "example": [
+       "s32",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "X86_SITOFP",
+      "example": [
+       "s64",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "X86_SITOFP",
+      "example": [
+       "s64",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "X86_SITOFP",
+      "example": [
+       "s80",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@6"
+      ]
+     }
+    ]
    }
   },
   "X86_SMULH": {
@@ -2636,7 +5118,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -2648,7 +5131,8 @@
      "G_SMULH",
      "G_UMULH"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_STORE": {
@@ -2662,7 +5146,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2673,7 +5158,8 @@
     "representatives": [
      "G_STORE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -2703,7 +5189,53 @@
       "p0"
      ]
     ],
-    "unrepresented": 4
+    "unrepresented": 4,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_STORE",
+      "example": [
+       "p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_STORE",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "none@None"
+      ]
+     },
+     {
+      "builder": "X86_STORE",
+      "example": [
+       "v2p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "X86_STORE",
+      "example": [
+       "v4p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4"
+      ]
+     }
+    ]
    },
    "pair(0,1)+mem": {
     "candidates": 13248,
@@ -2768,7 +5300,129 @@
       "v8s64"
      ]
     ],
-    "unrepresented": 10
+    "unrepresented": 10,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_STORE",
+      "example": [
+       "p0",
+       "p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_STORE",
+      "example": [
+       "p0",
+       "s1",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "none@None"
+      ]
+     },
+     {
+      "builder": "X86_STORE",
+      "example": [
+       "s1",
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@8"
+      ]
+     },
+     {
+      "builder": "X86_STORE",
+      "example": [
+       "s64",
+       "p0",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "X86_STORE",
+      "example": [
+       "s80",
+       "s1",
+       "s80"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@7"
+      ]
+     },
+     {
+      "builder": "X86_STORE",
+      "example": [
+       "v2p0",
+       "p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "X86_STORE",
+      "example": [
+       "v2p0",
+       "s1",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@9"
+      ]
+     },
+     {
+      "builder": "X86_STORE",
+      "example": [
+       "v4p0",
+       "p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4"
+      ]
+     },
+     {
+      "builder": "X86_STORE",
+      "example": [
+       "v4s32",
+       "p0",
+       "v2s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "X86_STORE",
+      "example": [
+       "v8s64",
+       "p0",
+       "v8s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@5"
+      ]
+     }
+    ]
    }
   },
   "X86_TRAP": {
@@ -2782,7 +5436,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 3,
@@ -2795,7 +5450,8 @@
      "G_DEBUGTRAP",
      "G_UBSANTRAP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_TRUNC": {
@@ -2809,7 +5465,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2820,7 +5477,8 @@
     "representatives": [
      "G_TRUNC"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -2838,7 +5496,20 @@
       "s8"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_TRUNC",
+      "example": [
+       "s1",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "X86_UADDE": {
@@ -2852,7 +5523,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 4,
@@ -2866,7 +5538,8 @@
      "G_USUBE",
      "G_USUBO"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -2904,7 +5577,65 @@
       "p0"
      ]
     ],
-    "unrepresented": 4
+    "unrepresented": 4,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_UADDE",
+      "example": [
+       "p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "none@None",
+       "none@None",
+       "none@None",
+       "none@None"
+      ]
+     },
+     {
+      "builder": "X86_UADDE",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4",
+       "match@4",
+       "match@4",
+       "match@4"
+      ]
+     },
+     {
+      "builder": "X86_UADDE",
+      "example": [
+       "s8",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0",
+       "match@0",
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_UADDE",
+      "example": [
+       "s64",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1",
+       "match@1",
+       "match@1",
+       "match@1"
+      ]
+     }
+    ]
    }
   },
   "X86_UITOFP": {
@@ -2918,7 +5649,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2929,7 +5661,8 @@
     "representatives": [
      "G_UITOFP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -2955,7 +5688,31 @@
       "s32"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_UITOFP",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@5"
+      ]
+     },
+     {
+      "builder": "X86_UITOFP",
+      "example": [
+       "s32",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "X86_UMIN": {
@@ -2969,7 +5726,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 4,
@@ -2983,7 +5741,8 @@
      "G_SMIN",
      "G_SMAX"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "X86_UNMERGE_VALUES": {
@@ -2997,7 +5756,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3008,7 +5768,8 @@
     "representatives": [
      "G_UNMERGE_VALUES"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 576,
@@ -3038,7 +5799,42 @@
       "p0"
      ]
     ],
-    "unrepresented": 3
+    "unrepresented": 3,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_UNMERGE_VALUES",
+      "example": [
+       "p0",
+       "s1"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "X86_UNMERGE_VALUES",
+      "example": [
+       "p0",
+       "s80"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "X86_UNMERGE_VALUES",
+      "example": [
+       "s1",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     }
+    ]
    }
   },
   "X86_ZEXTLOAD": {
@@ -3052,7 +5848,8 @@
     "representatives": [
      "C2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3063,7 +5860,8 @@
     "representatives": [
      "G_ZEXTLOAD"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)+mem": {
     "candidates": 13248,
@@ -3088,7 +5886,33 @@
       "s8"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "X86_ZEXTLOAD",
+      "example": [
+       "s16",
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "X86_ZEXTLOAD",
+      "example": [
+       "s64",
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     }
+    ]
    }
   }
  },

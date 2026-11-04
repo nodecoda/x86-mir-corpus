@@ -283,6 +283,30 @@ def _panel_query(component, value, classes, num_slots):
     return types
 
 
+def _signature_label(signature):
+    """JSON-friendly identity of a quotient key (per opcode first match)."""
+    return [f"{verdict}@{rule}" for verdict, rule in signature]
+
+
+def _unrepresented_entry(builder, component, signature, assignment):
+    """One uncovered class, with a representative and a reason.
+
+    ``opaque_predicate`` means the rule set reads a predicate the expression
+    layer cannot reduce, so the class boundary is not trustworthy yet;
+    ``panel_gap`` means a modelled class the boundary panel simply misses and
+    the next panel revision should cover.
+    """
+    reason = ("opaque_predicate"
+              if any(verdict == "unknown" for verdict, _ in signature)
+              else "panel_gap")
+    return {
+        "builder": builder.name,
+        "signature": _signature_label(signature),
+        "example": axis_repr(component, assignment),
+        "reason": reason,
+    }
+
+
 def analyze_builder(builder, profile, config, classes, mem_classes, aligns):
     _, opaque = builder_predicates(builder)
     env = domain.probe_env(classes, profile.feature_env(
@@ -294,7 +318,8 @@ def analyze_builder(builder, profile, config, classes, mem_classes, aligns):
         values = _axis_domain(component, classes, mem_classes, aligns)
         if any(not group for group in values):
             axes[name] = {"keys": 0, "length": 0, "representatives": [],
-                          "unrepresented": 0, "oversampled": 0,
+                          "unrepresented": 0, "unrepresented_detail": [],
+                          "oversampled": 0,
                           "opaque": True, "candidates": 0}
             continue
         seen = {}
@@ -328,13 +353,17 @@ def analyze_builder(builder, profile, config, classes, mem_classes, aligns):
             "representatives": [axis_repr(component, assignment)
                                 for assignment in reps],
             "unrepresented": len(unrepresented),
+            "unrepresented_detail": [
+                _unrepresented_entry(builder, component, signature,
+                                     seen[signature])
+                for signature in unrepresented],
             "oversampled": len(oversampled),
             "opaque": any("unknown" in signature for signature in order),
             "candidates": total,
         }
     axes["config"] = {
         "keys": 1, "length": 1, "representatives": [config],
-        "unrepresented": 0, "oversampled": 0,
+        "unrepresented": 0, "unrepresented_detail": [], "oversampled": 0,
         "opaque": bool(opaque),
         "candidates": 1,
         "note": "run once per config; the corpus config axis is the profile",
@@ -343,7 +372,7 @@ def analyze_builder(builder, profile, config, classes, mem_classes, aligns):
         "keys": len(builder.opcodes),
         "length": len(builder.opcodes),
         "representatives": list(builder.opcodes),
-        "unrepresented": 0, "oversampled": 0,
+        "unrepresented": 0, "unrepresented_detail": [], "oversampled": 0,
         "opaque": bool(opaque),
         "candidates": len(builder.opcodes),
     }
@@ -412,18 +441,22 @@ def analyze(result, profile, config):
         for entry in entries:
             for rep in entry["representatives"]:
                 merged.setdefault(tuple(rep), rep)
+        detail = [item for entry in entries
+                  for item in entry["unrepresented_detail"]]
         axes[name] = {
             "keys": len(merged),
             "length": sum(entry["length"] for entry in entries),
             "representatives": list(merged.values()),
-            "unrepresented": sum(entry["unrepresented"] for entry in entries),
+            "unrepresented": len(detail),
+            "unrepresented_detail": detail,
             "oversampled": sum(entry["oversampled"] for entry in entries),
             "opaque": any(entry["opaque"] for entry in entries),
             "candidates": sum(entry["candidates"] for entry in entries),
         }
     axes["config"] = {
         "keys": 1, "length": 1, "representatives": [config],
-        "unrepresented": 0, "oversampled": 0, "opaque": False,
+        "unrepresented": 0, "unrepresented_detail": [], "oversampled": 0,
+        "opaque": False,
         "candidates": 1,
         "note": "run once per config; the corpus config axis is the profile",
     }
@@ -431,7 +464,8 @@ def analyze(result, profile, config):
                       for opcode in builder.opcodes})
     axes["opcode"] = {
         "keys": len(opcodes), "length": len(opcodes),
-        "representatives": opcodes, "unrepresented": 0, "oversampled": 0,
+        "representatives": opcodes, "unrepresented": 0,
+        "unrepresented_detail": [], "oversampled": 0,
         "opaque": False, "candidates": len(opcodes),
     }
     total_rules = sum(len(builder.rules) for builder in result.builders)
@@ -460,6 +494,8 @@ def analyze(result, profile, config):
             "lambdas are listed in opaque_builders and keep the floor of the "
             "modelled quotient.",
             "unrepresented counts quotient classes the target boundary panel "
-            "never touches; it is a panel-coverage diagnostic, not a gate.",
+            "never touches; unrepresented_detail gives one example and a "
+            "reason per class (panel_gap or opaque_predicate).  It is a "
+            "panel-coverage diagnostic, not a gate.",
         ],
     }

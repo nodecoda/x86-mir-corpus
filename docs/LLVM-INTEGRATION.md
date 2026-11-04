@@ -5,7 +5,9 @@ in the LLVM checkout is modified.
 
 ## Pins
 
-- LLVM source/build: `8bc4cd96f4bb` (assertions ON, X86 target).
+- LLVM source/build: `8bc4cd96f4bb` (original) and `6706952f4a5a`
+  (validated with the contract-aware parity gate; assertions ON, X86 and
+  AArch64 targets).
 - Frozen reference: `ebac17721d12`.
 - Supported pins: `sidecar/supported-revisions.json`.  `doctor` rejects other
   revisions unless `--allow-unpinned` is passed.
@@ -54,6 +56,7 @@ while the sidecar is validated by `tests/test_sidecar_parity.py`.
 
 1. Build LLVM at the new revision with assertions and X86.
 2. Rebuild the sidecar; run `tests/test_sidecar_parity.py` with cached corpora.
-3. Require oracle byte equality and MIR per-atom equality before adding the
-   revision to `sidecar/supported-revisions.json`.
+3. Require oracle byte equality and MIR per-atom equality (on atoms the
+   sidecar hands to the legalizer; construction-rejected atoms are exempt)
+   before adding the revision to `sidecar/supported-revisions.json`.
 4. Regenerate baselines with `baseline capture` and record the change.

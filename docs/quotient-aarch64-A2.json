@@ -15,20 +15,67 @@
    "representatives": [
     "A2"
    ],
-   "unrepresented": 0
+   "unrepresented": 0,
+   "unrepresented_detail": []
   },
   "mem": {
-   "candidates": 15,
-   "keys": 1,
-   "length": 15,
+   "candidates": 54,
+   "keys": 2,
+   "length": 54,
    "opaque": false,
    "oversampled": 0,
    "representatives": [
     [
-     "s8"
+     "p0"
+    ],
+    [
+     "nxv2s64"
     ]
    ],
-   "unrepresented": 3
+   "unrepresented": 4,
+   "unrepresented_detail": [
+    {
+     "builder": "AArch64_SEXTLOAD",
+     "example": [
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@5"
+     ]
+    },
+    {
+     "builder": "AArch64_SEXTLOAD",
+     "example": [
+      "nxv2s64"
+     ],
+     "reason": "opaque_predicate",
+     "signature": [
+      "unknown@4"
+     ]
+    },
+    {
+     "builder": "AArch64_INDEXED_LOAD",
+     "example": [
+      "p0"
+     ],
+     "reason": "opaque_predicate",
+     "signature": [
+      "unknown@1"
+     ]
+    },
+    {
+     "builder": "AArch64_INDEXED_SEXTLOAD",
+     "example": [
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2",
+      "match@2"
+     ]
+    }
+   ]
   },
   "opcode": {
    "candidates": 227,
@@ -265,26 +312,83 @@
     "G_ZEXT",
     "G_ZEXTLOAD"
    ],
-   "unrepresented": 0
+   "unrepresented": 0,
+   "unrepresented_detail": []
   },
   "pair(0,1)": {
-   "candidates": 120050,
-   "keys": 51,
-   "length": 120050,
+   "candidates": 122451,
+   "keys": 88,
+   "length": 122451,
    "opaque": false,
-   "oversampled": 79,
+   "oversampled": 133,
    "representatives": [
     [
      "p0",
      "p0"
     ],
     [
+     "p0",
+     "s8"
+    ],
+    [
+     "p0",
+     "i8"
+    ],
+    [
+     "p0",
+     "nxv2i64"
+    ],
+    [
+     "s8",
+     "p0"
+    ],
+    [
      "s32",
+     "p0"
+    ],
+    [
+     "p0",
      "s32"
     ],
     [
      "p0",
-     "s8"
+     "s128"
+    ],
+    [
+     "p0",
+     "i32"
+    ],
+    [
+     "s128",
+     "s128"
+    ],
+    [
+     "s32",
+     "s32"
+    ],
+    [
+     "i32",
+     "i64"
+    ],
+    [
+     "v2p0",
+     "v2f32"
+    ],
+    [
+     "v2s8",
+     "p0"
+    ],
+    [
+     "v2s16",
+     "p0"
+    ],
+    [
+     "v2f32",
+     "p0"
+    ],
+    [
+     "nxv2i64",
+     "p0"
     ],
     [
      "p0",
@@ -295,36 +399,32 @@
      "s64"
     ],
     [
-     "s8",
-     "p0"
-    ],
-    [
      "i32",
      "i32"
-    ],
-    [
-     "nxv2i64",
-     "p0"
     ],
     [
      "s8",
      "s8"
     ],
     [
-     "i32",
-     "i64"
+     "v2s8",
+     "s8"
     ],
     [
-     "s128",
-     "s128"
+     "v2s16",
+     "s16"
     ],
     [
      "v8i8",
      "v8i8"
     ],
     [
-     "p0",
-     "nxv2i64"
+     "v2p0",
+     "p0"
+    ],
+    [
+     "bf16",
+     "p0"
     ],
     [
      "f32",
@@ -351,12 +451,76 @@
      "f32"
     ],
     [
+     "s64",
+     "p0"
+    ],
+    [
      "s128",
      "p0"
     ],
     [
+     "i128",
+     "p0"
+    ],
+    [
+     "v4s8",
+     "p0"
+    ],
+    [
+     "p0",
+     "v2s8"
+    ],
+    [
+     "p0",
+     "v2s16"
+    ],
+    [
+     "s32",
+     "v2p0"
+    ],
+    [
      "i32",
      "p0"
+    ],
+    [
+     "v2p0",
+     "v2p0"
+    ],
+    [
+     "v2s8",
+     "v2s16"
+    ],
+    [
+     "p0",
+     "bf16"
+    ],
+    [
+     "s32",
+     "s128"
+    ],
+    [
+     "v2p0",
+     "s8"
+    ],
+    [
+     "v2p0",
+     "v4s32"
+    ],
+    [
+     "v2p0",
+     "v8s16"
+    ],
+    [
+     "v2p0",
+     "v16s8"
+    ],
+    [
+     "v2s8",
+     "v2s8"
+    ],
+    [
+     "v2s64",
+     "v2s32"
     ],
     [
      "v2s32",
@@ -372,14 +536,6 @@
     ],
     [
      "v16s8",
-     "p0"
-    ],
-    [
-     "v2s8",
-     "p0"
-    ],
-    [
-     "v2s16",
      "p0"
     ],
     [
@@ -407,10 +563,6 @@
      "f128"
     ],
     [
-     "v2p0",
-     "p0"
-    ],
-    [
      "f32",
      "bf16"
     ],
@@ -419,44 +571,80 @@
      "f16"
     ],
     [
-     "i16",
-     "f16"
-    ],
-    [
-     "f16",
-     "i32"
-    ],
-    [
-     "p0",
-     "s32"
-    ],
-    [
-     "i64",
-     "p0"
-    ],
-    [
-     "s32",
-     "p0"
-    ],
-    [
-     "p0",
-     "s128"
+     "v2p0",
+     "v2s16"
     ],
     [
      "v2s32",
      "p0"
     ],
     [
-     "v4s32",
-     "v2s32"
+     "s128",
+     "f16"
     ],
     [
-     "p0",
+     "i32",
+     "f128"
+    ],
+    [
+     "i16",
+     "f16"
+    ],
+    [
+     "s16",
+     "v2p0"
+    ],
+    [
+     "f16",
+     "i32"
+    ],
+    [
+     "f16",
+     "i128"
+    ],
+    [
+     "v2s16",
+     "s128"
+    ],
+    [
+     "v2p0",
      "v2s8"
     ],
     [
+     "i64",
+     "p0"
+    ],
+    [
      "p0",
-     "v2s16"
+     "v2p0"
+    ],
+    [
+     "s16",
+     "s16"
+    ],
+    [
+     "s64",
+     "s64"
+    ],
+    [
+     "v2s8",
+     "v2p0"
+    ],
+    [
+     "v2s16",
+     "v2p0"
+    ],
+    [
+     "v2s32",
+     "v2p0"
+    ],
+    [
+     "v2s32",
+     "v2s32"
+    ],
+    [
+     "v4s32",
+     "v2s32"
     ],
     [
      "v2s32",
@@ -475,28 +663,1535 @@
      "v2f32"
     ],
     [
+     "p0",
+     "v4s32"
+    ],
+    [
+     "p0",
+     "v8s16"
+    ],
+    [
      "i8",
      "v8i8"
     ]
    ],
-   "unrepresented": 59
+   "unrepresented": 127,
+   "unrepresented_detail": [
+    {
+     "builder": "AArch64_INSERT",
+     "example": [
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_EXTRACT",
+     "example": [
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "AArch64_EXTRACT",
+     "example": [
+      "p0",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@5"
+     ]
+    },
+    {
+     "builder": "AArch64_EXTRACT",
+     "example": [
+      "s128",
+      "s128"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@7"
+     ]
+    },
+    {
+     "builder": "AArch64_SHL",
+     "example": [
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4",
+      "match@4",
+      "match@4"
+     ]
+    },
+    {
+     "builder": "AArch64_SHL",
+     "example": [
+      "p0",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@11",
+      "match@11",
+      "match@11"
+     ]
+    },
+    {
+     "builder": "AArch64_SHL",
+     "example": [
+      "p0",
+      "nxv2i64"
+     ],
+     "reason": "opaque_predicate",
+     "signature": [
+      "unknown@2",
+      "unknown@2",
+      "unknown@2"
+     ]
+    },
+    {
+     "builder": "AArch64_SHL",
+     "example": [
+      "s32",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_SHL",
+     "example": [
+      "i32",
+      "i64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1",
+      "match@1",
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_SHL",
+     "example": [
+      "v2p0",
+      "v2f32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@13",
+      "match@13",
+      "match@13"
+     ]
+    },
+    {
+     "builder": "AArch64_PTR_ADD",
+     "example": [
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_PTR_ADD",
+     "example": [
+      "p0",
+      "i64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_PTRMASK",
+     "example": [
+      "p0",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_SADDE",
+     "example": [
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2",
+      "match@2",
+      "match@2",
+      "match@2",
+      "match@2",
+      "match@2",
+      "match@2",
+      "match@2"
+     ]
+    },
+    {
+     "builder": "AArch64_SADDE",
+     "example": [
+      "i32",
+      "i32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0",
+      "match@0",
+      "match@0",
+      "match@0",
+      "match@0",
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_FSHL",
+     "example": [
+      "i32",
+      "i32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_ROTR",
+     "example": [
+      "s8",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_ROTR",
+     "example": [
+      "i32",
+      "i64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_SBFX",
+     "example": [
+      "s32",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_CTPOP",
+     "example": [
+      "s128",
+      "s128"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "AArch64_CTPOP",
+     "example": [
+      "i32",
+      "i32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_CTPOP",
+     "example": [
+      "v2s8",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@9"
+     ]
+    },
+    {
+     "builder": "AArch64_CTPOP",
+     "example": [
+      "v2s16",
+      "s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@10"
+     ]
+    },
+    {
+     "builder": "AArch64_CTPOP",
+     "example": [
+      "v8i8",
+      "v8i8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_CTLZ",
+     "example": [
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2",
+      "match@2"
+     ]
+    },
+    {
+     "builder": "AArch64_CTLZ",
+     "example": [
+      "p0",
+      "nxv2i64"
+     ],
+     "reason": "opaque_predicate",
+     "signature": [
+      "unknown@1",
+      "unknown@1"
+     ]
+    },
+    {
+     "builder": "AArch64_CTLZ",
+     "example": [
+      "i32",
+      "i32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_FPOWI",
+     "example": [
+      "f32",
+      "i32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_LROUND",
+     "example": [
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2",
+      "match@2"
+     ]
+    },
+    {
+     "builder": "AArch64_LROUND",
+     "example": [
+      "s64",
+      "s128"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3",
+      "match@3"
+     ]
+    },
+    {
+     "builder": "AArch64_LROUND",
+     "example": [
+      "i32",
+      "f16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1",
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_LROUND",
+     "example": [
+      "i32",
+      "f32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_LLROUND",
+     "example": [
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3",
+      "match@3"
+     ]
+    },
+    {
+     "builder": "AArch64_LLROUND",
+     "example": [
+      "s64",
+      "s128"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4",
+      "match@4"
+     ]
+    },
+    {
+     "builder": "AArch64_LLROUND",
+     "example": [
+      "i64",
+      "f16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1",
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_LLROUND",
+     "example": [
+      "i64",
+      "f32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_ICMP",
+     "example": [
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "AArch64_ICMP",
+     "example": [
+      "p0",
+      "v2s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@10"
+     ]
+    },
+    {
+     "builder": "AArch64_ICMP",
+     "example": [
+      "p0",
+      "v2s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@7"
+     ]
+    },
+    {
+     "builder": "AArch64_ICMP",
+     "example": [
+      "s32",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@8"
+     ]
+    },
+    {
+     "builder": "AArch64_ICMP",
+     "example": [
+      "v2p0",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@15"
+     ]
+    },
+    {
+     "builder": "AArch64_ICMP",
+     "example": [
+      "v2s8",
+      "v2s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@6"
+     ]
+    },
+    {
+     "builder": "AArch64_FCMP",
+     "example": [
+      "p0",
+      "bf16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4"
+     ]
+    },
+    {
+     "builder": "AArch64_FCMP",
+     "example": [
+      "p0",
+      "v2s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@7"
+     ]
+    },
+    {
+     "builder": "AArch64_FCMP",
+     "example": [
+      "s32",
+      "s128"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@11"
+     ]
+    },
+    {
+     "builder": "AArch64_FCMP",
+     "example": [
+      "i32",
+      "f16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_FCMP",
+     "example": [
+      "i32",
+      "f32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_FCMP",
+     "example": [
+      "v2s8",
+      "v2s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@6"
+     ]
+    },
+    {
+     "builder": "AArch64_ZEXT",
+     "example": [
+      "v2p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@7",
+      "match@7",
+      "match@7"
+     ]
+    },
+    {
+     "builder": "AArch64_ZEXT",
+     "example": [
+      "v2p0",
+      "v4s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@6",
+      "match@6",
+      "match@6"
+     ]
+    },
+    {
+     "builder": "AArch64_ZEXT",
+     "example": [
+      "v2p0",
+      "v8s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@5",
+      "match@5",
+      "match@5"
+     ]
+    },
+    {
+     "builder": "AArch64_ZEXT",
+     "example": [
+      "v2p0",
+      "v16s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4",
+      "match@4",
+      "match@4"
+     ]
+    },
+    {
+     "builder": "AArch64_ZEXT",
+     "example": [
+      "v2s8",
+      "v2s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@8",
+      "match@8",
+      "match@8"
+     ]
+    },
+    {
+     "builder": "AArch64_ZEXT",
+     "example": [
+      "v2s8",
+      "v2s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@9",
+      "match@9",
+      "match@9"
+     ]
+    },
+    {
+     "builder": "AArch64_ZEXT",
+     "example": [
+      "v2s64",
+      "v2s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1",
+      "match@1",
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_TRUNC",
+     "example": [
+      "v2s32",
+      "v2s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_TRUNC_SSAT_S",
+     "example": [
+      "v2i32",
+      "v2i64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTRUNC",
+     "example": [
+      "p0",
+      "v2s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@6"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTRUNC",
+     "example": [
+      "bf16",
+      "f32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTRUNC",
+     "example": [
+      "f16",
+      "f32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTRUNC",
+     "example": [
+      "f16",
+      "f128"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "AArch64_FPEXT",
+     "example": [
+      "f32",
+      "bf16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_FPEXT",
+     "example": [
+      "f128",
+      "f16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_FPEXT",
+     "example": [
+      "v2p0",
+      "v2s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTOSI",
+     "example": [
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@9",
+      "match@9"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTOSI",
+     "example": [
+      "p0",
+      "bf16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@8",
+      "match@8"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTOSI",
+     "example": [
+      "s128",
+      "f16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4",
+      "match@4"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTOSI",
+     "example": [
+      "i32",
+      "f16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1",
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTOSI",
+     "example": [
+      "i32",
+      "f32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTOSI",
+     "example": [
+      "i32",
+      "f128"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@14",
+      "match@14"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTOSI",
+     "example": [
+      "v2s16",
+      "s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@11",
+      "match@11"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTOSI_SAT",
+     "example": [
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@10",
+      "match@10"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTOSI_SAT",
+     "example": [
+      "p0",
+      "bf16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@9",
+      "match@9"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTOSI_SAT",
+     "example": [
+      "s128",
+      "f16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4",
+      "match@4"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTOSI_SAT",
+     "example": [
+      "i16",
+      "f16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1",
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTOSI_SAT",
+     "example": [
+      "i32",
+      "f32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_FPTOSI_SAT",
+     "example": [
+      "v2s16",
+      "s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@13",
+      "match@13"
+     ]
+    },
+    {
+     "builder": "AArch64_SITOFP",
+     "example": [
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@7",
+      "match@7"
+     ]
+    },
+    {
+     "builder": "AArch64_SITOFP",
+     "example": [
+      "p0",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@12",
+      "match@12"
+     ]
+    },
+    {
+     "builder": "AArch64_SITOFP",
+     "example": [
+      "s16",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@8",
+      "match@8"
+     ]
+    },
+    {
+     "builder": "AArch64_SITOFP",
+     "example": [
+      "f16",
+      "i32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1",
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_SITOFP",
+     "example": [
+      "f16",
+      "i128"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@16",
+      "match@16"
+     ]
+    },
+    {
+     "builder": "AArch64_SITOFP",
+     "example": [
+      "f32",
+      "i32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_SITOFP",
+     "example": [
+      "v2s16",
+      "s128"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@13",
+      "match@13"
+     ]
+    },
+    {
+     "builder": "AArch64_SELECT",
+     "example": [
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "AArch64_SELECT",
+     "example": [
+      "p0",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_SELECT",
+     "example": [
+      "v2p0",
+      "v2s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@5"
+     ]
+    },
+    {
+     "builder": "AArch64_INTTOPTR",
+     "example": [
+      "p0",
+      "i64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_BITCAST",
+     "example": [
+      "s16",
+      "s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_BITCAST",
+     "example": [
+      "s32",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_BITCAST",
+     "example": [
+      "s64",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "AArch64_BITCAST",
+     "example": [
+      "s128",
+      "s128"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "AArch64_BITCAST",
+     "example": [
+      "v2s8",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@8"
+     ]
+    },
+    {
+     "builder": "AArch64_BITCAST",
+     "example": [
+      "v2s16",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@9"
+     ]
+    },
+    {
+     "builder": "AArch64_MERGE_VALUES",
+     "example": [
+      "p0",
+      "s128"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "AArch64_MERGE_VALUES",
+     "example": [
+      "p0",
+      "nxv2i64"
+     ],
+     "reason": "opaque_predicate",
+     "signature": [
+      "unknown@0"
+     ]
+    },
+    {
+     "builder": "AArch64_UNMERGE_VALUES",
+     "example": [
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4"
+     ]
+    },
+    {
+     "builder": "AArch64_UNMERGE_VALUES",
+     "example": [
+      "p0",
+      "nxv2i64"
+     ],
+     "reason": "opaque_predicate",
+     "signature": [
+      "unknown@2"
+     ]
+    },
+    {
+     "builder": "AArch64_SHUFFLE_VECTOR",
+     "example": [
+      "p0",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "AArch64_SHUFFLE_VECTOR",
+     "example": [
+      "v2p0",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@10"
+     ]
+    },
+    {
+     "builder": "AArch64_SHUFFLE_VECTOR",
+     "example": [
+      "v2s8",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@5"
+     ]
+    },
+    {
+     "builder": "AArch64_SHUFFLE_VECTOR",
+     "example": [
+      "v2s16",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@6"
+     ]
+    },
+    {
+     "builder": "AArch64_SHUFFLE_VECTOR",
+     "example": [
+      "v2s32",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@7"
+     ]
+    },
+    {
+     "builder": "AArch64_SHUFFLE_VECTOR",
+     "example": [
+      "v2s32",
+      "v2s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_CONCAT_VECTORS",
+     "example": [
+      "v2p0",
+      "v2s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "AArch64_CONCAT_VECTORS",
+     "example": [
+      "v4s32",
+      "v2s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_EXTRACT_SUBVECTOR",
+     "example": [
+      "p0",
+      "v2s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@5"
+     ]
+    },
+    {
+     "builder": "AArch64_EXTRACT_SUBVECTOR",
+     "example": [
+      "p0",
+      "v2s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@6"
+     ]
+    },
+    {
+     "builder": "AArch64_EXTRACT_SUBVECTOR",
+     "example": [
+      "v2s32",
+      "v4s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_SPLAT_VECTOR",
+     "example": [
+      "nxv2s64",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_BRJT",
+     "example": [
+      "p0",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_FADD",
+     "example": [
+      "p0",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@7"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_FADD",
+     "example": [
+      "f16",
+      "v4f16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_FADD",
+     "example": [
+      "f32",
+      "v2f32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_FMUL",
+     "example": [
+      "p0",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@6"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_FMUL",
+     "example": [
+      "p0",
+      "v4s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_FMUL",
+     "example": [
+      "p0",
+      "v8s16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@5"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_ADD",
+     "example": [
+      "p0",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@7"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_ADD",
+     "example": [
+      "p0",
+      "v2s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@6"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_ADD",
+     "example": [
+      "i8",
+      "v8i8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_FMIN",
+     "example": [
+      "p0",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@6",
+      "match@6",
+      "match@6",
+      "match@6"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_FMIN",
+     "example": [
+      "f16",
+      "v4f16"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1",
+      "match@1",
+      "match@1",
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_FMIN",
+     "example": [
+      "f32",
+      "v2f32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0",
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_SMIN",
+     "example": [
+      "p0",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@6",
+      "match@6",
+      "match@6",
+      "match@6"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_SMIN",
+     "example": [
+      "i8",
+      "v8i8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0",
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_OR",
+     "example": [
+      "p0",
+      "v2p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_VECREDUCE_OR",
+     "example": [
+      "p0",
+      "v2s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1",
+      "match@1",
+      "match@1"
+     ]
+    }
+   ]
   },
   "pair(0,1)+mem": {
-   "candidates": 48020,
-   "keys": 5,
-   "length": 48020,
+   "candidates": 216090,
+   "keys": 12,
+   "length": 216090,
    "opaque": false,
-   "oversampled": 6,
+   "oversampled": 16,
    "representatives": [
     [
      "p0",
      "p0",
-     "s8"
+     "p0"
+    ],
+    [
+     "p0",
+     "p0",
+     "nxv2s64"
     ],
     [
      "s8",
      "p0",
-     "s8"
+     "p0"
     ],
     [
      "s64",
@@ -506,36 +2201,157 @@
     [
      "nxv2i64",
      "p0",
-     "s8"
+     "p0"
+    ],
+    [
+     "s64",
+     "p0",
+     "p0"
     ],
     [
      "s128",
      "p0",
-     "s8"
+     "p0"
+    ],
+    [
+     "i128",
+     "p0",
+     "p0"
+    ],
+    [
+     "v2p0",
+     "p0",
+     "p0"
+    ],
+    [
+     "v2s8",
+     "p0",
+     "p0"
+    ],
+    [
+     "v4s8",
+     "p0",
+     "p0"
+    ],
+    [
+     "v4s8",
+     "p0",
+     "s32"
     ]
    ],
-   "unrepresented": 0
+   "unrepresented": 7,
+   "unrepresented_detail": [
+    {
+     "builder": "AArch64_SEXTLOAD",
+     "example": [
+      "p0",
+      "p0",
+      "nxv2s64"
+     ],
+     "reason": "opaque_predicate",
+     "signature": [
+      "unknown@4"
+     ]
+    },
+    {
+     "builder": "AArch64_SEXTLOAD",
+     "example": [
+      "s64",
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_ZEXTLOAD",
+     "example": [
+      "p0",
+      "p0",
+      "nxv2s64"
+     ],
+     "reason": "opaque_predicate",
+     "signature": [
+      "unknown@3"
+     ]
+    },
+    {
+     "builder": "AArch64_ZEXTLOAD",
+     "example": [
+      "s64",
+      "p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_LOAD",
+     "example": [
+      "p0",
+      "p0",
+      "nxv2s64"
+     ],
+     "reason": "opaque_predicate",
+     "signature": [
+      "unknown@11"
+     ]
+    },
+    {
+     "builder": "AArch64_STORE",
+     "example": [
+      "p0",
+      "p0",
+      "nxv2s64"
+     ],
+     "reason": "opaque_predicate",
+     "signature": [
+      "unknown@13"
+     ]
+    },
+    {
+     "builder": "AArch64_STORE",
+     "example": [
+      "v4s8",
+      "p0",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@14"
+     ]
+    }
+   ]
   },
   "pair(0,2)": {
    "candidates": 2401,
-   "keys": 1,
+   "keys": 2,
    "length": 2401,
    "opaque": false,
-   "oversampled": 1,
+   "oversampled": 2,
    "representatives": [
     [
      "p0",
      "p0"
+    ],
+    [
+     "s8",
+     "p0"
     ]
    ],
-   "unrepresented": 0
+   "unrepresented": 0,
+   "unrepresented_detail": []
   },
   "slot0": {
    "candidates": 1323,
-   "keys": 16,
+   "keys": 22,
    "length": 1323,
    "opaque": false,
-   "oversampled": 57,
+   "oversampled": 109,
    "representatives": [
     [
      "p0"
@@ -556,10 +2372,7 @@
      "s8"
     ],
     [
-     "i32"
-    ],
-    [
-     "nxv2s64"
+     "i16"
     ],
     [
      "v2s8"
@@ -568,7 +2381,31 @@
      "v2s16"
     ],
     [
+     "s32"
+    ],
+    [
+     "i32"
+    ],
+    [
+     "v4s8"
+    ],
+    [
+     "nxv2s64"
+    ],
+    [
+     "v2f32"
+    ],
+    [
+     "s128"
+    ],
+    [
+     "s64"
+    ],
+    [
      "v2i32"
+    ],
+    [
+     "bf16"
     ],
     [
      "f16"
@@ -580,42 +2417,184 @@
      "f128"
     ],
     [
-     "bf16"
-    ],
-    [
-     "s128"
+     "s16"
     ]
    ],
-   "unrepresented": 0
+   "unrepresented": 0,
+   "unrepresented_detail": []
+  },
+  "slot0+mem": {
+   "candidates": 882,
+   "keys": 8,
+   "length": 882,
+   "opaque": false,
+   "oversampled": 4,
+   "representatives": [
+    [
+     "p0",
+     "p0"
+    ],
+    [
+     "p0",
+     "nxv2s64"
+    ],
+    [
+     "s8",
+     "p0"
+    ],
+    [
+     "s128",
+     "p0"
+    ],
+    [
+     "i128",
+     "p0"
+    ],
+    [
+     "v2p0",
+     "p0"
+    ],
+    [
+     "v2s8",
+     "p0"
+    ],
+    [
+     "v4s8",
+     "s32"
+    ]
+   ],
+   "unrepresented": 2,
+   "unrepresented_detail": [
+    {
+     "builder": "AArch64_STORE",
+     "example": [
+      "p0",
+      "nxv2s64"
+     ],
+     "reason": "opaque_predicate",
+     "signature": [
+      "unknown@13"
+     ]
+    },
+    {
+     "builder": "AArch64_STORE",
+     "example": [
+      "v4s8",
+      "s32"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@14"
+     ]
+    }
+   ]
   },
   "slot1": {
    "candidates": 343,
-   "keys": 1,
+   "keys": 10,
    "length": 343,
    "opaque": false,
-   "oversampled": 7,
+   "oversampled": 22,
    "representatives": [
     [
      "p0"
+    ],
+    [
+     "s8"
+    ],
+    [
+     "s32"
+    ],
+    [
+     "s128"
+    ],
+    [
+     "i32"
+    ],
+    [
+     "nxv2i64"
+    ],
+    [
+     "v2s8"
+    ],
+    [
+     "v2s16"
+    ],
+    [
+     "bf16"
+    ],
+    [
+     "v2p0"
     ]
    ],
-   "unrepresented": 0
+   "unrepresented": 0,
+   "unrepresented_detail": []
   },
   "triple(0,1,2)": {
    "candidates": 705894,
-   "keys": 5,
+   "keys": 15,
    "length": 705894,
    "opaque": false,
-   "oversampled": 6,
+   "oversampled": 8,
    "representatives": [
     [
      "p0",
      "p0",
+     "p0"
+    ],
+    [
+     "p0",
+     "v2p0",
+     "p0"
+    ],
+    [
+     "p0",
+     "v2p0",
+     "s8"
+    ],
+    [
+     "p0",
+     "v2s8",
+     "p0"
+    ],
+    [
+     "p0",
+     "nxv2i64",
+     "p0"
+    ],
+    [
+     "s8",
+     "v2s8",
+     "p0"
+    ],
+    [
+     "s8",
+     "v4s8",
      "p0"
     ],
     [
      "s16",
      "nxv8s16",
+     "s64"
+    ],
+    [
+     "i8",
+     "v8i8",
+     "p0"
+    ],
+    [
+     "v2p0",
+     "p0",
+     "p0"
+    ],
+    [
+     "v2s8",
+     "p0",
+     "p0"
+    ],
+    [
+     "nxv2s64",
+     "s64",
      "s64"
     ],
     [
@@ -634,7 +2613,190 @@
      "s64"
     ]
    ],
-   "unrepresented": 7
+   "unrepresented": 15,
+   "unrepresented_detail": [
+    {
+     "builder": "AArch64_EXTRACT_VECTOR_ELT",
+     "example": [
+      "p0",
+      "v2p0",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@3"
+     ]
+    },
+    {
+     "builder": "AArch64_EXTRACT_VECTOR_ELT",
+     "example": [
+      "p0",
+      "v2p0",
+      "s8"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@2"
+     ]
+    },
+    {
+     "builder": "AArch64_EXTRACT_VECTOR_ELT",
+     "example": [
+      "p0",
+      "v2s8",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_EXTRACT_VECTOR_ELT",
+     "example": [
+      "p0",
+      "nxv2i64",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "none@None"
+     ]
+    },
+    {
+     "builder": "AArch64_EXTRACT_VECTOR_ELT",
+     "example": [
+      "s8",
+      "v2s8",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@4"
+     ]
+    },
+    {
+     "builder": "AArch64_EXTRACT_VECTOR_ELT",
+     "example": [
+      "s8",
+      "v4s8",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@5"
+     ]
+    },
+    {
+     "builder": "AArch64_EXTRACT_VECTOR_ELT",
+     "example": [
+      "s16",
+      "nxv8s16",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_EXTRACT_VECTOR_ELT",
+     "example": [
+      "i8",
+      "v8i8",
+      "p0"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@6"
+     ]
+    },
+    {
+     "builder": "AArch64_INSERT_VECTOR_ELT",
+     "example": [
+      "nxv2s64",
+      "s64",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_MEMSET",
+     "example": [
+      "p0",
+      "s8",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_MEMSET",
+     "example": [
+      "p0",
+      "s64",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_MEMCPY",
+     "example": [
+      "p0",
+      "p0",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0",
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_MEMCPY_INLINE",
+     "example": [
+      "p0",
+      "p0",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    },
+    {
+     "builder": "AArch64_MEMSET_INLINE",
+     "example": [
+      "p0",
+      "s8",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@1"
+     ]
+    },
+    {
+     "builder": "AArch64_MEMSET_INLINE",
+     "example": [
+      "p0",
+      "s64",
+      "s64"
+     ],
+     "reason": "panel_gap",
+     "signature": [
+      "match@0"
+     ]
+    }
+   ]
   }
  },
  "classes": [
@@ -691,27 +2853,41 @@
  "config": "A2",
  "coverage": {
   "rules_total": 616,
-  "rules_with_representative": 185,
-  "rules_without_representative": 427
+  "rules_with_representative": 364,
+  "rules_without_representative": 248
  },
  "mem_classes": [
+  "p0",
   "s8",
   "s16",
   "s32",
   "s64",
-  "s128"
+  "s128",
+  "v2p0",
+  "v2s32",
+  "v4s16",
+  "v8s8",
+  "v2s64",
+  "v4s32",
+  "v8s16",
+  "v16s8",
+  "nxv2s64",
+  "nxv4s32",
+  "nxv8s16",
+  "nxv16s8"
  ],
  "notes": [
   "A key is the tuple of modelled predicate results (1/0/None) for one dependency component; None is a distinct opaque value.",
   "The candidate universe is the parsed class list, so class counts are exact for modelled predicates, not a panel sample.",
   "Predicate calls inside lambdas are not recovered; rule sets with lambdas are listed in opaque_builders and keep the floor of the modelled quotient.",
-  "unrepresented counts quotient classes the target boundary panel never touches; it is a panel-coverage diagnostic, not a gate."
+  "unrepresented counts quotient classes the target boundary panel never touches; unrepresented_detail gives one example and a reason per class (panel_gap or opaque_predicate).  It is a panel-coverage diagnostic, not a gate."
  ],
  "opaque_builders": [
   "AArch64_ABS",
   "AArch64_ADD",
   "AArch64_BITCAST",
   "AArch64_CONCAT_VECTORS",
+  "AArch64_CTPOP",
   "AArch64_EXTRACT_VECTOR_ELT",
   "AArch64_FADD",
   "AArch64_FCMP",
@@ -721,6 +2897,7 @@
   "AArch64_FPTOSI_SAT",
   "AArch64_FPTRUNC",
   "AArch64_ICMP",
+  "AArch64_INDEXED_LOAD",
   "AArch64_INTTOPTR",
   "AArch64_LOAD",
   "AArch64_MERGE_VALUES",
@@ -751,7 +2928,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 6,
@@ -767,7 +2945,8 @@
      "G_SAVGFLOOR",
      "G_SAVGCEIL"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_ABS": {
@@ -781,7 +2960,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -792,11 +2972,12 @@
     "representatives": [
      "G_ABS"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 49,
-    "keys": 4,
+    "keys": 7,
     "length": 49,
     "opaque": false,
     "oversampled": 4,
@@ -812,9 +2993,19 @@
      ],
      [
       "v2p0"
+     ],
+     [
+      "v2s8"
+     ],
+     [
+      "v2s16"
+     ],
+     [
+      "v4s8"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_ADD": {
@@ -828,7 +3019,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 5,
@@ -843,14 +3035,15 @@
      "G_OR",
      "G_XOR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 49,
-    "keys": 5,
+    "keys": 7,
     "length": 49,
     "opaque": false,
-    "oversampled": 5,
+    "oversampled": 7,
     "representatives": [
      [
       "p0"
@@ -862,13 +3055,20 @@
       "i32"
      ],
      [
+      "v2s8"
+     ],
+     [
+      "v4s8"
+     ],
+     [
       "nxv2i64"
      ],
      [
       "nxv2s64"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_ATOMICRMW_MIN": {
@@ -882,7 +3082,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 4,
@@ -896,51 +3097,8 @@
      "G_ATOMICRMW_UMIN",
      "G_ATOMICRMW_UMAX"
     ],
-    "unrepresented": 0
-   },
-   "pair(0,1)": {
-    "candidates": 2401,
-    "keys": 1,
-    "length": 2401,
-    "opaque": false,
-    "oversampled": 1,
-    "representatives": [
-     [
-      "p0",
-      "p0"
-     ]
-    ],
-    "unrepresented": 0
-   }
-  },
-  "AArch64_ATOMICRMW_XCHG": {
-   "config": {
-    "candidates": 1,
-    "keys": 1,
-    "length": 1,
-    "note": "run once per config; the corpus config axis is the profile",
-    "opaque": false,
-    "oversampled": 0,
-    "representatives": [
-     "A2"
-    ],
-    "unrepresented": 0
-   },
-   "opcode": {
-    "candidates": 6,
-    "keys": 6,
-    "length": 6,
-    "opaque": false,
-    "oversampled": 0,
-    "representatives": [
-     "G_ATOMICRMW_XCHG",
-     "G_ATOMICRMW_ADD",
-     "G_ATOMICRMW_SUB",
-     "G_ATOMICRMW_AND",
-     "G_ATOMICRMW_OR",
-     "G_ATOMICRMW_XOR"
-    ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -962,7 +3120,63 @@
       "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   }
+  },
+  "AArch64_ATOMICRMW_XCHG": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   },
+   "opcode": {
+    "candidates": 6,
+    "keys": 6,
+    "length": 6,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_ATOMICRMW_XCHG",
+     "G_ATOMICRMW_ADD",
+     "G_ATOMICRMW_SUB",
+     "G_ATOMICRMW_AND",
+     "G_ATOMICRMW_OR",
+     "G_ATOMICRMW_XOR"
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 3,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "s32",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_ATOMIC_CMPXCHG": {
@@ -976,7 +3190,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -987,7 +3202,8 @@
     "representatives": [
      "G_ATOMIC_CMPXCHG"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -1013,7 +3229,8 @@
       "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_ATOMIC_CMPXCHG_WITH_SUCCESS": {
@@ -1027,7 +3244,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1038,21 +3256,27 @@
     "representatives": [
      "G_ATOMIC_CMPXCHG_WITH_SUCCESS"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,2)": {
     "candidates": 2401,
-    "keys": 1,
+    "keys": 2,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 2,
     "representatives": [
      [
       "p0",
       "p0"
+     ],
+     [
+      "s8",
+      "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_BITCAST": {
@@ -1066,7 +3290,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1077,34 +3302,135 @@
     "representatives": [
      "G_BITCAST"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 1,
+    "keys": 8,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 2,
     "representatives": [
      [
       "p0",
       "p0"
+     ],
+     [
+      "p0",
+      "v2p0"
+     ],
+     [
+      "s16",
+      "s16"
+     ],
+     [
+      "s32",
+      "s32"
+     ],
+     [
+      "s64",
+      "s64"
+     ],
+     [
+      "s128",
+      "s128"
+     ],
+     [
+      "v2s8",
+      "v2p0"
+     ],
+     [
+      "v2s16",
+      "v2p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 6,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_BITCAST",
+      "example": [
+       "s16",
+       "s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "AArch64_BITCAST",
+      "example": [
+       "s32",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_BITCAST",
+      "example": [
+       "s64",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "AArch64_BITCAST",
+      "example": [
+       "s128",
+       "s128"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "AArch64_BITCAST",
+      "example": [
+       "v2s8",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@8"
+      ]
+     },
+     {
+      "builder": "AArch64_BITCAST",
+      "example": [
+       "v2s16",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@9"
+      ]
+     }
+    ]
    },
    "slot0": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 2,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 2,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "v2p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_BITREVERSE": {
@@ -1118,7 +3444,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1129,26 +3456,37 @@
     "representatives": [
      "G_BITREVERSE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 49,
-    "keys": 3,
+    "keys": 6,
     "length": 49,
     "opaque": false,
-    "oversampled": 3,
+    "oversampled": 5,
     "representatives": [
      [
       "p0"
      ],
      [
+      "s8"
+     ],
+     [
       "i32"
+     ],
+     [
+      "v2s8"
+     ],
+     [
+      "v2s16"
      ],
      [
       "nxv2i64"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_BLOCK_ADDR": {
@@ -1162,7 +3500,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1173,7 +3512,8 @@
     "representatives": [
      "G_BLOCK_ADDR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_BR": {
@@ -1187,7 +3527,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1198,7 +3539,8 @@
     "representatives": [
      "G_BR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_BRCOND": {
@@ -1212,7 +3554,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1223,7 +3566,8 @@
     "representatives": [
      "G_BRCOND"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_BRINDIRECT": {
@@ -1237,7 +3581,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1248,7 +3593,8 @@
     "representatives": [
      "G_BRINDIRECT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_BRJT": {
@@ -1262,7 +3608,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1273,7 +3620,8 @@
     "representatives": [
      "G_BRJT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -1291,7 +3639,20 @@
       "s64"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_BRJT",
+      "example": [
+       "p0",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_BSWAP": {
@@ -1305,7 +3666,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1316,7 +3678,8 @@
     "representatives": [
      "G_BSWAP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_BUILD_VECTOR": {
@@ -1330,7 +3693,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1341,7 +3705,147 @@
     "representatives": [
      "G_BUILD_VECTOR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 5,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 3,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "v2p0",
+      "p0"
+     ],
+     [
+      "v2s8",
+      "p0"
+     ],
+     [
+      "v2s32",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   }
+  },
+  "AArch64_BUILD_VECTOR_TRUNC": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_BUILD_VECTOR_TRUNC"
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   }
+  },
+  "AArch64_BZERO": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_BZERO"
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   }
+  },
+  "AArch64_CLMUL": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     "G_CLMUL"
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   }
+  },
+  "AArch64_CONCAT_VECTORS": {
+   "config": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "note": "run once per config; the corpus config axis is the profile",
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "A2"
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   },
+   "opcode": {
+    "candidates": 1,
+    "keys": 1,
+    "length": 1,
+    "opaque": true,
+    "oversampled": 0,
+    "representatives": [
+     "G_CONCAT_VECTORS"
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -1356,132 +3860,38 @@
      ],
      [
       "v2p0",
-      "p0"
-     ],
-     [
-      "v2s32",
-      "p0"
-     ]
-    ],
-    "unrepresented": 0
-   }
-  },
-  "AArch64_BUILD_VECTOR_TRUNC": {
-   "config": {
-    "candidates": 1,
-    "keys": 1,
-    "length": 1,
-    "note": "run once per config; the corpus config axis is the profile",
-    "opaque": false,
-    "oversampled": 0,
-    "representatives": [
-     "A2"
-    ],
-    "unrepresented": 0
-   },
-   "opcode": {
-    "candidates": 1,
-    "keys": 1,
-    "length": 1,
-    "opaque": false,
-    "oversampled": 0,
-    "representatives": [
-     "G_BUILD_VECTOR_TRUNC"
-    ],
-    "unrepresented": 0
-   }
-  },
-  "AArch64_BZERO": {
-   "config": {
-    "candidates": 1,
-    "keys": 1,
-    "length": 1,
-    "note": "run once per config; the corpus config axis is the profile",
-    "opaque": false,
-    "oversampled": 0,
-    "representatives": [
-     "A2"
-    ],
-    "unrepresented": 0
-   },
-   "opcode": {
-    "candidates": 1,
-    "keys": 1,
-    "length": 1,
-    "opaque": false,
-    "oversampled": 0,
-    "representatives": [
-     "G_BZERO"
-    ],
-    "unrepresented": 0
-   }
-  },
-  "AArch64_CLMUL": {
-   "config": {
-    "candidates": 1,
-    "keys": 1,
-    "length": 1,
-    "note": "run once per config; the corpus config axis is the profile",
-    "opaque": false,
-    "oversampled": 0,
-    "representatives": [
-     "A2"
-    ],
-    "unrepresented": 0
-   },
-   "opcode": {
-    "candidates": 1,
-    "keys": 1,
-    "length": 1,
-    "opaque": false,
-    "oversampled": 0,
-    "representatives": [
-     "G_CLMUL"
-    ],
-    "unrepresented": 0
-   }
-  },
-  "AArch64_CONCAT_VECTORS": {
-   "config": {
-    "candidates": 1,
-    "keys": 1,
-    "length": 1,
-    "note": "run once per config; the corpus config axis is the profile",
-    "opaque": true,
-    "oversampled": 0,
-    "representatives": [
-     "A2"
-    ],
-    "unrepresented": 0
-   },
-   "opcode": {
-    "candidates": 1,
-    "keys": 1,
-    "length": 1,
-    "opaque": true,
-    "oversampled": 0,
-    "representatives": [
-     "G_CONCAT_VECTORS"
-    ],
-    "unrepresented": 0
-   },
-   "pair(0,1)": {
-    "candidates": 2401,
-    "keys": 2,
-    "length": 2401,
-    "opaque": false,
-    "oversampled": 1,
-    "representatives": [
-     [
-      "p0",
-      "p0"
+      "v2s8"
      ],
      [
       "v4s32",
       "v2s32"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_CONCAT_VECTORS",
+      "example": [
+       "v2p0",
+       "v2s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "AArch64_CONCAT_VECTORS",
+      "example": [
+       "v4s32",
+       "v2s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_CONSTANT": {
@@ -1495,7 +3905,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1506,7 +3917,8 @@
     "representatives": [
      "G_CONSTANT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_CTLZ": {
@@ -1520,7 +3932,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -1532,14 +3945,15 @@
      "G_CTLZ",
      "G_CTLS"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 4,
+    "keys": 8,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 4,
     "representatives": [
      [
       "p0",
@@ -1551,27 +3965,94 @@
      ],
      [
       "p0",
+      "s32"
+     ],
+     [
+      "p0",
       "nxv2i64"
      ],
      [
       "i32",
       "i32"
-     ]
-    ],
-    "unrepresented": 3
-   },
-   "slot0": {
-    "candidates": 49,
-    "keys": 1,
-    "length": 49,
-    "opaque": false,
-    "oversampled": 1,
-    "representatives": [
+     ],
      [
+      "v2p0",
+      "p0"
+     ],
+     [
+      "v2s8",
+      "p0"
+     ],
+     [
+      "v2s16",
       "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 3,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_CTLZ",
+      "example": [
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2",
+       "match@2"
+      ]
+     },
+     {
+      "builder": "AArch64_CTLZ",
+      "example": [
+       "p0",
+       "nxv2i64"
+      ],
+      "reason": "opaque_predicate",
+      "signature": [
+       "unknown@1",
+       "unknown@1"
+      ]
+     },
+     {
+      "builder": "AArch64_CTLZ",
+      "example": [
+       "i32",
+       "i32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0"
+      ]
+     }
+    ]
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 5,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 4,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "v2p0"
+     ],
+     [
+      "v2s8"
+     ],
+     [
+      "v2s16"
+     ]
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_CTLZ_ZERO_POISON": {
@@ -1585,7 +4066,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1596,7 +4078,8 @@
     "representatives": [
      "G_CTLZ_ZERO_POISON"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_CTPOP": {
@@ -1605,34 +4088,44 @@
     "keys": 1,
     "length": 1,
     "note": "run once per config; the corpus config axis is the profile",
-    "opaque": false,
+    "opaque": true,
     "oversampled": 0,
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
     "keys": 1,
     "length": 1,
-    "opaque": false,
+    "opaque": true,
     "oversampled": 0,
     "representatives": [
      "G_CTPOP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 6,
+    "keys": 10,
     "length": 2401,
     "opaque": false,
-    "oversampled": 3,
+    "oversampled": 5,
     "representatives": [
      [
       "p0",
       "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "p0",
+      "s128"
      ],
      [
       "s8",
@@ -1647,6 +4140,14 @@
       "i32"
      ],
      [
+      "v2s8",
+      "s8"
+     ],
+     [
+      "v2s16",
+      "s16"
+     ],
+     [
       "v8i8",
       "v8i8"
      ],
@@ -1655,14 +4156,71 @@
       "p0"
      ]
     ],
-    "unrepresented": 3
+    "unrepresented": 5,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_CTPOP",
+      "example": [
+       "s128",
+       "s128"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "AArch64_CTPOP",
+      "example": [
+       "i32",
+       "i32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "AArch64_CTPOP",
+      "example": [
+       "v2s8",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@9"
+      ]
+     },
+     {
+      "builder": "AArch64_CTPOP",
+      "example": [
+       "v2s16",
+       "s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@10"
+      ]
+     },
+     {
+      "builder": "AArch64_CTPOP",
+      "example": [
+       "v8i8",
+       "v8i8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     }
+    ]
    },
    "slot0": {
     "candidates": 49,
-    "keys": 3,
+    "keys": 5,
     "length": 49,
     "opaque": false,
-    "oversampled": 3,
+    "oversampled": 5,
     "representatives": [
      [
       "p0"
@@ -1671,10 +4229,17 @@
       "s8"
      ],
      [
+      "s32"
+     ],
+     [
+      "s128"
+     ],
+     [
       "nxv2i64"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_CTTZ": {
@@ -1688,7 +4253,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1699,20 +4265,31 @@
     "representatives": [
      "G_CTTZ"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 4,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "s64"
+     ],
+     [
+      "v2p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_CTTZ_ZERO_POISON": {
@@ -1726,7 +4303,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1737,7 +4315,8 @@
     "representatives": [
      "G_CTTZ_ZERO_POISON"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_DYN_STACKALLOC": {
@@ -1751,7 +4330,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1762,7 +4342,8 @@
     "representatives": [
      "G_DYN_STACKALLOC"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_EXTRACT": {
@@ -1776,7 +4357,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1787,34 +4369,114 @@
     "representatives": [
      "G_EXTRACT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 1,
+    "keys": 8,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 5,
     "representatives": [
      [
       "p0",
       "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "p0",
+      "s32"
+     ],
+     [
+      "p0",
+      "s128"
+     ],
+     [
+      "p0",
+      "i32"
+     ],
+     [
+      "p0",
+      "nxv2i64"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "s128",
+      "s128"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 3,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_EXTRACT",
+      "example": [
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "AArch64_EXTRACT",
+      "example": [
+       "p0",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@5"
+      ]
+     },
+     {
+      "builder": "AArch64_EXTRACT",
+      "example": [
+       "s128",
+       "s128"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@7"
+      ]
+     }
+    ]
    },
    "slot1": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 6,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 4,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "s32"
+     ],
+     [
+      "s128"
+     ],
+     [
+      "i32"
+     ],
+     [
+      "nxv2i64"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_EXTRACT_SUBVECTOR": {
@@ -1828,7 +4490,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1839,7 +4502,8 @@
     "representatives": [
      "G_EXTRACT_SUBVECTOR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -1865,7 +4529,42 @@
       "v4s32"
      ]
     ],
-    "unrepresented": 3
+    "unrepresented": 3,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_EXTRACT_SUBVECTOR",
+      "example": [
+       "p0",
+       "v2s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@5"
+      ]
+     },
+     {
+      "builder": "AArch64_EXTRACT_SUBVECTOR",
+      "example": [
+       "p0",
+       "v2s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@6"
+      ]
+     },
+     {
+      "builder": "AArch64_EXTRACT_SUBVECTOR",
+      "example": [
+       "v2s32",
+       "v4s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_EXTRACT_VECTOR_ELT": {
@@ -1879,7 +4578,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -1890,24 +4590,35 @@
     "representatives": [
      "G_EXTRACT_VECTOR_ELT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot1": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 4,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "v2p0"
+     ],
+     [
+      "v2s8"
+     ],
+     [
+      "nxv2i64"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "triple(0,1,2)": {
     "candidates": 117649,
-    "keys": 2,
+    "keys": 9,
     "length": 117649,
     "opaque": false,
     "oversampled": 1,
@@ -1918,12 +4629,145 @@
       "p0"
      ],
      [
+      "p0",
+      "v2p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "v2p0",
+      "s8"
+     ],
+     [
+      "p0",
+      "v2s8",
+      "p0"
+     ],
+     [
+      "p0",
+      "nxv2i64",
+      "p0"
+     ],
+     [
+      "s8",
+      "v2s8",
+      "p0"
+     ],
+     [
+      "s8",
+      "v4s8",
+      "p0"
+     ],
+     [
       "s16",
       "nxv8s16",
       "s64"
+     ],
+     [
+      "i8",
+      "v8i8",
+      "p0"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 8,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_EXTRACT_VECTOR_ELT",
+      "example": [
+       "p0",
+       "v2p0",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "AArch64_EXTRACT_VECTOR_ELT",
+      "example": [
+       "p0",
+       "v2p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     },
+     {
+      "builder": "AArch64_EXTRACT_VECTOR_ELT",
+      "example": [
+       "p0",
+       "v2s8",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_EXTRACT_VECTOR_ELT",
+      "example": [
+       "p0",
+       "nxv2i64",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "none@None"
+      ]
+     },
+     {
+      "builder": "AArch64_EXTRACT_VECTOR_ELT",
+      "example": [
+       "s8",
+       "v2s8",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4"
+      ]
+     },
+     {
+      "builder": "AArch64_EXTRACT_VECTOR_ELT",
+      "example": [
+       "s8",
+       "v4s8",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@5"
+      ]
+     },
+     {
+      "builder": "AArch64_EXTRACT_VECTOR_ELT",
+      "example": [
+       "s16",
+       "nxv8s16",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "AArch64_EXTRACT_VECTOR_ELT",
+      "example": [
+       "i8",
+       "v8i8",
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@6"
+      ]
+     }
+    ]
    }
   },
   "AArch64_FABS": {
@@ -1937,7 +4781,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -1949,26 +4794,34 @@
      "G_FABS",
      "G_FNEG"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 49,
-    "keys": 3,
+    "keys": 5,
     "length": 49,
     "opaque": false,
-    "oversampled": 3,
+    "oversampled": 4,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "s128"
      ],
      [
       "bf16"
      ],
      [
       "f32"
+     ],
+     [
+      "v2s16"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_FADD": {
@@ -1982,7 +4835,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 17,
@@ -2009,17 +4863,21 @@
      "G_INTRINSIC_ROUND",
      "G_INTRINSIC_ROUNDEVEN"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 49,
-    "keys": 4,
+    "keys": 6,
     "length": 49,
     "opaque": false,
-    "oversampled": 3,
+    "oversampled": 4,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "bf16"
      ],
      [
       "f16"
@@ -2029,9 +4887,13 @@
      ],
      [
       "f128"
+     ],
+     [
+      "v2s16"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_FCMP": {
@@ -2045,7 +4907,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2056,22 +4919,35 @@
     "representatives": [
      "G_FCMP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 4,
+    "keys": 9,
     "length": 2401,
     "opaque": false,
-    "oversampled": 2,
+    "oversampled": 3,
     "representatives": [
      [
       "p0",
       "p0"
      ],
      [
+      "p0",
+      "bf16"
+     ],
+     [
+      "p0",
+      "v2s16"
+     ],
+     [
       "s8",
       "p0"
+     ],
+     [
+      "s32",
+      "s128"
      ],
      [
       "i32",
@@ -2080,22 +4956,105 @@
      [
       "i32",
       "f32"
+     ],
+     [
+      "v2p0",
+      "p0"
+     ],
+     [
+      "v2s8",
+      "v2s16"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 6,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_FCMP",
+      "example": [
+       "p0",
+       "bf16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4"
+      ]
+     },
+     {
+      "builder": "AArch64_FCMP",
+      "example": [
+       "p0",
+       "v2s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@7"
+      ]
+     },
+     {
+      "builder": "AArch64_FCMP",
+      "example": [
+       "s32",
+       "s128"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@11"
+      ]
+     },
+     {
+      "builder": "AArch64_FCMP",
+      "example": [
+       "i32",
+       "f16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_FCMP",
+      "example": [
+       "i32",
+       "f32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "AArch64_FCMP",
+      "example": [
+       "v2s8",
+       "v2s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@6"
+      ]
+     }
+    ]
    },
    "slot1": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 3,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 2,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "bf16"
+     ],
+     [
+      "v2s16"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_FCONSTANT": {
@@ -2109,7 +5068,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2120,7 +5080,8 @@
     "representatives": [
      "G_FCONSTANT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_FCOPYSIGN": {
@@ -2134,7 +5095,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2145,20 +5107,25 @@
     "representatives": [
      "G_FCOPYSIGN"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 2,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 2,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "s8"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_FENCE": {
@@ -2172,7 +5139,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2183,7 +5151,8 @@
     "representatives": [
      "G_FENCE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_FMAD": {
@@ -2197,7 +5166,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2208,7 +5178,8 @@
     "representatives": [
      "G_FMAD"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_FPEXT": {
@@ -2222,7 +5193,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2233,14 +5205,15 @@
     "representatives": [
      "G_FPEXT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 3,
+    "keys": 6,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 2,
     "representatives": [
      [
       "p0",
@@ -2253,9 +5226,56 @@
      [
       "f128",
       "f16"
+     ],
+     [
+      "v2p0",
+      "p0"
+     ],
+     [
+      "v2p0",
+      "v2s16"
+     ],
+     [
+      "v2s32",
+      "p0"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 3,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_FPEXT",
+      "example": [
+       "f32",
+       "bf16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "AArch64_FPEXT",
+      "example": [
+       "f128",
+       "f16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_FPEXT",
+      "example": [
+       "v2p0",
+       "v2s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     }
+    ]
    }
   },
   "AArch64_FPOWI": {
@@ -2269,7 +5289,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -2281,25 +5302,48 @@
      "G_FPOWI",
      "G_FLDEXP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 2,
+    "keys": 4,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0",
       "p0"
      ],
      [
+      "bf16",
+      "p0"
+     ],
+     [
       "f32",
       "i32"
+     ],
+     [
+      "v2p0",
+      "p0"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_FPOWI",
+      "example": [
+       "f32",
+       "i32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_FPTOSI": {
@@ -2313,7 +5357,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -2325,18 +5370,39 @@
      "G_FPTOSI",
      "G_FPTOUI"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 3,
+    "keys": 10,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0",
       "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "p0",
+      "bf16"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "s32",
+      "p0"
+     ],
+     [
+      "s128",
+      "f16"
      ],
      [
       "i32",
@@ -2345,35 +5411,143 @@
      [
       "i32",
       "f32"
+     ],
+     [
+      "i32",
+      "f128"
+     ],
+     [
+      "v2s16",
+      "s16"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 7,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_FPTOSI",
+      "example": [
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@9",
+       "match@9"
+      ]
+     },
+     {
+      "builder": "AArch64_FPTOSI",
+      "example": [
+       "p0",
+       "bf16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@8",
+       "match@8"
+      ]
+     },
+     {
+      "builder": "AArch64_FPTOSI",
+      "example": [
+       "s128",
+       "f16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4",
+       "match@4"
+      ]
+     },
+     {
+      "builder": "AArch64_FPTOSI",
+      "example": [
+       "i32",
+       "f16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1",
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_FPTOSI",
+      "example": [
+       "i32",
+       "f32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0"
+      ]
+     },
+     {
+      "builder": "AArch64_FPTOSI",
+      "example": [
+       "i32",
+       "f128"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@14",
+       "match@14"
+      ]
+     },
+     {
+      "builder": "AArch64_FPTOSI",
+      "example": [
+       "v2s16",
+       "s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@11",
+       "match@11"
+      ]
+     }
+    ]
    },
    "slot0": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 3,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "s32"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot1": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 3,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "bf16"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_FPTOSI_SAT": {
@@ -2387,7 +5561,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -2399,18 +5574,43 @@
      "G_FPTOSI_SAT",
      "G_FPTOUI_SAT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 3,
+    "keys": 11,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 5,
     "representatives": [
      [
       "p0",
       "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "p0",
+      "s128"
+     ],
+     [
+      "p0",
+      "bf16"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "s32",
+      "p0"
+     ],
+     [
+      "s128",
+      "f16"
      ],
      [
       "i16",
@@ -2419,35 +5619,140 @@
      [
       "i32",
       "f32"
+     ],
+     [
+      "v2s16",
+      "s16"
+     ],
+     [
+      "nxv2i64",
+      "p0"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 6,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_FPTOSI_SAT",
+      "example": [
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@10",
+       "match@10"
+      ]
+     },
+     {
+      "builder": "AArch64_FPTOSI_SAT",
+      "example": [
+       "p0",
+       "bf16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@9",
+       "match@9"
+      ]
+     },
+     {
+      "builder": "AArch64_FPTOSI_SAT",
+      "example": [
+       "s128",
+       "f16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4",
+       "match@4"
+      ]
+     },
+     {
+      "builder": "AArch64_FPTOSI_SAT",
+      "example": [
+       "i16",
+       "f16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1",
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_FPTOSI_SAT",
+      "example": [
+       "i32",
+       "f32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0"
+      ]
+     },
+     {
+      "builder": "AArch64_FPTOSI_SAT",
+      "example": [
+       "v2s16",
+       "s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@13",
+       "match@13"
+      ]
+     }
+    ]
    },
    "slot0": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 5,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 5,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "s32"
+     ],
+     [
+      "s128"
+     ],
+     [
+      "nxv2i64"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot1": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 4,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 4,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "s128"
+     ],
+     [
+      "bf16"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_FPTRUNC": {
@@ -2461,7 +5766,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2472,7 +5778,8 @@
     "representatives": [
      "G_FPTRUNC"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -2510,7 +5817,53 @@
       "p0"
      ]
     ],
-    "unrepresented": 4
+    "unrepresented": 4,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_FPTRUNC",
+      "example": [
+       "p0",
+       "v2s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@6"
+      ]
+     },
+     {
+      "builder": "AArch64_FPTRUNC",
+      "example": [
+       "bf16",
+       "f32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_FPTRUNC",
+      "example": [
+       "f16",
+       "f32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "AArch64_FPTRUNC",
+      "example": [
+       "f16",
+       "f128"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2"
+      ]
+     }
+    ]
    }
   },
   "AArch64_FRAME_INDEX": {
@@ -2524,7 +5877,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2535,7 +5889,8 @@
     "representatives": [
      "G_FRAME_INDEX"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_FREM": {
@@ -2549,7 +5904,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 19,
@@ -2578,7 +5934,8 @@
      "G_FTANH",
      "G_FMODF"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_FSHL": {
@@ -2592,7 +5949,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -2604,7 +5962,8 @@
      "G_FSHL",
      "G_FSHR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -2622,7 +5981,21 @@
       "i32"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_FSHL",
+      "example": [
+       "i32",
+       "i32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_GET_FPENV": {
@@ -2636,7 +6009,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 6,
@@ -2652,7 +6026,8 @@
      "G_SET_FPMODE",
      "G_RESET_FPMODE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_GET_ROUNDING": {
@@ -2666,7 +6041,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -2678,7 +6054,8 @@
      "G_GET_ROUNDING",
      "G_SET_ROUNDING"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_GLOBAL_VALUE": {
@@ -2692,7 +6069,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2703,7 +6081,8 @@
     "representatives": [
      "G_GLOBAL_VALUE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_ICMP": {
@@ -2717,7 +6096,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2728,54 +6108,172 @@
     "representatives": [
      "G_ICMP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 2,
+    "keys": 10,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0",
       "p0"
      ],
      [
+      "p0",
+      "s8"
+     ],
+     [
+      "p0",
+      "v2s8"
+     ],
+     [
+      "p0",
+      "v2s16"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "s32",
+      "v2p0"
+     ],
+     [
       "i32",
       "p0"
+     ],
+     [
+      "v2p0",
+      "p0"
+     ],
+     [
+      "v2p0",
+      "v2p0"
+     ],
+     [
+      "v2s8",
+      "v2s16"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 6,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_ICMP",
+      "example": [
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "AArch64_ICMP",
+      "example": [
+       "p0",
+       "v2s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@10"
+      ]
+     },
+     {
+      "builder": "AArch64_ICMP",
+      "example": [
+       "p0",
+       "v2s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@7"
+      ]
+     },
+     {
+      "builder": "AArch64_ICMP",
+      "example": [
+       "s32",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@8"
+      ]
+     },
+     {
+      "builder": "AArch64_ICMP",
+      "example": [
+       "v2p0",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@15"
+      ]
+     },
+     {
+      "builder": "AArch64_ICMP",
+      "example": [
+       "v2s8",
+       "v2s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@6"
+      ]
+     }
+    ]
    },
    "slot0": {
     "candidates": 49,
-    "keys": 2,
+    "keys": 4,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0"
      ],
      [
+      "s8"
+     ],
+     [
       "i32"
+     ],
+     [
+      "v2p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot1": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 4,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "v2s8"
+     ],
+     [
+      "v2s16"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_IMPLICIT_DEF": {
@@ -2789,7 +6287,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 3,
@@ -2802,14 +6301,15 @@
      "G_FREEZE",
      "G_CONSTANT_FOLD_BARRIER"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 49,
     "keys": 5,
     "length": 49,
     "opaque": false,
-    "oversampled": 5,
+    "oversampled": 6,
     "representatives": [
      [
       "p0"
@@ -2827,7 +6327,8 @@
       "nxv2i64"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_INDEXED_LOAD": {
@@ -2836,23 +6337,65 @@
     "keys": 1,
     "length": 1,
     "note": "run once per config; the corpus config axis is the profile",
-    "opaque": false,
+    "opaque": true,
     "oversampled": 0,
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   },
+   "mem": {
+    "candidates": 18,
+    "keys": 1,
+    "length": 18,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_INDEXED_LOAD",
+      "example": [
+       "p0"
+      ],
+      "reason": "opaque_predicate",
+      "signature": [
+       "unknown@1"
+      ]
+     }
+    ]
    },
    "opcode": {
     "candidates": 1,
     "keys": 1,
     "length": 1,
-    "opaque": false,
+    "opaque": true,
     "oversampled": 0,
     "representatives": [
      "G_INDEXED_LOAD"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   },
+   "pair(0,1)": {
+    "candidates": 2401,
+    "keys": 1,
+    "length": 2401,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_INDEXED_SEXTLOAD": {
@@ -2866,7 +6409,34 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   },
+   "mem": {
+    "candidates": 18,
+    "keys": 1,
+    "length": 18,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     [
+      "p0"
+     ]
+    ],
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_INDEXED_SEXTLOAD",
+      "example": [
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2",
+       "match@2"
+      ]
+     }
+    ]
    },
    "opcode": {
     "candidates": 2,
@@ -2878,7 +6448,8 @@
      "G_INDEXED_SEXTLOAD",
      "G_INDEXED_ZEXTLOAD"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 49,
@@ -2891,7 +6462,8 @@
       "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_INDEXED_STORE": {
@@ -2905,20 +6477,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
-   },
-   "mem": {
-    "candidates": 5,
-    "keys": 1,
-    "length": 5,
-    "opaque": false,
-    "oversampled": 0,
-    "representatives": [
-     [
-      "s8"
-     ]
-    ],
-    "unrepresented": 1
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2929,7 +6489,24 @@
     "representatives": [
      "G_INDEXED_STORE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   },
+   "pair(0,1)+mem": {
+    "candidates": 43218,
+    "keys": 1,
+    "length": 43218,
+    "opaque": false,
+    "oversampled": 1,
+    "representatives": [
+     [
+      "p0",
+      "p0",
+      "p0"
+     ]
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_INSERT": {
@@ -2943,7 +6520,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -2954,34 +6532,81 @@
     "representatives": [
      "G_INSERT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 1,
+    "keys": 6,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 4,
     "representatives": [
      [
       "p0",
       "p0"
-     ]
-    ],
-    "unrepresented": 0
-   },
-   "slot0": {
-    "candidates": 49,
-    "keys": 1,
-    "length": 49,
-    "opaque": false,
-    "oversampled": 1,
-    "representatives": [
+     ],
      [
+      "p0",
+      "s8"
+     ],
+     [
+      "p0",
+      "i8"
+     ],
+     [
+      "p0",
+      "nxv2i64"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "s32",
       "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_INSERT",
+      "example": [
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 5,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 4,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "s32"
+     ],
+     [
+      "i32"
+     ],
+     [
+      "nxv2i64"
+     ]
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_INSERT_SUBVECTOR": {
@@ -2995,7 +6620,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3006,7 +6632,8 @@
     "representatives": [
      "G_INSERT_SUBVECTOR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_INSERT_VECTOR_ELT": {
@@ -3020,7 +6647,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3031,35 +6659,72 @@
     "representatives": [
      "G_INSERT_VECTOR_ELT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 3,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "v2p0"
+     ],
+     [
+      "v2s8"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "triple(0,1,2)": {
     "candidates": 117649,
-    "keys": 1,
+    "keys": 4,
     "length": 117649,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0",
       "p0",
       "p0"
+     ],
+     [
+      "v2p0",
+      "p0",
+      "p0"
+     ],
+     [
+      "v2s8",
+      "p0",
+      "p0"
+     ],
+     [
+      "nxv2s64",
+      "s64",
+      "s64"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_INSERT_VECTOR_ELT",
+      "example": [
+       "nxv2s64",
+       "s64",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     }
+    ]
    }
   },
   "AArch64_INTRINSIC": {
@@ -3073,7 +6738,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -3085,7 +6751,8 @@
      "G_INTRINSIC",
      "G_INTRINSIC_W_SIDE_EFFECTS"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_INTTOPTR": {
@@ -3099,7 +6766,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3110,21 +6778,43 @@
     "representatives": [
      "G_INTTOPTR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 1,
+    "keys": 3,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 2,
     "representatives": [
      [
       "p0",
       "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "p0",
+      "i64"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_INTTOPTR",
+      "example": [
+       "p0",
+       "i64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     }
+    ]
    }
   },
   "AArch64_INVOKE_REGION_START": {
@@ -3138,7 +6828,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3149,7 +6840,8 @@
     "representatives": [
      "G_INVOKE_REGION_START"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_IS_FPCLASS": {
@@ -3163,7 +6855,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3174,7 +6867,8 @@
     "representatives": [
      "G_IS_FPCLASS"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_JUMP_TABLE": {
@@ -3188,7 +6882,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3199,7 +6894,8 @@
     "representatives": [
      "G_JUMP_TABLE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_LLROUND": {
@@ -3213,7 +6909,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -3225,7 +6922,8 @@
      "G_LLROUND",
      "G_INTRINSIC_LLRINT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -3259,7 +6957,57 @@
       "f32"
      ]
     ],
-    "unrepresented": 4
+    "unrepresented": 4,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_LLROUND",
+      "example": [
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3",
+       "match@3"
+      ]
+     },
+     {
+      "builder": "AArch64_LLROUND",
+      "example": [
+       "s64",
+       "s128"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4",
+       "match@4"
+      ]
+     },
+     {
+      "builder": "AArch64_LLROUND",
+      "example": [
+       "i64",
+       "f16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1",
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_LLROUND",
+      "example": [
+       "i64",
+       "f32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_LOAD": {
@@ -3273,20 +7021,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
-   },
-   "mem": {
-    "candidates": 5,
-    "keys": 1,
-    "length": 5,
-    "opaque": false,
-    "oversampled": 0,
-    "representatives": [
-     [
-      "s8"
-     ]
-    ],
-    "unrepresented": 1
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3297,61 +7033,155 @@
     "representatives": [
      "G_LOAD"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 2,
+    "keys": 8,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 5,
     "representatives": [
      [
       "p0",
       "p0"
      ],
      [
+      "s64",
+      "p0"
+     ],
+     [
       "s128",
+      "p0"
+     ],
+     [
+      "i128",
+      "p0"
+     ],
+     [
+      "v2p0",
+      "p0"
+     ],
+     [
+      "v2s8",
+      "p0"
+     ],
+     [
+      "v4s8",
+      "p0"
+     ],
+     [
+      "nxv2i64",
       "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)+mem": {
-    "candidates": 12005,
-    "keys": 2,
-    "length": 12005,
+    "candidates": 43218,
+    "keys": 9,
+    "length": 43218,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 5,
     "representatives": [
      [
       "p0",
       "p0",
-      "s8"
+      "p0"
+     ],
+     [
+      "p0",
+      "p0",
+      "nxv2s64"
+     ],
+     [
+      "s64",
+      "p0",
+      "p0"
      ],
      [
       "s128",
       "p0",
-      "s8"
+      "p0"
+     ],
+     [
+      "i128",
+      "p0",
+      "p0"
+     ],
+     [
+      "v2p0",
+      "p0",
+      "p0"
+     ],
+     [
+      "v2s8",
+      "p0",
+      "p0"
+     ],
+     [
+      "v4s8",
+      "p0",
+      "p0"
+     ],
+     [
+      "nxv2i64",
+      "p0",
+      "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_LOAD",
+      "example": [
+       "p0",
+       "p0",
+       "nxv2s64"
+      ],
+      "reason": "opaque_predicate",
+      "signature": [
+       "unknown@11"
+      ]
+     }
+    ]
    },
    "slot0": {
     "candidates": 49,
-    "keys": 2,
+    "keys": 8,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 5,
     "representatives": [
      [
       "p0"
      ],
      [
+      "s64"
+     ],
+     [
       "s128"
+     ],
+     [
+      "i128"
+     ],
+     [
+      "v2p0"
+     ],
+     [
+      "v2s8"
+     ],
+     [
+      "v4s8"
+     ],
+     [
+      "nxv2i64"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_LROUND": {
@@ -3365,7 +7195,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -3377,7 +7208,8 @@
      "G_LROUND",
      "G_INTRINSIC_LRINT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -3407,7 +7239,57 @@
       "f32"
      ]
     ],
-    "unrepresented": 4
+    "unrepresented": 4,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_LROUND",
+      "example": [
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2",
+       "match@2"
+      ]
+     },
+     {
+      "builder": "AArch64_LROUND",
+      "example": [
+       "s64",
+       "s128"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3",
+       "match@3"
+      ]
+     },
+     {
+      "builder": "AArch64_LROUND",
+      "example": [
+       "i32",
+       "f16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1",
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_LROUND",
+      "example": [
+       "i32",
+       "f32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_MEMCPY": {
@@ -3421,7 +7303,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -3433,7 +7316,8 @@
      "G_MEMCPY",
      "G_MEMMOVE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "triple(0,1,2)": {
     "candidates": 117649,
@@ -3453,7 +7337,22 @@
       "s64"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_MEMCPY",
+      "example": [
+       "p0",
+       "p0",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_MEMCPY_INLINE": {
@@ -3467,7 +7366,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3478,7 +7378,8 @@
     "representatives": [
      "G_MEMCPY_INLINE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "triple(0,1,2)": {
     "candidates": 117649,
@@ -3498,7 +7399,21 @@
       "s64"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_MEMCPY_INLINE",
+      "example": [
+       "p0",
+       "p0",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_MEMSET": {
@@ -3512,7 +7427,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3523,7 +7439,8 @@
     "representatives": [
      "G_MEMSET"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "triple(0,1,2)": {
     "candidates": 117649,
@@ -3548,7 +7465,33 @@
       "s64"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_MEMSET",
+      "example": [
+       "p0",
+       "s8",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_MEMSET",
+      "example": [
+       "p0",
+       "s64",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_MEMSET_INLINE": {
@@ -3562,7 +7505,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3573,7 +7517,8 @@
     "representatives": [
      "G_MEMSET_INLINE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "triple(0,1,2)": {
     "candidates": 117649,
@@ -3598,7 +7543,33 @@
       "s64"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_MEMSET_INLINE",
+      "example": [
+       "p0",
+       "s8",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_MEMSET_INLINE",
+      "example": [
+       "p0",
+       "s64",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_MERGE_VALUES": {
@@ -3612,7 +7583,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3623,7 +7595,8 @@
     "representatives": [
      "G_MERGE_VALUES"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -3653,7 +7626,31 @@
       "p0"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_MERGE_VALUES",
+      "example": [
+       "p0",
+       "s128"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "AArch64_MERGE_VALUES",
+      "example": [
+       "p0",
+       "nxv2i64"
+      ],
+      "reason": "opaque_predicate",
+      "signature": [
+       "unknown@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_MUL": {
@@ -3667,7 +7664,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3678,14 +7676,15 @@
     "representatives": [
      "G_MUL"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 49,
-    "keys": 4,
+    "keys": 6,
     "length": 49,
     "opaque": false,
-    "oversampled": 4,
+    "oversampled": 6,
     "representatives": [
      [
       "p0"
@@ -3697,10 +7696,17 @@
       "i32"
      ],
      [
+      "v2s8"
+     ],
+     [
+      "v4s8"
+     ],
+     [
       "nxv2i64"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_PHI": {
@@ -3714,7 +7720,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3725,14 +7732,15 @@
     "representatives": [
      "G_PHI"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 49,
-    "keys": 4,
+    "keys": 7,
     "length": 49,
     "opaque": false,
-    "oversampled": 4,
+    "oversampled": 6,
     "representatives": [
      [
       "p0"
@@ -3741,13 +7749,23 @@
       "s8"
      ],
      [
+      "i16"
+     ],
+     [
       "v2p0"
+     ],
+     [
+      "v2s8"
+     ],
+     [
+      "v2s16"
      ],
      [
       "nxv2i64"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_PREFETCH": {
@@ -3761,7 +7779,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3772,7 +7791,8 @@
     "representatives": [
      "G_PREFETCH"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_PTRAUTH_GLOBAL_VALUE": {
@@ -3786,7 +7806,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3797,11 +7818,12 @@
     "representatives": [
      "G_PTRAUTH_GLOBAL_VALUE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 1,
+    "keys": 2,
     "length": 2401,
     "opaque": false,
     "oversampled": 1,
@@ -3809,9 +7831,14 @@
      [
       "p0",
       "p0"
+     ],
+     [
+      "p0",
+      "s8"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_PTRMASK": {
@@ -3825,7 +7852,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3836,7 +7864,8 @@
     "representatives": [
      "G_PTRMASK"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -3854,7 +7883,20 @@
       "s64"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_PTRMASK",
+      "example": [
+       "p0",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_PTRTOINT": {
@@ -3868,7 +7910,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3879,7 +7922,8 @@
     "representatives": [
      "G_PTRTOINT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -3905,7 +7949,8 @@
       "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_PTR_ADD": {
@@ -3919,7 +7964,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3930,7 +7976,8 @@
     "representatives": [
      "G_PTR_ADD"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -3952,7 +7999,31 @@
       "i64"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_PTR_ADD",
+      "example": [
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_PTR_ADD",
+      "example": [
+       "p0",
+       "i64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_ROTL": {
@@ -3966,7 +8037,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -3977,7 +8049,8 @@
     "representatives": [
      "G_ROTL"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_ROTR": {
@@ -3991,7 +8064,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -4002,7 +8076,8 @@
     "representatives": [
      "G_ROTR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -4024,7 +8099,31 @@
       "i64"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_ROTR",
+      "example": [
+       "s8",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_ROTR",
+      "example": [
+       "i32",
+       "i64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_SADDE": {
@@ -4038,7 +8137,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 8,
@@ -4056,7 +8156,8 @@
      "G_UADDO",
      "G_USUBO"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -4086,7 +8187,45 @@
       "p0"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_SADDE",
+      "example": [
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@2",
+       "match@2",
+       "match@2",
+       "match@2",
+       "match@2",
+       "match@2",
+       "match@2",
+       "match@2"
+      ]
+     },
+     {
+      "builder": "AArch64_SADDE",
+      "example": [
+       "i32",
+       "i32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0",
+       "match@0",
+       "match@0",
+       "match@0",
+       "match@0",
+       "match@0",
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_SBFX": {
@@ -4100,7 +8239,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -4112,7 +8252,8 @@
      "G_SBFX",
      "G_UBFX"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -4130,7 +8271,21 @@
       "s32"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_SBFX",
+      "example": [
+       "s32",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_SCMP": {
@@ -4144,7 +8299,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -4156,7 +8312,8 @@
      "G_SCMP",
      "G_UCMP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_SDIV": {
@@ -4170,7 +8327,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -4182,7 +8340,8 @@
      "G_SDIV",
      "G_UDIV"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_SELECT": {
@@ -4196,7 +8355,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -4207,14 +8367,15 @@
     "representatives": [
      "G_SELECT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 5,
+    "keys": 7,
     "length": 2401,
     "opaque": false,
-    "oversampled": 3,
+    "oversampled": 4,
     "representatives": [
      [
       "p0",
@@ -4233,18 +8394,61 @@
       "p0"
      ],
      [
+      "v2p0",
+      "p0"
+     ],
+     [
+      "v2p0",
+      "v2s8"
+     ],
+     [
       "nxv2i64",
       "p0"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 3,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_SELECT",
+      "example": [
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "AArch64_SELECT",
+      "example": [
+       "p0",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     },
+     {
+      "builder": "AArch64_SELECT",
+      "example": [
+       "v2p0",
+       "v2s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@5"
+      ]
+     }
+    ]
    },
    "slot0": {
     "candidates": 49,
-    "keys": 3,
+    "keys": 4,
     "length": 49,
     "opaque": false,
-    "oversampled": 3,
+    "oversampled": 4,
     "representatives": [
      [
       "p0"
@@ -4253,10 +8457,14 @@
       "s8"
      ],
      [
+      "v2p0"
+     ],
+     [
       "nxv2i64"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_SEXTLOAD": {
@@ -4270,7 +8478,46 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   },
+   "mem": {
+    "candidates": 18,
+    "keys": 2,
+    "length": 18,
+    "opaque": false,
+    "oversampled": 0,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "nxv2s64"
+     ]
+    ],
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_SEXTLOAD",
+      "example": [
+       "p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@5"
+      ]
+     },
+     {
+      "builder": "AArch64_SEXTLOAD",
+      "example": [
+       "nxv2s64"
+      ],
+      "reason": "opaque_predicate",
+      "signature": [
+       "unknown@4"
+      ]
+     }
+    ]
    },
    "opcode": {
     "candidates": 1,
@@ -4281,22 +8528,69 @@
     "representatives": [
      "G_SEXTLOAD"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)+mem": {
-    "candidates": 12005,
-    "keys": 1,
-    "length": 12005,
+    "candidates": 43218,
+    "keys": 5,
+    "length": 43218,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0",
       "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "p0",
+      "nxv2s64"
+     ],
+     [
+      "s8",
+      "p0",
+      "p0"
+     ],
+     [
+      "s64",
+      "p0",
       "s8"
+     ],
+     [
+      "nxv2i64",
+      "p0",
+      "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_SEXTLOAD",
+      "example": [
+       "p0",
+       "p0",
+       "nxv2s64"
+      ],
+      "reason": "opaque_predicate",
+      "signature": [
+       "unknown@4"
+      ]
+     },
+     {
+      "builder": "AArch64_SEXTLOAD",
+      "example": [
+       "s64",
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     }
+    ]
    }
   },
   "AArch64_SEXT_INREG": {
@@ -4310,7 +8604,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -4321,7 +8616,8 @@
     "representatives": [
      "G_SEXT_INREG"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_SHL": {
@@ -4335,7 +8631,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 3,
@@ -4348,38 +8645,175 @@
      "G_ASHR",
      "G_LSHR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 2,
+    "keys": 12,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 5,
     "representatives": [
      [
       "p0",
       "p0"
      ],
      [
+      "p0",
+      "s8"
+     ],
+     [
+      "p0",
+      "s32"
+     ],
+     [
+      "p0",
+      "nxv2i64"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
       "s32",
       "s32"
-     ]
-    ],
-    "unrepresented": 1
-   },
-   "slot0": {
-    "candidates": 49,
-    "keys": 1,
-    "length": 49,
-    "opaque": false,
-    "oversampled": 1,
-    "representatives": [
+     ],
      [
+      "i32",
+      "i64"
+     ],
+     [
+      "v2p0",
+      "v2f32"
+     ],
+     [
+      "v2s8",
+      "p0"
+     ],
+     [
+      "v2s16",
+      "p0"
+     ],
+     [
+      "v2f32",
+      "p0"
+     ],
+     [
+      "nxv2i64",
       "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 6,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_SHL",
+      "example": [
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4",
+       "match@4",
+       "match@4"
+      ]
+     },
+     {
+      "builder": "AArch64_SHL",
+      "example": [
+       "p0",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@11",
+       "match@11",
+       "match@11"
+      ]
+     },
+     {
+      "builder": "AArch64_SHL",
+      "example": [
+       "p0",
+       "nxv2i64"
+      ],
+      "reason": "opaque_predicate",
+      "signature": [
+       "unknown@2",
+       "unknown@2",
+       "unknown@2"
+      ]
+     },
+     {
+      "builder": "AArch64_SHL",
+      "example": [
+       "s32",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0",
+       "match@0"
+      ]
+     },
+     {
+      "builder": "AArch64_SHL",
+      "example": [
+       "i32",
+       "i64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1",
+       "match@1",
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_SHL",
+      "example": [
+       "v2p0",
+       "v2f32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@13",
+       "match@13",
+       "match@13"
+      ]
+     }
+    ]
+   },
+   "slot0": {
+    "candidates": 49,
+    "keys": 6,
+    "length": 49,
+    "opaque": false,
+    "oversampled": 5,
+    "representatives": [
+     [
+      "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "v2s8"
+     ],
+     [
+      "v2s16"
+     ],
+     [
+      "v2f32"
+     ],
+     [
+      "nxv2i64"
+     ]
+    ],
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_SHUFFLE_VECTOR": {
@@ -4393,7 +8827,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -4404,34 +8839,135 @@
     "representatives": [
      "G_SHUFFLE_VECTOR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 1,
+    "keys": 8,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 2,
     "representatives": [
      [
       "p0",
       "p0"
+     ],
+     [
+      "p0",
+      "v2p0"
+     ],
+     [
+      "v2p0",
+      "p0"
+     ],
+     [
+      "v2p0",
+      "v2p0"
+     ],
+     [
+      "v2s8",
+      "v2p0"
+     ],
+     [
+      "v2s16",
+      "v2p0"
+     ],
+     [
+      "v2s32",
+      "v2p0"
+     ],
+     [
+      "v2s32",
+      "v2s32"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 6,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_SHUFFLE_VECTOR",
+      "example": [
+       "p0",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@3"
+      ]
+     },
+     {
+      "builder": "AArch64_SHUFFLE_VECTOR",
+      "example": [
+       "v2p0",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@10"
+      ]
+     },
+     {
+      "builder": "AArch64_SHUFFLE_VECTOR",
+      "example": [
+       "v2s8",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@5"
+      ]
+     },
+     {
+      "builder": "AArch64_SHUFFLE_VECTOR",
+      "example": [
+       "v2s16",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@6"
+      ]
+     },
+     {
+      "builder": "AArch64_SHUFFLE_VECTOR",
+      "example": [
+       "v2s32",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@7"
+      ]
+     },
+     {
+      "builder": "AArch64_SHUFFLE_VECTOR",
+      "example": [
+       "v2s32",
+       "v2s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    },
    "slot0": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 2,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 2,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "v2p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_SITOFP": {
@@ -4445,7 +8981,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -4457,17 +8994,42 @@
      "G_SITOFP",
      "G_UITOFP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 3,
+    "keys": 12,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 5,
     "representatives": [
      [
       "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "s8"
+     ],
+     [
+      "p0",
+      "s32"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "s16",
+      "p0"
+     ],
+     [
+      "s16",
+      "v2p0"
+     ],
+     [
+      "bf16",
       "p0"
      ],
      [
@@ -4475,37 +9037,155 @@
       "i32"
      ],
      [
+      "f16",
+      "i128"
+     ],
+     [
       "f32",
       "i32"
+     ],
+     [
+      "v2s16",
+      "s128"
+     ],
+     [
+      "v2f32",
+      "p0"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 7,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_SITOFP",
+      "example": [
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@7",
+       "match@7"
+      ]
+     },
+     {
+      "builder": "AArch64_SITOFP",
+      "example": [
+       "p0",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@12",
+       "match@12"
+      ]
+     },
+     {
+      "builder": "AArch64_SITOFP",
+      "example": [
+       "s16",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@8",
+       "match@8"
+      ]
+     },
+     {
+      "builder": "AArch64_SITOFP",
+      "example": [
+       "f16",
+       "i32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1",
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_SITOFP",
+      "example": [
+       "f16",
+       "i128"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@16",
+       "match@16"
+      ]
+     },
+     {
+      "builder": "AArch64_SITOFP",
+      "example": [
+       "f32",
+       "i32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0"
+      ]
+     },
+     {
+      "builder": "AArch64_SITOFP",
+      "example": [
+       "v2s16",
+       "s128"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@13",
+       "match@13"
+      ]
+     }
+    ]
    },
    "slot0": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 5,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 5,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "s16"
+     ],
+     [
+      "bf16"
+     ],
+     [
+      "v2f32"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot1": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 3,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "s8"
+     ],
+     [
+      "s32"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_SMIN": {
@@ -4519,7 +9199,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 4,
@@ -4533,7 +9214,8 @@
      "G_UMIN",
      "G_UMAX"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_SMULFIX": {
@@ -4547,7 +9229,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 4,
@@ -4561,7 +9244,8 @@
      "G_SMULFIXSAT",
      "G_UMULFIXSAT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_SMULH": {
@@ -4575,7 +9259,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -4587,7 +9272,8 @@
      "G_SMULH",
      "G_UMULH"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_SMULO": {
@@ -4601,7 +9287,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -4613,7 +9300,8 @@
      "G_SMULO",
      "G_UMULO"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_SPLAT_VECTOR": {
@@ -4627,7 +9315,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -4638,7 +9327,8 @@
     "representatives": [
      "G_SPLAT_VECTOR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -4656,7 +9346,8 @@
       "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_SPLAT_VECTOR#87": {
@@ -4670,7 +9361,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -4681,7 +9373,8 @@
     "representatives": [
      "G_SPLAT_VECTOR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -4699,7 +9392,20 @@
       "s64"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_SPLAT_VECTOR",
+      "example": [
+       "nxv2s64",
+       "s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_SREM": {
@@ -4713,7 +9419,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 4,
@@ -4727,7 +9434,8 @@
      "G_SDIVREM",
      "G_UDIVREM"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_STACKSAVE": {
@@ -4741,7 +9449,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -4753,7 +9462,8 @@
      "G_STACKSAVE",
      "G_STACKRESTORE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_STORE": {
@@ -4767,20 +9477,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
-   },
-   "mem": {
-    "candidates": 5,
-    "keys": 1,
-    "length": 5,
-    "opaque": false,
-    "oversampled": 0,
-    "representatives": [
-     [
-      "s8"
-     ]
-    ],
-    "unrepresented": 1
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -4791,61 +9489,214 @@
     "representatives": [
      "G_STORE"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 2,
+    "keys": 6,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 4,
     "representatives": [
      [
       "p0",
       "p0"
      ],
      [
+      "s8",
+      "p0"
+     ],
+     [
       "s128",
+      "p0"
+     ],
+     [
+      "i128",
+      "p0"
+     ],
+     [
+      "v2p0",
+      "p0"
+     ],
+     [
+      "v2s8",
       "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)+mem": {
-    "candidates": 12005,
-    "keys": 2,
-    "length": 12005,
+    "candidates": 43218,
+    "keys": 8,
+    "length": 43218,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 4,
     "representatives": [
      [
       "p0",
       "p0",
-      "s8"
+      "p0"
+     ],
+     [
+      "p0",
+      "p0",
+      "nxv2s64"
+     ],
+     [
+      "s8",
+      "p0",
+      "p0"
      ],
      [
       "s128",
       "p0",
-      "s8"
+      "p0"
+     ],
+     [
+      "i128",
+      "p0",
+      "p0"
+     ],
+     [
+      "v2p0",
+      "p0",
+      "p0"
+     ],
+     [
+      "v2s8",
+      "p0",
+      "p0"
+     ],
+     [
+      "v4s8",
+      "p0",
+      "s32"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_STORE",
+      "example": [
+       "p0",
+       "p0",
+       "nxv2s64"
+      ],
+      "reason": "opaque_predicate",
+      "signature": [
+       "unknown@13"
+      ]
+     },
+     {
+      "builder": "AArch64_STORE",
+      "example": [
+       "v4s8",
+       "p0",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@14"
+      ]
+     }
+    ]
    },
    "slot0": {
     "candidates": 49,
-    "keys": 2,
+    "keys": 6,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 4,
     "representatives": [
      [
       "p0"
      ],
      [
+      "s8"
+     ],
+     [
       "s128"
+     ],
+     [
+      "i128"
+     ],
+     [
+      "v2p0"
+     ],
+     [
+      "v2s8"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
+   },
+   "slot0+mem": {
+    "candidates": 882,
+    "keys": 8,
+    "length": 882,
+    "opaque": false,
+    "oversampled": 4,
+    "representatives": [
+     [
+      "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "nxv2s64"
+     ],
+     [
+      "s8",
+      "p0"
+     ],
+     [
+      "s128",
+      "p0"
+     ],
+     [
+      "i128",
+      "p0"
+     ],
+     [
+      "v2p0",
+      "p0"
+     ],
+     [
+      "v2s8",
+      "p0"
+     ],
+     [
+      "v4s8",
+      "s32"
+     ]
+    ],
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_STORE",
+      "example": [
+       "p0",
+       "nxv2s64"
+      ],
+      "reason": "opaque_predicate",
+      "signature": [
+       "unknown@13"
+      ]
+     },
+     {
+      "builder": "AArch64_STORE",
+      "example": [
+       "v4s8",
+       "s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@14"
+      ]
+     }
+    ]
    }
   },
   "AArch64_TRAP": {
@@ -4859,7 +9710,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 3,
@@ -4872,7 +9724,8 @@
      "G_DEBUGTRAP",
      "G_UBSANTRAP"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_TRUNC": {
@@ -4886,7 +9739,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -4897,17 +9751,26 @@
     "representatives": [
      "G_TRUNC"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 5,
+    "keys": 7,
     "length": 2401,
     "opaque": false,
-    "oversampled": 4,
+    "oversampled": 5,
     "representatives": [
      [
       "p0",
+      "p0"
+     ],
+     [
+      "v2s8",
+      "p0"
+     ],
+     [
+      "v2s16",
       "p0"
      ],
      [
@@ -4927,7 +9790,20 @@
       "p0"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_TRUNC",
+      "example": [
+       "v2s32",
+       "v2s64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_TRUNC_SSAT_S": {
@@ -4941,7 +9817,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 3,
@@ -4954,7 +9831,8 @@
      "G_TRUNC_SSAT_U",
      "G_TRUNC_USAT_U"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -4984,7 +9862,22 @@
       "p0"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 1,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_TRUNC_SSAT_S",
+      "example": [
+       "v2i32",
+       "v2i64"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0",
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_UADDSAT": {
@@ -4998,7 +9891,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 4,
@@ -5012,7 +9906,8 @@
      "G_USUBSAT",
      "G_SSUBSAT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "slot0": {
     "candidates": 49,
@@ -5037,7 +9932,8 @@
       "nxv2i64"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_UNMERGE_VALUES": {
@@ -5051,7 +9947,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -5062,7 +9959,8 @@
     "representatives": [
      "G_UNMERGE_VALUES"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -5092,7 +9990,31 @@
       "p0"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_UNMERGE_VALUES",
+      "example": [
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4"
+      ]
+     },
+     {
+      "builder": "AArch64_UNMERGE_VALUES",
+      "example": [
+       "p0",
+       "nxv2i64"
+      ],
+      "reason": "opaque_predicate",
+      "signature": [
+       "unknown@2"
+      ]
+     }
+    ]
    }
   },
   "AArch64_VAARG": {
@@ -5106,7 +10028,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -5117,7 +10040,8 @@
     "representatives": [
      "G_VAARG"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
@@ -5143,7 +10067,8 @@
       "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_VASTART": {
@@ -5157,7 +10082,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -5168,7 +10094,8 @@
     "representatives": [
      "G_VASTART"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_VECREDUCE_ADD": {
@@ -5182,7 +10109,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -5193,11 +10121,12 @@
     "representatives": [
      "G_VECREDUCE_ADD"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 2,
+    "keys": 4,
     "length": 2401,
     "opaque": false,
     "oversampled": 1,
@@ -5207,11 +10136,54 @@
       "p0"
      ],
      [
+      "p0",
+      "v2p0"
+     ],
+     [
+      "p0",
+      "v2s8"
+     ],
+     [
       "i8",
       "v8i8"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 3,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_VECREDUCE_ADD",
+      "example": [
+       "p0",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@7"
+      ]
+     },
+     {
+      "builder": "AArch64_VECREDUCE_ADD",
+      "example": [
+       "p0",
+       "v2s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@6"
+      ]
+     },
+     {
+      "builder": "AArch64_VECREDUCE_ADD",
+      "example": [
+       "i8",
+       "v8i8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_VECREDUCE_FADD": {
@@ -5225,7 +10197,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -5236,17 +10209,26 @@
     "representatives": [
      "G_VECREDUCE_FADD"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 3,
+    "keys": 5,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 2,
     "representatives": [
      [
       "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "v2p0"
+     ],
+     [
+      "bf16",
       "p0"
      ],
      [
@@ -5258,7 +10240,42 @@
       "v2f32"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 3,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_VECREDUCE_FADD",
+      "example": [
+       "p0",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@7"
+      ]
+     },
+     {
+      "builder": "AArch64_VECREDUCE_FADD",
+      "example": [
+       "f16",
+       "v4f16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_VECREDUCE_FADD",
+      "example": [
+       "f32",
+       "v2f32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_VECREDUCE_FMIN": {
@@ -5272,7 +10289,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 4,
@@ -5286,17 +10304,26 @@
      "G_VECREDUCE_FMINIMUM",
      "G_VECREDUCE_FMAXIMUM"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 3,
+    "keys": 5,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 2,
     "representatives": [
      [
       "p0",
+      "p0"
+     ],
+     [
+      "p0",
+      "v2p0"
+     ],
+     [
+      "bf16",
       "p0"
      ],
      [
@@ -5308,7 +10335,51 @@
       "v2f32"
      ]
     ],
-    "unrepresented": 2
+    "unrepresented": 3,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_VECREDUCE_FMIN",
+      "example": [
+       "p0",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@6",
+       "match@6",
+       "match@6",
+       "match@6"
+      ]
+     },
+     {
+      "builder": "AArch64_VECREDUCE_FMIN",
+      "example": [
+       "f16",
+       "v4f16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1",
+       "match@1",
+       "match@1",
+       "match@1"
+      ]
+     },
+     {
+      "builder": "AArch64_VECREDUCE_FMIN",
+      "example": [
+       "f32",
+       "v2f32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0",
+       "match@0",
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_VECREDUCE_FMUL": {
@@ -5322,7 +10393,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -5333,21 +10405,73 @@
     "representatives": [
      "G_VECREDUCE_FMUL"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 1,
+    "keys": 5,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 2,
     "representatives": [
      [
       "p0",
       "p0"
+     ],
+     [
+      "p0",
+      "v2p0"
+     ],
+     [
+      "p0",
+      "v4s32"
+     ],
+     [
+      "p0",
+      "v8s16"
+     ],
+     [
+      "bf16",
+      "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 3,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_VECREDUCE_FMUL",
+      "example": [
+       "p0",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@6"
+      ]
+     },
+     {
+      "builder": "AArch64_VECREDUCE_FMUL",
+      "example": [
+       "p0",
+       "v4s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4"
+      ]
+     },
+     {
+      "builder": "AArch64_VECREDUCE_FMUL",
+      "example": [
+       "p0",
+       "v8s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@5"
+      ]
+     }
+    ]
    }
   },
   "AArch64_VECREDUCE_MUL": {
@@ -5361,7 +10485,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -5372,7 +10497,8 @@
     "representatives": [
      "G_VECREDUCE_MUL"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_VECREDUCE_OR": {
@@ -5386,7 +10512,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 3,
@@ -5399,11 +10526,12 @@
      "G_VECREDUCE_AND",
      "G_VECREDUCE_XOR"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 1,
+    "keys": 3,
     "length": 2401,
     "opaque": false,
     "oversampled": 1,
@@ -5411,9 +10539,45 @@
      [
       "p0",
       "p0"
+     ],
+     [
+      "p0",
+      "v2p0"
+     ],
+     [
+      "p0",
+      "v2s8"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_VECREDUCE_OR",
+      "example": [
+       "p0",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0",
+       "match@0"
+      ]
+     },
+     {
+      "builder": "AArch64_VECREDUCE_OR",
+      "example": [
+       "p0",
+       "v2s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1",
+       "match@1",
+       "match@1"
+      ]
+     }
+    ]
    }
   },
   "AArch64_VECREDUCE_SEQ_FADD": {
@@ -5427,7 +10591,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 2,
@@ -5439,7 +10604,8 @@
      "G_VECREDUCE_SEQ_FADD",
      "G_VECREDUCE_SEQ_FMUL"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_VECREDUCE_SMIN": {
@@ -5453,7 +10619,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 4,
@@ -5467,11 +10634,12 @@
      "G_VECREDUCE_UMIN",
      "G_VECREDUCE_UMAX"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 2,
+    "keys": 3,
     "length": 2401,
     "opaque": false,
     "oversampled": 1,
@@ -5481,11 +10649,45 @@
       "p0"
      ],
      [
+      "p0",
+      "v2p0"
+     ],
+     [
       "i8",
       "v8i8"
      ]
     ],
-    "unrepresented": 1
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_VECREDUCE_SMIN",
+      "example": [
+       "p0",
+       "v2p0"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@6",
+       "match@6",
+       "match@6",
+       "match@6"
+      ]
+     },
+     {
+      "builder": "AArch64_VECREDUCE_SMIN",
+      "example": [
+       "i8",
+       "v8i8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0",
+       "match@0",
+       "match@0",
+       "match@0"
+      ]
+     }
+    ]
    }
   },
   "AArch64_VECTOR_COMPRESS": {
@@ -5499,7 +10701,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -5510,7 +10713,8 @@
     "representatives": [
      "G_VECTOR_COMPRESS"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_ZEXT": {
@@ -5524,7 +10728,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 3,
@@ -5537,34 +10742,171 @@
      "G_SEXT",
      "G_ANYEXT"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)": {
     "candidates": 2401,
-    "keys": 1,
+    "keys": 10,
     "length": 2401,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0",
       "p0"
+     ],
+     [
+      "s128",
+      "p0"
+     ],
+     [
+      "v2p0",
+      "p0"
+     ],
+     [
+      "v2p0",
+      "s8"
+     ],
+     [
+      "v2p0",
+      "v4s32"
+     ],
+     [
+      "v2p0",
+      "v8s16"
+     ],
+     [
+      "v2p0",
+      "v16s8"
+     ],
+     [
+      "v2s8",
+      "v2s8"
+     ],
+     [
+      "v2s8",
+      "v2s16"
+     ],
+     [
+      "v2s64",
+      "v2s32"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 7,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_ZEXT",
+      "example": [
+       "v2p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@7",
+       "match@7",
+       "match@7"
+      ]
+     },
+     {
+      "builder": "AArch64_ZEXT",
+      "example": [
+       "v2p0",
+       "v4s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@6",
+       "match@6",
+       "match@6"
+      ]
+     },
+     {
+      "builder": "AArch64_ZEXT",
+      "example": [
+       "v2p0",
+       "v8s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@5",
+       "match@5",
+       "match@5"
+      ]
+     },
+     {
+      "builder": "AArch64_ZEXT",
+      "example": [
+       "v2p0",
+       "v16s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@4",
+       "match@4",
+       "match@4"
+      ]
+     },
+     {
+      "builder": "AArch64_ZEXT",
+      "example": [
+       "v2s8",
+       "v2s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@8",
+       "match@8",
+       "match@8"
+      ]
+     },
+     {
+      "builder": "AArch64_ZEXT",
+      "example": [
+       "v2s8",
+       "v2s16"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@9",
+       "match@9",
+       "match@9"
+      ]
+     },
+     {
+      "builder": "AArch64_ZEXT",
+      "example": [
+       "v2s64",
+       "v2s32"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@1",
+       "match@1",
+       "match@1"
+      ]
+     }
+    ]
    },
    "slot0": {
     "candidates": 49,
-    "keys": 1,
+    "keys": 3,
     "length": 49,
     "opaque": false,
-    "oversampled": 1,
+    "oversampled": 3,
     "representatives": [
      [
       "p0"
+     ],
+     [
+      "s128"
+     ],
+     [
+      "v2p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    }
   },
   "AArch64_ZEXTLOAD": {
@@ -5578,7 +10920,8 @@
     "representatives": [
      "A2"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "opcode": {
     "candidates": 1,
@@ -5589,24 +10932,30 @@
     "representatives": [
      "G_ZEXTLOAD"
     ],
-    "unrepresented": 0
+    "unrepresented": 0,
+    "unrepresented_detail": []
    },
    "pair(0,1)+mem": {
-    "candidates": 12005,
-    "keys": 4,
-    "length": 12005,
+    "candidates": 43218,
+    "keys": 5,
+    "length": 43218,
     "opaque": false,
     "oversampled": 3,
     "representatives": [
      [
       "p0",
       "p0",
-      "s8"
+      "p0"
+     ],
+     [
+      "p0",
+      "p0",
+      "nxv2s64"
      ],
      [
       "s8",
       "p0",
-      "s8"
+      "p0"
      ],
      [
       "s64",
@@ -5616,10 +10965,36 @@
      [
       "nxv2i64",
       "p0",
-      "s8"
+      "p0"
      ]
     ],
-    "unrepresented": 0
+    "unrepresented": 2,
+    "unrepresented_detail": [
+     {
+      "builder": "AArch64_ZEXTLOAD",
+      "example": [
+       "p0",
+       "p0",
+       "nxv2s64"
+      ],
+      "reason": "opaque_predicate",
+      "signature": [
+       "unknown@3"
+      ]
+     },
+     {
+      "builder": "AArch64_ZEXTLOAD",
+      "example": [
+       "s64",
+       "p0",
+       "s8"
+      ],
+      "reason": "panel_gap",
+      "signature": [
+       "match@0"
+      ]
+     }
+    ]
    }
   }
  },

@@ -52,7 +52,9 @@ The panel is derived from the finite-quotient analysis
 ([QUOTIENT.md](QUOTIENT.md)): keys are the first-match rule index over a type
 dependency component; axes are rule read sets; lengths count the parsed class
 universe.  The AArch64 report (`docs/quotient-aarch64-A2.json`) covers 616
-rules, 185 reached by a class tuple, and 30 opaque builders.
+rules, 364 reached by a class tuple, and 32 opaque builders.  Uncovered
+quotient classes are enumerated with an example and a reason: 144
+`panel_gap` and 11 `opaque_predicate`.
 
 The boundary panel deliberately includes both `iN` and `sN` spellings (AArch64
 enables extended LLT kinds), fixed and scalable vectors, `bf16`, and `f128`.

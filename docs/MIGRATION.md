@@ -41,7 +41,9 @@ Parity gates (`tests/test_sidecar_parity.py`) require:
 
 - oracle output byte-identical to the in-tree filler;
 - per-atom `outcome/steps/detail_code/failed_on_opcode` identical to
-  `X86Tests`;
+  `X86Tests` wherever the sidecar runs the legalizer; atoms the sidecar
+  rejects in construction (`construction_mismatch`/`unbuildable`) are exempt,
+  and no in-tree `crash`/`budget`/`hang` may become `legalized`/`failed`;
 - C0–C3 counts and crash atom ids identical to
   `src/x86_mir_corpus/assets/mir-baseline-witness.json`.
 

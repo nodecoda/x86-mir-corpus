@@ -839,6 +839,7 @@ def build_report(corpus_doc, results, corpus_path, corpus_sha256, rules,
     report = {
         "schema": SCHEMA,
         "version": VERSION,
+        "target": corpus_target(corpus_doc),
         "corpus": {
             "path": os.path.abspath(corpus_path),
             "sha256": corpus_sha256,

@@ -28,6 +28,11 @@ BASELINE = os.path.join(testlib.TOOL_DIR, "src", "x86_mir_corpus", "assets",
                         "mir-baseline-witness.json")
 PARITY_ENABLED = os.environ.get("X86_MIR_PARITY") == "1"
 
+# Outcomes the sidecar decides before running the legalizer.  The in-tree
+# driver has no IR-shape contracts, so it may legalize, fail, or abort on the
+# same atom; that divergence is the point of the contracts.
+PRE_LEGALIZER = frozenset({"construction_mismatch", "unbuildable"})
+
 
 def corpus(name):
     if not CORPUS_DIR:
@@ -88,15 +93,24 @@ class MirParityTest(unittest.TestCase):
                                         os.path.join(tmp, "intree.json"))
             actual = self.run_report(SIDECAR_RUN, source,
                                      os.path.join(tmp, "sidecar.json"))
-        self.assertEqual(reference["counts"], actual["counts"])
         left = {a["id"]: a for a in reference["atoms"]}
         right = {a["id"]: a for a in actual["atoms"]}
         self.assertEqual(set(left), set(right))
         fields = ("outcome", "steps", "detail_code", "failed_on_opcode")
         diffs = [(atom, field, left[atom].get(field), right[atom].get(field))
-                 for atom in left for field in fields
+                 for atom in left
+                 if right[atom]["outcome"] not in PRE_LEGALIZER
+                 for field in fields
                  if left[atom].get(field) != right[atom].get(field)]
         self.assertEqual(diffs, [])
+        # The contract must never hide a legalizer verdict: atoms the in-tree
+        # driver crashed or ran out of budget on cannot become "legalized" or
+        # "failed" evidence in the sidecar.
+        hidden = sorted(
+            atom for atom in left
+            if left[atom]["outcome"] in {"crash", "budget", "hang"}
+            and right[atom]["outcome"] not in PRE_LEGALIZER)
+        self.assertEqual(hidden, [])
 
     def test_four_config_counts_match_baseline(self):
         if not PARITY_ENABLED:

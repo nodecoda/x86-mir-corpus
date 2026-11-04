@@ -16,7 +16,8 @@ This file fixes the semantics that downstream evidence may rely on.
 ## Atoms and outcomes
 
 Every corpus atom carries `id`, `query.types`, optional `query.mem`,
-`expected.action`, and `config`.  A MIR report has one result per atom with an
+`expected.action`, and `config`.  A MIR report records `target` at the top
+level (duplicated under `corpus.target`) and has one result per atom with an
 explicit `outcome`:
 
 `legalized`, `failed`, `budget`, `crash`, `hang`, `construction_mismatch`,
@@ -72,5 +73,10 @@ Before publishing a sidecar or adding an LLVM pin:
    same points file.
 2. `x86-mir-run` must match `X86Tests` per atom on
    `outcome/steps/detail_code/failed_on_opcode` (stderr tails may differ in the
-   program-name prefix).
+   program-name prefix) for every atom the sidecar actually hands to the
+   legalizer.  Atoms the sidecar rejects before construction
+   (`construction_mismatch`/`unbuildable`) are exempt: the in-tree driver has
+   no IR-shape contracts and may legalize or abort on them.  The contract must
+   never turn an in-tree `crash`/`budget`/`hang` into `legalized`/`failed`
+   evidence, and the test asserts that direction explicitly.
 3. C0–C3 counts and crash atom ids must equal `mir-baseline-witness.json`.

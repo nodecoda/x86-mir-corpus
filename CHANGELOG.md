@@ -35,6 +35,11 @@ All notable changes to this project are documented here.  The format follows
 
 ### Changed
 
+- `mir-run` reports carry `target` at the top level (also under
+  `corpus.target`), so an AArch64 report is self-describing.
+- Quotient reports list every class the boundary panel misses:
+  `unrepresented_detail` gives an example and `panel_gap`/`opaque_predicate`
+  per class, refreshed in `docs/quotient-{x86-C2,aarch64-A2}.json`.
 - `llvm build` builds the `mir-run` target instead of the historical
   `x86-mir-run` target name (same binary).
 - The AArch64 witness panel and rule probes changed the committed witness
@@ -42,6 +47,11 @@ All notable changes to this project are documented here.  The format follows
 
 ### Fixed
 
+- Sidecar parity is now contract-aware: `x86-mir-run` must match `X86Tests`
+  field-for-field on every atom it hands to the legalizer, while atoms it
+  rejects in construction are exempt; no in-tree `crash`/`budget`/`hang` may
+  become `legalized`/`failed` evidence.  LLVM `6706952f4a5a` joins the
+  supported revisions after the gate passed.
 - AArch64 corpus construction crashes: `G_ROTL` float funnel shifts,
   scalable `G_IS_FPCLASS` (`buildConstant` assertion), and scalable
   zero-poison/compare/multiply shapes are now `construction_mismatch`

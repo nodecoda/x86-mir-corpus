@@ -19,7 +19,14 @@ we emit?" but "how many behaviourally distinct queries does the rule set have?"
   panel sample.
 
 `unrepresented` counts quotient classes the target boundary panel never
-touches. It is a panel-coverage diagnostic, not a pass/fail gate.
+touches, and `unrepresented_detail` lists one example per class with a reason:
+
+- `panel_gap` — a modelled class the boundary panel simply misses; the next
+  panel revision should add a representative.
+- `opaque_predicate` — a class boundary read through a predicate the expression
+  layer cannot reduce yet; the fix is modelling, not more points.
+
+It is a panel-coverage diagnostic, not a pass/fail gate.
 
 ## Run
 
@@ -37,12 +44,13 @@ Read-only. It never changes panels, corpora, or pinned revisions.
 | Report | Summary |
 |---|---|
 | `quotient-x86-C2.json` | 275 rules, 214 reached by a class tuple, 8 opaque builders |
-| `quotient-aarch64-A2.json` | 616 rules, 185 reached, 30 opaque builders |
+| `quotient-aarch64-A2.json` | 616 rules, 364 reached, 32 opaque builders |
 
-The gap between "rules reached by a class tuple" and "rules total" is the next
-work item: most are shadowed by an earlier rule, and some are behind lambdas
-that the expression layer does not reduce yet. `opaque_builders` names the
-latter explicitly.
+The quotient coverage counts rules reachable from a type class tuple alone.
+The corpus is higher (582/611 active AArch64 rules) because rule witnesses add
+predicate-driven shapes for opaque builders.  The remaining quotient gap is
+shadowed rules plus lambdas the expression layer does not reduce yet;
+`opaque_builders` names the latter explicitly.
 
 ## Limits
 
